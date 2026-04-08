@@ -1,0 +1,12 @@
+{
+  "env": {
+    "CLAUDE_CODE_USE_FOUNDRY": "1",
+    "ANTHROPIC_FOUNDRY_API_KEY": "<YOUR_API_KEY_HERE>",
+    "ANTHROPIC_FOUNDRY_BASE_URL": "https://flk-team-ai-enablement-ai.services.ai.azure.com/anthropic",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "claude-code-node2",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "claude-haiku-4-5-2-node2",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-sonnet-4-6-node2",
+    "ANTHROPIC_FOUNDRY_REGION": "eastus2"
+  },
+  "model": "claude-code-node2"
+}

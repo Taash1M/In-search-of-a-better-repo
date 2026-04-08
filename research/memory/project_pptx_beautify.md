@@ -1,0 +1,28 @@
+---
+name: Presentation Beautification Skill Project
+description: python-pptx module + skill for consulting-grade PPT with presets/palettes, 18+ functions, 5 palettes, template builds, OfficeCLI-sourced enhancement backlog
+type: project
+---
+
+**Project**: Presentation Beautification Skill — python-pptx module + Claude Code skill for producing consulting-grade PowerPoint presentations.
+
+**Why:** Existing powerpoint-create skill scored D (75/120, 70% redundant). No preset/palette cascade. Requires Node.js. New skill consolidates 5 GitHub sources into one python-pptx-only system with docx_beautify's proven architecture.
+
+**How to apply:** All artifacts in `C:\Users\tmanyang\OneDrive - Fortive\Claude code\Presentation Beautification\`. Full project memory at `PROJECT_MEMORY.md` in that folder. GitHub research at `Github_Research.md` (5 repos documented). Standing instructions: always update Github_Research.md when consuming repos, always log sessions to PROJECT_MEMORY.md, always push gotchas to skill file.
+
+**Key details:**
+- Engine: python-pptx only (no Node.js/PptxGenJS)
+- Architecture: mirrors docx_beautify (4 presets x 5 palettes, cascade system)
+- Presets: executive, technical, pitch, report
+- Palettes: fortive, executive, modern, minimal, fortive_ai
+- 18 public functions, 11 internal helpers, 12 chart types
+- Design rules: action titles, 3-second rule, 60-30-10, CRAP principles, Ghost Deck method
+- Automated quality validation (font count, color count, text overflow, contrast)
+- Sources: powerpoint-create.md, docx_beautify.py, ClaudeSkills PPT Designer, mcp-server-ppt, MarpToPptx, PptxGenJS, OfficeCLI
+- Status: v2 complete + AI Blueprint recreation. Session 5 added OfficeCLI gap analysis with 13 PPTX + 10 DOCX backlog items. Session 7 added frontend-slides standalone, 2 new palettes, content density limits.
+- Template-based builds proven (placeholder removal, image cropping, boundary overflow prevention)
+- Test suite: 9 suites → 71 tests, ALL PASS (Session 7: +8 tests for new palettes + content density)
+- Palettes expanded: +swiss_modern, +paper_ink (now 7 total)
+- Content density enforcement: max 6 bullets per slide, auto-split to continuation slides
+- frontend-slides standalone function for rapid diagram/content slides without full template
+- Not yet promoted to active commands dir
