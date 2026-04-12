@@ -6,116 +6,170 @@ master sync repo when Claude Code writes or edits them.
 
 Triggers on: Edit, Write, MultiEdit
 Watches:
-  - ~/.claude/commands/*.md          → skills/
-  - ~/.claude/hooks/*.py             → configurations/hooks/
-  - ~/.claude/projects/.../memory/*  → research/memory/
-  - ~/.claude/settings.json          → configurations/
-  - MCP server source files          → modules/mcp-servers/
+  - ~/.claude/commands/*.md              → skills/ (routed by name)
+  - ~/.claude/commands/ai-ucb/*.md       → skills/ai-ucb/reference/
+  - ~/.claude/commands/<subdir>/         → skills/standalone/<subdir>/
+  - ~/.claude/hooks/*.py                 → configurations/hooks/
+  - ~/.claude/projects/.../memory/*.md   → research/memory/
+  - ~/.claude/settings.json              → configurations/ (secrets redacted)
+  - MCP server source files              → modules/mcp-servers/
 
-This hook does NOT git commit/push — that's done by the sync script or manually.
+This hook does NOT git commit/push — use push_to_github.py for that.
 It only ensures the repo directory stays in sync with local Claude Code files.
 """
 
 import json
 import os
+import re
 import shutil
 import sys
 from pathlib import Path
 
 REPO_ROOT = Path(r"C:\Users\tmanyang\OneDrive - Fortive\Claude code\In search of a more perfect repo")
+CLAUDE_DIR = Path(os.path.expanduser("~")) / ".claude"
 
-# MCP server source directories to watch
-MCP_ROOTS = {
-    Path(r"C:\Users\tmanyang\OneDrive - Fortive\Claude code\MCP\PBI MCP\src\pbi_semantic_mcp"): "modules/mcp-servers/pbi-semantic/src/pbi_semantic_mcp/",
-    Path(r"C:\Users\tmanyang\OneDrive - Fortive\Claude code\MCP\PBI MCP\src\pbi_semantic_mcp\data"): "modules/mcp-servers/pbi-semantic/data/",
+# ── MCP server source directories ────────────────────────────────────────────
+# Order matters: more-specific paths MUST come before less-specific ones,
+# because the first match wins.
+MCP_ROOTS = [
+    # data/ subdir gets special dest (no src/ prefix)
+    (Path(r"C:\Users\tmanyang\OneDrive - Fortive\Claude code\MCP\PBI MCP\src\pbi_semantic_mcp\data"),
+     "modules/mcp-servers/pbi-semantic/data"),
+    # everything else under pbi_semantic_mcp/
+    (Path(r"C:\Users\tmanyang\OneDrive - Fortive\Claude code\MCP\PBI MCP\src\pbi_semantic_mcp"),
+     "modules/mcp-servers/pbi-semantic/src/pbi_semantic_mcp"),
+]
+MCP_EXTENSIONS = {".py", ".yaml", ".yml", ".md", ".toml", ".json"}
+
+# ── Settings file (exact match, secrets redacted on copy) ────────────────────
+SETTINGS_FILE = CLAUDE_DIR / "settings.json"
+
+# Secret patterns to redact in settings.json
+SECRET_KEY_PATTERNS = re.compile(r"(KEY|SECRET|TOKEN|PASSWORD)", re.IGNORECASE)
+
+# ── Skill routing ────────────────────────────────────────────────────────────
+SKILL_DIR = CLAUDE_DIR / "commands"
+SKILL_OVERRIDES = {
+    # AI UCB orchestrator
+    "ai-use-case-builder.md": "skills/ai-ucb/orchestrator/",
+    # AI UCB sub-skills
+    "ai-ucb-ai.md": "skills/ai-ucb/sub-skills/",
+    "ai-ucb-deploy.md": "skills/ai-ucb/sub-skills/",
+    "ai-ucb-discover.md": "skills/ai-ucb/sub-skills/",
+    "ai-ucb-docs.md": "skills/ai-ucb/sub-skills/",
+    "ai-ucb-frontend.md": "skills/ai-ucb/sub-skills/",
+    "ai-ucb-infra.md": "skills/ai-ucb/sub-skills/",
+    "ai-ucb-pipeline.md": "skills/ai-ucb/sub-skills/",
+    "ai-ucb-test.md": "skills/ai-ucb/sub-skills/",
+    # AI UCB companions
+    "agentic-deploy.md": "skills/ai-ucb/companions/",
+    "doc-intelligence.md": "skills/ai-ucb/companions/",
+    "eval-framework.md": "skills/ai-ucb/companions/",
+    "rag-multimodal.md": "skills/ai-ucb/companions/",
+    "web-ingest.md": "skills/ai-ucb/companions/",
+    # Document skills
+    "docx-beautify.md": "skills/document/",
+    "doc-extract.md": "skills/document/",
+    "doc-extract-reference.md": "skills/document/",
+    "excel-create.md": "skills/document/",
+    "powerpoint-create.md": "skills/document/",
+    "powerbi-desktop.md": "skills/document/",
+    "azure-diagrams.md": "skills/document/",
+    # Knowledge graph
+    "graphify.md": "skills/knowledge-graph/",
+    "graphify-reference.md": "skills/knowledge-graph/",
 }
+SKILL_DEFAULT = "skills/standalone/"
 
-# Settings file (exact match)
-SETTINGS_FILE = Path(os.path.expanduser("~")) / ".claude" / "settings.json"
-
-# Map source directory patterns to repo destinations
+# ── Watch rules for flat-directory matching ──────────────────────────────────
 WATCH_RULES = [
-    # Skills: ~/.claude/commands/*.md
+    # AI UCB reference: ~/.claude/commands/ai-ucb/*.md
     {
-        "pattern": os.path.join(os.path.expanduser("~"), ".claude", "commands"),
+        "dir": SKILL_DIR / "ai-ucb",
         "extension": ".md",
-        "dest_default": "skills/standalone/",
-        "dest_overrides": {
-            "ai-use-case-builder.md": "skills/ai-ucb/orchestrator/",
-            "ai-ucb-ai.md": "skills/ai-ucb/sub-skills/",
-            "ai-ucb-deploy.md": "skills/ai-ucb/sub-skills/",
-            "ai-ucb-discover.md": "skills/ai-ucb/sub-skills/",
-            "ai-ucb-docs.md": "skills/ai-ucb/sub-skills/",
-            "ai-ucb-frontend.md": "skills/ai-ucb/sub-skills/",
-            "ai-ucb-infra.md": "skills/ai-ucb/sub-skills/",
-            "ai-ucb-pipeline.md": "skills/ai-ucb/sub-skills/",
-            "ai-ucb-test.md": "skills/ai-ucb/sub-skills/",
-            "agentic-deploy.md": "skills/ai-ucb/companions/",
-            "doc-intelligence.md": "skills/ai-ucb/companions/",
-            "eval-framework.md": "skills/ai-ucb/companions/",
-            "rag-multimodal.md": "skills/ai-ucb/companions/",
-            "web-ingest.md": "skills/ai-ucb/companions/",
-            "docx-beautify.md": "skills/document/",
-            "doc-extract.md": "skills/document/",
-            "doc-extract-reference.md": "skills/document/",
-            "excel-create.md": "skills/document/",
-            "powerpoint-create.md": "skills/document/",
-            "powerbi-desktop.md": "skills/document/",
-            "azure-diagrams.md": "skills/document/",
-            "graphify.md": "skills/knowledge-graph/",
-            "graphify-reference.md": "skills/knowledge-graph/",
-        },
-    },
-    # AI UCB reference files: ~/.claude/commands/ai-ucb/*.md
-    {
-        "pattern": os.path.join(os.path.expanduser("~"), ".claude", "commands", "ai-ucb"),
-        "extension": ".md",
-        "dest_default": "skills/ai-ucb/reference/",
-        "dest_overrides": {},
+        "dest": "skills/ai-ucb/reference/",
     },
     # Hooks: ~/.claude/hooks/*.py
     {
-        "pattern": os.path.join(os.path.expanduser("~"), ".claude", "hooks"),
+        "dir": CLAUDE_DIR / "hooks",
         "extension": ".py",
-        "dest_default": "configurations/hooks/",
-        "dest_overrides": {},
+        "dest": "configurations/hooks/",
     },
     # Memory: ~/.claude/projects/.../memory/*.md
     {
-        "pattern": os.path.join(os.path.expanduser("~"), ".claude", "projects",
-                                "C--windows-system32", "memory"),
+        "dir": CLAUDE_DIR / "projects" / "C--windows-system32" / "memory",
         "extension": ".md",
-        "dest_default": "research/memory/",
-        "dest_overrides": {},
+        "dest": "research/memory/",
     },
 ]
 
 
-def should_sync(file_path: str) -> tuple:
-    """Check if a file path matches any watch rule. Returns (True, dest_rel, preserve_subpath) or (False, None, False)."""
+def _redact_settings(src: Path) -> str:
+    """Read settings.json and redact any values whose key matches SECRET_KEY_PATTERNS."""
+    try:
+        data = json.loads(src.read_text(encoding="utf-8"))
+        env = data.get("env", {})
+        for key in env:
+            if SECRET_KEY_PATTERNS.search(key):
+                env[key] = "<REDACTED — set via environment>"
+        return json.dumps(data, indent=2, ensure_ascii=False)
+    except Exception:
+        return src.read_text(encoding="utf-8")
+
+
+def resolve(file_path: str):
+    """Determine where a file should be synced.
+
+    Returns (dest_dir: str, sanitized_content: str | None).
+    dest_dir is relative to REPO_ROOT.  sanitized_content is non-None only when
+    the file content must be rewritten (e.g. settings.json with redacted secrets).
+    Returns (None, None) if the file shouldn't be synced.
+    """
     fp = Path(file_path)
 
-    # Check settings.json (exact match)
+    # ── settings.json (exact match, redact secrets) ──────────────────────
     if fp == SETTINGS_FILE:
-        return True, "configurations/", False
+        return "configurations/", _redact_settings(fp)
 
-    # Check MCP source directories (preserve relative subpath)
-    for mcp_root, dest_prefix in MCP_ROOTS.items():
+    # ── MCP source directories (preserve subpath) ────────────────────────
+    for mcp_root, dest_prefix in MCP_ROOTS:
         try:
             rel = fp.relative_to(mcp_root)
-            # Only sync .py, .yaml, .yml, .md, .toml files
-            if fp.suffix in (".py", ".yaml", ".yml", ".md", ".toml", ".json"):
-                return True, dest_prefix + str(rel.parent).replace("\\", "/"), True
+            if fp.suffix in MCP_EXTENSIONS:
+                parent = str(rel.parent).replace("\\", "/")
+                if parent == ".":
+                    return dest_prefix + "/", None
+                return dest_prefix + "/" + parent + "/", None
         except ValueError:
             continue
 
-    # Check standard watch rules (flat copy)
+    # ── Skills: ~/.claude/commands/*.md ───────────────────────────────────
+    # Direct children (*.md files)
+    if fp.parent == SKILL_DIR and fp.suffix == ".md":
+        dest = SKILL_OVERRIDES.get(fp.name, SKILL_DEFAULT)
+        return dest, None
+
+    # Skill subdirectories (e.g. commands/frontend-slides/*)
+    # Copy the whole relative path under skills/standalone/<subdir>/
+    try:
+        rel = fp.relative_to(SKILL_DIR)
+        parts = rel.parts
+        if len(parts) >= 2:
+            subdir = parts[0]
+            sub_rel = Path(*parts[1:])
+            dest = f"skills/standalone/{subdir}/{str(sub_rel.parent).replace(chr(92), '/')}".rstrip("/") + "/"
+            if dest.endswith("./"):
+                dest = f"skills/standalone/{subdir}/"
+            return dest, None
+    except ValueError:
+        pass
+
+    # ── Flat watch rules (hooks, memory, ai-ucb reference) ───────────────
     for rule in WATCH_RULES:
-        rule_dir = Path(rule["pattern"])
-        if fp.parent == rule_dir and fp.suffix == rule["extension"]:
-            dest = rule["dest_overrides"].get(fp.name, rule["dest_default"])
-            return True, dest, False
-    return False, None, False
+        if fp.parent == rule["dir"] and fp.suffix == rule["extension"]:
+            return rule["dest"], None
+
+    return None, None
 
 
 def main():
@@ -127,7 +181,6 @@ def main():
     tool_name = data.get("tool_name", "")
     tool_input = data.get("tool_input", {})
 
-    # Only trigger on file write/edit tools
     if tool_name not in ("Edit", "Write", "MultiEdit"):
         sys.exit(0)
 
@@ -135,28 +188,26 @@ def main():
     if not file_path:
         sys.exit(0)
 
-    match, dest_rel, preserve_subpath = should_sync(file_path)
-    if not match:
+    dest_rel, sanitized = resolve(file_path)
+    if dest_rel is None:
         sys.exit(0)
 
     src = Path(file_path)
     if not src.exists():
         sys.exit(0)
 
-    if preserve_subpath:
-        # MCP files: dest_rel already includes the relative subpath
-        dest_dir = REPO_ROOT / dest_rel
-    else:
-        dest_dir = REPO_ROOT / dest_rel
+    dest_dir = REPO_ROOT / dest_rel
     dest_dir.mkdir(parents=True, exist_ok=True)
     dest = dest_dir / src.name
 
     try:
-        shutil.copy2(str(src), str(dest))
+        if sanitized is not None:
+            dest.write_text(sanitized, encoding="utf-8")
+        else:
+            shutil.copy2(str(src), str(dest))
     except Exception:
         pass  # Never block tool execution
 
-    # Never block
     sys.exit(0)
 
 

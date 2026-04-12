@@ -1,7 +1,7 @@
 {
   "env": {
     "CLAUDE_CODE_USE_FOUNDRY": "1",
-    "ANTHROPIC_FOUNDRY_API_KEY": "<REDACTED \u2014 set via environment>",
+    "ANTHROPIC_FOUNDRY_API_KEY": "<REDACTED — set via environment>",
     "ANTHROPIC_FOUNDRY_BASE_URL": "https://ai-taashimanyanga3461ai913834910233.services.ai.azure.com/anthropic",
     "ANTHROPIC_DEFAULT_OPUS_MODEL": "claude-opus-4-6",
     "ANTHROPIC_DEFAULT_HAIKU_MODEL": "claude-haiku-4-5",

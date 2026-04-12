@@ -17,7 +17,7 @@
 - [Graphify Skill](project_graphify.md) — Knowledge graph skill based on safishamsi/graphify repo, project dir: Claude code\graphify (2026-04-06)
 - [Document Extraction Skill](project_doc_extract.md) — Unified doc-extract skill (ContextGem+RAG-Anything+agentic-doc), B+ 104/120 (2026-04-07)
 - [PLM Drawing Extraction](project_plm_drawing_extraction.md) — Technical validation: 18/19 drawings, 94% title block accuracy, ContextGem vision routing learnings (2026-04-07)
-- [Master Sync Repo](project_sync_repo.md) — Private GitHub repo (Taash1M/In-search-of-a-better-repo), 88 files, auto-sync hook, 12 detailed READMEs (2026-04-08)
+- [Master Sync Repo](project_sync_repo.md) — GitHub sync repo, 3 scripts (hook+sync+push), 52 skills, MCPs, schannel SSL fix (2026-04-11)
 - [Sandbox Logic Apps](project_sandbox_logic_apps.md) — 2 dynamic Logic Apps: sharepoint-copy (SP→ADLS) + api-to-adls (REST→ADLS), parameterized HTTP triggers, run_ID hierarchy (2026-04-08)
 - [EM Leadership Forum](project_leadership_forum.md) — Bold Signal Light design, 3 PPTX + 3 HTML (animated), QA R2 complete, pending user review (2026-04-10)
 - [Q1 Start Deck](project_q1_start_deck.md) — Q1 Summary + Q2-Q4 Upcoming (donut chart, 11 initiative cards, Fabric callout), 3-stage QA passed (2026-04-10)
@@ -39,6 +39,7 @@
 - [Arrow direction in docs](feedback_arrow_direction.md) — arrows point TOWARD the other section, not both same direction
 - [Diagram quality gate](feedback_diagram_quality_gate.md) — validate every diagram for missing icons, overlap, distortion before embedding; fix+regenerate loop
 - [PPTX layout discipline](feedback_pptx_layout.md) — mandatory 3-stage QA (content + programmatic layout + visual), safe zone, dynamic positioning for grids
+- [Git push SSL fix](feedback_git_push_ssl.md) — use schannel SSL backend + bundle workflow for large pushes through corporate proxy
 
 ## Patterns Learned
 - **Always use all-purpose clusters** for Databricks interactive/notebook work
@@ -69,11 +70,12 @@
 - **Auth**: `ANTHROPIC_FOUNDRY_API_KEY` + `CLAUDE_CODE_USE_FOUNDRY=1`
 - Billing: Fluke AI ML Technology subscription (Azure Marketplace)
 
-## Claude Code Hooks (Installed 2026-03-12)
-- **Location**: `C:\Users\adm-tmanyang\.claude\hooks\` (3 Python scripts)
+## Claude Code Hooks (4 scripts)
+- **Location**: `C:\Users\adm-tmanyang\.claude\hooks\`
 - **secret-scanner.py**: PreToolUse on Bash, blocks git commits with secrets (30+ patterns)
 - **dangerous-command-blocker.py**: PreToolUse on Bash, 3-level protection
 - **change-logger.py**: PostToolUse on Edit/Write/MultiEdit/Bash, logs to `~/.claude/critical_log_changes.csv`
+- **repo-sync.py**: PostToolUse on Edit/Write/MultiEdit, auto-copies skills/hooks/memory/MCPs/settings to sync repo (wired 2026-04-11). Redacts secrets in settings.json. Does NOT commit/push.
 - **Python path**: `python` not `python3` (Windows, Python 3.12)
 
 ## Document Beautification Skill
