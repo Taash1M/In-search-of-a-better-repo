@@ -1,0 +1,80 @@
+{
+  "env": {
+    "CLAUDE_CODE_USE_FOUNDRY": "1",
+    "ANTHROPIC_FOUNDRY_API_KEY": "<REDACTED \u2014 set via environment>",
+    "ANTHROPIC_FOUNDRY_BASE_URL": "https://ai-taashimanyanga3461ai913834910233.services.ai.azure.com/anthropic",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "claude-opus-4-6",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "claude-haiku-4-5",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-sonnet-4-6",
+    "ANTHROPIC_FOUNDRY_REGION": "eastus2"
+  },
+  "model": "claude-opus-4-6",
+  "autoUpdatesChannel": "latest",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"C:/Users/adm-tmanyang/.claude/hooks/secret-scanner.py\""
+          },
+          {
+            "type": "command",
+            "command": "python \"C:/Users/adm-tmanyang/.claude/hooks/dangerous-command-blocker.py\""
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"C:/Users/adm-tmanyang/.claude/hooks/change-logger.py\""
+          },
+          {
+            "type": "command",
+            "command": "python \"C:/Users/adm-tmanyang/.claude/hooks/repo-sync.py\""
+          }
+        ]
+      },
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"C:/Users/adm-tmanyang/.claude/hooks/change-logger.py\""
+          },
+          {
+            "type": "command",
+            "command": "python \"C:/Users/adm-tmanyang/.claude/hooks/repo-sync.py\""
+          }
+        ]
+      },
+      {
+        "matcher": "MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"C:/Users/adm-tmanyang/.claude/hooks/change-logger.py\""
+          },
+          {
+            "type": "command",
+            "command": "python \"C:/Users/adm-tmanyang/.claude/hooks/repo-sync.py\""
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"C:/Users/adm-tmanyang/.claude/hooks/change-logger.py\""
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -2,8 +2,8 @@
 name: Skill Framework and Inventory
 description: Claude Code custom skills inventory, Turbo-inspired quality patterns, skill enhancement history. All 21 AI UCB files upgraded to A+ (2026-04-07).
 type: project
+originSessionId: aa210407-a09e-461f-aa2f-83d0e2fa4475
 ---
-
 ## Skill Inventory (as of 2026-04-07)
 
 ### Active Skills (`C:\Users\adm-tmanyang\.claude\commands\`)
@@ -16,6 +16,7 @@ type: project
 | `audit-ubi.md` | Multi-agent UBI codebase health audit | NEW (2026-03-30) — parallel fan-out by stream, P0-P3 severity |
 | `polish-notebook.md` | Iterative Databricks notebook quality loop | NEW (2026-03-30) — lint/test/simplify/review, max 3 iterations |
 | `session-review.md` | Lesson extraction with priority-ranked routing | NEW (2026-03-30) — 7 priority levels, skill>project>memory routing |
+| `powerpoint-create.md` | PPTX creation, PptxGenJS + python-pptx, design system | Enhanced (2026-04-10) — mandatory 3-stage QA (content + programmatic layout + visual) |
 | `paperclip.md` | Multi-agent orchestration, task ticketing, budgets, scheduling | NEW (2026-04-01) — cherry-picked from paperclipai/paperclip, A+ grade |
 | `ai-use-case-builder.md` | AI UCB orchestrator — atomic state, step checkpoints, saga compensation | v2.0 → A+ (2026-04-07) |
 | `ai-ucb-*.md` (x8) | AI UCB sub-skills: discover, infra, pipeline, ai, frontend, test, docs, deploy | v2.0 → all A+ (2026-04-07) |

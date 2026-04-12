@@ -1,0 +1,44 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pbi-semantic-mcp"
+version = "0.1.0"
+description = "MCP server for UBI Power BI semantic models — schema, metadata, DAX queries with guardrails"
+requires-python = ">=3.11"
+authors = [{ name = "Taashi Manyanga" }]
+
+dependencies = [
+    "mcp[cli]>=1.27.0",
+    "httpx>=0.27.0",
+    "pydantic-settings>=2.0",
+    "pyyaml>=6.0",
+    "sqlparse>=0.5.0",
+]
+
+[project.optional-dependencies]
+xmla = ["pyadomd>=0.1.0"]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.24.0",
+    "respx>=0.22.0",
+    "ruff>=0.8.0",
+]
+
+[project.scripts]
+pbi-semantic-mcp = "pbi_semantic_mcp.__main__:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pbi_semantic_mcp"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]

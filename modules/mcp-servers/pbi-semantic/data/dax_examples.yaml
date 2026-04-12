@@ -1,0 +1,114 @@
+# Shared DAX query examples — curated patterns for common question types
+
+examples:
+  # ── Aggregation ────────────────────────────────────────────────
+  - question: "What is the total value of open sales orders?"
+    query: |
+      EVALUATE
+      ROW(
+        "Total Open SO Value", SUM('FactSOBacklog'[OrderAmount]),
+        "Order Count", COUNTROWS('FactSOBacklog')
+      )
+    explanation: "Simple aggregation using ROW for a single-row result."
+    category: aggregation
+
+  - question: "Show revenue by operating unit for the current fiscal year"
+    query: |
+      EVALUATE
+      SUMMARIZECOLUMNS(
+        'DimOperatingUnit'[OperatingUnitName],
+        FILTER('DimDate', 'DimDate'[FiscalYear] = YEAR(TODAY())),
+        "Revenue", SUM('FactRevenue'[InvoicedAmount]),
+        "OrderCount", COUNTROWS('FactRevenue')
+      )
+    explanation: "Grouped aggregation with SUMMARIZECOLUMNS and a date filter."
+    category: aggregation
+
+  # ── Filtering ──────────────────────────────────────────────────
+  - question: "List all orders on hold with hold value over $50K"
+    query: |
+      EVALUATE
+      FILTER(
+        ADDCOLUMNS(
+          'FactSOBacklog',
+          "HoldValue", 'FactSOBacklog'[OrderAmount]
+        ),
+        'FactSOBacklog'[HoldStatus] = "On Hold"
+          && [HoldValue] > 50000
+      )
+    explanation: "Row-level filtering with FILTER and ADDCOLUMNS."
+    category: filtering
+
+  - question: "Show top 20 customers by backlog value"
+    query: |
+      EVALUATE
+      TOPN(
+        20,
+        SUMMARIZECOLUMNS(
+          'DimCustomer'[CustomerName],
+          "BacklogValue", SUM('FactSOBacklog'[OrderAmount])
+        ),
+        [BacklogValue], DESC
+      )
+    explanation: "TOPN for ranking with SUMMARIZECOLUMNS."
+    category: ranking
+
+  # ── Time Intelligence ──────────────────────────────────────────
+  - question: "Compare this month's revenue to the same month last year"
+    query: |
+      EVALUATE
+      ROW(
+        "Current Month", CALCULATE(
+          SUM('FactRevenue'[InvoicedAmount]),
+          DATESMTD('DimDate'[Date])
+        ),
+        "Same Month Last Year", CALCULATE(
+          SUM('FactRevenue'[InvoicedAmount]),
+          SAMEPERIODLASTYEAR(DATESMTD('DimDate'[Date]))
+        )
+      )
+    explanation: "Time intelligence with DATESMTD and SAMEPERIODLASTYEAR."
+    category: time-intelligence
+
+  - question: "Show monthly revenue trend for the past 12 months"
+    query: |
+      EVALUATE
+      SUMMARIZECOLUMNS(
+        'DimDate'[YearMonth],
+        DATESINPERIOD('DimDate'[Date], TODAY(), -12, MONTH),
+        "Revenue", SUM('FactRevenue'[InvoicedAmount])
+      )
+    explanation: "Rolling 12-month trend using DATESINPERIOD."
+    category: time-intelligence
+
+  # ── Multi-table / Relationship ─────────────────────────────────
+  - question: "Show backlog by product category and order status"
+    query: |
+      EVALUATE
+      SUMMARIZECOLUMNS(
+        'DimItem'[ProductCategory],
+        'FactSOBacklog'[OrderStatus],
+        "BacklogValue", SUM('FactSOBacklog'[OrderAmount]),
+        "LineCount", COUNTROWS('FactSOBacklog')
+      )
+    explanation: "Cross-table aggregation leveraging model relationships."
+    category: multi-table
+
+  # ── Calculated Columns / ADDCOLUMNS ────────────────────────────
+  - question: "Show orders with days-to-ship calculated"
+    query: |
+      EVALUATE
+      TOPN(
+        50,
+        ADDCOLUMNS(
+          'FactSOBacklog',
+          "DaysToShip", DATEDIFF(
+            'FactSOBacklog'[OrderDate],
+            'FactSOBacklog'[ScheduledShipDate],
+            DAY
+          )
+        ),
+        [DaysToShip], DESC
+      )
+    explanation: "ADDCOLUMNS to compute a derived column inline."
+    category: calculated

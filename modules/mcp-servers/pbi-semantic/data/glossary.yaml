@@ -1,0 +1,62 @@
+# UBI Business Glossary — common terms used across PBI semantic models
+
+terms:
+  - term: SO Backlog
+    definition: "Open (unfulfilled) sales orders — the queue of customer orders awaiting shipment. Measured in $ value and line count."
+
+  - term: Operating Unit
+    definition: "Organizational unit within UBI (e.g., Fluke Industrial, Fluke Calibration, Fluke Networks). Maps to Oracle OU."
+
+  - term: Book-to-Bill
+    definition: "Ratio of new orders booked to orders shipped in a period. >1 means backlog is growing."
+
+  - term: ASP
+    definition: "Average Selling Price — total revenue divided by units shipped."
+
+  - term: DSO
+    definition: "Days Sales Outstanding — average days to collect payment after invoicing."
+
+  - term: OTD
+    definition: "On-Time Delivery — percentage of orders shipped by or before the customer-requested date."
+
+  - term: NPI
+    definition: "New Product Introduction — the process from concept through first customer shipment."
+
+  - term: FRS
+    definition: "Fluke Reliability Solutions — the reliability/condition monitoring business unit."
+
+  - term: IIR
+    definition: "Installed Instrument Registry — database of all instruments by serial number, calibration status, and service history."
+
+  - term: Gold View
+    definition: "Curated analytical view in Databricks (flukebi_Gold schema) with business-friendly column names. The final layer before Power BI."
+
+  - term: STM
+    definition: "Source-to-Target Mapping — 45-column specification tracking a field from Oracle/source through Bronze/Silver/Gold to Power BI."
+
+  - term: Hold
+    definition: "An order line placed on administrative hold (credit, shipping, scheduling). Held lines are in backlog but cannot ship until released."
+
+  - term: Sales Credit
+    definition: "Revenue attribution split across sales reps via SalesCreditPct. One order line can credit multiple reps."
+
+  - term: Cross-Rate
+    definition: "Currency conversion rate from transaction currency to USD via a conversion view. Applied at the Silver layer."
+
+  - term: Fiscal Year
+    definition: "Fortive fiscal year runs Jan-Dec. Periods align to calendar months. FY2026 = Jan 2026 - Dec 2026."
+
+  - term: UBI
+    definition: "Unified Business Intelligence — the consolidated data platform serving Fluke and related OpCos."
+
+  - term: VOC
+    definition: "Voice of Customer — unified storage of customer feedback, survey data, call transcripts, and video interactions."
+
+  - term: Five 9
+    definition: "Five9 cloud contact center platform — provides call routing, IVR, and agent performance analytics."
+
+  - term: SCADA
+    definition: "Supervisory Control and Data Acquisition — manufacturing sensor/control data for OEE and quality metrics."
+
+  - term: eMaint
+    definition: "Computerized Maintenance Management System (CMMS) for equipment maintenance work orders and PM schedules."

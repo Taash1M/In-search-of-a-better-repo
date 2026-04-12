@@ -1,0 +1,164 @@
+# UBI Power BI Dataset Inventory
+# Each entry maps a business stream to its PBI semantic model.
+# dataset IDs should be filled in from PBI REST API discovery or manual lookup.
+
+datasets:
+  - name: SO Backlog
+    id: ""  # TODO: discover via scripts/discover_datasets.py
+    description: "Sales Order Backlog — open orders, bookings, shipments, holds, scheduling. Core operational dataset with 52 Gold views."
+    workspace: prod
+    stream: so_backlog
+    refresh_schedule: "bi-hourly"
+    owner: "UBI Data Team"
+
+  - name: Revenue
+    id: ""
+    description: "Revenue analytics — invoiced revenue, deferred revenue, revenue recognition, ASP, product mix."
+    workspace: prod
+    stream: revenue
+    refresh_schedule: "daily"
+    owner: "UBI Data Team"
+
+  - name: GL Financial
+    id: ""
+    description: "General Ledger — P&L, balance sheet, trial balance, journal entries, budget vs actuals."
+    workspace: prod
+    stream: gl
+    refresh_schedule: "daily"
+    owner: "UBI Data Team"
+
+  - name: Inventory
+    id: ""
+    description: "Inventory positions, aging, turns, excess & obsolete, warehouse movements."
+    workspace: prod
+    stream: inventory
+    refresh_schedule: "daily"
+    owner: "UBI Data Team"
+
+  - name: Purchasing
+    id: ""
+    description: "Purchase orders, receipts, AP aging, vendor performance, spend analytics."
+    workspace: prod
+    stream: purchasing
+    refresh_schedule: "daily"
+    owner: "UBI Data Team"
+
+  - name: Accounts Receivable
+    id: ""
+    description: "AR aging, collections, cash application, customer credit, DSO."
+    workspace: prod
+    stream: ar
+    refresh_schedule: "daily"
+    owner: "UBI Data Team"
+
+  - name: Item Master
+    id: ""
+    description: "Product catalog — items, categories, costs, pricing, BOMs."
+    workspace: prod
+    stream: item_master
+    refresh_schedule: "daily"
+    owner: "UBI Data Team"
+
+  - name: Customer Master
+    id: ""
+    description: "Customer hierarchy — accounts, sites, contacts, territories, segments."
+    workspace: prod
+    stream: customer_master
+    refresh_schedule: "daily"
+    owner: "UBI Data Team"
+
+  - name: SCADA
+    id: ""
+    description: "Manufacturing SCADA — production metrics, OEE, downtime, quality."
+    workspace: prod
+    stream: scada
+    refresh_schedule: "daily"
+    owner: "UBI Data Team"
+
+  - name: IIR Composite
+    id: ""
+    description: "Installed Instrument Registry — serial numbers, calibration, service history."
+    workspace: prod
+    stream: iir
+    refresh_schedule: "daily"
+    owner: "UBI Data Team"
+
+  - name: PLM
+    id: ""
+    description: "Product Lifecycle Management — engineering changes, BOMs, document control."
+    workspace: prod
+    stream: plm
+    refresh_schedule: "weekly"
+    owner: "UBI Data Team"
+
+  - name: Five 9
+    id: ""
+    description: "Contact center analytics — call volumes, SLAs, agent performance, transfer rates."
+    workspace: prod
+    stream: five9
+    refresh_schedule: "daily"
+    owner: "UBI Data Team"
+
+  - name: FRS Salesforce
+    id: ""
+    description: "FRS CRM — opportunities, pipeline, win rates, account coverage."
+    workspace: prod
+    stream: frs
+    refresh_schedule: "daily"
+    owner: "UBI Data Team"
+
+  - name: VOC
+    id: ""
+    description: "Voice of Customer — survey scores, NPS, feedback themes, sentiment."
+    workspace: prod
+    stream: voc
+    refresh_schedule: "weekly"
+    owner: "UBI Data Team"
+
+  - name: Databricks Usage
+    id: ""
+    description: "Databricks platform usage — cluster costs, notebook runs, job performance."
+    workspace: prod
+    stream: databricks
+    refresh_schedule: "daily"
+    owner: "UBI Data Team"
+
+  - name: eMaint
+    id: ""
+    description: "Maintenance management — work orders, asset tracking, PM schedules."
+    workspace: prod
+    stream: emaint
+    refresh_schedule: "daily"
+    owner: "UBI Data Team"
+
+  - name: Brazil
+    id: ""
+    description: "Brazil operations — Fluke Brazil specific reporting, localized metrics."
+    workspace: prod
+    stream: brazil
+    refresh_schedule: "daily"
+    owner: "UBI Data Team"
+
+  - name: TMO
+    id: ""
+    description: "Technology Management Office — project tracking, resource allocation."
+    workspace: prod
+    stream: tmo
+    refresh_schedule: "weekly"
+    owner: "UBI Data Team"
+
+  - name: Landauer
+    id: ""
+    description: "Landauer dosimetry — radiation monitoring, badge processing, compliance."
+    workspace: prod
+    stream: landauer
+    refresh_schedule: "daily"
+    owner: "UBI Data Team"
+
+  - name: SSD
+    id: ""
+    description: "Service & Support Data — RMAs, warranties, field service, spare parts."
+    workspace: prod
+    stream: ssd
+    refresh_schedule: "daily"
+    owner: "UBI Data Team"

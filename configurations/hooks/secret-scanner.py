@@ -116,6 +116,8 @@ EXCLUDED_DIRS = [
     '.pytest_cache/',
     'venv/',
     'env/',
+    # Private sync repo — secrets authorized by owner (private GitHub repo)
+    'In search of a more perfect repo/',
 ]
 
 def should_skip_file(file_path):
@@ -225,6 +227,21 @@ def main():
     command = tool_input.get('command', '')
     if not re.search(r'git\s+commit', command):
         sys.exit(0)
+
+    # Skip scanning for explicitly authorized private repos
+    AUTHORIZED_PRIVATE_REPOS = [
+        'In-search-of-a-better-repo',
+        'In search of a more perfect repo',
+    ]
+    try:
+        repo_root = subprocess.run(
+            ['git', 'rev-parse', '--show-toplevel'],
+            capture_output=True, text=True
+        ).stdout.strip()
+        if any(name in repo_root for name in AUTHORIZED_PRIVATE_REPOS):
+            sys.exit(0)
+    except Exception:
+        pass
 
     staged_files = get_staged_files()
 

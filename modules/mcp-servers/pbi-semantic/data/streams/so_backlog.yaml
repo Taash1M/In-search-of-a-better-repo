@@ -1,0 +1,329 @@
+# SO Backlog Stream — bootstrap metadata from STM and Gold view analysis
+# Source: STM_SOBacklog_20260210.csv (185 rows × 45 columns), 52 Gold views
+
+id: ""  # TODO: fill from PBI REST API
+name: SO Backlog
+description: "Sales Order Backlog — open orders, bookings, shipments, holds, scheduling. 52 Gold views, bi-hourly refresh."
+workspace: prod
+stream: so_backlog
+refresh_schedule: "bi-hourly"
+owner: "UBI Data Team"
+
+tables:
+  - name: FactSOBacklog
+    description: "Core fact table — one row per sales order line with amounts, dates, quantities, and status flags."
+    source_type: "Gold View (Refresh_SOBacklogViews.py)"
+    row_count_estimate: 500000
+    columns:
+      - name: OrderNumber
+        data_type: STRING
+        description: "Oracle sales order number"
+        is_key: false
+      - name: OrderLineNumber
+        data_type: INTEGER
+        description: "Line number within the sales order"
+      - name: OrderDate
+        data_type: DATE
+        description: "Date the order was booked"
+      - name: ScheduledShipDate
+        data_type: DATE
+        description: "Scheduled ship date (may differ from requested)"
+      - name: RequestedDate
+        data_type: DATE
+        description: "Customer-requested delivery date"
+      - name: ActualShipDate
+        data_type: DATE
+        description: "Actual ship date (null if not yet shipped)"
+      - name: OrderAmount
+        data_type: DECIMAL
+        description: "Extended order amount in USD (after currency conversion)"
+      - name: UnitSellingPrice
+        data_type: DECIMAL
+        description: "Unit selling price in transaction currency"
+      - name: OrderedQuantity
+        data_type: INTEGER
+        description: "Quantity ordered on the line"
+      - name: ShippedQuantity
+        data_type: INTEGER
+        description: "Quantity actually shipped"
+      - name: OrderStatus
+        data_type: STRING
+        description: "Line status: Open, Closed, Cancelled, On Hold"
+      - name: HoldStatus
+        data_type: STRING
+        description: "Hold type if on hold (Credit, Shipping, Scheduling, etc.)"
+      - name: HoldID
+        data_type: INTEGER
+        description: "Hold identifier (assigned via post-INSERT MERGE by priority)"
+      - name: FlowStatusCode
+        data_type: STRING
+        description: "Oracle flow status: BOOKED, AWAITING_SHIPPING, SHIPPED, CLOSED, CANCELLED"
+      - name: SalesCreditPct
+        data_type: DECIMAL
+        description: "Revenue attribution split percentage for this rep"
+      - name: ReturnSign
+        data_type: INTEGER
+        description: "1 for regular orders, -1 for returns (applied to amounts)"
+      - name: CurrencyCode
+        data_type: STRING
+        description: "Transaction currency (USD, EUR, GBP, JPY, etc.)"
+      - name: ConversionRate
+        data_type: DECIMAL
+        description: "Currency conversion rate to USD via cross-rate view"
+      - name: OperatingUnitID
+        data_type: INTEGER
+        description: "Oracle operating unit identifier"
+        is_key: false
+        fk_table: DimOperatingUnit
+        fk_column: OperatingUnitID
+      - name: CustomerID
+        data_type: INTEGER
+        description: "Customer account identifier"
+        fk_table: DimCustomer
+        fk_column: CustomerID
+      - name: ItemID
+        data_type: INTEGER
+        description: "Inventory item identifier"
+        fk_table: DimItem
+        fk_column: ItemID
+      - name: SalesRepID
+        data_type: INTEGER
+        description: "Sales representative identifier"
+        fk_table: DimSalesRep
+        fk_column: SalesRepID
+    measures:
+      - name: Total Backlog Value
+        expression: "SUM('FactSOBacklog'[OrderAmount])"
+        description: "Sum of all open order amounts in USD"
+        format_string: "$#,##0"
+      - name: Open Order Count
+        expression: "COUNTROWS(FILTER('FactSOBacklog', 'FactSOBacklog'[OrderStatus] = \"Open\"))"
+        description: "Count of open order lines"
+        format_string: "#,##0"
+      - name: On-Time Delivery %
+        expression: |
+          DIVIDE(
+            COUNTROWS(FILTER('FactSOBacklog',
+              'FactSOBacklog'[ActualShipDate] <= 'FactSOBacklog'[RequestedDate]
+            )),
+            COUNTROWS(FILTER('FactSOBacklog',
+              NOT(ISBLANK('FactSOBacklog'[ActualShipDate]))
+            ))
+          )
+        description: "Percentage of orders shipped on or before the customer-requested date"
+        format_string: "0.0%"
+      - name: Avg Days to Ship
+        expression: |
+          AVERAGEX(
+            FILTER('FactSOBacklog', NOT(ISBLANK('FactSOBacklog'[ActualShipDate]))),
+            DATEDIFF('FactSOBacklog'[OrderDate], 'FactSOBacklog'[ActualShipDate], DAY)
+          )
+        description: "Average calendar days from order date to actual ship date"
+        format_string: "0.0"
+
+  - name: DimCustomer
+    description: "Customer dimension — account hierarchy, sites, territories, segments."
+    source_type: "Gold View"
+    columns:
+      - name: CustomerID
+        data_type: INTEGER
+        description: "Surrogate key"
+        is_key: true
+      - name: CustomerName
+        data_type: STRING
+        description: "Customer account name"
+      - name: CustomerNumber
+        data_type: STRING
+        description: "Oracle customer number"
+      - name: CustomerClass
+        data_type: STRING
+        description: "Customer classification (Direct, Distribution, OEM, Internal)"
+      - name: Territory
+        data_type: STRING
+        description: "Sales territory assignment"
+      - name: Country
+        data_type: STRING
+        description: "Customer country"
+      - name: Region
+        data_type: STRING
+        description: "Geographic region (Americas, EMEA, APAC)"
+
+  - name: DimItem
+    description: "Product/item dimension — product hierarchy, categories, costs."
+    source_type: "Gold View"
+    columns:
+      - name: ItemID
+        data_type: INTEGER
+        description: "Surrogate key"
+        is_key: true
+      - name: ItemNumber
+        data_type: STRING
+        description: "Oracle inventory item number"
+      - name: ItemDescription
+        data_type: STRING
+        description: "Product description"
+      - name: ProductFamily
+        data_type: STRING
+        description: "Product family grouping"
+      - name: ProductCategory
+        data_type: STRING
+        description: "Product category (Tools, Accessories, Software, Services)"
+      - name: ProductLine
+        data_type: STRING
+        description: "Product line within the family"
+      - name: UnitCost
+        data_type: DECIMAL
+        description: "Standard unit cost in USD"
+
+  - name: DimOperatingUnit
+    description: "Operating unit dimension — Oracle org hierarchy."
+    source_type: "Gold View"
+    columns:
+      - name: OperatingUnitID
+        data_type: INTEGER
+        description: "Surrogate key"
+        is_key: true
+      - name: OperatingUnitName
+        data_type: STRING
+        description: "Operating unit name (e.g., Fluke Industrial US)"
+      - name: LegalEntity
+        data_type: STRING
+        description: "Legal entity name"
+      - name: BusinessUnit
+        data_type: STRING
+        description: "Business unit (Fluke, Fluke Cal, Fluke Networks)"
+
+  - name: DimSalesRep
+    description: "Sales representative dimension."
+    source_type: "Gold View"
+    columns:
+      - name: SalesRepID
+        data_type: INTEGER
+        description: "Surrogate key"
+        is_key: true
+      - name: SalesRepName
+        data_type: STRING
+        description: "Full name"
+      - name: SalesGroup
+        data_type: STRING
+        description: "Sales group/team"
+
+  - name: DimDate
+    description: "Date dimension with fiscal calendar."
+    source_type: "Gold View"
+    columns:
+      - name: Date
+        data_type: DATE
+        description: "Calendar date"
+        is_key: true
+      - name: FiscalYear
+        data_type: INTEGER
+        description: "Fiscal year (Jan-Dec aligned)"
+      - name: FiscalPeriod
+        data_type: INTEGER
+        description: "Fiscal period 1-12"
+      - name: FiscalQuarter
+        data_type: STRING
+        description: "Q1, Q2, Q3, Q4"
+      - name: MonthName
+        data_type: STRING
+        description: "Month name"
+      - name: WeekOfYear
+        data_type: INTEGER
+        description: "ISO week number"
+      - name: DayOfWeek
+        data_type: STRING
+        description: "Day name"
+      - name: IsWeekday
+        data_type: BOOLEAN
+        description: "True for Monday-Friday"
+
+relationships:
+  - from_table: FactSOBacklog
+    from_column: CustomerID
+    to_table: DimCustomer
+    to_column: CustomerID
+    cardinality: many-to-one
+
+  - from_table: FactSOBacklog
+    from_column: ItemID
+    to_table: DimItem
+    to_column: ItemID
+    cardinality: many-to-one
+
+  - from_table: FactSOBacklog
+    from_column: OperatingUnitID
+    to_table: DimOperatingUnit
+    to_column: OperatingUnitID
+    cardinality: many-to-one
+
+  - from_table: FactSOBacklog
+    from_column: SalesRepID
+    to_table: DimSalesRep
+    to_column: SalesRepID
+    cardinality: many-to-one
+
+  - from_table: FactSOBacklog
+    from_column: OrderDate
+    to_table: DimDate
+    to_column: Date
+    cardinality: many-to-one
+
+dax_examples:
+  - question: "What is the total backlog value by operating unit?"
+    query: |
+      EVALUATE
+      SUMMARIZECOLUMNS(
+        'DimOperatingUnit'[OperatingUnitName],
+        "BacklogValue", SUM('FactSOBacklog'[OrderAmount]),
+        "OpenLines", COUNTROWS(FILTER('FactSOBacklog', 'FactSOBacklog'[OrderStatus] = "Open"))
+      )
+    explanation: "Groups open backlog by operating unit using the OU dimension relationship."
+    category: aggregation
+
+  - question: "Show all orders currently on hold with their hold type"
+    query: |
+      EVALUATE
+      FILTER(
+        SELECTCOLUMNS(
+          'FactSOBacklog',
+          "Order", 'FactSOBacklog'[OrderNumber],
+          "Line", 'FactSOBacklog'[OrderLineNumber],
+          "Amount", 'FactSOBacklog'[OrderAmount],
+          "HoldType", 'FactSOBacklog'[HoldStatus]
+        ),
+        NOT(ISBLANK([HoldType]))
+      )
+    explanation: "Filters to only lines with a hold status, showing order details."
+    category: filtering
+
+  - question: "What is the on-time delivery rate by product family?"
+    query: |
+      EVALUATE
+      SUMMARIZECOLUMNS(
+        'DimItem'[ProductFamily],
+        FILTER('FactSOBacklog', NOT(ISBLANK('FactSOBacklog'[ActualShipDate]))),
+        "OTD_Rate", DIVIDE(
+          COUNTROWS(FILTER('FactSOBacklog',
+            'FactSOBacklog'[ActualShipDate] <= 'FactSOBacklog'[RequestedDate]
+          )),
+          COUNTROWS('FactSOBacklog')
+        ),
+        "ShippedOrders", COUNTROWS('FactSOBacklog')
+      )
+    explanation: "Calculates OTD % per product family for shipped orders."
+    category: aggregation
+
+  - question: "Show bookings trend by month for the last 6 months"
+    query: |
+      EVALUATE
+      SUMMARIZECOLUMNS(
+        'DimDate'[FiscalYear],
+        'DimDate'[FiscalPeriod],
+        'DimDate'[MonthName],
+        DATESINPERIOD('DimDate'[Date], TODAY(), -6, MONTH),
+        "Bookings", SUM('FactSOBacklog'[OrderAmount]),
+        "OrderCount", COUNTROWS('FactSOBacklog')
+      )
+    explanation: "Monthly bookings trend using DATESINPERIOD for a 6-month window."
+    category: time-intelligence

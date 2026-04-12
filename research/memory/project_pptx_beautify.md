@@ -2,8 +2,8 @@
 name: Presentation Beautification Skill Project
 description: python-pptx module + skill for consulting-grade PPT with presets/palettes, 18+ functions, 5 palettes, template builds, OfficeCLI-sourced enhancement backlog
 type: project
+originSessionId: aa210407-a09e-461f-aa2f-83d0e2fa4475
 ---
-
 **Project**: Presentation Beautification Skill — python-pptx module + Claude Code skill for producing consulting-grade PowerPoint presentations.
 
 **Why:** Existing powerpoint-create skill scored D (75/120, 70% redundant). No preset/palette cascade. Requires Node.js. New skill consolidates 5 GitHub sources into one python-pptx-only system with docx_beautify's proven architecture.
@@ -26,3 +26,4 @@ type: project
 - Content density enforcement: max 6 bullets per slide, auto-split to continuation slides
 - frontend-slides standalone function for rapid diagram/content slides without full template
 - Not yet promoted to active commands dir
+- Note: The active `powerpoint-create.md` skill (in commands dir) was enhanced 2026-04-10 with mandatory 3-stage QA workflow (content + programmatic layout + visual). The programmatic layout QA uses python-pptx to check OOB, margins, tiny text, and real overlaps while filtering intentional text-on-shape layering.
