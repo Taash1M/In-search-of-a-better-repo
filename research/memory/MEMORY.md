@@ -8,7 +8,7 @@
 - [Daily Report](project_daily_report.md) — Weekly status for 8 projects, DOCX close-out + Excel carry-forward
 - [UBI Gold Graph](project_ubi_gold_graph.md) — Neo4j knowledge graph from 431 Gold layer tables, Fabric Lakehouse
 - [Presentation Beautification](project_pptx_beautify.md) — python-pptx skill with presets/palettes, mirrors docx_beautify; powerpoint-create.md enhanced with 3-stage QA (2026-04-10)
-- [LLM Gateway Usage Tracking](project_llm_usage_tracking.md) — DuckDB on VM, HNS enabled, PBI v4 direct Delta, 12h cron, infra health check + PBI health page (2026-04-13)
+- [LLM Gateway Usage Tracking](project_llm_usage_tracking.md) — DuckDB on VM, HNS enabled, PBI v4 direct Delta, 12h cron, infra health check + PBI health page (2026-04-13) **BUG: publish fails**
 - [Paperclip Orchestration](project_paperclip.md) — Multi-agent orchestration skill, A+ grade, 5 modules, cherry-picked from paperclipai/paperclip
 - [MSIS 579 Write-Up](project_579_writeup.md) — Two-pass case write-up workflow (v1→PhD review→v2), JTBD framework, seed for generic write-up skill
 - [RAG Skills](project_rag_skills.md) — doc-intelligence (3-tier) + rag-multimodal (RAGAS eval + hybrid tuning), 3 repos reviewed, A+ grade (2026-04-07)
@@ -33,7 +33,7 @@
 - Landing = Bronze in UBI architecture (no separate raw zone)
 
 ## Feedback
-- [PBI encoding & modelExtensions](feedback_pbi_underlyingtype.md) — underlyingType, modelExtensions inside config (not top-level), sections not pages, date32 slicer fix, ZIP method=0, measure replace-not-skip, preserve user positions
+- [PBI encoding & modelExtensions](feedback_pbi_underlyingtype.md) — underlyingType, modelExtensions inside config (not top-level), sections not pages, date32 slicer fix, ZIP method=0, NEVER inject DataModel cross-file, measure replace-not-skip, preserve user positions
 - [Auto-invoke skills](feedback_skill_invocation.md) — Always activate skills proactively, FYI user as you go; don't ask permission first
 - [RBAC via REST API](feedback_rbac_rest_api.md) — az role assignment create fails on Fluke AI sub; always use REST API PUT
 - [Arrow direction in docs](feedback_arrow_direction.md) — arrows point TOWARD the other section, not both same direction

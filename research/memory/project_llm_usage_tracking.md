@@ -49,6 +49,9 @@ LLM Gateway usage tracking system captures request logs from 4 LiteLLM gateway n
   - Bug fix (2026-04-13): DataModel CRC corruption — `_replace_entry` deflated method=0 (stored) entries. Now respects original compression method.
   - Bug fix (2026-04-13): README update now preserves user's manual PBI Desktop position tweaks (updates text only, not positions)
   - Verdict explanation textbox added to Page 5 bottom (y=585-715): HEALTHY/DEGRADED/UNHEALTHY definitions with triggers
+  - Bug fix (2026-04-13): Cyclic reference on llm_usage — injected DataModel had dim_date→health_checks relationship, TREATAS created cycle. Removed DataModel injection + CROSSFILTER. TREATAS alone is one-way, no cycle.
+  - Bug fix (2026-04-13): Removed DataModel injection entirely — import-mode base DataModel in DirectLake report caused publish failures (UnknownError). Script now only modifies Report/Layout.
+  - **BUG (2026-04-13): Publish to PBI Service still fails with UnknownError** after all DataModel/CROSSFILTER fixes. Report opens and refreshes locally in Desktop. Root cause unknown — may be that programmatic ZIP manipulation of Report/Layout corrupts internal state that Service validates but Desktop doesn't. Needs investigation: try (1) creating report natively in Desktop, (2) using PBI REST API to publish, (3) comparing ZIP structure byte-by-byte with a working publish.
   - Total: 21 modelExtensions measures (11 KPI + 6 HC + 5 Insight, minus 1 shared Total Requests)
 - **Backend Retrofit** (2026-04-13): Added `date_key` (int YYYYMMDD) + `etl_run_id` (correlation UUID) to health_checks Delta table; `correlation_id` to job_runs
   - Correlation flow: PowerShell `$CorrelationId` -> `ETL_CORRELATION_ID` env var -> both Python scripts

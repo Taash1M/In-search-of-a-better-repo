@@ -1,6 +1,6 @@
 ---
 name: PBI type encoding, modelExtensions placement, and formatInformation rules
-description: dataType 3 vs 6 (model-dependent), underlyingType 261=Double, format/currencyFormat must be null, Fabric table naming, modelExtensions inside config not top-level, sections not pages, date32 slicer fix, ZIP DataModel method=0, measure replace-not-skip, preserve user positions
+description: dataType 3 vs 6 (model-dependent), underlyingType 261=Double, format/currencyFormat must be null, Fabric table naming, modelExtensions inside config not top-level, sections not pages, date32 slicer fix, ZIP DataModel method=0, NEVER inject DataModel cross-file, measure replace-not-skip, preserve user positions
 type: feedback
 originSessionId: f4d03941-dd0b-44f2-bb99-51b65b072972
 ---
@@ -69,6 +69,15 @@ PBI combo charts use projections `Category`, `Column y`, `Line y`. The Extension
 The DataModel entry in .pbix ZIP files uses **method=0 (stored/uncompressed)**. Never deflate it. When replacing ZIP entries, check the local header's compression method at offset 8: if method=0, write raw bytes (compressed_size == uncompressed_size). If method=8, deflate. Deflating a stored entry corrupts the CRC and PBI won't open the file.
 
 **Why:** Discovered 2026-04-13 when DataModel injection from base file caused `BadZipFile: Bad CRC-32 for file 'DataModel'`. The `_replace_entry` helper always deflated, but the header still said method=0.
+
+## NEVER inject DataModel across .pbix files — CRITICAL
+Do NOT replace the DataModel entry in a DirectLake .pbix (has `Connections` file) with a DataModel from a different .pbix (e.g., an import-mode base file). PBI Desktop tolerates the mismatch, but **PBI Service rejects it during publish** (UnknownError). The DataModel has internal state (versions, column mappings, dataset references) tied to its original connection mode.
+
+Additionally, injecting a DataModel that contains extra relationships (e.g., dim_date → health_checks) can create **cyclic filter paths** with TREATAS DAX: TREATAS pushes health_checks → dim_date, and the injected relationship pushes dim_date → health_checks = cycle. Without the relationship, TREATAS works as a one-way virtual filter with no cycle and no need for CROSSFILTER.
+
+**Why:** Discovered 2026-04-13. Injecting base file DataModel (51323 bytes, import-mode) into DirectLake v2 caused: (1) cyclic reference during evaluation on llm_usage table, (2) publish to PBI Service failed with UnknownError even after adding CROSSFILTER to break cycles. Removing both the injection and CROSSFILTER fixed both issues locally. **BUG: Publish still fails (2026-04-13) — needs investigation.** May require rebuilding the report natively in PBI Desktop rather than programmatic ZIP manipulation.
+
+**How to apply:** Only modify `Report/Layout` in the ZIP. Never touch `DataModel`. If relationships are needed, add them in PBI Desktop on the target file directly or in the Fabric semantic model.
 
 ## modelExtensions measures — always replace, never skip
 When adding report-level measures to modelExtensions, use replace-or-add logic (overwrite existing measures by name). Do NOT skip measures that already exist — they may have stale DAX from a prior run. This is especially important for TREATAS-based cross-table measures that replaced direct CALCULATE filters.
