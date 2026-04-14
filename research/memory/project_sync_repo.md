@@ -19,7 +19,7 @@ Master sync repo for all Claude Code assets. Enables identical setups across mul
 - **Local clone**: `C:\Users\tmanyang\In-search-of-a-better-repo` (use for push — avoids OneDrive SSL issues)
 - **PROJECT_MEMORY**: In repo root (not in `~/.claude/projects/` — lives with the project)
 - **Created**: 2026-04-08
-- **Content**: 52 skills, 4 hooks, 30 memory files, 3 Python modules, 1 MCP server (PBI Semantic), sanitized settings.json
+- **Content**: 52 skills, 4 hooks, 30 memory files, 3 Python modules, 1 MCP server (PBI Semantic), sanitized settings.json, .mcp.json (2 servers: context7 + obsidian)
 
 ## Three Scripts
 

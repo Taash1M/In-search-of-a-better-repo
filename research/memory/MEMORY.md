@@ -8,11 +8,11 @@
 - [Daily Report](project_daily_report.md) — Weekly status for 8 projects, DOCX close-out + Excel carry-forward
 - [UBI Gold Graph](project_ubi_gold_graph.md) — Neo4j knowledge graph from 431 Gold layer tables, Fabric Lakehouse
 - [Presentation Beautification](project_pptx_beautify.md) — python-pptx skill with presets/palettes, mirrors docx_beautify; powerpoint-create.md enhanced with 3-stage QA (2026-04-10)
-- [LLM Gateway Usage Tracking](project_llm_usage_tracking.md) — DuckDB on VM, HNS enabled, PBI v4 direct Delta, 12h cron
+- [LLM Gateway Usage Tracking](project_llm_usage_tracking.md) — DuckDB on VM, HNS enabled, PBI v4 direct Delta, 12h cron, infra health check + PBI health page (2026-04-13)
 - [Paperclip Orchestration](project_paperclip.md) — Multi-agent orchestration skill, A+ grade, 5 modules, cherry-picked from paperclipai/paperclip
 - [MSIS 579 Write-Up](project_579_writeup.md) — Two-pass case write-up workflow (v1→PhD review→v2), JTBD framework, seed for generic write-up skill
 - [RAG Skills](project_rag_skills.md) — doc-intelligence (3-tier) + rag-multimodal (RAGAS eval + hybrid tuning), 3 repos reviewed, A+ grade (2026-04-07)
-- [AI BI Tool](project_ai_bi_tool.md) — Multi-agent BI tool, 8 phases + MCP metadata integration, 190 tests, 4 DOCX + 3 PPTX, 15 diagrams (2026-04-11)
+- [AI BI Tool](project_ai_bi_tool.md) — Multi-agent BI tool, 8 phases + 3-wave hardening (38 fixes), 386 tests/80% cov, 8 DOCX + 4 PPTX, GA-ready (2026-04-13)
 - [Alex B Fortive GL](project_alex_b_fortive_gl.md) — Fortive corporate GL (co 11/13) not in UBI pipeline; Gold view SQL prepared; DOCX report delivered (2026-04-06)
 - [Graphify Skill](project_graphify.md) — Knowledge graph skill based on safishamsi/graphify repo, project dir: Claude code\graphify (2026-04-06)
 - [Document Extraction Skill](project_doc_extract.md) — Unified doc-extract skill (ContextGem+RAG-Anything+agentic-doc), B+ 104/120 (2026-04-07)
@@ -22,7 +22,7 @@
 - [EM Leadership Forum](project_leadership_forum.md) — Bold Signal Light design, 3 PPTX + 3 HTML (animated), QA R2 complete, pending user review (2026-04-10)
 - [Q1 Start Deck](project_q1_start_deck.md) — Q1 Summary + Q2-Q4 Upcoming (donut chart, 11 initiative cards, Fabric callout), 3-stage QA passed (2026-04-10)
 - [PBI Semantic MCP](project_pbi_mcp.md) — FastMCP server for UBI PBI models, Phase 1 complete, metadata layer integrated into AI BI Tool (2026-04-11)
-- [Obsidian SecondBrain](project_obsidian.md) — Obsidian vault, PARA method, OneDrive-synced, community plugins configured (2026-04-11)
+- [Obsidian SecondBrain](project_obsidian.md) — Obsidian vault, PARA method, OneDrive-synced, 13 plugins, MCPVault MCP server configured (2026-04-12)
 
 ## UBI Platform Key Facts
 - **Repos**: AzureDataBricks (`C:\Users\tmanyang\AzureDataBricks`), ADF (`C:\Users\tmanyang\ADF`), Power BI UBI Curated Datasets
@@ -33,7 +33,7 @@
 - Landing = Bronze in UBI architecture (no separate raw zone)
 
 ## Feedback
-- [PBI underlyingType encoding](feedback_pbi_underlyingtype.md) — 261=Double, 518=DateTime; chart axes use type for formatting
+- [PBI encoding & modelExtensions](feedback_pbi_underlyingtype.md) — underlyingType, modelExtensions inside config (not top-level), sections not pages, date32 slicer fix, ZIP method=0, measure replace-not-skip, preserve user positions
 - [Auto-invoke skills](feedback_skill_invocation.md) — Always activate skills proactively, FYI user as you go; don't ask permission first
 - [RBAC via REST API](feedback_rbac_rest_api.md) — az role assignment create fails on Fluke AI sub; always use REST API PUT
 - [Arrow direction in docs](feedback_arrow_direction.md) — arrows point TOWARD the other section, not both same direction
@@ -77,6 +77,10 @@
 - **change-logger.py**: PostToolUse on Edit/Write/MultiEdit/Bash, logs to `~/.claude/critical_log_changes.csv`
 - **repo-sync.py**: PostToolUse on Edit/Write/MultiEdit, auto-copies skills/hooks/memory/MCPs/settings to sync repo (wired 2026-04-11). Redacts secrets in settings.json. Does NOT commit/push.
 - **Python path**: `python` not `python3` (Windows, Python 3.12)
+
+## MCP Servers (2 active — `~/.claude/.mcp.json`)
+- **context7**: `@upstash/context7-mcp@latest` — library/framework documentation lookup
+- **obsidian**: `@bitbonsai/mcpvault@latest` v0.11.0 — direct file access to Obsidian vault at `C:\Users\tmanyang\OneDrive - Fortive\Claude code\Obsidian` (no Obsidian app needed)
 
 ## Document Beautification Skill
 - **Project dir**: `C:\Users\tmanyang\OneDrive - Fortive\Claude code\Document Beautification\`

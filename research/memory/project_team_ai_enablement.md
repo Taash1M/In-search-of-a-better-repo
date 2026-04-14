@@ -2,8 +2,8 @@
 name: Team AI Enablement (Claude Code for Team)
 description: Claude Code deployment for 27 Fluke users across 4 nodes on Azure AI Foundry. 12 model deployments, LLM Gateway, Excel add-in onboarding. 3 new node2 users added 2026-04-07.
 type: project
+originSessionId: f4d03941-dd0b-44f2-bb99-51b65b072972
 ---
-
 ## Deployment Directory
 `C:\Users\tmanyang\OneDrive - Fortive\AI\Claude code deployment\`
 
@@ -49,7 +49,16 @@ Settings JSONs generated. Onboarding email DOCX created (2026-04-07): `user-comm
 - **Full script**: in `CLAUDE.md` under "User Onboarding Process"
 
 ## LLM Gateway Usage Tracking
-See [project_llm_usage_tracking.md](project_llm_usage_tracking.md). DuckDB on VM (`llm-usage-duckdb-vm`, Standard_B2ms, ~$5.27/mo), 12h cron schedule. All 4 gateway nodes on v5 in `flkdockerregistry` ACR.
+See [project_llm_usage_tracking.md](project_llm_usage_tracking.md). DuckDB on VM (`llm-usage-duckdb-vm`, Standard_B2ms, ~$5.27/mo), 12h cron schedule. All 4 gateway nodes on v5 in `flkdockerregistry` ACR. **Infrastructure health check added 2026-04-13** — 6 check categories, results to Delta, non-blocking step in ETL runbook.
+
+## Infrastructure Health Check (2026-04-13)
+- Runs as Step 3/6 of `Invoke-LLMUsageETL` runbook (same 12h schedule)
+- Checks: RG, AI Services, 12 model deployments, 25 RBAC users, 4 gateway web apps, Anthropic endpoint
+- Delta table: `delta/metadata/health_checks/` (28 columns)
+- Verdict: HEALTHY / DEGRADED / UNHEALTHY
+- Current state: 12 deployments (4 Opus + 4 Sonnet + 3 Haiku nodes + 1 shared Sonnet), 25 Azure AI User assignments, all gateways Running
+- **PBI Report**: 5-page DirectLake report (v2). Page 4 "Infrastructure Health" (18 visuals, 6 HC measures). Page 5 "Usage & Health Insights" (15 visuals, 5 cross-table TREATAS measures — combo chart requests vs latency, bar chart by verdict, KPI cards, verdict explanation notes). README lists all 5 pages. Full_date slicers rebuilt (MMM-dd-yyyy, underlying=519). 21 total modelExtensions measures.
+- **Correlation tracking**: `date_key` (YYYYMMDD) + `etl_run_id` (UUID) added to health_checks; `correlation_id` to job_runs. Backfill script deployed and run.
 
 ## Documents
 DeploymentPlan, EnterpriseArchitect, EndUserConfigGuide, per-node credential emails, Excel Quick Start Guide v3 (all DOCX). Memory: `CLAUDE.md` in deployment dir.

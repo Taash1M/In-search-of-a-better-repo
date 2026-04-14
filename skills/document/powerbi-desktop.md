@@ -362,6 +362,13 @@ Note: `config` is a **JSON string inside JSON** — must be serialized as a stri
 
 **IMPORTANT:** When modifying config, preserve ALL existing keys. Only modify the `modelExtensions` key.
 
+**CRITICAL:** `modelExtensions` must be placed inside this config object (which is a JSON string at `layout["config"]`), NOT as a top-level key on the layout itself. Writing `layout["modelExtensions"] = [...]` is a silent no-op — PBI ignores it and visuals show `Missing_References` errors. The correct pattern:
+```python
+config = json.loads(layout["config"])
+config["modelExtensions"] = [...]  # Add/modify measures here
+layout["config"] = json.dumps(config, separators=(",",":"), ensure_ascii=False)
+```
+
 ## Visual Container Patterns
 
 Every non-textbox visual requires THREE fields: `config`, `query`, and `dataTransforms`. Missing any of these causes visuals to show errors or blank content.
@@ -797,7 +804,39 @@ open('output.pbix', 'wb').write(result)
 20. **Measure `underlyingType` must be 261 (Double), NOT 518 (DateTime).** PBI encodes types as `(category << 8) | valueType`. Category 1 = Numbers, Type 5 = Double → 261. Category 2 = Temporal, Type 6 = DateTime → 518. Using 518 causes chart Y-axes to display as "h:mm:ssfff tt" (time format) instead of numeric values. Cards may appear correct because they format single values using the format string, but chart axes derive their scale/labels from underlyingType.
 21. **The `format` field in `formatInformation` is an enum.** PBI March 2026+ (v2.152+) rejects values like `"Currency"`, `"Percentage"`, `"WholeNumber"` with `Error converting value "Currency" to type 'Microsoft.PowerBI.Modeling.Contracts.Format'`. Omit the `format` field entirely — `formatString` alone (e.g. `"$#,##0.00"`) is sufficient for display.
 22. **`dataType` in modelExtensions depends on model type.** For DirectQuery/Composite models (with `DataModel` file — Fabric Lakehouse, SQL Server), use `dataType: 3` (Decimal). For live connection reports (with `Connections` file), use `dataType: 6`. Using `6` in DirectQuery models causes PBI to interpret measures as DateTime, making chart axes show "h:mm:ssfff tt" instead of numeric values. Cards appear correct because they format single values, but chart axes derive type from `dataType`.
-23. **Layout sizing: avoid overlapping visuals.** When arranging cards/charts, calculate positions arithmetically from a grid system. After generating, extract positions from the user's manually-adjusted .pbix to capture PBI Desktop's pixel-perfect alignment, then persist those positions back into the generator. PBI Desktop stores float positions (e.g. `12.644`) when users drag elements — round to whole pixels for cleaner code.
+23. **Layout sizing: always run a visual sanity check.** After building the layout, iterate every visual container and verify: (a) no visual overflows the page (`x+w <= PAGE_W`, `y+h <= PAGE_H`), (b) adjacent visuals have at least 4px gap (no overlap), (c) card/label text fits within card width (keep measure names under 16 chars for 200px cards). Use a grid-based layout system with documented Y-band allocations (see example below). After generating, open in PBI Desktop and visually confirm — text truncation, chart title overlap, and table column clipping are invisible to code checks.
+    ```python
+    # Layout sanity check — add after building layout, before serialize
+    for s in layout["sections"]:
+        for i, vc in enumerate(s.get("visualContainers", [])):
+            c = json.loads(vc.get("config", "{}"))
+            pos = c.get("layouts", [{}])[0].get("position", {})
+            x, y, w, h = pos.get("x", 0), pos.get("y", 0), pos.get("width", 0), pos.get("height", 0)
+            if x + w > PAGE_W + 5:
+                print(f"WARNING: visual {i} overflows right: x={x} w={w}")
+            if y + h > PAGE_H + 5:
+                print(f"WARNING: visual {i} overflows bottom: y={y} h={h}")
+    ```
+    **Layout grid pattern** — document Y-bands in a docstring at the top of each `build_page_*()` function:
+    ```python
+    def build_page_health():
+        """Layout grid (1280x720):
+            y=0-47:    Title banner
+            y=50-104:  Slicer panel
+            y=108-131: Explainer bar
+            y=136-207: KPI cards (6 x 200px, 8px gap)
+            y=214-393: Charts (2 side-by-side, 15px gap)
+            y=398-399: Separator
+            y=404-423: Section header
+            y=428-715: Detail table
+        """
+    ```
+24. **Pages are `sections`, NOT `pages`.** The layout JSON stores pages under `layout["sections"]`, not `layout["pages"]`. There is no `pages` key. Each section has `displayName`, `ordinal`, `visualContainers`, `config`, `width`, `height`. When adding a new page, append to `layout["sections"]` and set `ordinal` to the next sequential number.
+25. **`modelExtensions` lives inside `layout["config"]` (a JSON string), NOT at the layout top level.** When modifying an existing .pbix, you must: (1) parse the config string: `config = json.loads(layout["config"])`, (2) modify `config["modelExtensions"]`, (3) serialize back: `layout["config"] = json.dumps(config, separators=(",",":"), ensure_ascii=False)`. Writing to `layout["modelExtensions"]` (top level) is silently ignored by PBI Desktop — measures won't resolve and visuals show `Missing_References` errors with "Fix this" badges on every card/chart.
+26. **PyArrow `date32` causes empty PBI DirectLake slicers.** When writing dimension tables to Delta Lake, Python `datetime.date` objects infer as PyArrow `date32` type. Fabric Lakehouse imports `date32` as a Date type, but DirectLake slicers may show empty if the report column expects a string. Fix: convert dates to strings with `.strftime("%Y-%m-%d")` before writing, and use explicit `pa.schema([..., pa.field("full_date", pa.string())])` with `schema_mode="overwrite"` to force the Delta schema update.
+27. **PBI Desktop overrides `underlyingType` from Fabric semantic model.** Even if you set `underlyingType: 1` (text) in a slicer's dataTransforms, PBI Desktop will override it to match the semantic model column type (e.g., 519 for DateTime) when connecting. **Strategy:** Set `underlying` to match what PBI will impose (519), and use `formatString` / `columnProperties` to control the display format (e.g., `"MMM-dd-yyyy"`). This prevents silent format conflicts.
+28. **Slicer display format via `columnProperties`.** To override slicer item formatting, add `columnProperties` to the singleVisual config: `"columnProperties": {"table.column": {"displayName": "Label", "formatString": "MMM-dd-yyyy"}}`. Also pass the same format to the `_dt_select_column` `fmt` parameter in dataTransforms. Both are needed — `columnProperties` for the visual, `dataTransforms.selects.format` for data binding.
+29. **Capture user's manual PBI Desktop positions.** When a user adjusts visual positions/sizes in PBI Desktop, extract positions from the saved .pbix (parse ZIP -> Report/Layout -> sections -> visualContainers -> config -> layouts[0].position). Update the generation script with exact `{x, y, width, height, z}` values. This prevents regeneration from overwriting the user's preferred layout. Always document the Y-band grid in a docstring.
 
 ## PBI Desktop Local Analysis Services Instance
 
@@ -962,6 +1001,16 @@ Aggregation function codes for query Select:
 2. Fix: Set `format` and `currencyFormat` to `null`. Keep `formatString` for display. Safe pattern: `{"formatString": "$#,##0.00", "thousandSeparator": true, "currencyFormat": null, "dateTimeCustomFormat": null}`.
 3. If error mentions `CurrencyFormat`, the `currencyFormat` field has a string value — set to `null`.
 4. If error mentions `Format`, the `format` field has a string value — remove it or set to `null`.
+
+### `Missing_References` error — cards/charts show "Fix this" but table visuals work
+1. **Most likely cause:** `modelExtensions` was written to `layout["modelExtensions"]` (top level) instead of inside `layout["config"]` (JSON string → parsed → `modelExtensions`). Table visuals work because they reference columns directly; cards/charts fail because they reference report-level measures that PBI can't find at the wrong location.
+2. Fix: Parse `layout["config"]` as JSON, add measures to `config["modelExtensions"]`, serialize back to string, remove any top-level `layout["modelExtensions"]` key. See Gotcha #25.
+3. Verify: After rebuild, extract layout and confirm `json.loads(layout["config"]).get("modelExtensions")` contains your measures, and `layout.get("modelExtensions")` is `None`.
+
+### DirectLake slicer shows empty despite data existing
+1. **Most likely cause:** The Delta Lake column was written as PyArrow `date32` type (from Python `datetime.date` objects), but the PBI DirectLake slicer expects a string. Fabric imports `date32` as Date type, and the slicer filter binding doesn't match.
+2. Fix: Convert dates to strings with `.strftime("%Y-%m-%d")` before writing to Delta. Use explicit PyArrow schema with `pa.field("column_name", pa.string())` and pass `schema_mode="overwrite"` to `write_deltalake()` to force schema update.
+3. Verify: Read the Delta table back and confirm `df["column_name"].dtype` is `object` (string), not `datetime64` or `date32`.
 
 ### Measure evaluation errors
 1. Verify ALL measures are self-contained (no bracket refs to other report-level measures) — see Critical section below.
