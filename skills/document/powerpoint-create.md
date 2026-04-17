@@ -5,6 +5,21 @@ description: "Use this skill any time a .pptx file is involved — creating slid
 
 # PowerPoint Creation & Beautification Skill
 
+## Decision Tree
+
+```
+What do you need?
+├─ Read/extract content from .pptx → markitdown (no creation needed)
+├─ Edit an existing presentation → Unpack XML → Edit → Repack (§Editing Existing)
+├─ Create a new deck from scratch
+│   ├─ Node.js available → PptxGenJS (§PptxGenJS Primary)
+│   └─ Python only → python-pptx (§python-pptx Alternative)
+├─ Add architecture/data flow diagrams → azure-diagrams sub-skill (generate_for_pptx)
+├─ Dark-themed technical slide → Pattern 13: Dark Architecture Diagram
+├─ Design exploration (multiple concepts) → 3 divergent layout proofs (§Design Exploration)
+└─ QA an existing deck → 3-stage workflow: content → programmatic layout → visual (§QA Workflow)
+```
+
 ## Quick Reference
 
 | Task | Tool | Guide |
