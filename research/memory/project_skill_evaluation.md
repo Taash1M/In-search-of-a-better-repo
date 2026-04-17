@@ -1,6 +1,6 @@
 ---
-name: Skill Evaluation (mattpocock/skills)
-description: Evaluated 19 skills from mattpocock/skills repo — extracted 6 patterns, upgraded 4 skills, installed 3 new skills, added YAML frontmatter to 5 skills (2026-04-16)
+name: Skill Evaluation (mattpocock/skills + Cocoon-AI)
+description: Evaluated mattpocock/skills (19 skills) + Cocoon-AI/architecture-diagram-generator — semantic color system added to 3 skills, dark arch pattern for PPTX, 6 patterns extracted. Skill Judge re-eval: azure-diagrams A+, docx-beautify A, ubi-dev A, powerpoint-create B+ (2026-04-16)
 type: project
 originSessionId: f4d03941-dd0b-44f2-bb99-51b65b072972
 ---
@@ -76,3 +76,43 @@ Used `skill-reviewer` agent from `claude-plugins-official/plugins/plugin-dev/` t
 - Organization (clear phases, templates, anti-patterns)
 
 Key finding: the 3 highest-rated skills all use progressive disclosure. Our skills that exceed 500 lines should split content into reference files.
+
+## Cocoon-AI Evaluation (2026-04-16)
+
+**Repo:** `https://github.com/Cocoon-AI/architecture-diagram-generator` (3.1k stars, MIT)
+**Grade:** B- (72/100) — well-crafted for scope but far simpler than our existing skills
+**Verdict:** No new skill needed. Cherry-picked enhancements into 3 existing skills.
+**Report:** `C:\Users\tmanyang\OneDrive - Fortive\Claude code\Skill Evaluation\cocoon-ai-architecture-diagram-evaluation.md`
+
+### Changes Made
+
+| Target Skill | Enhancement | Priority |
+|-------------|-------------|----------|
+| azure-diagrams.md (v1.2) | 8-category semantic service color system (auto-color by icon key) | P1 |
+| docx-beautify.md (v7) | Diagram category color map — Mermaid classDef + D2 style definitions for 8 categories | P2 |
+| powerpoint-create.md | Pattern 13: Dark Architecture Diagram — dark bg, semantic colors, Consolas font, drawn on-slide | P2 |
+
+**Key pattern adopted:** Semantic category coloring (compute=green, data=violet, AI=cyan, security=rose, network=amber, integration=blue, monitor=purple, platform=slate). Consistent across all 3 skills for cross-format diagram coherence.
+
+## Skill Judge 8-Dimension Re-Evaluation (2026-04-16)
+
+**Report:** `C:\Users\tmanyang\OneDrive - Fortive\Claude code\Skill Evaluation\skill-judge-4skills-evaluation.md`
+
+| Skill | Pre-Fix Score | Post-Fix Score | Grade | Key Fix |
+|---|---|---|---|---|
+| azure-diagrams | 108/120 | **111/120** | **A+** | Troubleshooting decision tree + NEVER quick-reference list |
+| docx-beautify | 106/120 | **108/120** | **A** | Quick-start decision tree; diagram split still needed for A+ |
+| powerpoint-create | 100/120 | 100/120 | **B+** | Needs progressive disclosure split (~700 core + API ref + patterns ref) |
+| ubi-dev | 103/120 | **106/120** | **A** | Task decision tree + 10 trigger keywords; split still needed for A+ |
+
+### Tier 1 Quick Wins Implemented (5/5 complete)
+1. azure-diagrams: Troubleshooting decision tree (5-branch) after Quality Gate
+2. azure-diagrams: NEVER quick-reference list (6 rules) at top of Gotchas
+3. docx-beautify: Quick-start decision tree (5-branch) before Architecture
+4. ubi-dev: Top-level task decision tree (7-branch) after Access Control
+5. ubi-dev: Expanded description with 10 trigger keywords
+
+### Tier 2 Remaining (Progressive Disclosure Splits)
+- powerpoint-create: Core (~700) + API ref + Patterns ref → A
+- ubi-dev: Core (~800) + TDD ref + ADF ref → A+
+- docx-beautify: Extract diagram sections (~400 lines) → A+

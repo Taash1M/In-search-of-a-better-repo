@@ -30,6 +30,17 @@ md_to_docx("input.md", "output.docx", preset="technical", cover_page=True, autho
 
 If the module is not importable (different working directory), copy the needed functions inline.
 
+## Quick-Start Decision Tree
+
+```
+What do you need?
+├─ Create a new document from scratch → create_document(preset=...) + add_*() functions
+├─ Convert Markdown to DOCX → md_to_docx("input.md", "output.docx", preset=..., cover_page=True)
+├─ Beautify an existing DOCX → Open with python-docx, apply preset styles, re-save
+├─ Add diagrams to a document → Use azure-diagrams sub-skill (generate_for_docx)
+└─ Format tables professionally → add_professional_table() with OXML shading/borders
+```
+
 ## Architecture
 
 ```
@@ -1034,6 +1045,55 @@ flowchart TD
 - Each level gets a distinct color class
 - Leaf nodes use lighter/grayer styling to visually recede
 - `width_inches=5.0-5.5` for vertical flowcharts
+
+---
+
+## Diagram Category Color System (v7 — from Cocoon-AI evaluation)
+
+When generating Mermaid or D2 diagrams with service/infrastructure components, use these consistent category colors. These match the azure-diagrams semantic service categories and the powerpoint-create dark architecture pattern for cross-format consistency.
+
+### Mermaid classDef Definitions
+
+```
+classDef compute fill:#E8F5E9,stroke:#2E7D32,stroke-width:2px,color:#1B5E20
+classDef data fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#311B92
+classDef ai fill:#E0F7FA,stroke:#00838F,stroke-width:2px,color:#004D40
+classDef security fill:#FCE4EC,stroke:#C62828,stroke-width:2px,color:#B71C1C
+classDef network fill:#FFF3E0,stroke:#E65100,stroke-width:2px,color:#BF360C
+classDef integration fill:#E3F2FD,stroke:#1565C0,stroke-width:2px,color:#0D47A1
+classDef monitor fill:#F3E5F5,stroke:#6A1B9A,stroke-width:2px,color:#4A148C
+classDef platform fill:#ECEFF1,stroke:#455A64,stroke-width:2px,color:#263238
+```
+
+### D2 Style Definitions
+
+```d2
+classes: {
+  compute: { style: { fill: "#E8F5E9"; stroke: "#2E7D32"; border-radius: 8; font-size: 14 } }
+  data:    { style: { fill: "#EDE7F6"; stroke: "#5E35B1"; border-radius: 8; font-size: 14 } }
+  ai:      { style: { fill: "#E0F7FA"; stroke: "#00838F"; border-radius: 8; font-size: 14 } }
+  security:{ style: { fill: "#FCE4EC"; stroke: "#C62828"; border-radius: 8; font-size: 14 } }
+  network: { style: { fill: "#FFF3E0"; stroke: "#E65100"; border-radius: 8; font-size: 14 } }
+  integration:{ style: { fill: "#E3F2FD"; stroke: "#1565C0"; border-radius: 8; font-size: 14 } }
+  monitor: { style: { fill: "#F3E5F5"; stroke: "#6A1B9A"; border-radius: 8; font-size: 14 } }
+  platform:{ style: { fill: "#ECEFF1"; stroke: "#455A64"; border-radius: 8; font-size: 14 } }
+}
+```
+
+### Category Assignment Guide
+
+| Category | When to Use | Example Services |
+|----------|-------------|-----------------|
+| `compute` | Web servers, APIs, functions, VMs, containers | App Service, Functions, AKS, Container Apps |
+| `data` | Databases, storage, warehouses, caches | Cosmos DB, SQL, Redis, Databricks, ADLS |
+| `ai` | ML models, search, bots, cognitive | Azure OpenAI, AI Search, Bot Services |
+| `security` | Auth, secrets, firewalls, identity | Key Vault, Entra, Sentinel, WAF |
+| `network` | VNets, load balancers, CDN, DNS | Front Door, Load Balancer, VNet |
+| `integration` | Messaging, workflows, API gateways | Service Bus, Logic Apps, Event Grid, APIM |
+| `monitor` | Observability, logging, alerts | App Insights, Log Analytics |
+| `platform` | Subscriptions, resource groups, registries | Resource Groups, Container Registry, Power BI |
+
+**Rule:** Apply these categories automatically when generating architecture/infrastructure diagrams. For non-infrastructure diagrams (business process, org charts, data flow), use the existing ad-hoc classDef approach.
 
 ---
 

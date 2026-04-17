@@ -345,6 +345,27 @@ For the full registry, call `list_icons()` or check `ICON_REGISTRY` in the modul
 
 ---
 
+## Semantic Service Categories (v1.2 — from Cocoon-AI evaluation)
+
+When no explicit `color` is set on a node, the module auto-assigns a category color based on the icon key. This makes diagrams instantly scannable — databases are always violet, security is always rose, etc.
+
+| Category | Fill (Light) | Stroke | Icon Keys |
+|----------|-------------|--------|-----------|
+| **Compute** | `#E8F5E9` | `#2E7D32` | `app_services`, `function_apps`, `virtual_machine`, `kubernetes`, `container_apps`, `container_instances`, `app_service_plan` |
+| **Data/Storage** | `#EDE7F6` | `#5E35B1` | `cosmos_db`, `sql_database`, `cache_redis`, `mysql`, `postgresql`, `storage_accounts`, `databricks`, `synapse`, `event_hubs` |
+| **AI/ML** | `#E0F7FA` | `#00838F` | `azure_openai`, `ai_services`, `cognitive_search`, `ai_search`, `bot_services`, `machine_learning` |
+| **Security/Identity** | `#FCE4EC` | `#C62828` | `key_vaults`, `sentinel`, `firewall`, `waf`, `nsg`, `users`, `entra_connect`, `managed_identities`, `app_registrations` |
+| **Networking** | `#FFF3E0` | `#E65100` | `virtual_networks`, `load_balancers`, `front_door`, `cdn_profiles` |
+| **Integration** | `#E3F2FD` | `#1565C0` | `service_bus`, `logic_apps`, `event_grid`, `app_configuration`, `api_management` |
+| **Monitoring** | `#F3E5F5` | `#6A1B9A` | `application_insights`, `log_analytics` |
+| **Platform** | `#ECEFF1` | `#455A64` | `resource_groups`, `subscriptions`, `static_apps`, `container_registries`, `power_bi` |
+
+**How it works:** If a node uses `icon="cosmos_db"` and no explicit `color`, the node box/fallback will use the Data/Storage palette (violet fill + stroke). If you set an explicit `color`, that overrides the category color.
+
+**Cross-skill consistency:** These same category colors are used in docx-beautify Mermaid `classDef` and D2 `style` blocks, and in powerpoint-create's dark architecture slide pattern. This ensures diagrams look consistent across all output formats.
+
+---
+
 ## Fluke Brand Colors
 
 Available via `COLORS` dict:
@@ -425,9 +446,28 @@ embed into document
 
 **This quality gate applies to ALL callers**: docx-beautify, powerpoint-create, ai-ucb-docs, and any future skill that generates diagrams.
 
+### Troubleshooting Decision Tree
+
+```
+Diagram looks wrong?
+├─ Icons missing/fallback boxes → Pre-validate icon keys (G9), check ICON_REGISTRY
+├─ Text overlapping → Increase node spacing (min spacing table above), shorten labels to ≤15 chars
+├─ Arrows through icons → Increase shrinkA/shrinkB ≥30, add curve offset
+├─ Diagram too small/large → Wrong output_preset — match to target format (G1)
+└─ Colors inconsistent → Use semantic service categories — auto-color by icon key
+```
+
 ---
 
 ## Gotchas & Rules
+
+### NEVER List (Quick Reference)
+- **NEVER** hardcode `figsize` — always use `output_preset`
+- **NEVER** embed a diagram without visually inspecting the PNG first
+- **NEVER** use duplicate node labels in the same diagram
+- **NEVER** skip the Quality Gate checks — even for "quick" diagrams
+- **NEVER** use icon keys without pre-validating against `ICON_REGISTRY`
+- **NEVER** exceed 15 characters in node labels — use `sublabel` for details
 
 ### G1: Always use output_preset for sizing
 Never hardcode `figsize` — always use the preset system so diagrams fit their target format.
@@ -477,3 +517,5 @@ Plus MSYS2 64-bit cairo DLLs at `C:\Users\tmanyang\tools\cairo-dlls\` (38 DLLs f
 |---------|------|---------|
 | 1.0.0 | 2026-04-06 | Initial release — icon registry, 4 diagram types, 5 output presets, docx/pptx integration |
 | 1.1.0 | 2026-04-06 | Added `data_factory`/`adf`, `oracle_database` icons. Fixed text overlap (spacing 2.0→2.6, label font reduced, arrow shrink 25→30). Added mandatory Quality Gate with pre/post-generation checks (G9, G10). |
+| 1.2.0 | 2026-04-16 | Added semantic service categories (8 categories, auto-color by icon key). Sourced from Cocoon-AI architecture-diagram-generator evaluation. Cross-skill color consistency with docx-beautify and powerpoint-create. |
+| 1.2.1 | 2026-04-16 | Added troubleshooting decision tree and NEVER quick-reference list. Skill-judge fixes for A+ rating. |

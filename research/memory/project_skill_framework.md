@@ -82,7 +82,7 @@ Cherry-picked from 5 repos: ContextGem (Apache 2.0), Taash1M/ContextGem fork, RA
 |---|---|---|
 | `azure-diagrams.md` | Architecture/data flow/landscape diagrams with real Azure SVG icons via cairosvg + matplotlib | 2026-04-06 |
 
-Module: `azure_diagrams.py` v1.1 in `Document Beautification\`. Called by docx-beautify, powerpoint-create, ai-ucb-docs. 5 output presets (docx portrait/landscape, pptx full/half, standalone). 78+ Azure icon registry (incl. data_factory, oracle_database). Mandatory Quality Gate: every diagram must be visually inspected for missing icons, text overlap, distortion, and arrow collisions before embedding. All 3 caller skills updated with quality gate reference (2026-04-06).
+Module: `azure_diagrams.py` v1.2.1 in `Document Beautification\`. Called by docx-beautify, powerpoint-create, ai-ucb-docs. 5 output presets (docx portrait/landscape, pptx full/half, standalone). 78+ Azure icon registry (incl. data_factory, oracle_database). Mandatory Quality Gate: every diagram must be visually inspected for missing icons, text overlap, distortion, and arrow collisions before embedding. All 3 caller skills updated with quality gate reference (2026-04-06). v1.2: Added 8-category semantic service colors (Cocoon-AI source, 2026-04-16). v1.2.1: Troubleshooting decision tree + NEVER list → A+ grade (2026-04-16).
 
 **AI UCB Reference Files (7, in commands/ai-ucb/):**
 `archetypes.md`, `pricing.md` (+ live API validation), `governance.md`, `infra-templates.md`, `pipeline-templates.md`, `frontend-templates.md` (+ security hardening), `doc-templates.md` (+ ADR + Model Card)
@@ -119,7 +119,17 @@ Source: Review of github.com/tobihagemann/turbo (64 markdown skill files). Six p
 5. **Don't-skip rules** — Explicit anti-shortcut rules section. Applied to: ubi-dev.md (10 rules), pptx-beautify.md (10 rules), docx-beautify.md (8 rules)
 6. **Session review / lesson extraction** — Priority-ranked routing to skill files, PROJECT_MEMORY, or auto memory. Created: session-review.md
 
-## Skill Judge Evaluation (2026-03-12)
+## Skill Judge Evaluations
+
+### 2026-03-12 (Initial)
 - Report: `C:\Users\tmanyang\Claude\deliverebles\skill-judge-evaluation-report.md`
 - Top: powerbi-desktop (A, 108), ubi-dev (B, 102), fluke-ai (B, 97)
 - Need trimming: excel-create (D, 83 — 65% redundant), powerpoint-create (D, 75 — 70% redundant)
+
+### 2026-04-16 (Re-Assessment — 4 skills)
+- Report: `C:\Users\tmanyang\OneDrive - Fortive\Claude code\Skill Evaluation\skill-judge-4skills-evaluation.md`
+- azure-diagrams: **A+ (111/120)** — troubleshooting tree + NEVER list added
+- docx-beautify: **A (108/120)** — quick-start tree added; diagram split needed for A+
+- ubi-dev: **A (106/120)** — task decision tree + trigger keywords added; file split needed for A+
+- powerpoint-create: **B+ (100/120)** — up from D (75); file split needed for A
+- Tier 2 remaining: progressive disclosure splits for all 3 non-A+ skills

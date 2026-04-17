@@ -1141,6 +1141,115 @@ slide.addText("— Sarah Chen, VP of Analytics", {
 });
 ```
 
+#### Pattern 13: Dark Architecture Diagram (from Cocoon-AI evaluation)
+
+Dark-background slide with semantically colored component boxes, connecting arrows, and optional boundary groups. For simple architectures (3-8 nodes), draws directly on the slide instead of embedding a PNG. Premium "tech keynote" feel.
+
+**When to use:** Technical deep-dives, engineering presentations, demo slides. Not for executive audiences who expect light backgrounds.
+
+**Category colors (match azure-diagrams and docx-beautify):**
+
+| Category | Fill | Stroke | Text |
+|----------|------|--------|------|
+| Compute | `1A3B2A` | `34D399` | `E8F5E9` |
+| Data | `2A1A3B` | `A78BFA` | `EDE7F6` |
+| AI/ML | `0A3B3B` | `22D3EE` | `E0F7FA` |
+| Security | `3B1A2A` | `FB7185` | `FCE4EC` |
+| Networking | `3B2A0A` | `FBBF24` | `FFF3E0` |
+| Integration | `0A2A3B` | `60A5FA` | `E3F2FD` |
+
+```javascript
+slide.background = { color: "0D1117" };
+
+// Title
+slide.addText("System Architecture", {
+  x: 0.5, y: 0.2, w: 9, h: 0.6,
+  fontSize: 24, bold: true, color: "F5F5F7", fontFace: "Consolas", margin: 0
+});
+slide.addText("Production Environment", {
+  x: 0.5, y: 0.75, w: 9, h: 0.3,
+  fontSize: 12, color: "94A3B8", fontFace: "Consolas", margin: 0
+});
+
+// Boundary box (dashed region)
+slide.addShape(pres.shapes.RECTANGLE, {
+  x: 0.3, y: 1.2, w: 9.4, h: 4.0,
+  fill: { color: "FBBF24", transparency: 95 },
+  line: { color: "FBBF24", width: 1, dashType: "dash" }
+});
+slide.addText("Azure Subscription", {
+  x: 0.5, y: 1.3, w: 3, h: 0.3,
+  fontSize: 10, color: "FBBF24", fontFace: "Consolas", margin: 0
+});
+
+// Helper: draw one component box
+function addComponent(slide, label, sublabel, x, y, fill, stroke, textColor) {
+  const w = 2.2, h = 1.1;
+  slide.addShape(pres.shapes.ROUNDED_RECTANGLE, {
+    x, y, w, h, rectRadius: 0.06,
+    fill: { color: fill }, line: { color: stroke, width: 1.5 }
+  });
+  slide.addText(label, {
+    x, y: y + 0.25, w, h: 0.35,
+    fontSize: 13, bold: true, color: textColor, align: "center", fontFace: "Consolas", margin: 0
+  });
+  slide.addText(sublabel, {
+    x, y: y + 0.6, w, h: 0.3,
+    fontSize: 10, color: "94A3B8", align: "center", fontFace: "Consolas", margin: 0
+  });
+}
+
+// Components (category colored)
+addComponent(slide, "App Service", "FastAPI :8000", 0.7, 2.5, "1A3B2A", "34D399", "E8F5E9");   // compute
+addComponent(slide, "Azure OpenAI", "Sonnet 4.6",   3.9, 2.5, "0A3B3B", "22D3EE", "E0F7FA");   // ai
+addComponent(slide, "Cosmos DB", "Sessions",         7.1, 2.5, "2A1A3B", "A78BFA", "EDE7F6");   // data
+
+// Connection arrows (gray, subtle)
+slide.addShape(pres.shapes.LINE, {
+  x: 2.9, y: 3.05, w: 1.0, h: 0,
+  line: { color: "64748B", width: 1.5 }
+});
+slide.addText("REST API", {
+  x: 2.9, y: 2.75, w: 1.0, h: 0.25,
+  fontSize: 8, color: "94A3B8", align: "center", fontFace: "Consolas", margin: 0
+});
+slide.addShape(pres.shapes.LINE, {
+  x: 6.1, y: 3.05, w: 1.0, h: 0,
+  line: { color: "64748B", width: 1.5 }
+});
+slide.addText("Sessions", {
+  x: 6.1, y: 2.75, w: 1.0, h: 0.25,
+  fontSize: 8, color: "94A3B8", align: "center", fontFace: "Consolas", margin: 0
+});
+
+// Legend (bottom-left)
+const legendY = 4.5;
+const cats = [
+  { label: "Compute", fill: "1A3B2A", stroke: "34D399" },
+  { label: "AI/ML", fill: "0A3B3B", stroke: "22D3EE" },
+  { label: "Data", fill: "2A1A3B", stroke: "A78BFA" },
+];
+for (let i = 0; i < cats.length; i++) {
+  const lx = 0.7 + i * 2.0;
+  slide.addShape(pres.shapes.ROUNDED_RECTANGLE, {
+    x: lx, y: legendY, w: 0.3, h: 0.2, rectRadius: 0.03,
+    fill: { color: cats[i].fill }, line: { color: cats[i].stroke, width: 1 }
+  });
+  slide.addText(cats[i].label, {
+    x: lx + 0.4, y: legendY, w: 1.2, h: 0.2,
+    fontSize: 9, color: "94A3B8", fontFace: "Consolas", valign: "middle", margin: 0
+  });
+}
+```
+
+**Rules for dark architecture slides:**
+- Use `Consolas` font (monospace = technical authority)
+- Max 2 line colors: `64748B` for data flow, `FB7185` dashed for auth flow
+- Boundary boxes: 95% transparent fill + dashed stroke
+- Component boxes: dark fill + bright stroke (never bright fill + dark text)
+- Connection labels: 8pt gray, above the line
+- Keep to 3-8 components; beyond that, use azure-diagrams PNG embed instead
+
 ### Spacing Rules
 
 - **0.5" minimum margins** from all slide edges

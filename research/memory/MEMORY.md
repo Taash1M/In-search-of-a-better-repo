@@ -5,7 +5,7 @@
 - [AI Use Case Builder](project_ai_use_case_builder.md) — v2.0, 21 skill files all A+ grade, comprehensive quality upgrade complete (2026-04-07)
 - [Team AI Enablement](project_team_ai_enablement.md) — Claude Code for 27 users, 4 nodes (3 new node2 users 2026-04-07), Azure AI Foundry, LLM Gateway tracking
 - [Skill Framework](project_skill_framework.md) — 40 skills (was 37), +3 new (qa-session, github-triage, ubiquitous-language), 6 patterns extracted, 5 frontmatter fixes (2026-04-16)
-- [Skill Evaluation](project_skill_evaluation.md) — mattpocock/skills 19-skill review, 6 patterns extracted+implemented, 3 installed, evaluation report (2026-04-16)
+- [Skill Evaluation](project_skill_evaluation.md) — mattpocock/skills + Cocoon-AI reviews, semantic colors, Skill Judge re-eval: azure-diagrams A+, docx-beautify A, ubi-dev A, pptx B+ (2026-04-16)
 - [Daily Report](project_daily_report.md) — Weekly status for 8 projects, DOCX close-out + Excel carry-forward
 - [UBI Gold Graph](project_ubi_gold_graph.md) — Neo4j knowledge graph from 431 Gold layer tables, Fabric Lakehouse
 - [Presentation Beautification](project_pptx_beautify.md) — python-pptx skill; powerpoint-create.md: 3-stage QA, add_picture_fit(), Veritas visual quality standards + proven patterns (2026-04-14)

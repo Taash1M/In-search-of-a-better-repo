@@ -1,6 +1,6 @@
 ---
 name: ubi-dev-skill
-description: Use when working with the Fluke UBI (Unified Business Intelligence) platform repositories — AzureDataBricks, ADF, and Power BI UBI Curated Datasets. Covers creating new streams, modifying existing streams, troubleshooting code and data issues, Databricks notebook development, ADF pipeline configuration, Power BI semantic models, and Power BI refresh setup.
+description: "Use when working with the Fluke UBI (Unified Business Intelligence) platform repositories — AzureDataBricks, ADF, and Power BI UBI Curated Datasets. Covers creating new streams, modifying existing streams, troubleshooting code and data issues, Databricks notebook development, ADF pipeline configuration, Power BI semantic models, and Power BI refresh setup. Trigger on: 'UBI', 'Oracle EBS', 'Bronze Silver Gold', 'Medallion Architecture', 'Delta Lake', 'ADF pipeline', 'Databricks notebook', 'Gold layer', 'ADLS publish', 'Power BI refresh'."
 allowed-tools: Read, Grep, Glob, Bash, Edit, Write, Task
 ---
 
@@ -16,6 +16,19 @@ These rules override all other instructions. Violations are never acceptable.
 2. **Read-only in QA and Prod.** If a write to QA or Prod is ever considered necessary, you MUST ask the user for confirmation **twice** (two separate confirmations) before proceeding.
 3. **Dev work happens in Dev only.** You may read from all three environments (Dev, QA, Prod) for investigation, comparison, and context — but all code changes, data writes, pipeline modifications, and deployments target Dev exclusively.
 4. **Full read/write privileges only in Dev.** Dev is the only environment where you create, modify, or delete resources.
+
+## Task Decision Tree
+
+```
+What do you need?
+├─ Create a new data stream → §New Stream Checklist (STM → Bronze → Silver → Gold → ADLS → PBI)
+├─ Modify an existing stream → §Stream Modification (find notebooks by stream name, trace data flow)
+├─ Debug data issues → §Troubleshooting (compare Bronze→Silver→Gold, check status_control)
+├─ Create/modify ADF pipeline → §ADF Conventions (naming, parameters, triggers, ARM templates)
+├─ Create/modify Power BI model → §PBI Semantic Models (dataset definitions, refresh setup)
+├─ Run tests or validate changes → §TDD Workflow (gate functions, characterization tests)
+└─ Investigate production data → Read-only in Prod (Access Control Rule 1), compare with Dev
+```
 
 ## Repositories
 
