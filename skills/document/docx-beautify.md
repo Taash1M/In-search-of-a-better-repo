@@ -860,6 +860,183 @@ add_paragraph_border(callout, style="single", width_pt=1.5, color="DC3545", spac
 
 ---
 
+## Diagram Visual Quality Standards
+
+These rules apply to every generated diagram (D2, Mermaid, matplotlib) embedded in a document. They elevate diagrams from "functional" to "consulting-grade."
+
+### Node Shape Variety
+
+Default diagrams use rectangles for everything — flat, monotonous. Use shape semantics:
+
+| Concept | Shape | D2 | Mermaid |
+|---------|-------|----|---------| 
+| Agent / autonomous component | Hexagon | `shape: hexagon` | `{{Agent Name}}` |
+| Decision / gate | Diamond | `shape: diamond` | `{Decision?}` |
+| Process / step | Rounded rectangle | `shape: rectangle` | `[Process]` or `(Process)` |
+| Data store / database | Cylinder | `shape: cylinder` | `[(Database)]` |
+| External system / user | Person or oval | `shape: person` | `([User])` |
+
+**Rule:** Diagrams with 4+ node types MUST use at least 2 distinct shapes.
+
+### Layered Zones for Architecture
+
+Show system layers (UI, API, Services, Data) as horizontal bands with labeled headers. D2 nested containers with distinct `style.fill` per zone. Zone labels 14pt+ bold.
+
+### Connection Line Discipline
+
+| Property | Bad (default) | Good (target) |
+|----------|--------------|---------------|
+| Stroke width | 2-3px | 1-1.5px |
+| Color | Multiple bright | Single muted gray (`#666666`) |
+| Arrow head | Large filled | Small, subtle |
+
+**Rule:** Connections are secondary — they guide the eye but never dominate. Max 2 line colors per diagram.
+
+### Color Discipline
+
+- **Max 3 accent colors** per diagram + neutrals (white, gray, black)
+- **Light fills** (`#E8xxxx`, `#F0xxxx`) with dark borders and text — never dark fill + dark text
+- **Semantic color**: Green = done, Blue = active, Yellow = pending, Red = error, Purple = AI/special
+- **Border 40-60% darker** than fill (e.g., fill `#E8F0FE`, border `#2C4F6E`)
+
+### Whitespace and Padding
+
+| Parameter | Minimum | D2 | Mermaid |
+|-----------|---------|----|---------| 
+| Outer padding | 40-60px | `--pad 60` | `%%{init: {'flowchart': {'padding': 20}}}%%` |
+| Node spacing | 40px+ | `grid-gap: 40` | `nodeSpacing: 50, rankSpacing: 50` |
+| Content fill ratio | 60-70% | — | — |
+
+**Rule:** If a diagram fills >75% of its area with shapes/lines, it's too dense. Add spacing or split.
+
+### Width Targets for DOCX
+
+Standard DOCX with 2.5cm margins = ~6.1" usable width:
+
+| Diagram Type | Width | Notes |
+|-------------|-------|-------|
+| Flowchart (TD) | 5.0-5.5" | Vertical, needs less width |
+| Flowchart (LR) | 6.0-6.5" | Horizontal, full width |
+| Sequence diagram | 6.0" | Wide due to participants |
+| Architecture (nested) | 5.5-6.0" | Match usable width |
+| Gantt / timeline | 6.5" | Maximum width for readability |
+| Hub-spoke / radial | 4.0-5.0" | Square ratio, center on page |
+
+### Height Targets
+
+| Visual Type | Max Height | Rule |
+|-------------|-----------|------|
+| Inline flowchart | 3.0-3.5" | Avoid page spillover |
+| Full-page diagram | 5.0" | Leave room for caption + margins |
+| Small supporting visual | 2.0-2.5" | Companion to text |
+
+**Rule:** Err on smaller side. A slightly small visual beats one that causes page breaks.
+
+### Proven Patterns for Dataflow / Process Flow Diagrams
+
+These patterns were validated on the Veritas Suite reference deck and Leadership Forum sample slide (2026-04-14). Use them as the quality standard for any dataflow, process flow, or tech stack diagram.
+
+#### Pattern: Icon Strip with Bracket Connectors (Mermaid)
+
+For horizontal technology stacks or methodology stages in DOCX, use a Mermaid LR flowchart with styled nodes:
+
+```
+%%{init: {'theme': 'base', 'themeVariables': {
+    'primaryColor': '#E8F0FE', 'primaryTextColor': '#003366',
+    'primaryBorderColor': '#005EB8', 'lineColor': '#005EB8',
+    'fontFamily': 'Segoe UI, Calibri, Arial', 'fontSize': '13px'
+}}}%%
+flowchart LR
+    MCP["🔌 MCP"] --> CC["🤖 Claude Code"] --> AF["☁️ AI Foundry"]
+    AF --> LLM["⚡ LiteLLM"] --> DL["💾 Delta Lake"] --> PBI["📊 Power BI"]
+
+    classDef blue fill:#E6F0FA,stroke:#005EB8,stroke-width:2px,color:#003366
+    classDef purple fill:#F0E8F8,stroke:#8040C0,stroke-width:2px,color:#003366
+    classDef green fill:#E8F5E9,stroke:#28A745,stroke-width:2px,color:#003366
+    classDef gold fill:#FFF8E1,stroke:#FFC000,stroke-width:2px,color:#003366
+    classDef red fill:#FDE8E6,stroke:#C74234,stroke-width:2px,color:#003366
+
+    class MCP blue
+    class CC purple
+    class AF blue
+    class LLM green
+    class DL gold
+    class PBI red
+```
+
+**Key rules:**
+- Each node gets a distinct `classDef` with a light fill + dark border (never dark fill + dark text)
+- Use emoji or unicode as icon placeholders inside node labels
+- Arrow connections are thin and single-colored (`lineColor`)
+- `width_inches=6.0` for full document width
+
+#### Pattern: Numbered Vertical Timeline (D2)
+
+For step sequences, delivery models, or methodology phases:
+
+```d2
+direction: down
+
+step1: "1. Two-Week Sprints" {
+  style: { fill: "#E6F0FA"; stroke: "#005EB8"; border-radius: 8; font-size: 14 }
+  desc: "Agent skills delivered in 2-week iteration cycles" {
+    style: { fill: transparent; stroke: transparent; font-size: 11; font-color: "#605E5C" }
+  }
+}
+step2: "2. Human-in-the-Loop" {
+  style: { fill: "#E6F0FA"; stroke: "#005EB8"; border-radius: 8; font-size: 14 }
+  desc: "Every agent output validated before production use" {
+    style: { fill: transparent; stroke: transparent; font-size: 11; font-color: "#605E5C" }
+  }
+}
+step3: "3. MCP-First" {
+  style: { fill: "#E6F0FA"; stroke: "#005EB8"; border-radius: 8; font-size: 14 }
+  desc: "All integrations via Model Context Protocol standard" {
+    style: { fill: transparent; stroke: transparent; font-size: 11; font-color: "#605E5C" }
+  }
+}
+
+step1 -> step2 -> step3: { style.stroke: "#E2E8F0"; style.stroke-width: 2 }
+```
+
+**Key rules:**
+- Numbered labels inside each container (not separate nodes)
+- Muted connector lines between steps (`#E2E8F0` light gray)
+- Description text as nested child nodes with transparent styling
+- `width_inches=4.0-5.0` — these are typically used alongside text, not full-width
+
+#### Pattern: Hierarchy Tags (Work Item Tree)
+
+For showing decomposition (Agent → Skill → Tool → Integration):
+
+```
+%%{init: {'theme': 'base', 'themeVariables': {
+    'primaryColor': '#E6F0FA', 'primaryTextColor': '#003366',
+    'primaryBorderColor': '#005EB8', 'lineColor': '#888888',
+    'fontFamily': 'Segoe UI, Calibri, Arial', 'fontSize': '12px'
+}}}%%
+flowchart TD
+    A["🤖 Agent"]:::blue --> S["⚙️ Skill"]:::purple
+    S --> T1["MCP Server"]:::green
+    S --> T2["API Call"]:::green
+    S --> T3["Bash Tool"]:::green
+    T1 --> Q["Quality Gate"]:::gray
+    T2 --> P["Prompt Template"]:::gray
+
+    classDef blue fill:#E6F0FA,stroke:#005EB8,stroke-width:2px,color:#003366
+    classDef purple fill:#F0E8F8,stroke:#8040C0,stroke-width:2px,color:#003366
+    classDef green fill:#E8F5E9,stroke:#28A745,stroke-width:2px,color:#003366
+    classDef gray fill:#F4F4F4,stroke:#E2E8F0,stroke-width:1px,color:#605E5C
+```
+
+**Key rules:**
+- Use `TD` (top-down) direction for hierarchies
+- Each level gets a distinct color class
+- Leaf nodes use lighter/grayer styling to visually recede
+- `width_inches=5.0-5.5` for vertical flowcharts
+
+---
+
 ## Diagram Rendering Gotchas
 
 Hard-won lessons from production diagram rendering. Follow these rules to avoid unreadable diagrams.

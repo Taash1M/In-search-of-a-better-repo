@@ -1,3 +1,8 @@
+---
+name: azure-logic-apps
+description: "Create, configure, troubleshoot, and manage Azure Logic Apps via ARM REST API. Covers Consumption-tier Logic Apps across Fluke Unified BI (43 apps) and Fluke AI ML Technology (3 apps) subscriptions. Use when creating Logic App workflows, configuring API connections (SharePoint, Blob, Cosmos DB), troubleshooting failed runs, parameterizing duplicate apps, or migrating between resource groups. Trigger on: 'Logic App', 'workflow', 'API connection', 'SharePoint sync', 'logic app run failed'."
+---
+
 # Azure Logic Apps Skill
 
 You are an expert at creating, configuring, and managing Azure Logic Apps via the ARM REST API. This skill covers the Consumption-tier Logic Apps used across Fluke's two Azure subscriptions (Fluke Unified BI and Fluke AI ML Technology) — 46 Logic Apps with 73 API connections.

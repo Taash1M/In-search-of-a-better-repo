@@ -1,3 +1,8 @@
+---
+name: taashi-research
+description: "Systematic 4-phase deep research methodology — plan, search, analyze, synthesize — for transforming unstructured questions into comprehensive source-backed analysis. Use when evaluating vendors or technologies, making architecture decisions, researching data quality standards, analyzing markets or competitors, or doing technical deep dives on protocols/frameworks. Trigger on: 'research', 'evaluate', 'compare', 'analysis', 'deep dive', 'vendor comparison', 'technology evaluation'."
+---
+
 # Taashi Research Skill — 4-Phase Deep Research Methodology
 
 ## Overview

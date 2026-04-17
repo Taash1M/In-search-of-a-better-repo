@@ -348,6 +348,16 @@ Logic Apps in Dev, VoC F9 Prod, and TechMentor Prod all have SharePoint API conn
 - Site ID: `fortive.sharepoint.com,40341b96-c6ae-4345-87fe-9820b1956776,ef391053-7bee-40f4-b0e0-66d51dd2100f`
 - Drive ID: `b!lhs0QK7GRUOH_pggsZVndlMQOe_ue_RAsOBm1R3SEA-BMkeuj3psRK7ZujIA_o0w`
 
+### Logic Apps
+
+3 Logic Apps in this subscription (all Recurrence-triggered, HTTP→Parse→ForEach pattern). For full Logic App management patterns, templates, and API connection setup, use the **`/azure-logic-apps`** skill.
+
+| Logic App | Resource Group | Purpose |
+|-----------|---------------|---------|
+| `flk-pulsesales-logicapp-dev` | `dev-flk-ai-foundry-hub-rg` | Pulse Sales data sync |
+| `flk-salesvoc-f9-logicapp-prod` | `flk-salesvoc-f9-prod-rg` | VoC F9 data sync |
+| `flk-techmentor-logicapp-prod` | `flk-techmentor-prod-rg` | TechMentor data sync |
+
 ### Bing Search Grounding
 Pulse Sales (Prod + QA) uses Bing Search for grounding AI responses with web data.
 

@@ -824,6 +824,55 @@ If any required section is empty or vague, loop back and ask. The canvas prevent
 
 ---
 
+## Work Item Classification: HITL vs AFK
+
+**Source pattern:** mattpocock/skills `prd-to-issues` — tracer-bullet vertical slices with agent-readiness markers
+
+When breaking the discovered use case into implementation phases and work items, classify each item as **HITL** or **AFK**:
+
+| Marker | Meaning | Example |
+|--------|---------|---------|
+| **HITL** (Human-in-the-loop) | Requires human review, decision, or domain expertise at some point during execution | "Design the entity extraction schema for depot repair reports" — needs SME input |
+| **AFK** (Away from keyboard) | Can be fully completed by a Claude Code agent without human intervention | "Provision Dev resource group and deploy gpt-4.1" — deterministic infrastructure work |
+
+### Classification Rules
+
+1. **HITL if** the work item requires:
+   - Domain expertise the agent doesn't have (business rules, compliance decisions)
+   - Access to systems the agent can't reach (manual data exports, vendor calls)
+   - Subjective quality judgment (UX design, content tone, strategic prioritization)
+   - Approval gates (cost sign-off, security review, stakeholder buy-in)
+
+2. **AFK if** the work item:
+   - Has a deterministic outcome (infrastructure provisioning, pipeline scaffolding)
+   - Can be verified programmatically (tests pass, health checks green)
+   - Follows an established template (notebook generation, API scaffolding)
+   - Has clear acceptance criteria with no ambiguity
+
+3. **Default to HITL** when uncertain — it's safer to over-tag than under-tag
+
+### Why This Matters
+
+HITL/AFK classification enables **parallel agent execution** — the orchestrator can assign AFK items to agents immediately while queuing HITL items for human attention. This maximizes throughput during multi-phase builds.
+
+Add the classification to `ai-ucb-state.json` in the phase breakdown:
+
+```json
+{
+  "phases": {
+    "discover": {
+      "work_items": [
+        {"id": "D1", "description": "Gather source system credentials", "type": "HITL", "reason": "Requires admin access to Oracle EBS"},
+        {"id": "D2", "description": "Validate archetype selection", "type": "HITL", "reason": "User must confirm architecture direction"},
+        {"id": "I1", "description": "Provision Dev resource group", "type": "AFK", "reason": "Deterministic ARM deployment"}
+      ]
+    }
+  }
+}
+```
+
+---
+
 ## Discovery Anti-Patterns (NEVER Do These)
 
 1. **NEVER skip cost estimation.** Even if the user says "just deploy it," present the cost breakdown. It's a gate requirement.

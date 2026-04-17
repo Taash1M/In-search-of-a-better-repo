@@ -947,6 +947,16 @@ Skynet_SIT, Capex, PartShortage, UCP, SSD, Five9CallLog
 - **Idempotency:** All pipeline activities must be idempotent. Use MERGE/UPSERT instead of INSERT in notebooks and SQL scripts so that reruns do not create duplicate records.
 - **Error capture:** Use `@activity('<name>').error.message` and `@activity('<name>').error.errorCode` expressions in failure paths to log meaningful errors to the audit table.
 
+### Logic App Error Notification Pattern
+
+ADF pipelines use Logic Apps for failure email notifications. The standard pattern:
+
+1. ADF `On Failure` path triggers a **Web Activity** that POSTs to a Logic App HTTP trigger URL
+2. Logic App receives the error payload (pipeline name, error message, run ID)
+3. Logic App sends HTML email via Office 365 connector
+
+For full Logic App management (creating workflows, API connections, templates, troubleshooting), use the **`/azure-logic-apps`** skill. The UBI subscription has **43 Logic Apps** — primarily SharePoint-to-Blob sync and batch file processing patterns.
+
 ### ADF Security Best Practices
 
 - **Managed Identity preferred:** Use system-assigned managed identity for connecting to Azure Key Vault, ADLS, Azure SQL, and Databricks. Avoid storing credentials in linked services where MSI is supported.

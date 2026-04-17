@@ -1,3 +1,8 @@
+---
+name: powerbi-desktop
+description: "Programmatically create and modify Power BI Desktop (.pbix) files — inject DAX measures, build report pages with visuals, manage semantic models, connect to Analysis Services, handle SecurityBindings/DPAPI. Use when creating .pbix files from scratch, injecting measures into existing reports, building visual layouts programmatically, or automating Power BI Desktop workflows. Trigger on: 'pbix', 'Power BI', 'DAX measure', 'report page', 'Power BI Desktop', 'semantic model', '.pbix file'."
+---
+
 # Power BI Desktop Automation Skill
 
 ## Overview

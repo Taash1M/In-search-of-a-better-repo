@@ -710,6 +710,77 @@ langchain-openai     # For RAGAS test generation
 
 ---
 
+## When Evaluation Reveals Problems: Durable Issue Templates + TDD Fix Plans
+
+**Source patterns:** mattpocock/skills `triage-issue` (TDD fix plans) + `qa` (durable descriptions)
+
+When DeepEval, RAGAS, or Garak evaluation reveals a quality problem, **file a GitHub issue** that is durable and actionable. The issue must survive codebase refactors — describe behaviors, not code paths.
+
+### Issue Template for Evaluation Failures
+
+```
+gh issue create --title "<metric> failure: <behavior description>" --body "$(cat <<'EOF'
+## What Happened
+
+[Describe the evaluation failure in user-facing terms]
+- Metric: <metric name> (e.g., FaithfulnessMetric)
+- Score: <actual> (threshold: <expected>)
+- Test case: <natural language description of the input/output pair>
+
+## What I Expected
+
+[Expected behavior — what a passing score would look like]
+
+## Root Cause Analysis
+
+- **Category**: [hallucination | retrieval gap | safety bypass | drift | cost spike]
+- **Why it fails**: [Describe the behavioral root cause — NOT code paths or line numbers]
+- **Contributing factors**: [e.g., "knowledge cutoff", "missing context window", "prompt too permissive"]
+
+## TDD Fix Plan
+
+Each step produces a test that fails (RED), then the minimal fix to pass (GREEN).
+
+1. **RED**: Write a test case that reproduces this exact failure
+   - Input: [the failing input]
+   - Expected: [faithfulness > 0.7 / no hallucination / blocked probe]
+   - Actual: [current failing score]
+
+2. **GREEN**: Implement the minimal fix
+   - [Describe the behavioral change — e.g., "add retrieval context window overlap",
+     "tighten system prompt guardrails", "add entity grounding check"]
+
+3. **RED**: Write regression test for the edge case
+   - [Describe a variation that should also pass]
+
+4. **GREEN**: Generalize the fix if needed
+
+5. **REFACTOR**: Clean up after all tests pass
+   - [Any architectural improvements revealed by the fix]
+
+## Acceptance Criteria
+
+- [ ] Original failing test case now passes with score > threshold
+- [ ] No regression in other evaluation metrics (run full suite)
+- [ ] Garak critical probes still defended (if fix touched prompts/guardrails)
+
+## Additional Context
+
+[Any observations from the evaluation run — patterns across test cases, specific inputs that are especially problematic, correlation with other metrics]
+EOF
+)"
+```
+
+### Durable Description Rules (Apply to ALL Eval Reports)
+
+1. **No file paths or line numbers** — these go stale after refactors
+2. **Use the project's domain language** — "the sales agent hallucinates account history" not "gpt-4o returns wrong JSON in the summarizer node"
+3. **Describe behaviors, not code** — "retrieval misses relevant documents when query contains product codes" not "search_query_agent.py line 42 drops tokens"
+4. **Reproduction steps are mandatory** — include the exact input, expected output, and actual output
+5. **Keep it concise** — a developer should read the issue in 30 seconds
+
+---
+
 ## References
 
 - [DeepEval Documentation](https://docs.confident-ai.com/)

@@ -1,10 +1,37 @@
 ---
 name: Skill Framework and Inventory
-description: Claude Code custom skills inventory, Turbo-inspired quality patterns, skill enhancement history. All 21 AI UCB files upgraded to A+ (2026-04-07).
+description: 40 skill files (was 37). +3 new from mattpocock/skills (qa-session, github-triage, ubiquitous-language), 6 patterns extracted, 5 frontmatter fixes (2026-04-16).
 type: project
 originSessionId: aa210407-a09e-461f-aa2f-83d0e2fa4475
 ---
-## Skill Inventory (as of 2026-04-07)
+## Skill Inventory (updated 2026-04-16)
+
+### mattpocock/skills Evaluation (2026-04-16)
+
+Evaluated 19 skills from `https://github.com/mattpocock/skills.git`. Security: PASS (9/10). Quality: 7.5/10.
+
+**New skills installed:**
+| Skill | Source | Key Feature |
+|---|---|---|
+| `qa-session.md` | mattpocock/qa | Interactive bug filing with background codebase exploration, Fluke product labels |
+| `github-triage.md` | mattpocock/github-triage | Label-based state machine for issue triage, HITL/AFK classification |
+| `ubiquitous-language.md` | mattpocock/ubiquitous-language | DDD glossary extraction, pre-seeded with 10 Fluke domain terms |
+
+**Patterns extracted and implemented:**
+| Pattern | Source Skill | Applied To | Description |
+|---|---|---|---|
+| Parallel sub-agent design variants | design-an-interface | powerpoint-create.md | 3 divergent layout proofs before committing |
+| Background exploration | qa, github-triage | powerpoint-create.md | Spawn Explore agent for content research while discussing |
+| HITL/AFK classification | prd-to-issues | ai-ucb-discover.md | Agent-readiness markers on work items |
+| 4 dependency categories | improve-codebase-architecture | ai-use-case-builder.md | In-process, local-substitutable, remote-owned, true-external |
+| Durable issue templates | triage-issue, qa | eval-framework.md | No file paths/line numbers + TDD fix plan |
+| Trigger descriptions | write-a-skill | 5 skills (frontmatter) | YAML frontmatter added to azure-diagrams, azure-logic-apps, powerbi-desktop, flk-litellm, taashi-research |
+
+**Evaluation report:** `C:\Users\tmanyang\OneDrive - Fortive\Claude code\Skill Evaluation\mattpocock_skills_evaluation.md`
+
+---
+
+## Prior Skill Inventory (as of 2026-04-07)
 
 ### Active Skills (`C:\Users\adm-tmanyang\.claude\commands\`)
 

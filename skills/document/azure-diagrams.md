@@ -1,3 +1,8 @@
+---
+name: azure-diagrams
+description: "Generate publication-quality Azure architecture, data flow, and resource landscape diagrams using actual Azure SVG icons and python-pptx/Pillow. Sub-skill for docx-beautify and powerpoint-create. Use when creating cloud architecture diagrams, data flow diagrams, Azure resource landscapes, authentication flows, or sequence-style interaction diagrams. Trigger on: 'architecture diagram', 'data flow', 'Azure diagram', 'resource landscape', 'service map'."
+---
+
 # Azure Architecture & Data Flow Diagram Skill
 
 > Sub-skill called by docx-beautify and pptx-beautify. Generates publication-quality architecture, data flow, and resource landscape diagrams using actual Azure SVG icons.

@@ -156,9 +156,15 @@ slide.addImage({ data: "image/png;base64,iVBORw0KGgo...", x: 1, y: 1, w: 5, h: 3
 // Circular crop
 slide.addImage({ path: "headshot.jpg", x: 1, y: 1, w: 1.5, h: 1.5, rounding: true });
 
-// Sizing modes
-{ sizing: { type: "contain", w: 4, h: 3 } }  // Fit inside, preserve ratio
+// Sizing modes — USE "contain" FOR ALL GENERATED DIAGRAMS
+{ sizing: { type: "contain", w: 4, h: 3 } }  // Fit inside, preserve ratio (PREFERRED)
 { sizing: { type: "cover", w: 4, h: 3 } }    // Fill area, may crop
+
+// MANDATORY for diagrams/charts/screenshots — prevents stretching:
+slide.addImage({
+  path: "diagram.png", x: 0.3, y: 1.1, w: 12.7, h: 6,
+  sizing: { type: "contain", w: 12.7, h: 6 }
+});
 ```
 
 #### Icons (react-icons)
@@ -383,6 +389,60 @@ img_stream = BytesIO(image_bytes)
 slide.shapes.add_picture(img_stream, Inches(5), Inches(1), Inches(4), Inches(3))
 ```
 
+#### Adding Images — Aspect-Ratio Preserving (MANDATORY for diagrams)
+
+**ALWAYS use this helper when placing generated images (D2 diagrams, azure_diagrams, matplotlib charts, screenshots).** The raw `add_picture(path, left, top, width, height)` stretches the image to the exact dimensions you specify, ignoring the source aspect ratio. This produces distorted/stretched visuals that look unprofessional.
+
+```python
+from PIL import Image
+from pptx.util import Inches
+
+def add_picture_fit(slide, img_path, left, top, max_width, max_height):
+    """Add picture preserving aspect ratio within a bounding box, centered.
+    
+    Args:
+        slide: pptx slide object
+        img_path: path to image file (str or Path)
+        left: left edge of bounding box (EMU, e.g. Inches(0.3))
+        top: top edge of bounding box (EMU, e.g. Inches(1.1))
+        max_width: max width of bounding box (EMU, e.g. Inches(12.7))
+        max_height: max height of bounding box (EMU, e.g. Inches(6.0))
+    """
+    with Image.open(img_path) as img:
+        img_w, img_h = img.size
+    aspect = img_w / img_h
+    box_aspect = max_width / max_height
+    if aspect > box_aspect:
+        # Image is wider than box — constrain by width
+        w = max_width
+        h = max_width / aspect
+    else:
+        # Image is taller than box — constrain by height
+        h = max_height
+        w = max_height * aspect
+    # Center in the bounding box
+    x = left + (max_width - w) / 2
+    y = top + (max_height - h) / 2
+    slide.shapes.add_picture(str(img_path), int(x), int(y), int(w), int(h))
+```
+
+**Usage:**
+```python
+# Instead of this (STRETCHES the image):
+slide.shapes.add_picture(png_path, Inches(0.3), Inches(1.1), Inches(12.7), Inches(6.0))
+
+# Use this (preserves aspect ratio, centered in bounding box):
+add_picture_fit(slide, png_path, Inches(0.3), Inches(1.1), Inches(12.7), Inches(6.0))
+```
+
+**When to use which:**
+| Scenario | Method |
+|----------|--------|
+| Generated diagrams (D2, azure_diagrams, matplotlib) | `add_picture_fit()` — ALWAYS |
+| Screenshots, photos with unknown dimensions | `add_picture_fit()` — ALWAYS |
+| Icons/logos where you control exact pixel size | `add_picture()` is OK |
+| Pre-cropped images with known matching ratio | `add_picture()` is OK |
+
 #### Adding Tables
 
 ```python
@@ -534,6 +594,81 @@ img_path = generate_for_pptx(generate_architecture_diagram, "temp.png", nodes=[.
 If any issue is found, fix node positions/labels/spacing, regenerate, and re-inspect. Repeat until all checks pass. **Never embed a diagram you haven't inspected.**
 
 See `/azure-diagrams` skill for full API reference, icon registry, quality gate checklist, and boundary box types.
+
+---
+
+## Design Exploration (Parallel Sub-Agent Pattern)
+
+**Source pattern:** mattpocock/skills `design-an-interface` — "Design It Twice" (John Ousterhout)
+
+When creating a new presentation from scratch (not editing an existing one), generate **3 divergent layout concepts** in parallel before committing to one. This produces better designs than iterating on a single approach.
+
+### When to Use
+
+- User requests a new deck with no existing template
+- User describes a theme or topic but not specific layouts
+- High-stakes presentations (leadership, external, board)
+
+### Process
+
+1. **Gather constraints** — audience, slide count, key message, any brand requirements
+2. **Spawn 3 sub-agents in parallel**, each with a different design constraint:
+
+```
+Agent 1: "Conservative corporate" — Navy/white, minimal shapes, heavy text hierarchy
+Agent 2: "Visual storytelling" — Image-dominant, bold colors, hero slides with data viz
+Agent 3: "Consulting grade" — McKinsey/BCG style, action titles, SCR narrative, split layouts
+```
+
+Each sub-agent should produce:
+- A **2-slide proof** (title slide + one content slide)
+- A **rationale** (why this approach suits the audience)
+- A **trade-off note** (what this approach sacrifices)
+
+3. **Present all 3 to the user** with a comparison:
+
+| Dimension | Conservative | Visual | Consulting |
+|-----------|-------------|--------|------------|
+| Audience fit | ... | ... | ... |
+| Information density | ... | ... | ... |
+| Production speed | ... | ... | ... |
+
+4. **User picks one** (or a hybrid) — proceed with full build using the chosen direction
+
+### Anti-Patterns
+
+- Generating 3 minor variations of the same layout (must be genuinely different approaches)
+- Spending more than 5 minutes per proof (these are quick sketches, not final slides)
+- Skipping this step when the user has already specified a design system (e.g., "use Bold Signal Light")
+
+## Background Exploration for Content Slides
+
+**Source pattern:** mattpocock/skills `qa` and `github-triage`
+
+When creating presentation content about a codebase, project, or system the user works on, **spawn a background Explore agent** to gather context while discussing the deck structure with the user.
+
+### When to Use
+
+- User says "make a deck about our TechMentor architecture"
+- User wants slides summarizing a project's status or technical design
+- Content requires understanding code, config, or project structure
+
+### Process
+
+1. **While talking to the user** about slide structure, kick off:
+```
+Agent(subagent_type=Explore, run_in_background=True):
+  "Explore [project area] to understand: architecture, key components,
+   domain terminology, recent changes, and any documentation.
+   Report: component names, relationships, and user-facing behaviors."
+```
+
+2. **Use the exploration results** to:
+   - Adopt the project's domain language in slide titles and body text
+   - Identify the right level of abstraction for the audience
+   - Catch any factual errors before they make it into the deck
+
+3. **Never reference file paths or line numbers** in slide content — describe behaviors and architecture, not code locations (durable description principle from mattpocock/skills)
 
 ---
 
@@ -1879,13 +2014,440 @@ python scripts/office/unpack.py presentation.pptx unpacked/
 
 ---
 
+## Build-Time Prevention Checklist (MANDATORY)
+
+Before generating a PPTX, verify these patterns in your build script. These are the most common causes of broken presentations — catching them at build time is 10x cheaper than fixing them in QA.
+
+### 1. Text Line Breaks — NEVER use `\n` in `.text` assignments
+
+python-pptx does NOT render `\n` as a line break — it renders as a replacement character box (`⎕`). This silently corrupts every slide that has multi-line text.
+
+```python
+# WRONG — shows broken character in PowerPoint
+p.text = "Phase 2: Agentic AI-Powered\nLLM Usage Tracking"
+
+# CORRECT — split into paragraphs
+lines = text.split("\n")
+for i, line in enumerate(lines):
+    p = tf.paragraphs[0] if i == 0 else tf.add_paragraph()
+    p.text = line
+    p.font.size = Pt(font_size)
+    # ... apply formatting to each paragraph
+```
+
+**Prevention**: Any helper function that accepts text must split on `\n` and create separate paragraphs. Wrap this in your `add_textbox()` utility so it's impossible to forget.
+
+### 2. D2 Diagrams — Use Native PNG, NOT cairosvg
+
+D2 generates SVGs with embedded base64 web fonts (`@font-face` with WOFF data). cairosvg cannot render these fonts — all text disappears, leaving tiny black boxes on a white canvas.
+
+```python
+# WRONG — cairosvg can't render D2's embedded fonts
+subprocess.run([D2_EXE, ..., str(d2_file), str(svg_file)])
+cairosvg.svg2png(bytestring=svg_file.read_bytes(), write_to=str(png_file))
+
+# CORRECT — D2 natively renders PNG with proper fonts
+subprocess.run([D2_EXE, "--theme", "0", "--pad", "60", str(d2_file), str(png_file)])
+```
+
+**When to use cairosvg**: Only for SVGs you generate yourself (matplotlib, azure_diagrams) where you control the fonts. Never for third-party SVG generators that embed fonts.
+
+### 3. D2 Theme Selection
+
+D2 theme 200 is dark (dark background). Use theme 0 (default/light) for slides with white backgrounds, unless you specifically want a dark diagram.
+
+### 4. RGBA Transparency in Embedded Images
+
+PNG images with RGBA mode have transparent regions that render as black in some viewers and QA tools. If you control the image pipeline, composite onto a white background before embedding:
+
+```python
+if img.mode == 'RGBA':
+    bg = Image.new('RGB', img.size, (255, 255, 255))
+    bg.paste(img, mask=img.split()[3])
+    bg.save(output_path)
+```
+
+### 5. Shape Transparency via XML
+
+python-pptx's `fill.solid()` creates a `_SolidFill` object that doesn't expose `.find()`. To set transparency/alpha on a solid fill, traverse the shape's XML element tree:
+
+```python
+def set_shape_fill(shape, color, transparency=0):
+    fill = shape.fill
+    fill.solid()
+    fill.fore_color.rgb = color
+    if transparency > 0:
+        for sf in shape._element.iter(qn('a:solidFill')):
+            if len(sf) > 0:
+                alpha = sf[0].makeelement(qn('a:alpha'),
+                    {'val': str(int((1 - transparency) * 100000))})
+                sf[0].append(alpha)
+            break
+```
+
+### 6. D2 Output Dimensions and Layout
+
+D2 native PNG output matches the diagram's natural size. `direction: right` with many nodes produces extremely wide, thin images (e.g., 7302x678px — aspect ratio 10:1) that shrink to unreadable strips when fit to a slide.
+
+**Fix**: Use `grid-rows: 2` to split long flows into a 2-row grid:
+
+```d2
+# WRONG — produces 10:1 aspect ratio, unreadable on slide
+direction: right
+step1 -> step2 -> step3 -> step4 -> step5 -> step6 -> step7 -> step8
+
+# CORRECT — 2-row grid produces ~3:1 aspect ratio, fits slide well
+grid-rows: 2
+grid-gap: 40
+
+row1: "" {
+  direction: right
+  style: { fill: transparent; stroke: transparent }
+  step1 -> step2 -> step3 -> step4
+}
+row2: "" {
+  direction: right
+  style: { fill: transparent; stroke: transparent }
+  step5 -> step6 -> step7 -> step8
+}
+row1.step4 -> row2.step5: { style.stroke-dash: 5 }
+```
+
+**Target aspect ratios**: 2:1 to 4:1 for landscape slides. If a diagram exceeds ~5:1, split into rows.
+
+### 7. Image Placement — ALWAYS Preserve Aspect Ratio
+
+**NEVER use raw `add_picture(path, left, top, width, height)` for generated images.** It stretches the image to the exact dimensions you specify, ignoring the source aspect ratio. This produces visually distorted diagrams.
+
+```python
+# WRONG — stretches image to 12.7" x 6.0" regardless of actual ratio
+slide.shapes.add_picture(png_path, Inches(0.3), Inches(1.1), Inches(12.7), Inches(6.0))
+
+# CORRECT — preserves aspect ratio, centers in bounding box
+add_picture_fit(slide, png_path, Inches(0.3), Inches(1.1), Inches(12.7), Inches(6.0))
+```
+
+Use the `add_picture_fit()` helper from the [Adding Images — Aspect-Ratio Preserving](#adding-images--aspect-ratio-preserving-mandatory-for-diagrams) section. For PptxGenJS, use `sizing: { type: "contain" }`.
+
+---
+
+## Diagram Visual Quality Standards
+
+These rules apply to every generated diagram (D2, Mermaid, matplotlib, azure_diagrams) embedded in a presentation. They are the difference between "diagram on a slide" and "consulting-grade visual."
+
+### Node Shape Variety — Break the Rectangle Trap
+
+Default diagrams use rectangles for everything. This produces flat, monotonous visuals that all look the same. Use shape semantics:
+
+| Concept | Shape | D2 | Mermaid |
+|---------|-------|----|---------| 
+| Agent / autonomous component | Hexagon | `shape: hexagon` | `{{Agent Name}}` |
+| Decision / gate | Diamond | `shape: diamond` | `{Decision?}` |
+| Process / step | Rounded rectangle | `shape: rectangle` (default) | `[Process]` or `(Process)` |
+| Data store / database | Cylinder | `shape: cylinder` | `[(Database)]` |
+| External system / user | Person or oval | `shape: person` | `([User])` |
+| Start / end | Circle or stadium | `shape: circle` | `([Start])` |
+
+**Rule:** Every diagram with 4+ node types MUST use at least 2 distinct shapes. Never make all nodes rectangles.
+
+### Layered Zones — Show Architecture Depth
+
+Complex systems have layers (UI → API → Services → Data). Show them as horizontal or vertical bands with labeled headers:
+
+```d2
+# D2: Layered zone architecture
+direction: down
+
+ui_layer: "UI Layer" {
+  style: {
+    fill: "#E8F4FD"
+    stroke: "#B3D9F2"
+    border-radius: 8
+    font-size: 16
+    bold: true
+  }
+  web_app: "React Web App" { shape: rectangle }
+  mobile: "Mobile App" { shape: rectangle }
+}
+
+api_layer: "API Gateway" {
+  style: {
+    fill: "#E8F0FE"
+    stroke: "#A8C4E8"
+    border-radius: 8
+    font-size: 16
+    bold: true
+  }
+  gateway: "LiteLLM Proxy" { shape: hexagon }
+}
+
+data_layer: "Data Layer" {
+  style: {
+    fill: "#F0F4E8"
+    stroke: "#C8D8A8"
+    border-radius: 8
+    font-size: 16
+    bold: true
+  }
+  delta: "Delta Lake" { shape: cylinder }
+  cosmos: "Cosmos DB" { shape: cylinder }
+}
+
+ui_layer.web_app -> api_layer.gateway
+api_layer.gateway -> data_layer.delta
+```
+
+**Rule:** Any diagram showing a multi-tier system MUST use container nesting with distinct fill colors per zone. Zone labels must be 14pt+ bold.
+
+### Connection Line Discipline
+
+Default thick, colorful arrows make diagrams look like subway maps. Use restraint:
+
+| Property | Default (bad) | Target (good) |
+|----------|--------------|---------------|
+| Stroke width | 2-3px | 1-1.5px |
+| Color | Multiple bright colors | Single muted gray (`#666666` or `#888888`) |
+| Arrow head | Large filled | Small, subtle |
+| Label placement | On the line | Near the line, not overlapping |
+
+**D2:** `style.stroke-width: 1` + `style.stroke: "#666666"` on connections
+**Mermaid:** Use `linkStyle` to set stroke color/width, or `%%{init}%%` `lineColor`
+
+**Rule:** Connection lines are secondary visual elements — they guide the eye but should never dominate. Max 2 colors for connections in any diagram.
+
+### Whitespace and Padding
+
+Cramped diagrams look amateur. Professional diagrams breathe.
+
+| Parameter | Minimum | D2 setting | Mermaid setting |
+|-----------|---------|-----------|-----------------|
+| Outer padding | 40-60px | `--pad 60` | `%%{init: {'flowchart': {'padding': 20}}}%%` |
+| Node spacing | 40px+ | `grid-gap: 40` | `%%{init: {'flowchart': {'nodeSpacing': 50, 'rankSpacing': 50}}}%%` |
+| Container padding | 20px+ | `style.padding: 20` | N/A (auto) |
+| Content-to-edge ratio | 60-70% content | — | — |
+
+**Rule:** If a diagram fills more than 75% of its bounding area with shapes/lines, it's too dense. Add padding, increase spacing, or split into two diagrams.
+
+### Color Discipline for Diagrams
+
+| Principle | Rule |
+|-----------|------|
+| **Max accent colors** | 3 per diagram + neutrals (white, gray, black) |
+| **Fill lightness** | Use light fills (`#E8xxxx`, `#F0xxxx`) with dark borders and text |
+| **Semantic color** | Green = done/success, Blue = active/in-progress, Yellow/Amber = warning/pending, Red = error/blocked, Purple = special/AI, Gray = inactive |
+| **Background** | White or very light gray (`#FAFAFA`) for slide embedding; dark backgrounds only if the slide itself is dark-themed |
+| **Border vs fill contrast** | Border should be 40-60% darker than fill (e.g., fill `#E8F0FE`, border `#2C4F6E`) |
+
+**Rule:** Never use saturated/dark fills with dark text — always light fill + dark text or dark fill + white text. Test readability at 50% zoom.
+
+### Split Layout Pattern — Diagram + Callout
+
+For complex diagrams, don't force everything into the image. Use a split layout:
+
+```
+┌──────────────────────────────────────────────┐
+│  ACTION TITLE                                │
+├───────────────────────┬──────────────────────┤
+│                       │                      │
+│   DIAGRAM             │   KEY TAKEAWAYS      │
+│   (65% width)         │   • Point 1          │
+│                       │   • Point 2          │
+│                       │   • Point 3          │
+│                       │                      │
+├───────────────────────┴──────────────────────┤
+│  Source line                                 │
+└──────────────────────────────────────────────┘
+```
+
+This avoids cramming explanatory text into the diagram itself, keeps labels short, and gives the audience a reading path: title → diagram (visual) → takeaways (verbal).
+
+### Icon Row with Bracket Connectors (Proven Pattern)
+
+For slides showing a toolchain, tech stack, or methodology stages. Proven on Leadership Forum sample (Veritas slide 18 adaptation).
+
+**Visual structure:**
+```
+         ┌──────────────────────────────────────┐   ← bracket bar
+         │                                      │   ← vertical drops
+         ▼                                      ▼
+      [icon1] ──▶ [icon2] ──▶ [icon3] ──▶ [icon4]   ← colored circles + arrow segments
+      Label 1     Label 2     Label 3     Label 4    ← 2-line labels below
+```
+
+**Implementation (python-pptx):**
+
+```python
+from pptx.enum.shapes import MSO_SHAPE
+from pptx.util import Inches, Pt
+from pptx.dml.color import RGBColor
+from pptx.oxml.ns import qn
+from lxml import etree
+
+# --- Config ---
+items = [("MCP", "#005EB8"), ("Claude Code", "#8040C0"), ("AI Foundry", "#0078D4"),
+         ("LiteLLM", "#28A745"), ("Delta Lake", "#FFC000"), ("Power BI", "#C74234")]
+start_x, icon_y, diameter, spacing = 1.0, 1.85, 0.75, 1.95
+CONN_COLOR = RGBColor(0x00, 0x5E, 0xB8)
+
+# --- Colored icon circles ---
+for i, (label, hex_color) in enumerate(items):
+    x = start_x + i * spacing
+    r, g, b = int(hex_color[1:3],16), int(hex_color[3:5],16), int(hex_color[5:7],16)
+    circle = slide.shapes.add_shape(MSO_SHAPE.OVAL,
+        Inches(x), Inches(icon_y), Inches(diameter), Inches(diameter))
+    circle.fill.solid()
+    circle.fill.fore_color.rgb = RGBColor(r, g, b)
+    circle.line.fill.background()
+    # Label initial inside circle (centered)
+    tf = circle.text_frame
+    tf.margin_left = tf.margin_right = tf.margin_top = tf.margin_bottom = 0
+    p = tf.paragraphs[0]
+    p.alignment = PP_ALIGN.CENTER
+    run = p.add_run()
+    run.text = label[0]  # First character
+    run.font.size = Pt(14); run.font.bold = True
+    run.font.color.rgb = RGBColor(0xFF, 0xFF, 0xFF)
+    # Vertical center via XML
+    bodyPr = circle._element.find('.//' + qn('a:bodyPr'))
+    if bodyPr is not None: bodyPr.set('anchor', 'ctr')
+
+# --- Bracket frame (top bar + vertical drops) ---
+first_cx = start_x + diameter / 2
+last_cx = start_x + (len(items) - 1) * spacing + diameter / 2
+bracket_y = icon_y - 0.15
+
+# Top bar
+bar = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE,
+    Inches(first_cx), Inches(bracket_y), Inches(last_cx - first_cx), Pt(1.5))
+bar.fill.solid(); bar.fill.fore_color.rgb = CONN_COLOR; bar.line.fill.background()
+# Left drop
+ld = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE,
+    Inches(first_cx), Inches(bracket_y), Pt(1.5), Inches(icon_y - bracket_y))
+ld.fill.solid(); ld.fill.fore_color.rgb = CONN_COLOR; ld.line.fill.background()
+# Right drop
+rd = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE,
+    Inches(last_cx), Inches(bracket_y), Pt(1.5), Inches(icon_y - bracket_y))
+rd.fill.solid(); rd.fill.fore_color.rgb = CONN_COLOR; rd.line.fill.background()
+
+# --- Arrow segments between icons (with triangle arrowheads) ---
+for i in range(len(items) - 1):
+    x_from = start_x + i * spacing + diameter + 0.05
+    x_to = start_x + (i + 1) * spacing - 0.05
+    mid_y = icon_y + diameter / 2
+    # Horizontal bar
+    seg = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE,
+        Inches(x_from), Inches(mid_y - 0.01), Inches(x_to - x_from), Pt(1.5))
+    seg.fill.solid(); seg.fill.fore_color.rgb = CONN_COLOR; seg.line.fill.background()
+    # Triangle arrowhead (FLOWCHART_EXTRACT rotated 90°)
+    tri_sz = 0.12
+    tri = slide.shapes.add_shape(MSO_SHAPE.FLOWCHART_EXTRACT,
+        Inches(x_to - 0.02), Inches(mid_y - tri_sz/2), Inches(tri_sz), Inches(tri_sz))
+    tri.fill.solid(); tri.fill.fore_color.rgb = CONN_COLOR; tri.line.fill.background()
+    tri.rotation = 90.0  # Point right
+```
+
+**Key details:**
+- `FLOWCHART_EXTRACT` is a triangle shape; rotate 90° to point right
+- Bracket bar sits 0.15" above the icon row top
+- Arrow segments span the gap between icon edges (with 0.05" padding)
+- Works for 4-8 items on LAYOUT_WIDE; for LAYOUT_16x9, reduce spacing to ~1.4"
+
+### Numbered Vertical Timeline (Proven Pattern)
+
+For callout panels, delivery models, or step sequences alongside a diagram. Proven on Leadership Forum sample.
+
+**Visual structure:**
+```
+     ①  Title One
+     │   Description text here
+     │
+     ②  Title Two
+     │   Description text here
+     │
+     ③  Title Three
+         Description text here
+```
+
+**Implementation (python-pptx):**
+
+```python
+callouts = [
+    ("2-Week Sprints", "Agent skills delivered in 2-week iteration cycles"),
+    ("Human-in-the-Loop", "Every agent output validated before production use"),
+    ("MCP-First", "All integrations via Model Context Protocol standard"),
+]
+
+panel_x = 8.5   # Right side of slide
+panel_y = 3.55
+circle_x = panel_x + 0.15
+circle_d = 0.45
+text_x = panel_x + 0.8
+step_spacing = 0.95
+
+# Vertical connecting line (behind circles)
+line_top = panel_y + 0.55 + circle_d / 2
+line_bot = panel_y + 0.55 + (len(callouts) - 1) * step_spacing + circle_d / 2
+vline = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE,
+    Inches(circle_x + circle_d/2 - 0.01), Inches(line_top),
+    Pt(2), Inches(line_bot - line_top))
+vline.fill.solid()
+vline.fill.fore_color.rgb = RGBColor(0xE2, 0xE8, 0xF0)  # Light gray
+vline.line.fill.background()
+
+for i, (title, desc) in enumerate(callouts):
+    cy = panel_y + 0.55 + i * step_spacing
+
+    # Numbered circle (navy)
+    nc = slide.shapes.add_shape(MSO_SHAPE.OVAL,
+        Inches(circle_x), Inches(cy), Inches(circle_d), Inches(circle_d))
+    nc.fill.solid()
+    nc.fill.fore_color.rgb = RGBColor(0x00, 0x33, 0x66)  # Navy
+    nc.line.fill.background()
+    tf = nc.text_frame
+    tf.margin_left = tf.margin_right = tf.margin_top = tf.margin_bottom = 0
+    p = tf.paragraphs[0]
+    p.alignment = PP_ALIGN.CENTER
+    run = p.add_run()
+    run.text = str(i + 1)
+    run.font.size = Pt(16); run.font.bold = True
+    run.font.color.rgb = RGBColor(0xFF, 0xFF, 0xFF)
+    bodyPr = nc._element.find('.//' + qn('a:bodyPr'))
+    if bodyPr is not None: bodyPr.set('anchor', 'ctr')
+
+    # Title (bold) + Description (gray) to the right
+    # ... add_text helper calls for title at (text_x, cy+0.02) and desc at (text_x, cy+0.25)
+```
+
+**Key details:**
+- Draw the vertical line FIRST so circles render on top
+- `step_spacing` of 0.95" works for 3 items; use 0.75" for 4-5 items
+- Pair with the Icon Row on the left side for a balanced split layout
+- Navy circles + white numbers is the default; use pillar accent colors for variety
+
+### Aspect Ratio Targets for Diagram Types
+
+| Diagram Type | Target Ratio | Max Width (LAYOUT_WIDE) | Notes |
+|-------------|-------------|------------------------|-------|
+| Flowchart (top-down) | 3:4 to 1:1 | 8" | Tall, leave room for title + footer |
+| Flowchart (left-right) | 2:1 to 3:1 | 12" | Use grid-rows if exceeds 4:1 |
+| Sequence diagram | 1:1 to 3:2 | 10" | Width grows with participants |
+| Architecture (nested) | 4:3 to 16:9 | 12" | Match slide aspect ratio |
+| Gantt / timeline | 3:1 to 4:1 | 12" | Horizontal emphasis |
+| Hub-spoke | 1:1 | 6" | Square, use in split layout |
+
+---
+
 ## QA Workflow
 
 **Assume there are problems. Your job is to find them.**
 
 The first render is almost never correct. Approach QA as a bug hunt, not a confirmation step.
 
-### Content QA
+**IMPORTANT: This QA workflow is MANDATORY and AUTOMATIC.** After every PPTX generation or beautification, run all 3 stages programmatically. Do not ask the user for permission — just run it. Do not declare a presentation complete until all stages pass with zero issues. If issues are found, fix them in the build script, regenerate, and re-run QA until clean.
+
+**MANDATORY: Every PPTX must pass all three QA stages before delivery.** Do not skip any stage. Do not declare success until all three report zero issues.
+
+### Stage 1: Content QA
 
 ```bash
 python -m markitdown output.pptx
@@ -1898,7 +2460,128 @@ Check for missing content, typos, wrong order.
 python -m markitdown output.pptx | grep -iE "xxxx|lorem|ipsum|placeholder|this.*(page|slide).*layout"
 ```
 
-### Visual QA
+### Stage 2: Programmatic Layout QA (MANDATORY — run before visual QA)
+
+This catches layout bugs that are invisible in code but obvious in the output: shapes past the slide edge, margin violations, tiny unreadable text, and elements colliding. Run this **every time** after building a PPTX — even for single-slide decks.
+
+```python
+"""
+Programmatic Layout QA for PPTX files.
+Checks: Hard OOB, safe-zone margins, tiny text, real overlaps.
+Filters out intentional text-on-shape layering (PptxGenJS pattern).
+Exit code 0 = all clear, 1 = issues found.
+"""
+import sys
+sys.stdout.reconfigure(encoding='utf-8')
+from pptx import Presentation
+from pptx.util import Pt
+
+PPTX_PATH = sys.argv[1] if len(sys.argv) > 1 else "output.pptx"
+SAFE_MARGIN = 0.25           # inches from slide edge for content
+SAFE_FOOTER = 0.08           # tighter allowance for footer-zone text
+MIN_FONT_PT = 6              # minimum readable font size
+OVERLAP_THRESHOLD = 0.30     # 30% of smaller shape's area
+
+prs = Presentation(PPTX_PATH)
+sw = prs.slide_width / 914400
+sh = prs.slide_height / 914400
+issues = []
+
+for si, slide in enumerate(prs.slides, 1):
+    shapes = []
+    for shape in slide.shapes:
+        l = shape.left/914400; t = shape.top/914400
+        w = shape.width/914400; h = shape.height/914400
+        txt = shape.text_frame.text.strip() if shape.has_text_frame else ''
+        min_font = 999
+        if shape.has_text_frame:
+            for p in shape.text_frame.paragraphs:
+                for r in p.runs:
+                    if r.font.size:
+                        min_font = min(min_font, r.font.size / 12700)
+        shapes.append({'l':l,'t':t,'w':w,'h':h,'r':l+w,'b':t+h,
+                       'txt':txt,'name':shape.name,'font':min_font})
+
+        # --- Check 1: Hard OOB (past slide edges) ---
+        if l < -0.02 or t < -0.02 or l+w > sw+0.02 or t+h > sh+0.02:
+            issues.append(f'S{si} HARD-OOB: "{shape.name}" bounds=[{l:.2f},{t:.2f},{l+w:.2f},{t+h:.2f}] slide=[{sw:.2f},{sh:.2f}] | "{txt[:40]}"')
+
+        # --- Check 2: Safe-zone margin violations ---
+        is_fullbleed = w > sw*0.9 or h > sh*0.9
+        is_thin = w < 0.03 or h < 0.03
+        if not is_fullbleed and not is_thin:
+            is_footer = t > sh - 0.8 and h < 0.3
+            max_b = sh - (SAFE_FOOTER if is_footer else SAFE_MARGIN)
+            if l+w > sw - SAFE_MARGIN and w < sw*0.5:
+                issues.append(f'S{si} RIGHT-MARGIN: "{shape.name}" right={l+w:.3f}" (max={sw-SAFE_MARGIN:.2f}")')
+            if l < SAFE_MARGIN and w < sw*0.5:
+                issues.append(f'S{si} LEFT-MARGIN: "{shape.name}" left={l:.3f}" (safe={SAFE_MARGIN}")')
+            if t+h > max_b:
+                issues.append(f'S{si} BOTTOM-MARGIN: "{shape.name}" bottom={t+h:.3f}" (max={max_b:.2f}") | "{txt[:40]}"')
+
+        # --- Check 3: Tiny unreadable text ---
+        if min_font < 999 and min_font < MIN_FONT_PT:
+            issues.append(f'S{si} TINY-TEXT(<{MIN_FONT_PT}pt): "{shape.name}" font={min_font:.1f}pt | "{txt[:30]}"')
+
+    # --- Check 4: Real overlaps (filter intentional text-on-shape layering) ---
+    content = [s for s in shapes if s['w'] > 0.15 and s['h'] > 0.1 and s['w'] < sw*0.9]
+    for i, a in enumerate(content):
+        for j, b in enumerate(content):
+            if j <= i: continue
+            ox = max(0, min(a['r'],b['r'])-max(a['l'],b['l']))
+            oy = max(0, min(a['b'],b['b'])-max(a['t'],b['t']))
+            if ox < 0.1 or oy < 0.1: continue
+            area = ox * oy
+            smaller = min(a['w']*a['h'], b['w']*b['h'])
+            if smaller <= 0 or area/smaller < OVERLAP_THRESHOLD: continue
+            # Intentional: background shape (no text) with content on top
+            if not a['txt'] or not b['txt']: continue
+            # Intentional: same-y footer pair (left-aligned + right-aligned)
+            if abs(a['t']-b['t']) < 0.05 and abs(a['h']-b['h']) < 0.05 and a['t'] > sh-1.0: continue
+            issues.append(f'S{si} OVERLAP({area/smaller:.0%}): "{a["name"]}"("{a["txt"][:25]}") vs "{b["name"]}"("{b["txt"][:25]}")')
+
+    # --- Summary: bottom-most elements for spatial awareness ---
+    bots = sorted(shapes, key=lambda s: s['b'], reverse=True)[:3]
+    print(f'Slide {si}: {len(slide.shapes)} shapes | Bottom: {", ".join(f"{s[\"name\"]}@{s[\"b\"]:.2f}" for s in bots)}')
+
+print(f'\n{"="*50}')
+if issues:
+    print(f'{len(issues)} ISSUES FOUND:')
+    for iss in issues:
+        print(f'  - {iss}')
+    sys.exit(1)
+else:
+    print('ALL CLEAR — no layout issues detected.')
+    sys.exit(0)
+```
+
+**How to run:**
+```bash
+python qa_layout.py "path/to/output.pptx"
+```
+
+**What it catches:**
+
+| Check | What | Threshold |
+|-------|------|-----------|
+| Hard OOB | Shapes past slide edges | > 0.02" past edge |
+| Safe zone | Content too close to edges | < 0.25" margin (0.08" for footers) |
+| Tiny text | Unreadable font sizes | < 6pt |
+| Real overlaps | Two text elements colliding | > 30% of smaller shape's area |
+
+**What it filters out (not bugs):**
+- **Text-on-shape layering** — PptxGenJS pattern where an empty background shape has text/badges placed on top (100% overlap, one shape has no text → intentional)
+- **Footer pairs** — Left-aligned source + right-aligned team label at the same y position
+- **Full-bleed backgrounds** — Shapes covering > 90% of slide width/height
+- **Thin decorative lines** — Shapes < 0.03" in either dimension
+
+**If issues are found:** Fix the build script, rebuild, and re-run this check. Do NOT proceed to visual QA until this passes with zero issues. Common fixes:
+- **OOB**: Reduce element heights/gaps, or move content up
+- **Margin**: Push footers/content inward by adjusting y or h values
+- **Overlap**: Redistribute elements across columns, reduce card heights, increase gaps
+- **Tiny text**: Increase font size to at least 7pt (8pt preferred for body text)
+
+### Stage 3: Visual QA
 
 **Use subagents** — even for 2-3 slides. You've been staring at the code and will see what you expect, not what's there.
 
@@ -1933,13 +2616,13 @@ python -m markitdown output.pptx | grep -iE "xxxx|lorem|ipsum|placeholder|this.*
 
 ### Verification Loop
 
-1. Generate slides -> Convert to images -> Inspect
+1. Build PPTX → Content QA → **Programmatic Layout QA** → Visual QA
 2. **List issues found** (if zero found, look again more critically)
-3. Fix issues
-4. **Re-verify affected slides** — one fix often creates another problem
-5. Repeat until a full pass reveals no new issues
+3. Fix issues in the build script
+4. **Rebuild and re-run all three QA stages** — one fix often creates another problem
+5. Repeat until a full pass reveals no new issues across all three stages
 
-**Do not declare success until you've completed at least one fix-and-verify cycle.**
+**Do not declare success until you've completed at least one fix-and-verify cycle with zero issues across all stages.**
 
 To re-render specific slides after fixes:
 ```bash

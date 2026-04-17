@@ -118,6 +118,44 @@ def rollback_phase(state, phase_name, scope="individual"):
 1. **Individual rollback** — deletes only resources created by this phase
 2. **Resource group rollback** — deletes entire RG (faster, but destructive if shared)
 
+## Dependency Classification for Architecture Decisions
+
+**Source pattern:** mattpocock/skills `improve-codebase-architecture` — 4-category dependency model (John Ousterhout)
+
+When evaluating architecture during Discovery (Phase 0) or reviewing existing systems, classify each dependency into one of 4 categories. This determines the right testing and integration strategy for each phase.
+
+| Category | Definition | Testing Strategy | Example at Fluke |
+|----------|-----------|-----------------|------------------|
+| **In-process** | Code you own, running in the same process | Unit test directly, mock nothing | LangGraph agent nodes within Pulse Sales |
+| **Local-substitutable** | Code you own, separate service, replaceable with a stub | Integration test with in-memory substitute | Cosmos DB accessed via repository pattern → use in-memory dict for tests |
+| **Remote-owned** | Service you own, deployed separately, can't easily stub | Contract test (API schema) + real service in Dev | ADF pipelines triggered by Logic Apps |
+| **True-external** | Service you don't control at all | Mock at boundary, verify schema against docs | Azure OpenAI API, Bing Grounding, SharePoint Online |
+
+### How to Apply
+
+1. **During Phase 0 (Discovery):** When mapping data sources and AI services, tag each with its dependency category in the state contract
+2. **During Phase 1 (Infra):** In-process and local-substitutable deps can share a resource group; remote-owned and true-external need separate health checks
+3. **During Phase 5 (Test):** Use the category to select the right test doubles:
+   - In-process → no mocking needed
+   - Local-substitutable → in-memory substitute
+   - Remote-owned → deploy in Dev, test against real service
+   - True-external → mock at the SDK boundary, use recorded responses
+
+Add to `ai-ucb-state.json`:
+```json
+{
+  "requirements": {
+    "dependencies": [
+      {"name": "cosmos-db", "category": "local-substitutable", "reason": "Repository pattern allows in-memory substitute"},
+      {"name": "azure-openai", "category": "true-external", "reason": "Microsoft-managed, schema may change"},
+      {"name": "langgraph-agents", "category": "in-process", "reason": "Agent nodes run in same Python process"}
+    ]
+  }
+}
+```
+
+---
+
 ## Subscription Configuration
 
 | Subscription | ID | Purpose | Default |

@@ -1,3 +1,8 @@
+---
+name: flk-litellm
+description: "Deploy and configure LiteLLM proxy gateways on Azure App Service for routing Claude/Anthropic models through Azure AI Foundry. Translates OpenAI-format requests to Anthropic Messages API. Use when deploying a LiteLLM gateway, configuring OpenAI-compatible endpoints for Claude, troubleshooting Claude for Excel/PowerPoint connectivity, or managing API key rotation. Trigger on: 'LiteLLM', 'litellm', 'gateway', 'OpenAI proxy', 'Claude for Excel', 'Claude for PowerPoint', 'API translation'."
+---
+
 # LiteLLM Gateway Deployment Skill for Azure App Service
 
 You are an expert at deploying and configuring LiteLLM proxy gateways on Azure App Service, specifically for routing Claude models through Azure AI Foundry to clients like Claude for Excel/PowerPoint.
