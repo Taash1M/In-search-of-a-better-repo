@@ -1,6 +1,6 @@
 ---
 name: powerbi-desktop
-description: "Programmatically create and modify Power BI Desktop (.pbix) files — inject DAX measures, build report pages with visuals, manage semantic models, connect to Analysis Services, handle SecurityBindings/DPAPI. Use when creating .pbix files from scratch, injecting measures into existing reports, building visual layouts programmatically, or automating Power BI Desktop workflows. Trigger on: 'pbix', 'Power BI', 'DAX measure', 'report page', 'Power BI Desktop', 'semantic model', '.pbix file'."
+description: "Programmatically create and modify Power BI Desktop (.pbix/.pbip) files — inject DAX measures, build report pages with visuals, manage semantic models, connect to Analysis Services, handle SecurityBindings/DPAPI. CRITICAL: .pbix modification is IMPOSSIBLE in PBI 2.153+ — must use .pbip format. Use when creating .pbix/.pbip files from scratch, injecting measures into existing reports, building visual layouts programmatically, or automating Power BI Desktop workflows. Trigger on: 'pbix', 'pbip', 'Power BI', 'DAX measure', 'report page', 'Power BI Desktop', 'semantic model', '.pbix file', '.pbip file'."
 ---
 
 # Power BI Desktop Automation Skill
@@ -842,6 +842,11 @@ open('output.pbix', 'wb').write(result)
 27. **PBI Desktop overrides `underlyingType` from Fabric semantic model.** Even if you set `underlyingType: 1` (text) in a slicer's dataTransforms, PBI Desktop will override it to match the semantic model column type (e.g., 519 for DateTime) when connecting. **Strategy:** Set `underlying` to match what PBI will impose (519), and use `formatString` / `columnProperties` to control the display format (e.g., `"MMM-dd-yyyy"`). This prevents silent format conflicts.
 28. **Slicer display format via `columnProperties`.** To override slicer item formatting, add `columnProperties` to the singleVisual config: `"columnProperties": {"table.column": {"displayName": "Label", "formatString": "MMM-dd-yyyy"}}`. Also pass the same format to the `_dt_select_column` `fmt` parameter in dataTransforms. Both are needed — `columnProperties` for the visual, `dataTransforms.selects.format` for data binding.
 29. **Capture user's manual PBI Desktop positions.** When a user adjusts visual positions/sizes in PBI Desktop, extract positions from the saved .pbix (parse ZIP -> Report/Layout -> sections -> visualContainers -> config -> layouts[0].position). Update the generation script with exact `{x, y, width, height, z}` values. This prevents regeneration from overwriting the user's preferred layout. Always document the Y-band grid in a docstring.
+30. **PBIX ZIP modification is IMPOSSIBLE in PBI 2.153+ (April 2026).** PBI Desktop validates Report/Layout content against an internal integrity check — any byte change (even 1 byte) causes `MashupValidationError: This file is corrupted`. This was proven exhaustively: raw byte surgery, Python zipfile, PowerShell .NET ZipFile, direct byte replacement — ALL fail. SecurityBindings removal does NOT help. **Fix: Use .pbip format.** Save As → Power BI Project from PBI Desktop. This decomposes Report/Layout into plain JSON files (pages/, visuals/, reportExtensions.json) that are freely editable. Workflow: (1) open .pbix in Desktop, (2) File → Save As → Power BI Project (.pbip), (3) edit JSON files directly, (4) reopen .pbip in Desktop, (5) publish or Save As .pbix. **ALWAYS try .pbip first for any programmatic report modification.**
+31. **TREATAS with island tables (no relationships).** When a table has no relationships to any other table (island table), you cannot use `VALUES('Table'[column])` in TREATAS if the column doesn't exist. Instead, derive the join key from an existing column using SELECTCOLUMNS: `TREATAS(SELECTCOLUMNS(FILTER('island_table', ...), "dk", INT(SUBSTITUTE(LEFT('island_table'[timestamp_col], 10), "-", ""))), 'target_table'[date_key])`. This converts ISO timestamp strings like "2026-04-13T12:34:56" to YYYYMMDD integers (20260413) that match date_key columns. VAR blocks work in report-level measures (unlike bracket refs), so use them to keep complex TREATAS expressions readable.
+32. **Slicer must match the table used by page visuals.** If ALL visuals on a page reference only one table (an island table with no relationships), the slicer MUST use a column from THAT table. A `dim_date.full_date` slicer won't filter island-table visuals because there's no relationship to propagate the filter. Use the island table's own timestamp/date column instead. On mixed pages (visuals from related AND unrelated tables), the slicer should use the dimension table — TREATAS measures will handle the cross-table bridge.
+33. **Always verify column names against the TMDL.** Before writing measures or visual references, read the `.tmdl` file in the semantic model definition to get exact column names. Column names in design documents or ETL scripts often differ from the actual Fabric Lakehouse column names (e.g., `deployments_found` vs `deployments_total`, `rbac_users_found` vs `rbac_user_count`). A wrong column name produces `QueryExtensionMeasureError: Column 'X' in table 'Y' cannot be found`.
+34. **Report-level measures in .pbip use `dataType: "Double"` (string), not `dataType: 3` (int).** The `reportExtensions.json` format differs from the legacy `modelExtensions` in `layout["config"]`. Also: no `formatInformation` wrapper needed — just `formatString` directly. And `displayOption: "FitToPage"` is a string, not int 1. See the PBIP File Type Deep Reference section for full schema differences.
 
 ## PBI Desktop Local Analysis Services Instance
 
@@ -963,9 +968,99 @@ Aggregation function codes for query Select:
 - `4` = MAX
 - `5` = COUNT_NONNULL
 
+## .pbip Report Modification Workflow (RECOMMENDED for PBI 2.153+)
+
+**As of PBI Desktop April 2026 (v2.153.910.0), .pbip is the ONLY viable path for programmatic report modification.** The .pbix format has an unbypassable content hash check.
+
+### Step-by-Step Workflow
+
+1. **Convert .pbix → .pbip**: Open the .pbix in PBI Desktop → File → Save As → Power BI Project (.pbip)
+2. **Understand the file structure**:
+   ```
+   MyReport.pbip                          # Entry point (JSON, points to .Report/ and .SemanticModel/)
+   MyReport.Report/
+     definition/
+       report.json                        # Report-level settings
+       pages/
+         pages.json                       # Page order array (pageOrder + activePageName)
+         {pageId}/
+           page.json                      # Page metadata (displayName, dimensions)
+           visuals/
+             {visualId}/
+               visual.json                # Visual definition (type, query, objects, position)
+       reportExtensions.json              # Report-level measures (replaces modelExtensions)
+   MyReport.SemanticModel/
+     definition/
+       tables/{tablename}.tmdl           # Table columns, types, partitions
+       relationships.tmdl                 # All model relationships
+       model.tmdl                         # Model-level settings
+   ```
+3. **Read the TMDL first**: Before writing ANY measure or visual reference, read the `.tmdl` files to get exact column names and verify relationships. Column names in design docs often differ from actual names.
+4. **Edit JSON files directly**: All JSON files can be edited with any text editor or programmatically. No ZIP manipulation needed.
+5. **Key format differences from .pbix**:
+   - `reportExtensions.json`: measures use `dataType: "Double"` (string), not `dataType: 3` (int)
+   - `reportExtensions.json`: `formatString` is a direct field, no `formatInformation` wrapper
+   - `page.json`: `displayOption: "FitToPage"` (string, not int 1)
+   - `visual.json`: position includes `tabOrder` alongside x/y/z/width/height
+   - `visual.json`: report-level measures use `"Schema": "extension"` in SourceRef
+   - `pages.json`: uses `pageOrder` array, not `sections` — page IDs are folder names
+6. **Validate**: Reopen the .pbip in PBI Desktop. PBI validates on open and shows clear error messages if something is wrong.
+7. **Publish**: From PBI Desktop → Publish to workspace, or Save As .pbix for distribution.
+
+### Adding a New Page
+
+1. Create a new folder under `pages/` with a unique hex ID (e.g., `a1b2c3d4e5f6789012ab`)
+2. Add `page.json` with schema, name, displayName, displayOption, height, width
+3. Create `visuals/` subfolder with a subfolder per visual, each containing `visual.json`
+4. Add the page ID to the `pageOrder` array in `pages/pages.json`
+5. If adding measures, add them to `reportExtensions.json` under the correct entity
+
+### Adding Report-Level Measures
+
+Edit `reportExtensions.json`. Each entity has a `measures` array:
+```json
+{
+  "name": "My Measure",
+  "dataType": "Double",
+  "expression": "SUM('TableName'[Column])",
+  "formatString": "$#,##0.00",
+  "displayFolder": "FolderName"
+}
+```
+
+**Rules:**
+- ALL DAX must be fully inlined — NO bracket refs to other measures (`[OtherMeasure]` fails)
+- VAR/RETURN blocks work and are recommended for complex measures
+- Fabric Lakehouse tables need single quotes: `'schemaName tableName'[column]`
+- Column names must exactly match the TMDL definition
+
+### Cross-Table Measures for Island Tables
+
+When a table has no relationships (island table), use TREATAS with SELECTCOLUMNS to derive join keys:
+
+```dax
+// Count rows in related_table for dates matching island_table timestamps
+CALCULATE(
+    COUNTROWS('related_table'),
+    TREATAS(
+        SELECTCOLUMNS(
+            FILTER('island_table', 'island_table'[verdict] = "GOOD"),
+            "dk",
+            INT(SUBSTITUTE(LEFT('island_table'[timestamp_col], 10), "-", ""))
+        ),
+        'related_table'[date_key]
+    )
+)
+```
+
+This converts ISO timestamp "2026-04-13T12:34:56" → date_key 20260413 and pushes it as a virtual filter.
+
 ## Troubleshooting
 
-### "This file is corrupted or was created by an unrecognized version"
+### "MashupValidationError: This file is corrupted" (PBI 2.153+, April 2026+)
+**This is a DIFFERENT error from the SecurityBindings issue below.** PBI 2.153+ validates Report/Layout against an internal content hash. NO programmatic .pbix modification works — not raw bytes, not zipfile, not OPC, not .NET ZipFile. **The ONLY fix is to use .pbip format.** See Gotcha #30 for the complete workflow. If you see this error, stop trying to fix the .pbix and convert to .pbip immediately.
+
+### "This file is corrupted or was created by an unrecognized version" (PBI ≤2.152)
 1. **Most likely cause:** SecurityBindings hash mismatch. Remove SecurityBindings from the ZIP.
 2. **Second cause:** Wrong ZIP metadata (create_version, external_attr). Use binary rebuild instead of Python zipfile.
 3. **Third cause:** Layout JSON encoding wrong. Must be UTF-16-LE without BOM.
@@ -4716,7 +4811,8 @@ After enhancing this skill, verify all original sections are intact by checking 
 - `## Report/Layout JSON Structure`
 - `## Visual Container Patterns` (Patterns 1-8)
 - `## Complete Workflow: Build Report with Visuals`
-- `## Key Gotchas (Ranked by Pain Level)` (19 gotchas)
+- `## Key Gotchas (Ranked by Pain Level)` (34 gotchas)
+- `## .pbip Report Modification Workflow (RECOMMENDED for PBI 2.153+)`
 - `## PBI Desktop Local Analysis Services Instance`
 - `## Live Connection Configuration`
 - `## Power BI REST API Reference`

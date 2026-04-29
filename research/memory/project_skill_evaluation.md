@@ -1,6 +1,6 @@
 ---
 name: Skill Evaluation (mattpocock/skills + Cocoon-AI)
-description: Evaluated mattpocock/skills (19 skills) + Cocoon-AI/architecture-diagram-generator — semantic color system added to 3 skills, dark arch pattern for PPTX, 6 patterns extracted. Skill Judge re-eval: azure-diagrams A+, docx-beautify A, ubi-dev A, powerpoint-create B+ (2026-04-16)
+description: Evaluated mattpocock/skills (19 skills) + Cocoon-AI/architecture-diagram-generator — semantic color system added to 3 skills, dark arch pattern for PPTX, 6 patterns extracted. Skill Judge re-eval (revised 2026-04-17): azure-diagrams A+ (112), docx-beautify A+ (112), ubi-dev A (110), powerpoint-create A (106). D5 re-scored per no-split policy.
 type: project
 originSessionId: f4d03941-dd0b-44f2-bb99-51b65b072972
 ---
@@ -94,16 +94,18 @@ Key finding: the 3 highest-rated skills all use progressive disclosure. Our skil
 
 **Key pattern adopted:** Semantic category coloring (compute=green, data=violet, AI=cyan, security=rose, network=amber, integration=blue, monitor=purple, platform=slate). Consistent across all 3 skills for cross-format diagram coherence.
 
-## Skill Judge 8-Dimension Re-Evaluation (2026-04-16)
+## Skill Judge 8-Dimension Re-Evaluation (revised 2026-04-17)
 
 **Report:** `C:\Users\tmanyang\OneDrive - Fortive\Claude code\Skill Evaluation\skill-judge-4skills-evaluation.md`
 
-| Skill | Pre-Fix Score | Post-Fix Score | Grade | Key Fix |
+| Skill | 2026-04-16 Score | 2026-04-17 Revised | Grade | D5 Change |
 |---|---|---|---|---|
-| azure-diagrams | 108/120 | **111/120** | **A+** | Troubleshooting decision tree + NEVER quick-reference list |
-| docx-beautify | 106/120 | **108/120** | **A** | Quick-start decision tree; diagram split still needed for A+ |
-| powerpoint-create | 100/120 | 100/120 | **B+** | Needs progressive disclosure split (~700 core + API ref + patterns ref) |
-| ubi-dev | 103/120 | **106/120** | **A** | Task decision tree + 10 trigger keywords; split still needed for A+ |
+| azure-diagrams | 112/120 | **112/120** | **A+** | D5 unchanged (15/15) |
+| docx-beautify | 109/120 | **112/120** | **A+** | D5: 11→14 (decision tree + clear sections) |
+| powerpoint-create | 101/120 | **106/120** | **A** | D5: 7→12 (decision tree, but API docs dilute signal) |
+| ubi-dev | 107/120 | **110/120** | **A** | D5: 11→14 (best decision tree of all 4 skills) |
+
+**D5 re-score rationale:** Original scores penalized file length and recommended splits. Per user policy (2026-04-16), skills are slash commands loaded on-demand (~2% context). D5 now evaluates navigation quality only. powerpoint-create still penalized because ~500 lines of known API docs dilute signal (content relevance issue, not length issue).
 
 ### Tier 1 Quick Wins Implemented (5/5 complete)
 1. azure-diagrams: Troubleshooting decision tree (5-branch) after Quality Gate
@@ -112,7 +114,10 @@ Key finding: the 3 highest-rated skills all use progressive disclosure. Our skil
 4. ubi-dev: Top-level task decision tree (7-branch) after Access Control
 5. ubi-dev: Expanded description with 10 trigger keywords
 
-### Tier 2 Remaining (Progressive Disclosure Splits)
-- powerpoint-create: Core (~700) + API ref + Patterns ref → A
-- ubi-dev: Core (~800) + TDD ref + ADF ref → A+
-- docx-beautify: Extract diagram sections (~400 lines) → A+
+### Decision: Keep Files Intact (2026-04-16)
+
+User decided against progressive disclosure splits. Rationale: skills are slash commands (pay-per-use context), not ambient. A 2,885-line file is ~2% of 200k context window. Decision trees at the top provide fast routing without file management overhead. Only revisit if context limits hit in practice.
+
+### powerpoint-create Decision Tree Added (2026-04-16)
+
+7-branch decision tree added to powerpoint-create.md (the last of the 4 skills to get one). All 4 skills now have top-level decision trees. Pushed to GitHub (`f89482b`).

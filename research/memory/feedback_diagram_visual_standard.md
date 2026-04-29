@@ -32,3 +32,8 @@ All dataflow, process flow, and tech stack diagrams must meet these quality stan
 - Build script: `Leadership Forum/sample_slide18_adaptation.py`
 - Source reference: `Presentation Beautification/U examples/veritassuite_pVrple.pptx` (slide 18)
 - Skills updated: `powerpoint-create.md` (Diagram Visual Quality Standards section), `docx-beautify.md` (Proven Patterns section)
+
+### Two Design Systems (2026-04-21)
+These rules apply to BOTH systems. The visual execution differs:
+1. **Bold Signal Light** (dark/navy theme) — proven on Leadership Forum deck. Navy #003366 backgrounds, Fluke Yellow #FFC000 accents, Arial Black headers. Use for: techno-functional audiences, internal leadership.
+2. **Veritas Clean** (white/minimal theme) — proven on AI Next Steps v3. White backgrounds, large black titles, thin borders, monochrome + blue/gold. Use for: C-Suite, external stakeholders, strategy decks. Reference: `AI\Plan\build_next_steps_v3.py`.

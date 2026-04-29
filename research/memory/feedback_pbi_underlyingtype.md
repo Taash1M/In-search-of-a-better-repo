@@ -1,6 +1,6 @@
 ---
-name: PBI type encoding, modelExtensions placement, and formatInformation rules
-description: dataType 3 vs 6 (model-dependent), underlyingType 261=Double, format/currencyFormat must be null, Fabric table naming, modelExtensions inside config not top-level, sections not pages, date32 slicer fix, ZIP DataModel method=0, NEVER inject DataModel cross-file, measure replace-not-skip, preserve user positions
+name: PBI type encoding, modelExtensions placement, formatInformation, .pbip workflow, island table patterns, Fabric DirectQuery M query folding
+description: PBIX impossible in 2.153+ (use .pbip), TREATAS island tables, Fabric DirectQuery M queries must be simple table refs (no Table.AddColumn/SelectColumns), Fabric shortcuts don't auto-sync Delta schema changes, ambiguous relationship paths from bidirectional cross-filter, schema_mode="overwrite" for Delta column additions, blob upload auth-mode key not login
 type: feedback
 originSessionId: f4d03941-dd0b-44f2-bb99-51b65b072972
 ---
@@ -93,6 +93,86 @@ When a visual references a measure by name (via `Measure` in prototypeQuery Sele
 When updating README or other textbox content programmatically, only modify the `paragraphs` content — do NOT replace the entire visual or override `position`. Users adjust fractional positions in PBI Desktop (e.g., y=96.51, x=12.79) that must survive script re-runs. For new visuals (not yet in the file), use hardcoded positions; for existing visuals, update text only.
 
 **Why:** Discovered 2026-04-13 when regeneration kept resetting user's README layout adjustments (Contents header, page list, Architecture header all repositioned manually).
+
+## PBIX ZIP manipulation is IMPOSSIBLE in PBI 2.153+ — CRITICAL
+PBI Desktop April 2026 (2.153.910.0) validates Report/Layout content against an internal integrity check. **Any modification to Report/Layout bytes — even 1 byte — causes "MashupValidationError: This file is corrupted"**. This was proven exhaustively:
+- Raw byte surgery (preserving all ZIP metadata): fails
+- Python zipfile module (clean rewrite): fails
+- Direct byte replacement (no JSON parsing): fails
+- Zero-change round-trip: works (proves ZIP structure is fine; content hash is the blocker)
+
+**Fix: Use .pbip format instead.** Save As → Power BI Project (.pbip) from PBI Desktop. This decomposes Report/Layout into plain JSON files (pages/, visuals/, reportExtensions.json) that can be edited freely. PBI Desktop validates on open, not via embedded hash.
+
+**Why:** Discovered 2026-04-22 after 8+ failed attempts with different ZIP approaches. SecurityBindings (DPAPI blob) is NOT the hash — removing it doesn't help. The hash/checksum location is unknown but validated by PBI Desktop on file open.
+
+**How to apply:** Never modify .pbix files programmatically. Always use .pbip format for report modifications. Workflow: (1) open .pbix in Desktop, (2) Save As .pbip, (3) edit JSON files, (4) reopen .pbip in Desktop, (5) publish or Save As .pbix.
+
+## .pbip format conventions
+- Page schema: `https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json`
+- Visual schema: `https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json`
+- `reportExtensions.json` replaces `modelExtensions` in config — measures use `dataType: "Double"` (string, not int 3)
+- No `formatInformation` wrapper — just `formatString` directly
+- `displayOption: "FitToPage"` (string, not int 1)
+- Each visual is a separate file: `pages/{pageId}/visuals/{visualId}/visual.json`
+- Position uses `tabOrder` field alongside x/y/z/width/height
+
+## TREATAS with island tables (no relationships)
+When a table has no relationships to any other table (island table), TREATAS can bridge it via a computed column. If the island table has a timestamp string but no date_key, derive it: `INT(SUBSTITUTE(LEFT('Table'[timestamp_col], 10), "-", ""))` converts "2026-04-13T..." → 20260413.
+
+Pattern: `TREATAS(SELECTCOLUMNS(FILTER('island_table', ...), "dk", INT(SUBSTITUTE(LEFT('island_table'[timestamp], 10), "-", ""))), 'target_table'[date_key])`
+
+**Critical for page-level consistency:** If ALL visuals on a page reference only the island table, the slicer MUST use a column from that table (not from an unrelated dim table). A `dim_date.full_date` slicer won't filter island-table visuals. Use the timestamp column instead.
+
+**Why:** Discovered 2026-04-22 when health_checks (no date_key, no dim_date relationship) was used with dim_date slicers and bar chart categories — slicer did nothing, bar chart showed wrong data.
+
+## Fabric DirectQuery — M query folding is STRICT (CRITICAL)
+In Fabric DirectQuery (Lakehouse SQL endpoint), ALL M query steps must fold to native SQL. `Table.AddColumn`, `Table.SelectColumns`, `Table.TransformColumns`, and any computed/derived columns in M will fail with: **"Unable to convert an M query in table 'X' into a native source query."**
+
+**Only safe M pattern for Fabric DirectQuery:**
+```m
+let
+    Source = Sql.Database("server", "database"),
+    Table = Source{[Schema="schema",Item="table"]}[Data]
+in
+    Table
+```
+
+**Why:** Discovered 2026-04-29 when adding `year_month` via `Table.AddColumn` and selecting columns via `Table.SelectColumns` both failed. Fabric SQL endpoint requires complete query folding — no client-side computation.
+
+**How to apply:** If you need a derived column (e.g., `year_month` from `month` + `year`), add it in the ETL pipeline (Python/DuckDB) and write it to the Delta table. Then wait for Fabric Lakehouse to detect the schema change before referencing it in TMDL. Never compute it in M.
+
+## Fabric Lakehouse shortcuts don't auto-detect Delta schema changes
+When you add new columns to an existing Delta table via `write_deltalake(schema_mode="overwrite")`, the Fabric Lakehouse shortcut does NOT immediately detect the new columns. The SQL endpoint still reports the old schema (e.g., `Invalid column name 'year_month'`).
+
+**Fix:** User must go to Fabric portal → Lakehouse → manually refresh the table schema. Alternatively, delete and recreate the shortcut.
+
+**Why:** Discovered 2026-04-29 when `year_month` existed in the Delta table metadata but Fabric returned "Invalid column name". The Delta table was correct (verified via DuckDB on VM), but Fabric's schema cache was stale.
+
+**How to apply:** After any Delta schema change, don't reference the new column in TMDL until Fabric has synced. Plan for a manual Fabric portal step after ETL deploys schema changes.
+
+## Delta table schema changes need `schema_mode="overwrite"`
+When adding new columns to an existing Delta table, `write_deltalake()` requires `schema_mode="overwrite"` (deltalake 1.5.0+). Without it, the write fails with a schema mismatch error (e.g., 38 columns vs 37 expected).
+
+**Why:** Default `write_deltalake` enforces schema match. Adding `year_month` to dim_date (12 cols vs 11) and `date_key` to user_activity (38 vs 37) both failed until `schema_mode="overwrite"` was added.
+
+## Ambiguous relationship paths from bidirectional cross-filter
+Adding a new relationship can create an ambiguous path if an indirect path already exists through bidirectional cross-filter relationships. PBI errors with `PFE_XL_USERELATIONSHIP_AMBIGUOUS_PATH`.
+
+**Example:** Adding `user_activity→dim_date` created a second path: `user_activity→job_runs↔health_checks→dim_date` (the `↔` is bidirectional `crossFilteringBehavior: bothDirections`). Fix: set one of the indirect relationships to `isActive: false`.
+
+**How to apply:** Before adding a new relationship, trace ALL existing paths between the two tables (including through bidirectional relationships). If a second path exists, deactivate one of the intermediate relationships.
+
+## Blob upload auth mode
+`az storage blob upload --auth-mode login` can fail with permission errors on some storage accounts. Use `--auth-mode key` instead.
+
+**Why:** Discovered 2026-04-29 when deploying scripts to `flkaienablement` blob. Login auth returned authorization error despite having RBAC access.
+
+## Blank bars in PBI charts from orphan dimension keys
+When PBI bar/donut charts show a blank bar, it means fact table records have a foreign key value with no matching dimension entry. The dimension lookup returns NULL for the display name. Common causes:
+- **Model keys**: `_get_model_key()` fallback returns raw deployment name (e.g., `"claude-code"`) which isn't in DIM_MODELS. Fix: add catch-all entries to the dimension table.
+- **Node keys**: Old fact records (Delta merge preserves history) may have keys from before the dimension was expanded. Fix: add catch-all entries + validate keys in Silver processing.
+
+**How to apply:** When adding new LiteLLM gateway deployments or model configurations, always check that DIM_MODELS and DIM_NODES have matching entries. Add catch-all rows for any potential orphans.
 
 ## Other rules
 - Never use bracket refs `[OtherMeasure]` in report-level measures — inline full DAX.

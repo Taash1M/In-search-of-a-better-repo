@@ -42,6 +42,10 @@ Phase 2 adds an agentic AI analysis layer on top of the existing LLM Gateway Usa
 - `delta/reports/recommendations/` — upgrade paths, Phase 3 readiness
 - `delta/metadata/agent_runs/` — agent execution audit trail
 
+## Architecture Diagrams
+- Phase 2 Gateway architecture on Miro board: `https://miro.com/app/board/uXjVHajHEbE=/` (x=5500)
+- Azure-icon PNG: `AI\Miro\Claude Code Deployment\architecture\phase2_azure_arch.png`
+
 ## Deliverables (all in Phase 2 folder)
 - `Phase_2_Agentic_Usage_Tracking_Plan_v2.md` — refined plan (primary)
 - `Phase_2_Final_Plan.docx` — beautified plan

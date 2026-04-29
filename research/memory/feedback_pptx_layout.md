@@ -33,3 +33,13 @@ Never place shapes or images that overflow slide boundaries. Every visual must f
   - Tuple format: `(label, desc, img_fx, img_fy, side)` where img_fx/fy = fraction within FITTED image
   - `draw_dotted_segment()` must use NO fill (`seg.fill.background()`) + border-only `a:ln` with `prstDash val="dot"` for thin dotted connectors — never solid fill + dotted border (looks thick)
   - Horizontal connector from bubble edge to agent's (x, y) position in diagram
+- **Veritas clean header/footer pattern (proven 2026-04-21):**
+  - `v_header()`: 34pt bold black title at (0.60, 0.30), "FLUKE" watermark 34pt light gray at right, 14pt gray subtitle, thin blue accent line at y=1.28
+  - `v_footer()`: thin LGRAY line at y=7.12, 8pt silver centered text at y=7.16
+  - Content safe zone: y=1.42 to y=7.05, x=0.60 to x=12.73
+  - `add_dashed_rect()`: use XML `a:prstDash val="dash"` on the `a:ln` element (more reliable than `MSO_LINE_DASH_STYLE` enum import)
+- **python-pptx XML gotchas (proven 2026-04-19):**
+  - `a:bodyPr anchor` accepts ONLY `t`, `ctr`, `b` — NOT `tl`, `tr`, `bl`, `br`. Using `tl` (from MSO_ANCHOR.TOP mapping) causes PowerPoint to reject the file on open.
+  - Bullet `a:pPr indent` must be NEGATIVE (e.g., `-177800`) for hanging bullets. Positive indent pushes bullet+text together.
+  - `str(PRGBColor)` happens to return `'003366'` format but this is fragile. Always use `f'{c[0]:02X}{c[1]:02X}{c[2]:02X}'` for `a:srgbClr val` attributes in manual XML construction.
+  - When constructing `a:solidFill` → `a:srgbClr` for table cell fills, insert into `tcPr` — the element hierarchy must be `a:tcPr` → `a:solidFill` → `a:srgbClr`.

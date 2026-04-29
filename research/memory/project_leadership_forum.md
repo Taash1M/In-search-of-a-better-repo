@@ -1,6 +1,6 @@
 ---
 name: EM Leadership Forum
-description: 45-min AI presentation — Bold Signal Light design, 28-slide deck, checkpoint 3 final (2026-04-16)
+description: 45-min AI presentation — Bold Signal Light design, 29-slide deck (hybrid slide + section stamps), checkpoint 3 final (2026-04-17)
 type: project
 originSessionId: aa210407-a09e-461f-aa2f-83d0e2fa4475
 ---
@@ -48,6 +48,28 @@ Backups: `checkpoint2_backup/` (11 scripts), `checkpoint3_backup/` (2 main build
 ## Post-Checkpoint: Agent Portfolio Populated (2026-04-16)
 
 Slide 12 replaced placeholder with `build_slide_9_agent_portfolio()` in both v4 and D1 scripts. 3x2 card grid with color-coded pattern groups, product badges, SHARED indicators. Both decks rebuilt + PDFs regenerated.
+
+## Hybrid Slide Added (2026-04-17)
+
+Slide 13: Merges slide 11 (Scorecard KPI tiles) + slide 12 (Agentic Patterns agent cards). Top section has 4 KPI tiles ($2M+, ~4K, 5Y, 8/9), bottom has 5 compressed agent card columns (0.83 vertical scale, cards at y=2.65"). Original slides 11 and 12 kept intact alongside. Deck now **29 slides**.
+
+Build script: `build_hybrid_slide.py`. Backup: `leadership_forum_v4_pre_hybrid_backup.pptx`.
+
+## Section Stamps Added (2026-04-17)
+
+25 content slides stamped with section identifiers matching slides 2 (Journey) and 3 (Agenda). Stamp = blue circle (#005EB8) with white number + bold navy title + soft gray subtitle, positioned upper-right at user-specified coordinates (circle x=10.455", text x=10.795", y=0.12-0.16").
+
+| # | Stamp | Slides |
+|---|-------|--------|
+| 1 | Industry Framing / Task → Agentic | 4-7 |
+| 2 | 90-Day Progress / 8/9 Complete | 9-13 |
+| 3 | Architecture / 3 Deep-Dives | 14-15 |
+| 4 | Best Practices / Agents & MCP | 8 |
+| 5 | Agent Deep-Dives / TechMentor + Videos | 16-22 |
+| 6 | Claude Code / Enterprise Enablement | 23-25 |
+| 7 | Forward Look / Q2/Q3/Q4 Roadmap | 26-28 |
+
+Unstamped: slides 1 (Title), 2 (Journey), 3 (Agenda), 29 (Closing).
 
 ## 3 Agentic AI Deep-Dive Slides Added (2026-04-16)
 

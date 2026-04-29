@@ -212,7 +212,7 @@ Customer search and recruitment intelligence tool.
 
 ### 7. Team AI Enablement (Claude Code)
 
-Shared Claude Code infrastructure enabling 10 team members to use Claude Opus 4.6 via Azure AI Foundry.
+Shared Claude Code infrastructure enabling 34+ team members to use Claude Opus 4.6 via Azure AI Foundry. AAD auth live for per-user usage tracking (4 users confirmed flowing as of 2026-04-27).
 
 | Environment | Resource Group | AI Services | Location |
 |-------------|---------------|-------------|----------|
@@ -234,11 +234,11 @@ Shared Claude Code infrastructure enabling 10 team members to use Claude Opus 4.
 **Node Assignments (3-5 users per node):**
 | Node | Users |
 |------|-------|
-| node1 | Kevin Davison, Eshwari Mulpuru, Urvin Thakkar, Mihai Constantin-Pau |
-| node2 | Jd Giles, Richard Feng, Alex Chillman |
-| node3 | Vineet Thuvara, Steven Moore, Taashi Manyanga, Daniel Pouley, Azra Jabeen |
+| node1 | Kevin Davison, Eshwari Mulpuru, Urvin Thakkar, Mihai Constantin-Pau, Rachel King |
+| node2 | Jd Giles, Richard Feng, Alex Chillman, Julian Knabe, Matt Markl |
+| node3 | Vineet Thuvara, Steven Moore, Taashi Manyanga, Daniel Pouley, Azra Jabeen, Sean Sparks |
 
-**End-User Configuration:**
+**End-User Configuration (API Key — legacy, being phased out):**
 ```bash
 export CLAUDE_CODE_USE_FOUNDRY=1
 export ANTHROPIC_FOUNDRY_RESOURCE="flk-team-ai-enablement-ai"
@@ -246,13 +246,42 @@ export ANTHROPIC_DEFAULT_OPUS_MODEL="claude-code-nodeX"  # node1/node2/node3
 export ANTHROPIC_FOUNDRY_API_KEY="<api-key>"
 ```
 
-**RBAC:** Azure AI User (53ca6127-db72-4b80-b1b0-d745d6d5456d) assigned to all 12 users on the AI Services resource.
+**End-User Configuration (AAD Auth — target state for per-user tracking):**
+```bash
+export CLAUDE_CODE_USE_FOUNDRY=1
+export ANTHROPIC_FOUNDRY_RESOURCE="flk-team-ai-enablement-ai"
+export ANTHROPIC_DEFAULT_OPUS_MODEL="claude-code-nodeX"  # node1/node2/node3
+# No API key — uses DefaultAzureCredential (az login token)
+```
+
+**AAD Auth & Per-User Tracking (live 2026-04-27):**
+- `disableLocalAuth` remains `false` — both API key and AAD auth coexist
+- Azure diagnostic logging enabled on `flk-team-ai-enablement-ai` (RequestResponse) → `flkaienablement` storage
+- AAD auth populates `objectId` in diagnostic logs → resolved via `dim_aad_users` Delta table (35 users pre-seeded from RBAC)
+- Confirmed flowing: Julian Knabe, Danny Pouley (CLI inference), Kevin Davison, Taashi Manyanga (portal)
+- Graph API `User.Read.All` on MI pending tenant admin — sync script works with interactive token or pre-seeded cache
+
+**Usage Tracking Infrastructure:**
+- **VM**: `llm-usage-duckdb-vm` (Standard_B2ms, Ubuntu 24.04, ~$5.27/mo)
+- **ETL**: `llm_usage_etl.py` v3 (939 lines) — LiteLLM logs + diagnostic logs → 13 Delta tables
+- **Pre-ETL sync**: `sync_aad_users.py` — reads RBAC roster → Graph API → `dim_aad_users` Delta table
+- **Health check**: `infra_health_check.py` — 6 categories, non-blocking
+- **Automation**: `flk-llm-etl-automation` (Azure Automation, MI OID `851f094f-...`)
+- **Runbook**: `Invoke-LLMUsageETL` (7 steps: Start VM → Wait → Health Check → AAD Sync → ETL → Deallocate → Summary)
+- **Schedule**: Every 12 hours (0:00 and 12:00 UTC)
+- **Storage**: `flkaienablement` (HNS/ADLS Gen2), `litellm-logs` container
+- **Delta tables (13)**: Bronze, Silver, Gold Fact, Gold Agg, Gold Audit (user_activity), Diagnostic User Activity, 4 Dims (nodes, users, models, date), dim_aad_users, 2 Metadata (job_runs, health_checks)
+
+**RBAC:** Azure AI User (53ca6127-db72-4b80-b1b0-d745d6d5456d) assigned to 34 users via 4 security groups + individual assignments on the AI Services resource.
 
 **Deployment Notes:**
 - Anthropic models require `api-version=2025-12-01` for REST API
 - Portal-based deployments (ai.azure.com) recommended over REST API for initial Anthropic model provisioning
 - Marketplace agreement: `anthropic-claude-opus-4-6-offer` (signed 2026-03-02)
 - Foundry project + SystemAssigned managed identity required before deploying
+- `CLAUDE_CODE_USE_FOUNDRY=1` bypasses all proxy settings (`ANTHROPIC_BASE_URL` ignored) — can't route through LiteLLM or APIM
+- VM has Azure CLI 2.85.0 installed (2026-04-27)
+- Script deployment to VM: upload to blob → download via Python SDK on VM (heredoc approach fails for large scripts)
 
 ---
 

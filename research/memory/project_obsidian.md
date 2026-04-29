@@ -1,6 +1,6 @@
 ---
 name: Obsidian SecondBrain
-description: Obsidian vault for Second Brain knowledge management, PARA method, OneDrive-synced, MCPVault MCP server configured
+description: Obsidian vault as Claude's persistent second brain — auto-logging hook, CLAUDE.md read/write instructions, session logs in 1-Projects/Claude Sessions/, MCP (npx.cmd fix), 8 templates
 type: project
 originSessionId: aa210407-a09e-461f-aa2f-83d0e2fa4475
 ---
@@ -57,3 +57,12 @@ originSessionId: aa210407-a09e-461f-aa2f-83d0e2fa4475
 - Attachments save to `Attachments/`
 - Daily notes format: `YYYY-MM-DD`
 - Accent color: purple (#7c3aed)
+
+## Claude Integration (2026-04-17)
+- **Hook**: `obsidian-session-logger.py` — PostToolUse on Edit/Write/MultiEdit/Bash, appends to `1-Projects/Claude Sessions/YYYY-MM-DD.md`
+- **CLAUDE.md**: `~/.claude/CLAUDE.md` — instructs Claude to read session logs on start, write decisions/findings during, summarize at end
+- **MCP fix**: Changed `npx` to `npx.cmd` in `.mcp.json` for Windows reliability
+- **Session Log template**: 8th template added to `Templates/Session Log.md`
+- **Project note**: `1-Projects/Obsidian Second Brain.md` seeded
+- **Self-protecting**: Hook skips writes to its own session file (no recursion)
+- **Read-only filter**: Skips logging for cat/ls/grep/git-status type commands
