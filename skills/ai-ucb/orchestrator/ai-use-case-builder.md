@@ -573,7 +573,7 @@ Do NOT proceed to the next phase without explicit user approval.
 When the user invokes `/ai-use-case-builder` with no existing state:
 
 1. **Greet and orient.** Explain what the builder does and the 8 phases.
-2. **Ask for project directory.** Where should state files and artifacts be saved? Default: `C:\Users\tmanyang\OneDrive - Fortive\AI\{project-name}\`
+2. **Ask for project directory.** Where should state files and artifacts be saved? Default: `<USER_HOME>/OneDrive - <ORG>\AI\{project-name}\`
 3. **Create initial state files.** Write `ai-ucb-state.json` and `PROJECT_MEMORY.md`.
 4. **Dispatch Phase 0.** Read and execute the instructions in `/ai-ucb-discover`.
 5. **After Phase 0 GATE:** Dispatch Phase 1 → 2 → 3 → 4 → 5 → 6 → 7, gating between each.
@@ -790,7 +790,7 @@ All repositories live at `dev.azure.com/flukeit/Fluke Data And Analytics`:
 | `ADF` | ADF pipeline JSON | Extend with new pipelines |
 | `{use-case-name}` | AI app code + Bicep | Create new per use case |
 
-Branch strategy: `Users/tmanyang/{use-case-name}` feature branches, PR to main.
+Branch strategy: `Users/<USER>/{use-case-name}` feature branches, PR to main.
 
 ## Quick-Start Example
 
@@ -800,7 +800,7 @@ Branch strategy: `Users/tmanyang/{use-case-name}` feature branches, PR to main.
 1. /ai-use-case-builder invoked
 2. No ai-ucb-state.json found → New project flow
 3. Ask project directory → user confirms default
-4. Create state files in C:\Users\tmanyang\OneDrive - Fortive\AI\product-knowledge-bot\
+4. Create state files in <USER_HOME>/OneDrive - <ORG>\AI\product-knowledge-bot\
 5. Dispatch /ai-ucb-discover:
    - NL parsing → "documents, chatbot, SharePoint" → RAG archetype
    - Requirements gathered: SharePoint source, AI Search vector, Copilot Studio frontend

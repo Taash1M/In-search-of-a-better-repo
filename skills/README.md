@@ -250,7 +250,7 @@ The live location and the repo are not auto-synced. The manual workflow:
 
 # When satisfied, copy to repo
 cp ~/.claude/commands/skill-name.md \
-   "C:\Users\tmanyang\OneDrive - Fortive\Claude code\In search of a more perfect repo\skills\<category>\skill-name.md"
+   "<USER_HOME>/OneDrive - <ORG>\Claude code\In search of a more perfect repo\skills\<category>\skill-name.md"
 
 # Commit and push
 git add skills/<category>/skill-name.md
@@ -293,7 +293,7 @@ It was considered. The problem is that edits happen in both directions (live edi
 
 **Context window budget matters.** Invoking multiple large skills in the same conversation compounds context usage. If you're running a session with `ai-use-case-builder.md` (orchestrator) and several sub-skills, you're injecting thousands of tokens before your first message. On haiku (100 TPM), that budget is tight. Prefer targeted sub-skill invocation over broad orchestrator invocation when you know the specific phase.
 
-**D2 diagram paths must use forward slashes.** The D2 CLI (`C:\Users\tmanyang\tools\d2\d2-v0.7.1\bin\d2.exe`) requires forward-slash paths in the diagram source. Backslash paths silently fail or produce empty output.
+**D2 diagram paths must use forward slashes.** The D2 CLI (`<USER_HOME>/tools\d2\d2-v0.7.1\bin\d2.exe`) requires forward-slash paths in the diagram source. Backslash paths silently fail or produce empty output.
 
 **`$` triggers shell substitution in heredocs.** When writing skill content that includes `$variables`, use single-quoted heredocs (`<<'EOF'`) or escape every `$`. This has bitten the docx-beautify and azure-diagrams skills during bash-based generation steps.
 

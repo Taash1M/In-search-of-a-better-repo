@@ -16,7 +16,7 @@ Two skills built from analysis of 3 GitHub repos (rag-anything, contextgem, doct
 
 **Skill files (live):** `~/.claude/commands/doc-intelligence.md`, `~/.claude/commands/rag-multimodal.md`
 **Skill files (backup):** `AI UCB/skills/companions/doc-intelligence.md`, `AI UCB/skills/companions/rag-multimodal.md`
-**Original project dir:** `C:\Users\tmanyang\OneDrive - Fortive\Claude code\RAG\`
+**Original project dir:** `<USER_HOME>/OneDrive - <ORG>\Claude code\RAG\`
 **Repos:** rag-anything, contextgem, doctra (all in original project dir)
 **AI UCB files edited:** ai-ucb-discover, ai-ucb-pipeline, ai-ucb-ai, archetypes, ai-use-case-builder (5 files, 13 total edits)
 

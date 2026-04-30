@@ -78,8 +78,8 @@ START: What kind of document extraction?
 **Install:** `pip install contextgem`
 
 **Repos:**
-- Framework: `C:\Users\tmanyang\OneDrive - Fortive\Claude code\contextgem\repo\`
-- Taash1M fork (enhanced): `C:\Users\tmanyang\OneDrive - Fortive\Claude code\Taashi_Github\18_ContextGem_Document_Extraction\`
+- Framework: `<USER_HOME>/OneDrive - <ORG>\Claude code\contextgem\repo\`
+- Taash1M fork (enhanced): `<USER_HOME>/OneDrive - <ORG>\Claude code\Taashi_Github\18_ContextGem_Document_Extraction\`
 
 ### Core Pattern
 
@@ -222,7 +222,7 @@ doc = llm.extract_all(doc)
 
 **Install:** `pip install raganything`
 
-**Repo:** `C:\Users\tmanyang\OneDrive - Fortive\Claude code\RAG\rag-anything\`
+**Repo:** `<USER_HOME>/OneDrive - <ORG>\Claude code\RAG\rag-anything\`
 
 ### Core Pattern
 
@@ -291,7 +291,7 @@ config = RAGAnythingConfig(
 
 **When:** Processing large batches, need resilience, retries, parallel processing, bounding boxes.
 
-**Repo:** `C:\Users\tmanyang\OneDrive - Fortive\Claude code\contextgem\agentic-doc\`
+**Repo:** `<USER_HOME>/OneDrive - <ORG>\Claude code\contextgem\agentic-doc\`
 
 These patterns apply TO any framework above. Cherry-pick as needed.
 
@@ -355,7 +355,7 @@ from pathlib import Path
 files = list(Path("./documents").glob("*.pdf"))
 
 # SharePoint (via OneDrive sync)
-files = list(Path(r"C:\Users\tmanyang\OneDrive - Fortive\...").glob("*.pdf"))
+files = list(Path(r"<USER_HOME>/OneDrive - <ORG>\...").glob("*.pdf"))
 
 # S3 (download first, then process)
 import boto3

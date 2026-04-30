@@ -652,8 +652,8 @@ def validate_extraction(results, expected_fields):
 
 | Resource | Location |
 |----------|----------|
-| Doctra repo | `C:\Users\tmanyang\OneDrive - Fortive\Claude code\RAG\doctra\` |
-| ContextGem repo | `C:\Users\tmanyang\OneDrive - Fortive\Claude code\RAG\contextgem\` |
+| Doctra repo | `<USER_HOME>/OneDrive - <ORG>\Claude code\RAG\doctra\` |
+| ContextGem repo | `<USER_HOME>/OneDrive - <ORG>\Claude code\RAG\contextgem\` |
 | Azure AI Document Intelligence | `https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/` |
 | AI UCB archetypes | `~/.claude/commands/ai-ucb/archetypes.md` (Archetype 3) |
 | AI UCB pipeline templates | `~/.claude/commands/ai-ucb/pipeline-templates.md` |

@@ -5,7 +5,7 @@ type: project
 ---
 
 ## Project Directory (Primary)
-`C:\Users\tmanyang\OneDrive - Fortive\Claude code\AI UCB\`
+`<USER_HOME>/OneDrive - <ORG>\Claude code\AI UCB\`
 
 **Why:** Consolidated from 3 scattered locations on 2026-04-03. This is the versioned backup and documentation home.
 **How to apply:** Always update live skills in `~/.claude/commands/` first, then sync to this folder. See `FILE_MAP.md` in root.
@@ -63,7 +63,7 @@ Documentation suite: 5 docs (EA, Solution Design, Approach, Mappings, How-To) in
 - 3 new state contract flags: `multimodal_rag`, `enhanced_parsing`, `doc_intelligence_tier`
 - Doc Intelligence archetype: STUB → FULL (3-tier architecture from Doctra + ContextGem patterns)
 - RAG archetype: +multimodal option (9-field AI Search index, VLM-enhanced retrieval)
-- "What Was Done" report + presentation generated in `C:\Users\tmanyang\OneDrive - Fortive\Claude code\AI UCB\`
+- "What Was Done" report + presentation generated in `<USER_HOME>/OneDrive - <ORG>\Claude code\AI UCB\`
 - AI UCB project memory created at same location for continuity
 
 ## Post-Sprint: Agentic Deploy Integration (2026-04-03)
@@ -74,7 +74,7 @@ Documentation suite: 5 docs (EA, Solution Design, Approach, Mappings, How-To) in
 - Pipeline dispatcher: multi-agent upgraded from STUB to FULL
 - AI dispatcher: multi-agent enhanced with LLM registry + memory + eval conditionals
 - `eval_framework: true` works independently on ANY archetype (cross-cutting enhancement for Phase 5)
-- Source repo: `C:\Users\tmanyang\OneDrive - Fortive\Claude code\AI UCB\AI-agentic-system-dev-to-prod-\`
+- Source repo: `<USER_HOME>/OneDrive - <ORG>\Claude code\AI UCB\AI-agentic-system-dev-to-prod-\`
 
 ## Post-Sprint: AI Engineering Toolkit Evaluation (2026-04-03)
 - Cloned ai-engineering-toolkit (github.com/Taash1M/ai-engineering-toolkit) — awesome-list of 100+ tools across 14 categories

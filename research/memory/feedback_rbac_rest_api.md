@@ -9,7 +9,7 @@ Use the REST API for Azure RBAC assignments on the Fluke AI ML Technology subscr
 **Why:** `az role assignment create --scope <resource-id>` returns `MissingSubscription` error even when the subscription is set and the resource exists. This is likely a PIM/tenant interaction bug. The REST API works reliably with the same scope string.
 
 **How to apply:** When onboarding users to Azure AI Foundry:
-1. Resolve email → OID: `az ad user show --id "user@fluke.com" --query "id" -o tsv`
+1. Resolve email → OID: `az ad user show --id "user@<ORG_DOMAIN>" --query "id" -o tsv`
 2. Get token: `az account get-access-token --resource https://management.azure.com --query accessToken -o tsv`
 3. PUT via REST: `https://management.azure.com{scope}/providers/Microsoft.Authorization/roleAssignments/{uuid}?api-version=2022-04-01`
 4. Body: `{ "properties": { "roleDefinitionId": "...roleDefinitions/53ca6127-...", "principalId": "{OID}", "principalType": "User" } }`

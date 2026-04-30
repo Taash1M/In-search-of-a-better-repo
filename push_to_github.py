@@ -27,8 +27,8 @@ from pathlib import Path
 
 # ─── Configuration ───────────────────────────────────────────────────────────
 
-ONEDRIVE_CLONE = Path(r"C:\Users\tmanyang\OneDrive - Fortive\Claude code\In search of a more perfect repo")
-LOCAL_CLONE = Path(r"C:\Users\tmanyang\In-search-of-a-better-repo")
+ONEDRIVE_CLONE = Path(r"<USER_HOME>/OneDrive - <ORG>\Claude code\In search of a more perfect repo")
+LOCAL_CLONE = Path(r"<USER_HOME>/In-search-of-a-better-repo")
 BRANCH = "main"
 BUNDLE_PATH = Path(tempfile.gettempdir()) / "repo-sync-bundle.bundle"
 

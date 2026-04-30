@@ -8,7 +8,7 @@ originSessionId: aa210407-a09e-461f-aa2f-83d0e2fa4475
 
 **Why:** Existing powerpoint-create skill scored D (75/120, 70% redundant). No preset/palette cascade. Requires Node.js. New skill consolidates 5 GitHub sources into one python-pptx-only system with docx_beautify's proven architecture.
 
-**How to apply:** All artifacts in `C:\Users\tmanyang\OneDrive - Fortive\Claude code\Presentation Beautification\`. Full project memory at `PROJECT_MEMORY.md` in that folder. GitHub research at `Github_Research.md` (5 repos documented). Standing instructions: always update Github_Research.md when consuming repos, always log sessions to PROJECT_MEMORY.md, always push gotchas to skill file.
+**How to apply:** All artifacts in `<USER_HOME>/OneDrive - <ORG>\Claude code\Presentation Beautification\`. Full project memory at `PROJECT_MEMORY.md` in that folder. GitHub research at `Github_Research.md` (5 repos documented). Standing instructions: always update Github_Research.md when consuming repos, always log sessions to PROJECT_MEMORY.md, always push gotchas to skill file.
 
 **Key details:**
 - Engine: python-pptx only (no Node.js/PptxGenJS)

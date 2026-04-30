@@ -14,7 +14,7 @@ Update the "Data Related Slides" (24 & 25) in the Q1 strategy deck with content 
 
 ## Key Facts
 
-- **Project dir**: `C:\Users\tmanyang\OneDrive - Fortive\AI\EM\Q1 Start Deck\`
+- **Project dir**: `<USER_HOME>/OneDrive - <ORG>\AI\EM\Q1 Start Deck\`
 - **PPTX**: `Fluke IT 2026 Strat _Q1.pptx` (25 slides, 16:9) — original deck, not yet modified
 - **Target insert file**: `Fluke IT 2026 Data_Updates for _Q1.pptx` — final destination, not yet touched
 - **Excel source**: `Data and AI Updates_March impact deliverables.xlsx`
@@ -87,4 +87,4 @@ Update the "Data Related Slides" (24 & 25) in the Q1 strategy deck with content 
 
 ## File Access Note
 
-Excel file may be locked by OneDrive/Excel — copy to `C:\Users\tmanyang\AppData\Local\Temp\q1_data.xlsx` before reading with openpyxl.
+Excel file may be locked by OneDrive/Excel — copy to `<USER_HOME>/AppData\Local\Temp\q1_data.xlsx` before reading with openpyxl.

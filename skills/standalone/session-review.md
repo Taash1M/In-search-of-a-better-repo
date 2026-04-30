@@ -87,20 +87,20 @@ For each lesson, determine the exact target file:
 
 ### Skill Targets
 Check which skills were invoked or referenced in this session:
-- `C:\Users\adm-tmanyang\.claude\commands\ubi-dev.md`
-- `C:\Users\tmanyang\OneDrive - Fortive\Claude code\Document Beautification\docx-beautify.md`
-- `C:\Users\tmanyang\OneDrive - Fortive\Claude code\Presentation Beautification\pptx-beautify.md`
-- Other skills in `C:\Users\adm-tmanyang\.claude\commands\`
+- `<ADMIN_HOME>/.claude\commands\ubi-dev.md`
+- `<USER_HOME>/OneDrive - <ORG>\Claude code\Document Beautification\docx-beautify.md`
+- `<USER_HOME>/OneDrive - <ORG>\Claude code\Presentation Beautification\pptx-beautify.md`
+- Other skills in `<ADMIN_HOME>/.claude\commands\`
 
 ### Project Memory Targets
-- `C:\Users\tmanyang\OneDrive - Fortive\Projects\MDM\Customer Data\Customer Data Matching and Linking\PROJECT_MEMORY.md`
-- `C:\Users\tmanyang\OneDrive - Fortive\Projects\UBI\CPQ - SMC and RMC\PROJECT_MEMORY.md`
-- `C:\Users\tmanyang\OneDrive - Fortive\Claude code\Presentation Beautification\PROJECT_MEMORY.md`
-- `C:\Users\tmanyang\OneDrive - Fortive\Claude code\Document Beautification\PROJECT_MEMORY.md`
+- `<USER_HOME>/OneDrive - <ORG>\Projects\MDM\Customer Data\Customer Data Matching and Linking\PROJECT_MEMORY.md`
+- `<USER_HOME>/OneDrive - <ORG>\Projects\UBI\CPQ - SMC and RMC\PROJECT_MEMORY.md`
+- `<USER_HOME>/OneDrive - <ORG>\Claude code\Presentation Beautification\PROJECT_MEMORY.md`
+- `<USER_HOME>/OneDrive - <ORG>\Claude code\Document Beautification\PROJECT_MEMORY.md`
 - Other PROJECT_MEMORY.md files in active project directories
 
 ### Auto Memory Target
-- `C:\Users\adm-tmanyang\.claude\projects\C--windows-system32\memory\`
+- `<ADMIN_HOME>/.claude\projects\C--windows-system32\memory\`
 
 ## Step 4: Apply Updates
 

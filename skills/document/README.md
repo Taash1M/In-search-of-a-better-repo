@@ -141,9 +141,9 @@ Sub-skill that generates Azure architecture and data flow diagrams. Key componen
 | `contextgem` | latest | doc-extract |
 | `D2 CLI` | v0.7.1 | docx-beautify (diagram backend) |
 
-**cairosvg on Windows** requires MSYS2 64-bit DLLs. See `reference_cairosvg_windows.md` in MEMORY for setup notes. Cairo DLLs are at `C:\Users\tmanyang\tools\cairo-dlls\`.
+**cairosvg on Windows** requires MSYS2 64-bit DLLs. See `reference_cairosvg_windows.md` in MEMORY for setup notes. Cairo DLLs are at `<USER_HOME>/tools\cairo-dlls\`.
 
-**D2 CLI** is at `C:\Users\tmanyang\tools\d2\d2-v0.7.1\bin\d2.exe`. Use forward-slash paths only; avoid `$` in labels (triggers substitution); `|md|` blocks break on `<`.
+**D2 CLI** is at `<USER_HOME>/tools\d2\d2-v0.7.1\bin\d2.exe`. Use forward-slash paths only; avoid `$` in labels (triggers substitution); `|md|` blocks break on `<`.
 
 ---
 
@@ -164,5 +164,5 @@ done
 ```
 
 To update `docx_beautify.py` (backing module):
-- Source: `C:\Users\tmanyang\OneDrive - Fortive\Claude code\Document Beautification\docx_beautify.py`
+- Source: `<USER_HOME>/OneDrive - <ORG>\Claude code\Document Beautification\docx_beautify.py`
 - After changes, re-run the Skill Judge against `docx-beautify.md` to confirm grade is maintained

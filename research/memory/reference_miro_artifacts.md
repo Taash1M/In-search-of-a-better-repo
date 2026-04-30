@@ -5,7 +5,7 @@ type: reference
 originSessionId: ae50e3e1-9553-4e26-a884-435a65a1bea9
 ---
 ## Location
-`C:\Users\tmanyang\OneDrive - Fortive\AI\Miro\`
+`<USER_HOME>/OneDrive - <ORG>\AI\Miro\`
 
 ## Structure
 ```

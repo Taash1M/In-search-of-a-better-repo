@@ -5,8 +5,8 @@ type: project
 ---
 
 ## Location
-- **Weekly reports**: `C:\Users\tmanyang\OneDrive - Fortive\ADHOC\UBI\Daily Report\`
-- **Updates / working versions**: `C:\Users\tmanyang\OneDrive - Fortive\ADHOC\UBI\Daily Report\Updates\`
+- **Weekly reports**: `<USER_HOME>/OneDrive - <ORG>\ADHOC\UBI\Daily Report\`
+- **Updates / working versions**: `<USER_HOME>/OneDrive - <ORG>\ADHOC\UBI\Daily Report\Updates\`
 
 ## Reports Generated
 - **2026-03-27 DOCX close-out**: `2026-03-27/Daily_Update_20260327.docx` — final DOCX-format report

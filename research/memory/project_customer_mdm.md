@@ -5,7 +5,7 @@ type: project
 ---
 
 ## Project Directory
-`C:\Users\tmanyang\OneDrive - Fortive\Projects\MDM\Customer Data\Customer Data Matching and Linking\`
+`<USER_HOME>/OneDrive - <ORG>\Projects\MDM\Customer Data\Customer Data Matching and Linking\`
 
 ## Key Files
 - **Memory file**: `PROJECT_MEMORY.md` in project dir (full session log, table catalog, bridge keys, design decisions)
@@ -25,7 +25,7 @@ type: project
 - Bridge linkage: CRM.flk_oracleaccountid -> bridge.Id -> bridge.flk_partynumber -> EBS.PartyNumber
 
 ## Status (2026-03-18)
-ALL 5 PHASES PRODUCTION COMPLETE + VALIDATED. E2E artifact review COMPLETED. Documentation review COMPLETED — 9 discrepancies fixed in Approach v2->v2.2. Feature branches `Users/tmanyang/CustomerMDM` in both repos — committed but NOT pushed.
+ALL 5 PHASES PRODUCTION COMPLETE + VALIDATED. E2E artifact review COMPLETED. Documentation review COMPLETED — 9 discrepancies fixed in Approach v2->v2.2. Feature branches `Users/<USER>/CustomerMDM` in both repos — committed but NOT pushed.
 
 ## Production Results
 - **Phase 2 (Dedup)**: CRM 2.27M->1.58M survivors (30.2% dup). EBS 4.35M->1.22M survivors (71.9% dup). CRM scored 5.6M pairs, EBS scored 3.3M pairs.

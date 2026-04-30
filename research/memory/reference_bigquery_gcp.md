@@ -14,11 +14,11 @@ originSessionId: dfe89d08-5370-4725-a763-d79180316df0
 - **Email**: `marketing-analytics-reporting@cobalt-cider-279717.iam.gserviceaccount.com`
 - **Client ID**: `104310228882783091754`
 - **Key storage**: Azure Key Vault `flkubi-kv-prd` (resource group `flkubi-prd-rg-001`), secret name `Google-Fluke-ServiceAccount-Json`
-- **ADF linked service**: `flkubi_google_bigquery` (`C:\Users\tmanyang\ADF\linkedService\flkubi_google_bigquery.json`)
-- **Local key backup**: `C:\Users\tmanyang\Claude\cobalt-cider-279717-service-account.json`
+- **ADF linked service**: `flkubi_google_bigquery` (`<USER_HOME>/ADF\linkedService\flkubi_google_bigquery.json`)
+- **Local key backup**: `<USER_HOME>/Claude\cobalt-cider-279717-service-account.json`
 
 ## Authentication — Browser UI
-- **Gmail account**: `taashi.manyanga@gmail.com` — created ~2020-2021 for BigQuery console access
+- **Gmail account**: `<USER>@<PERSONAL_DOMAIN>` — created ~2020-2021 for BigQuery console access
 - **Login URL**: console.cloud.google.com → select project `cobalt-cider-279717` → BigQuery
 - **Password recovery**: Use Google "Forgot password" flow; recovery goes to Gmail recovery options
 
@@ -26,7 +26,7 @@ originSessionId: dfe89d08-5370-4725-a763-d79180316df0
 - **June 2020**: Tom Oyarzun initiated REQ0148060 (Pull GA data to Azure), created GCP project and service account
 - **July 2020**: Tom asked Fortive (Glen Hamilton, Michelle Smith) to grant project access to Fortive's BigQuery
 - **Oct 2021**: Tom emailed Daniel Sheppard about BigQuery/UA/GA4/GCP data usage for UBI
-- **Key people**: Tom Oyarzun (owner), Sunil Kumar (dev, used sunil1.kumar@fluke.com), Jon Gardiner, Glen Hamilton (Fortive)
+- **Key people**: Tom Oyarzun (owner), Sunil Kumar (dev, used sunil1.kumar@<ORG_DOMAIN>), Jon Gardiner, Glen Hamilton (Fortive)
 
 ## Also Note
 - `taashir@gmail.com` is a separate personal Gmail (non-BigQuery, used for personal forwards)

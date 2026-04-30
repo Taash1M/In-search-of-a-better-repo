@@ -7,9 +7,9 @@ originSessionId: aa210407-a09e-461f-aa2f-83d0e2fa4475
 # Obsidian Second Brain
 
 ## Location
-- **Vault**: `C:\Users\tmanyang\OneDrive - Fortive\Claude code\Obsidian`
+- **Vault**: `<USER_HOME>/OneDrive - <ORG>\Claude code\Obsidian`
 - **Obsidian app**: `C:\Program Files\Obsidian\Obsidian.exe`
-- **Setup script**: `C:\Users\tmanyang\OneDrive - Fortive\AI\AI BI Tool\obsidian_setup.py`
+- **Setup script**: `<USER_HOME>/OneDrive - <ORG>\AI\AI BI Tool\obsidian_setup.py`
 - **Sync**: OneDrive (automatic)
 
 ## Setup Status
@@ -24,7 +24,7 @@ originSessionId: aa210407-a09e-461f-aa2f-83d0e2fa4475
 
 ## MCP Server (MCPVault)
 - **Package**: `@bitbonsai/mcpvault@latest` (v0.11.0)
-- **Config**: `C:\Users\adm-tmanyang\.claude\.mcp.json` → `obsidian` entry
+- **Config**: `<ADMIN_HOME>/.claude\.mcp.json` → `obsidian` entry
 - **Mode**: Direct file access (no Obsidian app needed)
 - **Security**: Path traversal protection, symlink blocking, `.obsidian`/`.git` auto-excluded
 - **File types**: `.md`, `.markdown`, `.txt`, `.base`, `.canvas`

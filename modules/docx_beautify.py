@@ -1197,8 +1197,8 @@ def _find_beautiful_mermaid():
         os.path.expanduser("~/AppData/Local/Temp/beautiful-mermaid/dist/index.js"),
         # Global npm install locations (admin and user accounts)
         os.path.expanduser("~/AppData/Roaming/npm/node_modules/beautiful-mermaid/dist/index.js"),
-        r"C:\Users\adm-tmanyang\AppData\Roaming\npm\node_modules\beautiful-mermaid\dist\index.js",
-        r"C:\Users\tmanyang\AppData\Roaming\npm\node_modules\beautiful-mermaid\dist\index.js",
+        r"<ADMIN_HOME>/AppData\Roaming\npm\node_modules\beautiful-mermaid\dist\index.js",
+        r"<USER_HOME>/AppData\Roaming\npm\node_modules\beautiful-mermaid\dist\index.js",
     ]
     for p in candidates:
         if os.path.isfile(p):
@@ -2137,7 +2137,7 @@ def _check_d2():
     if shutil.which("d2") is not None:
         return True
     # Check known install location on this machine
-    known = r"C:\Users\tmanyang\tools\d2\d2-v0.7.1\bin\d2.exe"
+    known = r"<USER_HOME>/tools\d2\d2-v0.7.1\bin\d2.exe"
     if os.path.isfile(known):
         return True
     return False
@@ -2148,7 +2148,7 @@ def _get_d2_cmd():
     import shutil
     if shutil.which("d2") is not None:
         return "d2"
-    known = r"C:\Users\tmanyang\tools\d2\d2-v0.7.1\bin\d2.exe"
+    known = r"<USER_HOME>/tools\d2\d2-v0.7.1\bin\d2.exe"
     if os.path.isfile(known):
         return known
     return "d2"

@@ -287,7 +287,7 @@ There are three copies of these files. Keep them in sync manually after signific
 | **Live (main skills)** | `~/.claude/commands/` | `ai-use-case-builder.md` + 8 sub-skills + 5 companions |
 | **Live (reference)** | `~/.claude/commands/ai-ucb/` | 7 reference files |
 | **Repo** | `skills/ai-ucb/` | Full 21-file set, organized by category |
-| **Backup** | `C:\Users\tmanyang\OneDrive - Fortive\Claude code\AI UCB\skills\` | Timestamped snapshots |
+| **Backup** | `<USER_HOME>/OneDrive - <ORG>\Claude code\AI UCB\skills\` | Timestamped snapshots |
 
 ### Sync order (live → repo)
 1. Edit live files in `~/.claude/commands/` (this is what Claude Code uses)

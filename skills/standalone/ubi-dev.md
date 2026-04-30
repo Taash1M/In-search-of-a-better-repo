@@ -33,7 +33,7 @@ What do you need?
 ## Repositories
 
 ### 1. AzureDataBricks (Compute Layer)
-- **Local path:** `C:\Users\tmanyang\AzureDataBricks`
+- **Local path:** `<USER_HOME>/AzureDataBricks`
 - **Remote:** `https://dev.azure.com/flukeit/Fluke%20Data%20And%20Analytics/_git/AzureDataBricks`
 - **Branch:** `main`
 - **Purpose:** Databricks notebooks implementing the Medallion Architecture (Bronze → Silver → Gold)
@@ -41,14 +41,14 @@ What do you need?
 - **Total files:** 646
 
 ### 2. ADF (Orchestration Layer)
-- **Local path:** `C:\Users\tmanyang\ADF`
+- **Local path:** `<USER_HOME>/ADF`
 - **Remote:** `https://dev.azure.com/flukeit/Fluke%20Data%20And%20Analytics/_git/ADF`
 - **Branch:** `Main`
 - **Purpose:** Azure Data Factory pipelines, triggers, datasets, and linked services that orchestrate the Databricks notebooks
 - **Resources:** 91 pipelines, 113 datasets, 31 linked services, 102 triggers
 
 ### 3. Power BI UBI Curated Datasets (Reporting Layer)
-- **Local path:** `C:\Users\tmanyang\Power BI UBI Curated Datasets`
+- **Local path:** `<USER_HOME>/Power BI UBI Curated Datasets`
 - **Remote:** `https://dev.azure.com/flukeit/Fluke%20Data%20And%20Analytics/_git/Power%20BI%20UBI%20Curated%20Datasets`
 - **Branch:** `main`
 - **Purpose:** Power BI semantic models (.pbix files, dataset definitions) that consume the Gold layer data for reporting and analytics
@@ -1016,7 +1016,7 @@ If any additional nesting exists (e.g., a TRUE branch scope before the Switch), 
 4. Transform `item().xxx` references to `pipeline().parameters.xxx` in the child
 5. Resolve `activity('...').output` references in the parent and pass as string parameters
 
-**Reference:** PR #3888 (2026-02-25) — Fixed `FlukeUBI_Source_DataPull_Stream` by extracting Switch blocks into `FlukeUBI_Source_DataPull_Full_Copy` and `FlukeUBI_Source_DataPull_Inc_Copy` child pipelines. Documentation at `C:\Users\tmanyang\OneDrive - Fortive\ADHOC\UBI\ADF nested issue\`.
+**Reference:** PR #3888 (2026-02-25) — Fixed `FlukeUBI_Source_DataPull_Stream` by extracting Switch blocks into `FlukeUBI_Source_DataPull_Full_Copy` and `FlukeUBI_Source_DataPull_Inc_Copy` child pipelines. Documentation at `<USER_HOME>/OneDrive - <ORG>\ADHOC\UBI\ADF nested issue\`.
 
 ### ADF Resource Groups
 
@@ -1655,7 +1655,7 @@ df = spark.sql("""
 
 Every STM CSV deliverable MUST also be converted to a formatted Excel workbook using the standard `format_stm.py` utility. The raw CSV is the source of truth; the Excel version is the presentation layer.
 
-**Utility location:** `C:\Users\tmanyang\OneDrive - Fortive\Claude code\skills\format_stm.py`
+**Utility location:** `<USER_HOME>/OneDrive - <ORG>\Claude code\skills\format_stm.py`
 
 **Usage:**
 ```bash
@@ -1990,4 +1990,4 @@ When reviewing or auditing UBI artifacts, classify findings using these levels:
 
 ## File Output Location
 
-All deliverables and output files go to: `C:\Users\tmanyang\Claude\deliverebles\`
+All deliverables and output files go to: `<USER_HOME>/Claude\deliverebles\`

@@ -32,7 +32,7 @@ OneDrive provides versioning, sharing, and backup for the binary files. Git prov
 | Excel examples (Regional, Charts) | PNG | `AI\Claude code deployment\docs\Training\` |
 | FAQ | TXT | `AI\Claude code deployment\docs\Training\` |
 
-All OneDrive paths are relative to `C:\Users\tmanyang\OneDrive - Fortive\`.
+All OneDrive paths are relative to `<USER_HOME>/OneDrive - <ORG>\`.
 
 ---
 
@@ -58,7 +58,7 @@ To regenerate any document after content updates:
 2. Run the script from the OneDrive directory where it lives:
 
 ```bash
-cd "C:\Users\tmanyang\OneDrive - Fortive\AI\Claude code deployment\docs\Training"
+cd "<USER_HOME>/OneDrive - <ORG>\AI\Claude code deployment\docs\Training"
 python generate_claude_code_onboarding_node2.py
 ```
 

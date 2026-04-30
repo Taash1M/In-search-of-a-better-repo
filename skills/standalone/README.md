@@ -105,7 +105,7 @@ Handles the MSIS 521 assignment lifecycle in 6 phases: parse prompt, research, o
 
 ## Sync Workflow
 
-Skills in this directory are the canonical versions. Promoted skills are also installed at `C:\Users\adm-tmanyang\.claude\commands\` so Claude Code can resolve them globally.
+Skills in this directory are the canonical versions. Promoted skills are also installed at `<ADMIN_HOME>/.claude\commands\` so Claude Code can resolve them globally.
 
 To sync a skill after editing:
 

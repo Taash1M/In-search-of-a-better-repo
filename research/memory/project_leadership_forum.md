@@ -14,7 +14,7 @@ Deliverables for an EM Leadership Forum presentation on Agentic AI at Fluke. Aud
 
 ## Key Facts
 
-- **Project dir**: `C:\Users\tmanyang\OneDrive - Fortive\AI\EM\Leadership Forum\`
+- **Project dir**: `<USER_HOME>/OneDrive - <ORG>\AI\EM\Leadership Forum\`
 - **Interview results**: `rebuild_plan_interview.md` (complete slide-by-slide spec for all 23 slides)
 - **Created**: 2026-04-08
 - **Status**: Full 25-slide deck built (2026-04-15). Architecture bubble fix validated + applied (2026-04-16). Agent Portfolio slide populated (2026-04-16).
@@ -137,7 +137,7 @@ All 4 engines confirmed working with test renders:
 | Architecture (generic systems) | **D2** v0.7.1 with styled classes + grid layouts | Proven in Phase 2 PPTX |
 | Data charts (bar, donut, line) | **matplotlib** 3.10.8 | Available, customizable |
 | KPI cards / dashboards | **python-pptx** native shapes | Proven in Phase 2 PPTX |
-| SVG→PNG conversion | **cairosvg** 2.9.0 (with MSYS2 DLLs at `C:\Users\tmanyang\tools\cairo-dlls`) | Works for matplotlib/Mermaid SVGs; NOT for D2 SVGs (embedded WOFF fonts) |
+| SVG→PNG conversion | **cairosvg** 2.9.0 (with MSYS2 DLLs at `<USER_HOME>/tools\cairo-dlls`) | Works for matplotlib/Mermaid SVGs; NOT for D2 SVGs (embedded WOFF fonts) |
 
 **Key learning**: Mermaid CLI was available but underutilized — stronger than D2 for sequence diagrams and flowcharts. D2 remains better for architecture/structural diagrams with nested containers.
 
@@ -147,8 +147,8 @@ All 4 engines confirmed working with test renders:
 - **Hierarchy tags** — rounded rect work items with color-coded borders per level (Agent → Skill → Tool)
 - Build script: `sample_slide18_adaptation.py`
 
-**Mermaid CLI location**: `C:\Users\adm-tmanyang\AppData\Roaming\npm\mmdc`
-**D2 location**: `C:\Users\tmanyang\tools\d2\d2-v0.7.1\bin\d2.exe`
+**Mermaid CLI location**: `<ADMIN_HOME>/AppData\Roaming\npm\mmdc`
+**D2 location**: `<USER_HOME>/tools\d2\d2-v0.7.1\bin\d2.exe`
 
 ## Design System: Bold Signal Light — Fluke Edition
 

@@ -11,14 +11,14 @@ Use `scan_inbox.py` via the explorer.exe cross-session trick:
 
 ```
 # Files (already exist):
-C:\Users\tmanyang\OneDrive - Fortive\AI\Claude code deployment\requests\scan_inbox.py
-C:\Users\tmanyang\OneDrive - Fortive\AI\Claude code deployment\requests\run_scan.bat
+<USER_HOME>/OneDrive - <ORG>\AI\Claude code deployment\requests\scan_inbox.py
+<USER_HOME>/OneDrive - <ORG>\AI\Claude code deployment\requests\run_scan.bat
 
-# Launch from adm-tmanyang session:
-explorer.exe "C:\Users\tmanyang\OneDrive - Fortive\AI\Claude code deployment\requests\run_scan.bat"
+# Launch from <ADMIN_USER> session:
+explorer.exe "<USER_HOME>/OneDrive - <ORG>\AI\Claude code deployment\requests\run_scan.bat"
 
 # Wait ~15-20 seconds, then read results:
-cat "C:\Users\tmanyang\OneDrive - Fortive\AI\Claude code deployment\requests\scan_results.log"
+cat "<USER_HOME>/OneDrive - <ORG>\AI\Claude code deployment\requests\scan_results.log"
 ```
 
 The script searches Inbox for emails with "claude", "Claude Code", "CLI access", "LLM access", "AI Access" in subject or body, received in 2026. Returns up to 100 results sorted newest-first with sender, date, subject, TO, and 300-char body preview.
@@ -27,7 +27,7 @@ The script searches Inbox for emails with "claude", "Claude Code", "CLI access",
 Compare scan results against the current DOCX table. Look for:
 - Direct requests ("I would like access", "requesting access", "please enable", "can you provide claude code to")
 - Forwarded requests from Eshwari Mulpuru (CC'd people = the requestees)
-- Teams chat notifications (from `system-notification@fortive.com`) containing access requests
+- Teams chat notifications (from `system-notification@<ORG_DOMAIN>`) containing access requests
 
 Filter OUT:
 - Setup guide thread replies (existing team members)

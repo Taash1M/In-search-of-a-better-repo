@@ -1,16 +1,16 @@
 ---
 name: Miro MCP Integration
-description: Miro MCP server connected to taashi.manyanga@fluke.com, official miro-ai repo cloned, 13 tools available, custom skill planned, project folder at Claude code\MCP\Miro MCP
+description: Miro MCP server connected to <USER>@<ORG_DOMAIN>, official miro-ai repo cloned, 13 tools available, custom skill planned, project folder at Claude code\MCP\Miro MCP
 type: project
 originSessionId: 9accd003-3d3b-4227-b58a-870575044110
 ---
 ## Project Directory
-`C:\Users\tmanyang\OneDrive - Fortive\Claude code\MCP\Miro MCP\`
+`<USER_HOME>/OneDrive - <ORG>\Claude code\MCP\Miro MCP\`
 
 ## Connection Status
 - **MCP Server**: Official Miro MCP at `https://mcp.miro.com/` (HTTP transport)
-- **Auth**: OAuth 2.1 — connected and authenticated as `taashi.manyanga@fluke.com`
-- **Enabled by**: Laura Williams (laura.williams@fortive.com) on 2026-04-13 via Fortive admin (Miro Enterprise)
+- **Auth**: OAuth 2.1 — connected and authenticated as `<USER>@<ORG_DOMAIN>`
+- **Enabled by**: Laura Williams (laura.williams@<ORG_DOMAIN>) on 2026-04-13 via Fortive admin (Miro Enterprise)
 - **Config**: Already in Claude Code local MCP config (`claude mcp add --transport http miro https://mcp.miro.com`)
 - **Status check**: `claude mcp list` — should show `miro: https://mcp.miro.com (HTTP) - Connected`
 
@@ -80,7 +80,7 @@ originSessionId: 9accd003-3d3b-4227-b58a-870575044110
   - Pending: create frames to group related items; items currently free-floating
 
 ## Artifacts Folder
-- **Location**: `C:\Users\tmanyang\OneDrive - Fortive\AI\Miro\`
+- **Location**: `<USER_HOME>/OneDrive - <ORG>\AI\Miro\`
 - **Structure**: One subfolder per board/project → `architecture/` (Azure-icon PNGs), `dataflow-d2/` (D2 sources), `dataflow-svg/` (rendered SVGs)
 - **Claude Code Deployment**: 5 PNGs + 5 .d2 + 5 .svg = 15 files
 - See [reference_miro_artifacts.md](reference_miro_artifacts.md) for full tree

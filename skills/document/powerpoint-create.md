@@ -560,7 +560,7 @@ For architecture, data flow, and resource landscape diagram slides, use the **az
 
 ```python
 import sys
-sys.path.insert(0, r"C:\Users\tmanyang\OneDrive - Fortive\Claude code\Document Beautification")
+sys.path.insert(0, r"<USER_HOME>/OneDrive - <ORG>\Claude code\Document Beautification")
 from azure_diagrams import quick_architecture, quick_flow, quick_landscape
 
 # Architecture diagram sized for full PPTX slide

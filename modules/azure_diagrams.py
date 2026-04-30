@@ -5,7 +5,7 @@ Generates publication-quality architecture diagrams using actual Azure SVG icons
 Designed to be called by docx-beautify and pptx-beautify skills.
 
 Dependencies: pip install matplotlib Pillow cairosvg cairocffi
-              + MSYS2 64-bit cairo DLLs in C:\\Users\\tmanyang\\tools\\cairo-dlls\\
+              + MSYS2 64-bit cairo DLLs in C:\\Users\\<USER>\\tools\\cairo-dlls\\
 
 Usage:
     from azure_diagrams import generate_architecture_diagram, generate_data_flow_diagram
@@ -37,7 +37,7 @@ from pathlib import Path
 # CAIROSVG BOOTSTRAP — Must happen before any cairosvg import
 # ═══════════════════════════════════════════════════════════════════════════
 
-CAIRO_DLL_DIR = r"C:\Users\tmanyang\tools\cairo-dlls"
+CAIRO_DLL_DIR = r"<USER_HOME>/tools\cairo-dlls"
 
 def _bootstrap_cairo():
     """Add MSYS2 64-bit cairo DLLs to PATH so cairocffi can find libcairo-2.dll."""
@@ -82,7 +82,7 @@ except ImportError:
 # ═══════════════════════════════════════════════════════════════════════════
 
 ICON_BASE_DIR = (
-    r"C:\Users\tmanyang\OneDrive - Fortive\Claude code\Document Beautification"
+    r"<USER_HOME>/OneDrive - <ORG>\Claude code\Document Beautification"
     r"\Azure_Public_Service_Icons_V23\Azure_Public_Service_Icons\Icons"
 )
 

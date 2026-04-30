@@ -10,7 +10,7 @@ Fluke AI Next Steps Plan — a C-Suite executive deck presenting 7 strategic dec
 
 **Why:** The Office Hours meeting surfaced 5 key rollout questions with no clear decision authority. The Steering Committee fills the governance gap the Charter requires but doesn't explicitly create. Each of 7 open questions gets 2 options with justification and a clear recommendation.
 
-**How to apply:** Build scripts in `C:\Users\tmanyang\OneDrive - Fortive\AI\Plan\`. Each version has its own build script and output PPTX.
+**How to apply:** Build scripts in `<USER_HOME>/OneDrive - <ORG>\AI\Plan\`. Each version has its own build script and output PPTX.
 
 ## Versions
 
@@ -62,16 +62,16 @@ Inspired by user's reference slides (Veritas product deck — TIMELINE and DEPLO
 ## AI Advisory Committee C-Suite Email (2026-04-24)
 
 Separate deliverable built from Office Hours content + this deck's 7 decisions:
-- **File**: `C:\Users\tmanyang\OneDrive - Fortive\AI\AI Advisory Committee\AI_Charter_Progress_Update_CLevel_April2026.docx`
+- **File**: `<USER_HOME>/OneDrive - <ORG>\AI\AI Advisory Committee\AI_Charter_Progress_Update_CLevel_April2026.docx`
 - **Content**: Executive summary, 4 real use cases with time-savings metrics, 7 decisions table, governance structure, risk awareness, next steps
 - **Sources**: Apr 10 + Apr 24 Office Hours transcripts + this PPTX
 - **Apr 24 Office Hours key topics**: JD Giles channel coverage demo, per-user usage tracking need raised by JD and Eshwari, governance discussion
 
 ## Source Documents
 
-- `C:\Users\tmanyang\OneDrive - Fortive\AI\Office Hours\4-10-2026\AI Office Hours — Meeting Minutes (April 10, 2026).docx`
-- `C:\Users\tmanyang\OneDrive - Fortive\AI\Office Hours\4-24-2026\AI Office Hours (April 24, 2026).docx`
-- `C:\Users\tmanyang\OneDrive - Fortive\AI\Charter\Fluke_AI_Charter_Updated_20260326.docx`
+- `<USER_HOME>/OneDrive - <ORG>\AI\Office Hours\4-10-2026\AI Office Hours — Meeting Minutes (April 10, 2026).docx`
+- `<USER_HOME>/OneDrive - <ORG>\AI\Office Hours\4-24-2026\AI Office Hours (April 24, 2026).docx`
+- `<USER_HOME>/OneDrive - <ORG>\AI\Charter\Fluke_AI_Charter_Updated_20260326.docx`
 
 ## QA Artifacts
 

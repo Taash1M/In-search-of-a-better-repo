@@ -301,7 +301,7 @@ ML Technology subscription. Do not waste time debugging this — it is a known p
 **Step 1: Resolve email to Object ID**
 
 ```bash
-az ad user show --id user@fluke.com --query id -o tsv
+az ad user show --id user@<ORG_DOMAIN> --query id -o tsv
 ```
 
 **Step 2: Get a management plane bearer token**
@@ -381,7 +381,7 @@ sync after any changes.
 **After editing a hook locally:**
 
 ```bash
-cp ~/.claude/hooks/<hook-name>.py "C:/Users/tmanyang/OneDrive - Fortive/Claude code/In search of a more perfect repo/configurations/hooks/<hook-name>.py"
+cp ~/.claude/hooks/<hook-name>.py "<USER_HOME>/OneDrive - <ORG>/Claude code/In search of a more perfect repo/configurations/hooks/<hook-name>.py"
 ```
 
 **After editing a settings template:**

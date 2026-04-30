@@ -8,7 +8,7 @@ Phase 2 adds an agentic AI analysis layer on top of the existing LLM Gateway Usa
 
 **Why:** Enterprise requirement for automated pipeline monitoring, usage analytics, and future upgrade recommendations without manual analysis effort.
 
-**How to apply:** Reference the Phase 2 folder at `C:\Users\tmanyang\OneDrive - Fortive\AI\Claude code deployment\Usage Tracking\Phase 2\` for plan, architecture, and deliverables. Primary plan is `Phase_2_Agentic_Usage_Tracking_Plan_v2.md`.
+**How to apply:** Reference the Phase 2 folder at `<USER_HOME>/OneDrive - <ORG>\AI\Claude code deployment\Usage Tracking\Phase 2\` for plan, architecture, and deliverables. Primary plan is `Phase_2_Agentic_Usage_Tracking_Plan_v2.md`.
 
 ## Status (2026-04-14)
 - **Plan v2.0 COMPLETE** — refined after 3-panel expert evaluation (87 findings, all CRITICAL+HIGH resolved)

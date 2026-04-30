@@ -8,10 +8,10 @@ Oracle CPQ (Configure Price Quote), SMC (Subscription Management Cloud), and RMC
 
 **Why:** With CPQ implementation, subscription orders now bypass legacy EBS Order Management and flow through SMC → AR, requiring a new UBI data pipeline.
 
-**How to apply:** When working on this project, reference files at `C:\Users\tmanyang\OneDrive - Fortive\Projects\UBI\CPQ - SMC and RMC\`.
+**How to apply:** When working on this project, reference files at `<USER_HOME>/OneDrive - <ORG>\Projects\UBI\CPQ - SMC and RMC\`.
 
 ## Project Directory
-`C:\Users\tmanyang\OneDrive - Fortive\Projects\UBI\CPQ - SMC and RMC\`
+`<USER_HOME>/OneDrive - <ORG>\Projects\UBI\CPQ - SMC and RMC\`
 
 ## Status (2026-04-29)
 - **Phase:** Technical Design → Miro board walkthrough ready, pending stakeholder review
@@ -141,7 +141,7 @@ Oracle CPQ (Configure Price Quote), SMC (Subscription Management Cloud), and RMC
 - **Conclusion**: RMC subscription revenue data is essentially NOT in UBI. The 18 "Revenue Management" rows are a tiny fraction with no detail. A new stream is definitively required.
 
 ## Validation Query Script
-- `C:\Users\tmanyang\OneDrive - Fortive\Projects\UBI\CPQ - SMC and RMC\check_rmc_in_factrevenue.py`
+- `<USER_HOME>/OneDrive - <ORG>\Projects\UBI\CPQ - SMC and RMC\check_rmc_in_factrevenue.py`
 
 ## Next Steps
 1. ~~Phase 0: Validate RMC data in FactRevenue~~ **DONE** — confirmed NOT present

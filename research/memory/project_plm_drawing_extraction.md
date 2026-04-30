@@ -30,7 +30,7 @@ First real-world test of the `doc-extract` skill on 20 Fluke engineering drawing
 
 ## Output Location
 
-`C:\Users\tmanyang\OneDrive - Fortive\AI\Technical Validation\Document extraction - PLM Drawings\`
+`<USER_HOME>/OneDrive - <ORG>\AI\Technical Validation\Document extraction - PLM Drawings\`
 
 ## Recommendation
 

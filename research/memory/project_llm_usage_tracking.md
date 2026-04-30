@@ -8,7 +8,7 @@ LLM Gateway usage tracking system captures request logs from 5 LiteLLM gateway n
 
 **Why:** Enterprise requirement for tracking AI token usage and costs across 16+ Claude Code team members on Azure AI Foundry Marketplace billing. Current gateway-level tracking identifies nodes but not individual users.
 
-**How to apply:** When working on the LLM Gateway, AI Enablement, or usage dashboards, reference the plan at `C:\Users\tmanyang\OneDrive - Fortive\AI\Claude code deployment\LLM Gateway\LLM_Gateway_Usage_Tracking_Plan.md` and the project memory at `C:\Users\tmanyang\OneDrive - Fortive\AI\Claude code deployment\CLAUDE.md`.
+**How to apply:** When working on the LLM Gateway, AI Enablement, or usage dashboards, reference the plan at `<USER_HOME>/OneDrive - <ORG>\AI\Claude code deployment\LLM Gateway\LLM_Gateway_Usage_Tracking_Plan.md` and the project memory at `<USER_HOME>/OneDrive - <ORG>\AI\Claude code deployment\CLAUDE.md`.
 
 ## Per-User Tracking via Azure Diagnostic Logs (2026-04-27, was Phase 0 only on 2026-04-24)
 
@@ -24,7 +24,7 @@ The gateway-level ETL (LiteLLM logs → DuckDB → Delta) continues as-is for co
 
 ### ETL v3 (deployed 2026-04-27, updated 2026-04-29)
 - **Script**: `llm_usage_etl_v2.py` (~980 lines, v3 despite filename)
-- **VM path**: `/home/azureuser/llm_usage_etl.py`
+- **VM path**: `<VM_HOME>/llm_usage_etl.py`
 - **New functions**: `_process_diagnostic_logs()`, `_resolve_object_ids()`, `_load_aad_user_cache()`, `_load_diag_watermark()`/`_save_diag_watermark()`, `_detect_node_from_deployment()`
 - **New Delta tables**: `gold/audit/diagnostic_user_activity` (joined Type A+B records), `gold/dimensions/dim_aad_users` (objectId→name/email cache)
 - **13 Delta tables total** (was 11): added `diagnostic_user_activity` + `dim_aad_users`
@@ -38,7 +38,7 @@ The gateway-level ETL (LiteLLM logs → DuckDB → Delta) continues as-is for co
 
 ### AAD User Sync (pre-ETL, deployed 2026-04-27)
 - **Script**: `sync_aad_users.py` (standalone, repeatable)
-- **VM path**: `/home/azureuser/sync_aad_users.py`
+- **VM path**: `<VM_HOME>/sync_aad_users.py`
 - **Process**: Reads RBAC assignments on `flk-team-ai-enablement-ai` → resolves each objectId via Graph API → writes to `dim_aad_users` Delta table
 - **Initial seed**: 35 rows (34 RBAC users + 1 Foundry Portal SP)
 - **Runbook integration**: Step 4/7 in `Invoke-LLMUsageETL.ps1`, requires ARM + Graph tokens
@@ -61,21 +61,21 @@ The gateway-level ETL (LiteLLM logs → DuckDB → Delta) continues as-is for co
 - **Azure CLI 2.85.0**: Installed on VM (2026-04-27) for future use
 
 ### VM Operational Reference (CRITICAL — avoid repeat troubleshooting)
-- **Python venv**: `/home/azureuser/etl_env/` — NOT system Python. System pip locked by PEP 668.
+- **Python venv**: `<VM_HOME>/etl_env/` — NOT system Python. System pip locked by PEP 668.
 - **Activation**: `. etl_env/bin/activate` (POSIX dot-source). Do NOT use `source` — VM `az vm run-command` uses `sh`, not `bash`.
 - **Installed packages** (in venv): `duckdb 1.2.2`, `pandas 3.0.1`, `deltalake 1.5.0`, `azure-storage-blob 12.28.0`, `azure-core 1.39.0`
 - **NOT installed**: `azure-storage-file-datalake` — use `azure-storage-blob` or account key for ADLS access
-- **`etl_env.sh`**: On VM at `/home/azureuser/etl_env.sh` — exports `AZURE_STORAGE_CONNECTION_STRING` and `AZURE_BLOB_CONTAINER_NAME`. Sourced by `run_etl.sh` if conn string not already in env.
+- **`etl_env.sh`**: On VM at `<VM_HOME>/etl_env.sh` — exports `AZURE_STORAGE_CONNECTION_STRING` and `AZURE_BLOB_CONTAINER_NAME`. Sourced by `run_etl.sh` if conn string not already in env.
 - **Querying Delta tables from VM**: Use `deltalake` Python library with `abfss://` scheme + account_key. Do NOT use DuckDB `delta_scan` — it can't authenticate to ADLS (returns `Identity not found`).
 - **Gold Fact column names**: `model_deployment` (not `model_deployment_name`), `total_tokens`, `request_id`, `date_key`
 - **Job metadata column names**: `run_start_time`, `run_duration_seconds`, `new_blobs_processed`, `bronze_rows_written`, `total_tokens_processed`, `correlation_id`
 
 ### Wrapper Script: `run_etl.sh` (deployed 2026-04-28, TESTED & VALIDATED)
-- **VM path**: `/home/azureuser/run_etl.sh`
+- **VM path**: `<VM_HOME>/run_etl.sh`
 - **Local path**: `LLM Gateway/run_etl.sh`
 - **Purpose**: Single entry point — handles HOME, venv, etl_env.sh, runs sync + ETL + query
 - **Flags**: `--sync`, `--etl`, `--query DATE_KEY`, `--all` (no args = --all)
-- **Companion**: `/home/azureuser/query_usage.py` — reports usage by node, diagnostic users, dimensions, last ETL run
+- **Companion**: `<VM_HOME>/query_usage.py` — reports usage by node, diagnostic users, dimensions, last ETL run
 - **Script deployment**: Upload to blob `_scripts/` → download on VM via Python Azure SDK
 
 #### Ad-hoc ETL — THE COMMAND (copy-paste, no assembly needed):
@@ -93,7 +93,7 @@ GRAPH_TOKEN=$(az account get-access-token --resource https://graph.microsoft.com
 # 4. Run full pipeline (sync + ETL + query)
 az vm run-command invoke --resource-group flk-team-ai-enablement-rg --name llm-usage-duckdb-vm \
   --command-id RunShellScript --scripts \
-  "export HOME=/home/azureuser ARM_ACCESS_TOKEN='$ARM_TOKEN' GRAPH_ACCESS_TOKEN='$GRAPH_TOKEN' && /home/azureuser/run_etl.sh --all" \
+  "export HOME=<VM_HOME>/ ARM_ACCESS_TOKEN='$ARM_TOKEN' GRAPH_ACCESS_TOKEN='$GRAPH_TOKEN' && <VM_HOME>/run_etl.sh --all" \
   --query "value[0].message" -o tsv
 
 # 5. Deallocate VM
@@ -104,7 +104,7 @@ az vm deallocate --resource-group flk-team-ai-enablement-rg --name llm-usage-duc
 ```bash
 az vm run-command invoke --resource-group flk-team-ai-enablement-rg --name llm-usage-duckdb-vm \
   --command-id RunShellScript --scripts \
-  "export HOME=/home/azureuser && . /home/azureuser/etl_env.sh && /home/azureuser/run_etl.sh --query 20260428" \
+  "export HOME=<VM_HOME>/ && . <VM_HOME>/etl_env.sh && <VM_HOME>/run_etl.sh --query 20260428" \
   --query "value[0].message" -o tsv
 ```
 
@@ -248,7 +248,7 @@ az vm run-command invoke --resource-group flk-team-ai-enablement-rg --name llm-u
 - **Schedule**: `Every12Hours` (0:00 and 12:00 UTC, starting 2026-03-27)
 
 ## Phase 8 Resources (Health Check)
-- **Script**: `infra_health_check.py` (on VM at `/home/azureuser/`, local at `LLM Gateway/`)
+- **Script**: `infra_health_check.py` (on VM at `<VM_HOME>/`, local at `LLM Gateway/`)
 - **Delta table**: `delta/metadata/health_checks/` (28 columns, merge on `check_run_id`)
 - **ARM token flow**: Runbook MI → `Get-AzAccessToken` → env var `ARM_ACCESS_TOKEN` → Python `requests`
 - **Runbook step**: [3/7] non-blocking, wrapped in try/catch
@@ -283,8 +283,8 @@ az vm run-command invoke --resource-group flk-team-ai-enablement-rg --name llm-u
 
 ### Deployment (2026-04-23)
 - **Method**: Uploaded script to blob storage (`_scripts/llm_usage_etl_v2.py`), VM downloaded via `az vm run-command invoke`
-- **VM path**: `/home/azureuser/llm_usage_etl.py` (939 lines v3, was 642 v2)
-- **Backup**: `/home/azureuser/llm_usage_etl.py.bak` (original v2)
+- **VM path**: `<VM_HOME>/llm_usage_etl.py` (939 lines v3, was 642 v2)
+- **Backup**: `<VM_HOME>/llm_usage_etl.py.bak` (original v2)
 
 ### Validation Results (manual ETL run, 2026-04-23)
 - **Run ID**: `54d37278-36b0-4e62-9c83-f6a76304740f`

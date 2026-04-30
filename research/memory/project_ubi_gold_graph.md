@@ -8,7 +8,7 @@ type: project
 
 **Why:** Enable GraphRAG, lineage analysis, impact analysis, and cross-domain discovery across the full UBI data model (CRM, Orders, Inventory, Procurement, AR, Service, VOC, Finance, etc.)
 
-**How to apply:** All artifacts go in `C:\Users\tmanyang\OneDrive - Fortive\AI\Neo4j\UBI Gold Graph\`. Full project memory at `PROJECT_MEMORY.md` in that folder. Read-only access to prod. Skill (`ubi-neo4j.md`) lives in commands dir with backup in project folder.
+**How to apply:** All artifacts go in `<USER_HOME>/OneDrive - <ORG>\AI\Neo4j\UBI Gold Graph\`. Full project memory at `PROJECT_MEMORY.md` in that folder. Read-only access to prod. Skill (`ubi-neo4j.md`) lives in commands dir with backup in project folder.
 
 **Key details:**
 - Fabric Lakehouse: `FLK_UBI_LH_GOLDS`, ID `0a252e47-a44f-4002-8d96-4cbdb8dc1951`

@@ -33,7 +33,7 @@ These rules override all other instructions. Violations are never acceptable.
 ### Azure CLI Access
 
 ```bash
-# Get ARM token (user is already authenticated as taashi.manyanga@fluke.com)
+# Get ARM token (user is already authenticated as <USER>@<ORG_DOMAIN>)
 TOKEN=$(az account get-access-token --resource https://management.azure.com --query accessToken -o tsv)
 
 # Query subscription via REST API
@@ -51,7 +51,7 @@ GRAPH_TOKEN=$(az account get-access-token --resource https://graph.microsoft.com
 The full subscription knowledge base with every resource group, resource, AI model deployment, and architecture detail is maintained at:
 
 ```
-C:\Users\tmanyang\OneDrive - Fortive\AI\Commercial Americas\fluke-ai-ml-subscription-knowledge.md
+<USER_HOME>/OneDrive - <ORG>\AI\Commercial Americas\fluke-ai-ml-subscription-knowledge.md
 ```
 
 **Always read this file at the start of any development session** to ensure you have current context on the subscription's resources.
@@ -61,7 +61,7 @@ C:\Users\tmanyang\OneDrive - Fortive\AI\Commercial Americas\fluke-ai-ml-subscrip
 All project-related artifacts, documentation, and working files for Commercial Americas initiatives are stored at:
 
 ```
-C:\Users\tmanyang\OneDrive - Fortive\AI\Commercial Americas\
+<USER_HOME>/OneDrive - <ORG>\AI\Commercial Americas\
 ```
 
 ---
@@ -469,7 +469,7 @@ curl -s -H "Authorization: Bearer $TOKEN" \
 This subscription supports the **Commercial Americas** initiative — building a Vertical Market Sales Playbook powered by Pulse AI. Key context files are at:
 
 ```
-C:\Users\tmanyang\OneDrive - Fortive\AI\Commercial Americas\
+<USER_HOME>/OneDrive - <ORG>\AI\Commercial Americas\
   fluke-ai-ml-subscription-knowledge.md   -- Full subscription inventory
   source_docs\                             -- SharePoint documents (project plans, exec summaries)
   Miro Board Screenshots\                  -- Playbook wireframes, process flows, operating model

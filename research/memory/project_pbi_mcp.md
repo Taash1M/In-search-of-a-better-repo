@@ -14,10 +14,10 @@ MCP server exposing UBI Power BI semantic models to Claude Code. Users connect a
 
 ## Key Facts
 
-- **Project dir**: `C:\Users\tmanyang\OneDrive - Fortive\Claude code\MCP\PBI MCP`
+- **Project dir**: `<USER_HOME>/OneDrive - <ORG>\Claude code\MCP\PBI MCP`
 - **Package**: `pbi_semantic_mcp` (under `src/`)
 - **PROJECT_MEMORY.md**: In project dir (detailed build log)
-- **Plan file**: `C:\Users\adm-tmanyang\.claude\plans\generic-hopping-coral.md`
+- **Plan file**: `<ADMIN_HOME>/.claude\plans\generic-hopping-coral.md`
 - **Created**: 2026-04-10
 - **Status**: Phase 1 foundation + docs complete — 6 tools, 28 tests, 2 DOCX deliverables with architecture diagrams
 - **Metadata integrated into AI BI Tool** (2026-04-11): registry.py, loader.py, YAML data files copied + adapted into `fluke-ai-bi-tool/backend/app/metadata/` and `fluke-ai-bi-tool/data/`
@@ -52,4 +52,4 @@ MCP server exposing UBI Power BI semantic models to Claude Code. Users connect a
 
 - **`What Was Deployed — PBI Semantic MCP Server.docx`** (443KB) — 6 azure_diagrams, executive preset, comprehensive deployment summary
 - **`How to Use — PBI Semantic MCP Server.docx`** (324KB) — 3 azure_diagrams, installation + usage guide + troubleshooting
-- Build script: `C:\Users\tmanyang\AppData\Local\Temp\build_pbi_mcp_docs_v2.py`
+- Build script: `<USER_HOME>/AppData\Local\Temp\build_pbi_mcp_docs_v2.py`

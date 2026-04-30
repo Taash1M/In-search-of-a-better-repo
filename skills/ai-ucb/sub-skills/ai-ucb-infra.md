@@ -55,7 +55,7 @@ Tags applied to all resources:
   Project: {project_name}
   Archetype: {archetype}
   Environment: dev
-  Owner: taashi.manyanga@fluke.com
+  Owner: <USER>@<ORG_DOMAIN>
   CostCenter: {cost-center}
   CreatedBy: ai-use-case-builder
   CreatedDate: {date}
@@ -198,7 +198,7 @@ TAGS='{
     "Project": "'${PROJECT_NAME}'",
     "Archetype": "'${ARCHETYPE}'",
     "Environment": "'${ENV}'",
-    "Owner": "taashi.manyanga@fluke.com",
+    "Owner": "<USER>@<ORG_DOMAIN>",
     "CostCenter": "'${COST_CENTER}'",
     "CreatedBy": "ai-use-case-builder",
     "CreatedDate": "'$(date -u +%Y-%m-%dT%H:%M:%SZ)'",

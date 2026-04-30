@@ -10,11 +10,11 @@ Cloned and evaluated `https://github.com/mattpocock/skills.git` (19 skills) for 
 
 **Why:** Identify valuable patterns and capabilities to upgrade existing skills or create new ones. Standing initiative to keep the skill framework competitive.
 
-**How to apply:** Source patterns are attributed in each modified skill with `**Source pattern:** mattpocock/skills` tags. Evaluation report at `C:\Users\tmanyang\OneDrive - Fortive\Claude code\Skill Evaluation\mattpocock_skills_evaluation.md`.
+**How to apply:** Source patterns are attributed in each modified skill with `**Source pattern:** mattpocock/skills` tags. Evaluation report at `<USER_HOME>/OneDrive - <ORG>\Claude code\Skill Evaluation\mattpocock_skills_evaluation.md`.
 
 ## Key Facts
 
-- **Project dir**: `C:\Users\tmanyang\OneDrive - Fortive\Claude code\Skill Evaluation\`
+- **Project dir**: `<USER_HOME>/OneDrive - <ORG>\Claude code\Skill Evaluation\`
 - **Repo cloned to**: `skills/` subdirectory (19 skill directories)
 - **Evaluated**: 2026-04-16
 - **Security**: PASS (9/10) — no credentials, no injection, one hardcoded path (obsidian-vault)
@@ -82,7 +82,7 @@ Key finding: the 3 highest-rated skills all use progressive disclosure. Our skil
 **Repo:** `https://github.com/Cocoon-AI/architecture-diagram-generator` (3.1k stars, MIT)
 **Grade:** B- (72/100) — well-crafted for scope but far simpler than our existing skills
 **Verdict:** No new skill needed. Cherry-picked enhancements into 3 existing skills.
-**Report:** `C:\Users\tmanyang\OneDrive - Fortive\Claude code\Skill Evaluation\cocoon-ai-architecture-diagram-evaluation.md`
+**Report:** `<USER_HOME>/OneDrive - <ORG>\Claude code\Skill Evaluation\cocoon-ai-architecture-diagram-evaluation.md`
 
 ### Changes Made
 
@@ -96,7 +96,7 @@ Key finding: the 3 highest-rated skills all use progressive disclosure. Our skil
 
 ## Skill Judge 8-Dimension Re-Evaluation (revised 2026-04-17)
 
-**Report:** `C:\Users\tmanyang\OneDrive - Fortive\Claude code\Skill Evaluation\skill-judge-4skills-evaluation.md`
+**Report:** `<USER_HOME>/OneDrive - <ORG>\Claude code\Skill Evaluation\skill-judge-4skills-evaluation.md`
 
 | Skill | 2026-04-16 Score | 2026-04-17 Revised | Grade | D5 Change |
 |---|---|---|---|---|

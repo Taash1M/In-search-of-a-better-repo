@@ -27,7 +27,7 @@ Determine what to audit:
 
 ### Partitioning Rules
 
-1. Glob for all `.py` and `.sql` files under `C:\Users\tmanyang\AzureDataBricks\FlukeCoreGrowth\`
+1. Glob for all `.py` and `.sql` files under `<USER_HOME>/AzureDataBricks\FlukeCoreGrowth\`
 2. Partition files by stream directory. Cap at 10 partitions.
 3. If a partition has 50+ files, sub-partition by subdirectory (Staging/Mart/Gold).
 
@@ -129,7 +129,7 @@ For each finding:
 
 ## Step 5: Generate Audit Report
 
-Create a Markdown report at `C:\Users\tmanyang\Claude\deliverebles\UBI_Audit_<YYYYMMDD>.md`
+Create a Markdown report at `<USER_HOME>/Claude\deliverebles\UBI_Audit_<YYYYMMDD>.md`
 
 ### Report Structure
 

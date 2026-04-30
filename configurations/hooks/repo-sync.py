@@ -25,7 +25,7 @@ import shutil
 import sys
 from pathlib import Path
 
-REPO_ROOT = Path(r"C:\Users\tmanyang\OneDrive - Fortive\Claude code\In search of a more perfect repo")
+REPO_ROOT = Path(r"<USER_HOME>/OneDrive - <ORG>\Claude code\In search of a more perfect repo")
 CLAUDE_DIR = Path(os.path.expanduser("~")) / ".claude"
 
 # ── MCP server source directories ────────────────────────────────────────────
@@ -33,10 +33,10 @@ CLAUDE_DIR = Path(os.path.expanduser("~")) / ".claude"
 # because the first match wins.
 MCP_ROOTS = [
     # data/ subdir gets special dest (no src/ prefix)
-    (Path(r"C:\Users\tmanyang\OneDrive - Fortive\Claude code\MCP\PBI MCP\src\pbi_semantic_mcp\data"),
+    (Path(r"<USER_HOME>/OneDrive - <ORG>\Claude code\MCP\PBI MCP\src\pbi_semantic_mcp\data"),
      "modules/mcp-servers/pbi-semantic/data"),
     # everything else under pbi_semantic_mcp/
-    (Path(r"C:\Users\tmanyang\OneDrive - Fortive\Claude code\MCP\PBI MCP\src\pbi_semantic_mcp"),
+    (Path(r"<USER_HOME>/OneDrive - <ORG>\Claude code\MCP\PBI MCP\src\pbi_semantic_mcp"),
      "modules/mcp-servers/pbi-semantic/src/pbi_semantic_mcp"),
 ]
 MCP_EXTENSIONS = {".py", ".yaml", ".yml", ".md", ".toml", ".json"}
@@ -46,6 +46,33 @@ SETTINGS_FILE = CLAUDE_DIR / "settings.json"
 
 # Secret patterns to redact in settings.json
 SECRET_KEY_PATTERNS = re.compile(r"(KEY|SECRET|TOKEN|PASSWORD)", re.IGNORECASE)
+
+# ── Path / PII sanitization (applied to ALL synced content) ─────────────────
+# Order matters: longer / more-specific patterns first.
+SANITIZE_RULES = [
+    # Admin user paths (both slash styles) — before regular user
+    (re.compile(r"C:[/\\]Users[/\\]<ADMIN_USER>[/\\]?"), "<ADMIN_HOME>/"),
+    # Regular user paths
+    (re.compile(r"C:[/\\]Users[/\\]<USER>[/\\]?"), "<USER_HOME>/"),
+    # Company name in OneDrive paths
+    (re.compile(r"OneDrive\s*-\s*Fortive"), "OneDrive - <ORG>"),
+    # VM user paths
+    (re.compile(r"<VM_HOME>/?"), "<VM_HOME>/"),
+    # Email addresses (before standalone username)
+    (re.compile(r"taashi\.manyanga@fluke\.com"), "<USER>@<ORG_DOMAIN>"),
+    (re.compile(r"taashi\.manyanga@fortive\.com"), "<USER>@<ORG_DOMAIN>"),
+    (re.compile(r"taashi\.manyanga@gmail\.com"), "<USER>@<PERSONAL_DOMAIN>"),
+    # Standalone usernames (word-boundary)
+    (re.compile(r"\badm-<USER>\b"), "<ADMIN_USER>"),
+    (re.compile(r"\btmanyang\b"), "<USER>"),
+]
+
+
+def _sanitize_content(text: str) -> str:
+    """Replace local paths, usernames, and email addresses with generic placeholders."""
+    for pattern, replacement in SANITIZE_RULES:
+        text = pattern.sub(replacement, text)
+    return text
 
 # ── Skill routing ────────────────────────────────────────────────────────────
 SKILL_DIR = CLAUDE_DIR / "commands"
@@ -202,7 +229,10 @@ def main():
 
     try:
         if sanitized is not None:
-            dest.write_text(sanitized, encoding="utf-8")
+            dest.write_text(_sanitize_content(sanitized), encoding="utf-8")
+        elif src.suffix in {".md", ".py", ".json", ".yaml", ".yml", ".toml"}:
+            raw = src.read_text(encoding="utf-8")
+            dest.write_text(_sanitize_content(raw), encoding="utf-8")
         else:
             shutil.copy2(str(src), str(dest))
     except Exception:

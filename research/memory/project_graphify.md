@@ -12,8 +12,8 @@ Graphify turns any folder (code, docs, papers, images) into a queryable knowledg
 **How to apply:** Use `/graphify` skill for codebase analysis, reading list mapping, research corpus navigation. Integrates with UBI Gold Graph (Neo4j) and MCP server for agent access.
 
 ## Project Location
-- **Repo clone**: `C:\Users\tmanyang\OneDrive - Fortive\Claude code\graphify\`
-- **Skill file**: `C:\Users\adm-tmanyang\.claude\commands\graphify.md`
+- **Repo clone**: `<USER_HOME>/OneDrive - <ORG>\Claude code\graphify\`
+- **Skill file**: `<ADMIN_HOME>/.claude\commands\graphify.md`
 - **Source**: https://github.com/safishamsi/graphify (MIT license)
 - **PyPI package**: `graphifyy` (temporary name, v0.3.0)
 

@@ -948,7 +948,7 @@ az account get-access-token --resource https://analysis.windows.net/powerbi/api 
 
 ### PBI Desktop Store Location
 ```
-C:\Users\tmanyang\AppData\Local\Microsoft\WindowsApps\PBIDesktopStore.exe
+<USER_HOME>/AppData\Local\Microsoft\WindowsApps\PBIDesktopStore.exe
 ```
 Process name when running: `PBIDesktop.exe` (NOT `PBIDesktopStore.exe`)
 

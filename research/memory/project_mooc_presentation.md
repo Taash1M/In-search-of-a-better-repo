@@ -10,7 +10,7 @@ MSIS 511 case presentation arguing that MOOCs will NOT disrupt the University of
 
 **Why:** Assignment from UW professor — analyze whether technology will disrupt top institutions. Our team argues the "will not disrupt" position.
 
-**How to apply:** Project dir `C:\Users\tmanyang\OneDrive\Taashi M\UW\Q4\511\`. Research in `research/` subdirectory. Build script generates PPTX using Veritas clean design adapted with UW colors (Purple #4B2E83, Gold #B7A57A).
+**How to apply:** Project dir `<USER_HOME>/OneDrive\Taashi M\UW\Q4\511\`. Research in `research/` subdirectory. Build script generates PPTX using Veritas clean design adapted with UW colors (Purple #4B2E83, Gold #B7A57A).
 
 ## Team
 - **Course**: MSIS 511, Q4

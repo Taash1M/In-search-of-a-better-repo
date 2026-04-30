@@ -14,13 +14,13 @@ cairosvg depends on cairocffi which uses ctypes to load `libcairo-2.dll`. pycair
 
 ```python
 import os
-os.add_dll_directory(r'C:\Users\tmanyang\tools\cairo-dlls')
-os.environ['PATH'] = r'C:\Users\tmanyang\tools\cairo-dlls;' + os.environ.get('PATH', '')
+os.add_dll_directory(r'<USER_HOME>/tools\cairo-dlls')
+os.environ['PATH'] = r'<USER_HOME>/tools\cairo-dlls;' + os.environ.get('PATH', '')
 import cairosvg  # NOW this works
 ```
 
 ### DLL Location
-`C:\Users\tmanyang\tools\cairo-dlls\` — 38 DLLs from MSYS2 mingw64 packages
+`<USER_HOME>/tools\cairo-dlls\` — 38 DLLs from MSYS2 mingw64 packages
 
 ### Key DLLs (dependency chain)
 libwinpthread-1.dll → libgcc_s_seh-1.dll → libstdc++-6.dll → libpixman-1-0.dll, libfreetype-6.dll, libfontconfig-1.dll, libharfbuzz-0.dll → **libcairo-2.dll**

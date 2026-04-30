@@ -25,13 +25,13 @@ Use this skill **automatically** whenever a document or presentation needs:
 ## Module Location
 
 ```
-C:\Users\tmanyang\OneDrive - Fortive\Claude code\Document Beautification\azure_diagrams.py
+<USER_HOME>/OneDrive - <ORG>\Claude code\Document Beautification\azure_diagrams.py
 ```
 
 **Import pattern:**
 ```python
 import sys
-sys.path.insert(0, r"C:\Users\tmanyang\OneDrive - Fortive\Claude code\Document Beautification")
+sys.path.insert(0, r"<USER_HOME>/OneDrive - <ORG>\Claude code\Document Beautification")
 from azure_diagrams import (
     quick_architecture, quick_flow, quick_landscape,
     generate_architecture_diagram, generate_data_flow_diagram,
@@ -482,7 +482,7 @@ If arrows are close together, offset labels with the `curve` parameter or adjust
 If an icon isn't found, the module renders a colored box with initials. Check `list_icons()` to verify availability. **Always pre-check icons before generating** — see Quality Gate above.
 
 ### G5: cairosvg bootstrap is automatic
-The module handles DLL path setup on import. If you see "cairosvg not available" warnings, check that `C:\Users\tmanyang\tools\cairo-dlls\` exists with the MSYS2 64-bit DLLs.
+The module handles DLL path setup on import. If you see "cairosvg not available" warnings, check that `<USER_HOME>/tools\cairo-dlls\` exists with the MSYS2 64-bit DLLs.
 
 ### G6: Clean up temp files
 When generating diagrams for embedding in DOCX/PPTX, use `tempfile.mktemp(suffix='.png')` and delete after embedding.
@@ -507,7 +507,7 @@ After generating any diagram, use the Read tool to visually inspect the PNG. Che
 pip install matplotlib Pillow cairosvg cairocffi
 ```
 
-Plus MSYS2 64-bit cairo DLLs at `C:\Users\tmanyang\tools\cairo-dlls\` (38 DLLs from MSYS2 mingw64 packages).
+Plus MSYS2 64-bit cairo DLLs at `<USER_HOME>/tools\cairo-dlls\` (38 DLLs from MSYS2 mingw64 packages).
 
 ---
 

@@ -16,7 +16,7 @@ pip install python-docx
 ### Reusable Module
 
 A complete reusable module is available at:
-`C:\Users\tmanyang\OneDrive - Fortive\Claude code\Document Beautification\docx_beautify.py`
+`<USER_HOME>/OneDrive - <ORG>\Claude code\Document Beautification\docx_beautify.py`
 
 ```python
 from docx_beautify import create_document, md_to_docx, add_professional_table, add_cover_page
@@ -614,7 +614,7 @@ doc.save("TestResults_SOBacklog_20260320.docx")
 import os
 from docx_beautify import md_to_docx
 
-md_dir = r"C:\Users\tmanyang\Claude\deliverebles"
+md_dir = r"<USER_HOME>/Claude\deliverebles"
 for f in os.listdir(md_dir):
     if f.endswith(".md"):
         md_path = os.path.join(md_dir, f)
@@ -669,7 +669,7 @@ For architecture, data flow, and resource landscape diagrams, use the **azure-di
 
 ```python
 import sys
-sys.path.insert(0, r"C:\Users\tmanyang\OneDrive - Fortive\Claude code\Document Beautification")
+sys.path.insert(0, r"<USER_HOME>/OneDrive - <ORG>\Claude code\Document Beautification")
 from azure_diagrams import quick_architecture, quick_flow, quick_landscape, generate_for_docx
 from docx_beautify import create_document
 from docx.shared import Inches

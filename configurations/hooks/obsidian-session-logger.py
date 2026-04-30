@@ -2,7 +2,7 @@
 """
 Obsidian Session Logger Hook (PostToolUse)
 Appends significant tool activity to today's session log in the Obsidian vault.
-Vault: C:/Users/tmanyang/OneDrive - Fortive/Claude code/Obsidian/
+Vault: <USER_HOME>/OneDrive - <ORG>/Claude code/Obsidian/
 """
 
 import json
@@ -10,7 +10,7 @@ import os
 import sys
 from datetime import datetime
 
-VAULT_PATH = "C:/Users/tmanyang/OneDrive - Fortive/Claude code/Obsidian"
+VAULT_PATH = "<USER_HOME>/OneDrive - <ORG>/Claude code/Obsidian"
 SESSIONS_DIR = os.path.join(VAULT_PATH, "1-Projects", "Claude Sessions")
 TODAY = datetime.now().strftime("%Y-%m-%d")
 SESSION_FILE = os.path.join(SESSIONS_DIR, f"{TODAY}.md")

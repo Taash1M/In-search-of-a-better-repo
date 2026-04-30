@@ -18,7 +18,7 @@ ENV="dev"
 RG="flk-${APP}-${ENV}-rg"
 REGION="eastus2"
 REGION2="centralus"
-TAGS='{"Project":"{project}","Archetype":"{archetype}","Environment":"dev","Owner":"taashi.manyanga@fluke.com","CostCenter":"{cc}","CreatedBy":"ai-use-case-builder"}'
+TAGS='{"Project":"{project}","Archetype":"{archetype}","Environment":"dev","Owner":"<USER>@<ORG_DOMAIN>","CostCenter":"{cc}","CreatedBy":"ai-use-case-builder"}'
 ```
 
 ---
@@ -450,7 +450,7 @@ All resources MUST have these tags:
 | Project | Project name from state.json | product-knowledge-bot |
 | Archetype | Archetype from state.json | rag |
 | Environment | dev / qa / prod | dev |
-| Owner | User email | taashi.manyanga@fluke.com |
+| Owner | User email | <USER>@<ORG_DOMAIN> |
 | CostCenter | Business cost center | TBD-at-discovery |
 | CreatedBy | Always this value | ai-use-case-builder |
 | CreatedDate | ISO 8601 date | 2026-03-12 |

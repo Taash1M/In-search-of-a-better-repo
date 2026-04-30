@@ -164,7 +164,7 @@ def _load_azure_diagrams():
         return importlib.import_module("azure_diagrams")
     # Search common locations relative to user profile
     candidates = [
-        Path.home() / "OneDrive - Fortive" / "Claude code" / "Document Beautification",
+        Path.home() / "OneDrive - <ORG>" / "Claude code" / "Document Beautification",
         Path.home() / "Claude code" / "Document Beautification",
         Path.cwd() / "lib",
     ]
@@ -292,7 +292,7 @@ info:
   description: "AI-powered API for {{ archetype }} use case"
   contact:
     name: "Fluke AI Team"
-    email: "ai-team@fluke.com"
+    email: "ai-team@<ORG_DOMAIN>"
 servers:
   - url: "https://flk-{{ app_slug }}-func-{{ env }}.azurewebsites.net/api"
     description: "{{ env | upper }} environment"
@@ -731,7 +731,7 @@ from docx.oxml.ns import qn
 try:
     import importlib, sys
     candidates = [
-        Path.home() / "OneDrive - Fortive" / "Claude code" / "Document Beautification",
+        Path.home() / "OneDrive - <ORG>" / "Claude code" / "Document Beautification",
     ]
     for p in candidates:
         if (p / "docx_beautify.py").exists():

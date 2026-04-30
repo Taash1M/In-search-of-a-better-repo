@@ -27,7 +27,7 @@ if sys.stdout.encoding != "utf-8":
 
 # ─── Configuration ───────────────────────────────────────────────────────────
 
-REPO_ROOT = Path(r"C:\Users\tmanyang\OneDrive - Fortive\Claude code\In search of a more perfect repo")
+REPO_ROOT = Path(r"<USER_HOME>/OneDrive - <ORG>\Claude code\In search of a more perfect repo")
 CLAUDE_DIR = Path(os.path.expanduser("~")) / ".claude"
 
 SECRET_KEY_PATTERNS = re.compile(r"(KEY|SECRET|TOKEN|PASSWORD)", re.IGNORECASE)
@@ -107,8 +107,8 @@ SYNC_MAP = {
         ]],
     },
     "modules": {
-        (r"C:\Users\tmanyang\OneDrive - Fortive\Claude code\Document Beautification\docx_beautify.py", "modules/"),
-        (r"C:\Users\tmanyang\OneDrive - Fortive\Claude code\Document Beautification\azure_diagrams.py", "modules/"),
+        (r"<USER_HOME>/OneDrive - <ORG>\Claude code\Document Beautification\docx_beautify.py", "modules/"),
+        (r"<USER_HOME>/OneDrive - <ORG>\Claude code\Document Beautification\azure_diagrams.py", "modules/"),
     },
     "settings": {
         # settings.json — will be sanitized (secrets redacted) before copy
@@ -120,7 +120,7 @@ SYNC_MAP = {
 MCP_SERVERS = [
     {
         "name": "pbi-semantic",
-        "source_root": Path(r"C:\Users\tmanyang\OneDrive - Fortive\Claude code\MCP\PBI MCP"),
+        "source_root": Path(r"<USER_HOME>/OneDrive - <ORG>\Claude code\MCP\PBI MCP"),
         "dest_root": "modules/mcp-servers/pbi-semantic/",
         "paths": [
             # (source relative path, dest relative path, glob pattern)

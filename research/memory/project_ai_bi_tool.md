@@ -5,7 +5,7 @@ type: project
 originSessionId: aa210407-a09e-461f-aa2f-83d0e2fa4475
 ---
 ## Project Directory
-`C:\Users\tmanyang\OneDrive - Fortive\AI\AI BI Tool\`
+`<USER_HOME>/OneDrive - <ORG>\AI\AI BI Tool\`
 Code: `fluke-ai-bi-tool/` subdirectory
 
 **Why:** Internal BI assistant accessible via SharePoint. Users point at PBI models or OneDrive files, answer a 3-5 question interview, then conversationally create publication-quality BI reports. Zero data storage.

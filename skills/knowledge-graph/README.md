@@ -107,10 +107,10 @@ Loaded by `graphify.md` on-demand when deeper detail is needed. Contains:
 
 ```bash
 # Build a knowledge graph from the UBI Databricks repo
-/graphify path="C:/Users/tmanyang/AzureDataBricks" export=["neo4j", "html"]
+/graphify path="<USER_HOME>/AzureDataBricks" export=["neo4j", "html"]
 
 # Graph a Python library for architecture review
-/graphify path="C:/Users/tmanyang/OneDrive - Fortive/Claude code/graphify" export=["json", "html"]
+/graphify path="<USER_HOME>/OneDrive - <ORG>/Claude code/graphify" export=["json", "html"]
 
 # Build an Obsidian vault from a research document collection
 /graphify path="./research-papers" input_type="docs" export=["obsidian"]
@@ -138,7 +138,7 @@ This enables cross-referencing code structure (graphify graph) with data lineage
 The graphify source repo is cloned at:
 
 ```
-C:\Users\tmanyang\OneDrive - Fortive\Claude code\graphify\
+<USER_HOME>/OneDrive - <ORG>\Claude code\graphify\
 ```
 
 Use `/repo-eval` against this path to re-evaluate or extract updated patterns if the upstream repo is updated.

@@ -49,7 +49,7 @@ Tom Kepler email (2026-04-07) to Alex Becker, Taashi Manyanga, Baker Funkhouser 
 - 100+ distinct cost centers, 86 unique accounts (32 mapped, 56 unmapped)
 
 ### Artifacts
-- `C:\Users\tmanyang\OneDrive - Fortive\ADHOC\UBI\Alex B - Fortive\`
+- `<USER_HOME>/OneDrive - <ORG>\ADHOC\UBI\Alex B - Fortive\`
 - `vw_FactGLDetails_Flat_FTV.sql` — Gold view for all 15 Fortive entities (updated 2026-04-22)
 - `Fortive_GL_Data_Investigation_Report.docx` — 2-page investigation report (2026-04-06)
 - `Fortive_GL_Handover_Document.docx` — 7-section handover with 4 diagrams, 32-account mapping, 15-entity scope (updated 2026-04-22)

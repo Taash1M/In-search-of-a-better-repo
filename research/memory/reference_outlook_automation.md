@@ -1,11 +1,11 @@
 ---
 name: Outlook Automation Pattern (COM + Explorer trick)
-description: Proven method for automating Outlook email search/export from adm-tmanyang session — COM cross-session workaround, DASL filters, Edge PDF, Graph API blockers
+description: Proven method for automating Outlook email search/export from <ADMIN_USER> session — COM cross-session workaround, DASL filters, Edge PDF, Graph API blockers
 type: reference
 originSessionId: 16123451-50c1-4bd1-bf89-c33d5f382919
 ---
 ## The Problem
-Claude Code runs as `adm-tmanyang`. Outlook runs as `tmanyang`. COM can't cross Windows user sessions — both `Dispatch` and `GetActiveObject` fail with `CO_E_SERVER_EXEC_FAILURE` (-2146959355) and `MK_E_UNAVAILABLE` (-2147221021).
+Claude Code runs as `<ADMIN_USER>`. Outlook runs as `<USER>`. COM can't cross Windows user sessions — both `Dispatch` and `GetActiveObject` fail with `CO_E_SERVER_EXEC_FAILURE` (-2146959355) and `MK_E_UNAVAILABLE` (-2147221021).
 
 ## What Doesn't Work on Fortive Tenant
 - **Microsoft Graph API**: All tested public client IDs are blocked:
@@ -17,10 +17,10 @@ Claude Code runs as `adm-tmanyang`. Outlook runs as `tmanyang`. COM can't cross 
 
 ## The Working Method
 1. Write a Python script using `win32com.client` for Outlook COM
-2. Wrap it in a `.bat` file using the **full Python path** (`C:\Users\tmanyang\Python312\python.exe`) — `python` is not on tmanyang's PATH
+2. Wrap it in a `.bat` file using the **full Python path** (`<USER_HOME>/Python312\python.exe`) — `python` is not on <USER>'s PATH
 3. Redirect output to a log file in the .bat
 4. Launch via `explorer.exe "C:\path\to\script.bat"` from the admin session
-5. Explorer always runs as the desktop user (tmanyang), so the .bat inherits tmanyang's COM access
+5. Explorer always runs as the desktop user (<USER>), so the .bat inherits <USER>'s COM access
 6. Poll the log file from the admin session to track progress
 
 ## Key Technical Details
@@ -66,7 +66,7 @@ Windows paths in Python triple-quoted docstrings cause `SyntaxError: (unicode er
 ## Dependencies
 - `pywin32` (win32com.client) — for Outlook COM
 - Edge browser at `C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe`
-- Python at `C:\Users\tmanyang\Python312\python.exe`
+- Python at `<USER_HOME>/Python312\python.exe`
 
 ## Files
 - `requests/export_claude_requests_v2.py` — full export script (PDF export of each email)

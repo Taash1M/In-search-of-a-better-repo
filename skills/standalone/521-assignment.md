@@ -3,7 +3,7 @@
 You are executing a structured workflow for completing MSIS 521 (Text Analytics / NLP) assignments. Follow this systematic approach to ensure high-quality, validated deliverables.
 
 ## Assignment Directory
-$ARGUMENTS (e.g., "C:\Users\tmanyang\OneDrive\Taashi M\UW\Q3\521\Assignment 2")
+$ARGUMENTS (e.g., "<USER_HOME>/OneDrive\Taashi M\UW\Q3\521\Assignment 2")
 
 ---
 

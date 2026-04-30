@@ -15,8 +15,8 @@ Master sync repo for all Claude Code assets. Enables identical setups across mul
 ## Key Facts
 
 - **GitHub**: `https://github.com/Taash1M/In-search-of-a-better-repo` (private)
-- **OneDrive clone**: `C:\Users\tmanyang\OneDrive - Fortive\Claude code\In search of a more perfect repo\`
-- **Local clone**: `C:\Users\tmanyang\In-search-of-a-better-repo` (use for push — avoids OneDrive SSL issues)
+- **OneDrive clone**: `<USER_HOME>/OneDrive - <ORG>\Claude code\In search of a more perfect repo\`
+- **Local clone**: `<USER_HOME>/In-search-of-a-better-repo` (use for push — avoids OneDrive SSL issues)
 - **PROJECT_MEMORY**: In repo root (not in `~/.claude/projects/` — lives with the project)
 - **Created**: 2026-04-08
 - **Content**: 52 skills, 4 hooks, 30 memory files, 3 Python modules, 1 MCP server (PBI Semantic), sanitized settings.json, .mcp.json (2 servers: context7 + obsidian)
@@ -56,16 +56,16 @@ When user says "sync to GitHub" or "push to repo":
 Or if doing it manually via bash:
 ```bash
 # 1. Commit in OneDrive clone
-cd "C:/Users/tmanyang/OneDrive - Fortive/Claude code/In search of a more perfect repo"
+cd "<USER_HOME>/OneDrive - <ORG>/Claude code/In search of a more perfect repo"
 git add -A && git commit -m "Sync update"
 
 # 2. Bundle → local clone → push
-git bundle create /c/Users/tmanyang/repo-sync-bundle.bundle main
-cd "C:/Users/tmanyang/In-search-of-a-better-repo"
-git pull /c/Users/tmanyang/repo-sync-bundle.bundle main
+git bundle create /c/Users/<USER>/repo-sync-bundle.bundle main
+cd "<USER_HOME>/In-search-of-a-better-repo"
+git pull /c/Users/<USER>/repo-sync-bundle.bundle main
 git config http.sslBackend schannel
 git push origin main
-rm /c/Users/tmanyang/repo-sync-bundle.bundle
+rm /c/Users/<USER>/repo-sync-bundle.bundle
 ```
 
 ## Important Notes

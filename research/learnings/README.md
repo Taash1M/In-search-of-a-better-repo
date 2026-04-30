@@ -34,7 +34,7 @@ Patterns, anti-patterns, and gotchas extracted from 3+ months of Claude Code usa
 
 **OXML for features not exposed natively.** python-docx does not expose all Word formatting features through its Python API. Table borders, paragraph shading, custom list styles, and certain run-level properties require direct OXML manipulation via `lxml`. The pattern is: get the element (`._element`), build the XML node, append or merge. Always test OXML additions against a round-trip open in Word — some constructs are valid XML but cause Word repair prompts.
 
-**cairosvg needs MSYS2 DLLs on Windows.** cairosvg requires native Cairo libraries. On Windows, the Python wheel does not bundle them. Install MSYS2 (64-bit), then copy the required DLLs to a location on `PATH`. Required DLLs: `libcairo-2.dll`, `libgdk_pixbuf-2.0-0.dll`, `libglib-2.0-0.dll`, `libgobject-2.0-0.dll`, plus their transitive dependencies. DLL location: `C:\Users\tmanyang\tools\cairo-dlls\`. See `research/memory/reference_cairosvg_windows.md` for the full list.
+**cairosvg needs MSYS2 DLLs on Windows.** cairosvg requires native Cairo libraries. On Windows, the Python wheel does not bundle them. Install MSYS2 (64-bit), then copy the required DLLs to a location on `PATH`. Required DLLs: `libcairo-2.dll`, `libgdk_pixbuf-2.0-0.dll`, `libglib-2.0-0.dll`, `libgobject-2.0-0.dll`, plus their transitive dependencies. DLL location: `<USER_HOME>/tools\cairo-dlls\`. See `research/memory/reference_cairosvg_windows.md` for the full list.
 
 **D2 path gotchas.** The D2 CLI (`d2.exe`) requires forward-slash paths even on Windows — backslashes cause silent parse failures. The `$` character in diagram source triggers shell variable substitution when passed via subprocess; wrap in single quotes or escape. `|md|` literal blocks break if the content contains `<` — use `|` plain blocks or escape the angle brackets.
 
@@ -68,6 +68,6 @@ Patterns, anti-patterns, and gotchas extracted from 3+ months of Claude Code usa
 
 ## 6. Git and Repo Patterns
 
-**Safe directory for cross-user ownership.** When running git commands on a repo owned by a different Windows user (e.g., running as `adm-tmanyang` on a repo owned by `tmanyang`), git refuses to operate with a "dubious ownership" error. Fix with `git config --global --add safe.directory <path>`. This is required on any shared machine or when using elevated shells.
+**Safe directory for cross-user ownership.** When running git commands on a repo owned by a different Windows user (e.g., running as `<ADMIN_USER>` on a repo owned by `<USER>`), git refuses to operate with a "dubious ownership" error. Fix with `git config --global --add safe.directory <path>`. This is required on any shared machine or when using elevated shells.
 
 **Never use `-uall` on large repos.** `git status -uall` recursively lists every untracked file in every subdirectory. On repos with large `node_modules/`, build outputs, or data directories, this can take minutes and produce megabytes of output. Use `git status` (no flags) or `git status -u` (default, one level deep) instead.

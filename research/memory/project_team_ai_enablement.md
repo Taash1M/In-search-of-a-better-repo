@@ -5,7 +5,7 @@ type: project
 originSessionId: f4d03941-dd0b-44f2-bb99-51b65b072972
 ---
 ## Deployment Directory
-`C:\Users\tmanyang\OneDrive - Fortive\AI\Claude code deployment\`
+`<USER_HOME>/OneDrive - <ORG>\AI\Claude code deployment\`
 
 ## Azure AI Foundry
 - **Resource**: `flk-team-ai-enablement-ai` (East US 2)
@@ -52,16 +52,16 @@ originSessionId: f4d03941-dd0b-44f2-bb99-51b65b072972
 ### New Users Added 2026-04-07
 | User | Email | Node | Settings File |
 |------|-------|------|---------------|
-| Jim Moeller | jim.moeller@fluke.com | node2 | `user-config/settings_jim_moeller_node2.json` |
-| Peter Bergstrom | peter.bergstrom@fluke.com | node2 | `user-config/settings_peter_bergstrom_node2.json` |
-| John Erickson | john.erickson@fluke.com | node2 | `user-config/settings_john_erickson_node2.json` |
+| Jim Moeller | jim.moeller@<ORG_DOMAIN> | node2 | `user-config/settings_jim_moeller_node2.json` |
+| Peter Bergstrom | peter.bergstrom@<ORG_DOMAIN> | node2 | `user-config/settings_peter_bergstrom_node2.json` |
+| John Erickson | john.erickson@<ORG_DOMAIN> | node2 | `user-config/settings_john_erickson_node2.json` |
 
 Settings JSONs generated. Onboarding email DOCX created (2026-04-07): `user-comms/Email_ClaudeCode_node2_onboarding_jim_peter_john.docx` (CLI setup + Excel gateway credentials, references attached Quick Start Guide). RBAC role assignment status unknown — verify before sending credentials. User list file updated at `user-comms/list of users to be granted access.txt` (19 users total).
 
 ### Sanjay Kalra Added 2026-04-22
 | User | Email | Node | Settings File |
 |------|-------|------|---------------|
-| Sanjay Kalra | sanjay.kalra@fluke.com | node2 | `user-config/settings_sanjay_kalra_node2.json` |
+| Sanjay Kalra | sanjay.kalra@<ORG_DOMAIN> | node2 | `user-config/settings_sanjay_kalra_node2.json` |
 
 RBAC confirmed (Azure AI User, HTTP 201). Onboarding DOCX: `user-comms/Email_ClaudeCode_node2_onboarding_sanjay_kalra.docx` (settings.json approach with env table, 5-step CLI setup, Azure Portal key retrieval, Excel gateway creds). API key intentionally empty in settings JSON — user must retrieve from Azure Portal.
 
@@ -85,7 +85,7 @@ RBAC confirmed (Azure AI User, HTTP 201). Onboarding DOCX: `user-comms/Email_Cla
 | FLK-ai-enablement-node-3 | `64967da1-9cd6-4e29-9d9a-2ba03421ed59` | 2026-04-22 |
 | FLK-ai-enablement-node-4 | `53bd21f1-b7e2-4c06-8e8b-8a81e31e5f45` | 2026-04-22 |
 
-Node 5 (UBI subscription) uses separate SG: `flkazu-ubi-FlkBIprojects-iam-group@fluke.com`
+Node 5 (UBI subscription) uses separate SG: `flkazu-ubi-FlkBIprojects-iam-group@<ORG_DOMAIN>`
 
 ### Generic Onboarding Materials
 - **Settings files**: `user-config/settings_generic_node{1-4}.json` (API key blank)
@@ -179,7 +179,7 @@ See [project_llm_usage_tracking.md](project_llm_usage_tracking.md). DuckDB on VM
 - **Resource**: `flkubi-claude-enablemen-resource`
 - **Base URL**: `https://flkubi-claude-enablemen-resource.services.ai.azure.com/anthropic`
 - **Models**: `claude-opus-node-5`, `claude-sonnet-node-5`, `claude-haiku-node-5` (+ 3 shared deployments)
-- **Access**: Security group `flkazu-ubi-FlkBIprojects-iam-group@fluke.com` (group-based RBAC, not individual)
+- **Access**: Security group `flkazu-ubi-FlkBIprojects-iam-group@<ORG_DOMAIN>` (group-based RBAC, not individual)
 - **Settings**: `user-config/Flkubi/settings.json`
 - **Docs**: `user-config/Flkubi/Node5_Claude_Enablement_Setup.docx` (7 sections)
 - **SG config**: `user-config/SG config.txt` updated with node-5 entry
@@ -190,22 +190,22 @@ See [project_llm_usage_tracking.md](project_llm_usage_tracking.md). DuckDB on VM
 - **v2** (2026-04-19): `export_claude_requests_v2.py` + `run_export.bat` — Python, Outlook COM + Edge headless PDF, Inbox only, 2026 date filter, 17 regex access-request patterns
 
 ### v2 Architecture (the working method)
-1. **Auth**: Outlook COM via `win32com.client.Dispatch("Outlook.Application")` — requires tmanyang session
+1. **Auth**: Outlook COM via `win32com.client.Dispatch("Outlook.Application")` — requires <USER> session
 2. **Search**: DASL filter on Inbox only: `subject/body LIKE '%claude%' AND datereceived >= 2026-01-01`
 3. **Filter**: Secondary Python regex (17 patterns) for explicit access-request language (access, request, setup, enable, license, onboard, deploy, pilot, trial, etc.)
 4. **Export**: `mail.HTMLBody` → styled HTML wrapper → Edge headless (`--headless --print-to-pdf`) → PDF
 5. **Manifest**: CSV with Date, Sender, Email, Subject, MatchedPhrase, Status
 
-### Cross-session execution trick (adm-tmanyang → tmanyang)
+### Cross-session execution trick (<ADMIN_USER> → <USER>)
 - **Problem**: COM can't cross Windows user sessions. Graph API blocked by Fortive tenant (AADSTS65002/AADSTS50105 for all tested client IDs: Office, Graph CLI, Azure CLI).
-- **Solution**: `run_export.bat` wraps Python call with full path (`C:\Users\tmanyang\Python312\python.exe`). Launch via `explorer.exe "path\to\run_export.bat"` from admin session — Explorer runs as desktop user (tmanyang), so the .bat inherits tmanyang's session. Output redirected to `export_log.txt` for polling from admin session.
-- **Python path**: tmanyang profile has `C:\Users\tmanyang\Python312\python.exe` (not on PATH for that user — must use full path in .bat)
+- **Solution**: `run_export.bat` wraps Python call with full path (`<USER_HOME>/Python312\python.exe`). Launch via `explorer.exe "path\to\run_export.bat"` from admin session — Explorer runs as desktop user (<USER>), so the .bat inherits <USER>'s session. Output redirected to `export_log.txt` for polling from admin session.
+- **Python path**: <USER> profile has `<USER_HOME>/Python312\python.exe` (not on PATH for that user — must use full path in .bat)
 
 ### Run results (2026-04-19)
 - 13,232 Inbox items → 130 DASL matches → 60 exported PDFs, 2 Edge timeouts, 47 filtered out (no access language)
 - **False positives identified**: Microsoft PIM notifications (6), Outlook Reaction Digests (2), Teams notification emails (2), setup guide thread replies (~25), EOD status updates (4)
 - **Genuine requests**: Bergstrom, Knabe, King (5 licenses), Moeller, Johnston, Erickson, Schultz, plus forwarded business cases from Mulpuru
-- **Next run**: tighten filters to exclude system senders (microsoft.com, system-notification@fortive.com) and setup-guide-thread replies
+- **Next run**: tighten filters to exclude system senders (microsoft.com, system-notification@<ORG_DOMAIN>) and setup-guide-thread replies
 
 ## Deliverables (updated 2026-04-28)
 Three documents built from the email export analysis:
@@ -275,7 +275,7 @@ export ANTHROPIC_DEFAULT_OPUS_MODEL="claude-code-nodeX"
 - AAD analysis: `Usage Tracking/AAD_User_Report_Apr24-27.md`
 
 ## AI Advisory Committee C-Suite Email (2026-04-24)
-- **File**: `C:\Users\tmanyang\OneDrive - Fortive\AI\AI Advisory Committee\AI_Charter_Progress_Update_CLevel_April2026.docx`
+- **File**: `<USER_HOME>/OneDrive - <ORG>\AI\AI Advisory Committee\AI_Charter_Progress_Update_CLevel_April2026.docx`
 - **Content**: Executive summary + 4 real use cases (JD Giles channel coverage, Vineet CRS docs, Steven competitive intel, Julian M&A models) + 7 strategic decisions table + governance + risk awareness ("dangerously powerful" CLI)
 - **Sources**: Two AI Office Hours transcripts (Apr 10 + Apr 24) + AI Next Steps Plan PPTX
 - **Use cases with metrics**: JD (3 days → 1.5 hours), Vineet (3 weeks → 30 min), Steven (18 competitors analyzed), Julian (3-4 hours → 30 min)
@@ -297,7 +297,7 @@ Phases spaced 5000-5500 units apart on x-axis: Phase 1 CLI (x=0), Phase 2 Gatewa
 
 ### Azure-Icon Architecture PNGs (drag-drop to board)
 Generated via `azure_diagrams.py` with real Microsoft Azure SVG icons:
-- **Location**: `C:\Users\tmanyang\OneDrive - Fortive\AI\Miro\Claude Code Deployment\architecture\`
+- **Location**: `<USER_HOME>/OneDrive - <ORG>\AI\Miro\Claude Code Deployment\architecture\`
 - `phase1_azure_arch.png` — 13 nodes: 3 user groups → CLI → Entra/RBAC → AI Foundry → 3 node deployments + shared pool
 - `phase2_azure_arch.png` — 14 nodes: users → clients → 5 LiteLLM gateways → AI Foundry, container infra sidebar
 - `phase3_azure_arch.png` — 15 nodes: 5 gateways → Blob → VM pipeline → Bronze → Silver → Gold star schema
@@ -306,10 +306,10 @@ Generated via `azure_diagrams.py` with real Microsoft Azure SVG icons:
 - **Generator**: `diagrams/generate_azure_arch_v2.py` (uses Node/Connection/Boundary/DiagramConfig API, standalone preset)
 
 ### D2 Data Flow Diagrams
-- **Source**: `C:\Users\tmanyang\OneDrive - Fortive\AI\Miro\Claude Code Deployment\dataflow-d2\`
-- **SVGs**: `C:\Users\tmanyang\OneDrive - Fortive\AI\Miro\Claude Code Deployment\dataflow-svg\`
+- **Source**: `<USER_HOME>/OneDrive - <ORG>\AI\Miro\Claude Code Deployment\dataflow-d2\`
+- **SVGs**: `<USER_HOME>/OneDrive - <ORG>\AI\Miro\Claude Code Deployment\dataflow-svg\`
 - 5 diagrams: phase1_cli, phase2_gateway, phase3_etl, phase4_security, infra (each .d2 + .svg)
-- D2 CLI v0.7.1 at `C:\Users\tmanyang\tools\d2\d2-v0.7.1\bin\d2.exe`
+- D2 CLI v0.7.1 at `<USER_HOME>/tools\d2\d2-v0.7.1\bin\d2.exe`
 - D2 gotcha: `$` triggers variable substitution — use `52/mo` not `$52/mo`
 
 ## Documents

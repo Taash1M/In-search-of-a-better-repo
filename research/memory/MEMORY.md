@@ -31,10 +31,10 @@
 - [Miro MCP](project_miro_mcp.md) — Official MCP (OAuth 2.1), 13 tools, 2 boards (Claude Code Deployment + CPQ SMC RMC), artifacts at AI\Miro\, no image upload (2026-04-29)
 
 ## UBI Platform Key Facts
-- **Repos**: AzureDataBricks (`C:\Users\tmanyang\AzureDataBricks`), ADF (`C:\Users\tmanyang\ADF`), Power BI UBI Curated Datasets
-- **Deliverables folder**: `C:\Users\tmanyang\Claude\deliverebles\`
-- **Backup folder**: `C:\Users\tmanyang\OneDrive - Fortive\Claude code\`
-- **Skill file**: `C:\Users\adm-tmanyang\.claude\commands\ubi-dev.md`
+- **Repos**: AzureDataBricks (`<USER_HOME>/AzureDataBricks`), ADF (`<USER_HOME>/ADF`), Power BI UBI Curated Datasets
+- **Deliverables folder**: `<USER_HOME>/Claude\deliverebles\`
+- **Backup folder**: `<USER_HOME>/OneDrive - <ORG>\Claude code\`
+- **Skill file**: `<ADMIN_HOME>/.claude\commands\ubi-dev.md`
 - **STM format**: 45 columns, 7 stages (Source, Landing, Bronze, Silver, Gold DB, Gold ADLS, PBI)
 - Landing = Bronze in UBI architecture (no separate raw zone)
 - **BigQuery GCP project**: `cobalt-cider-279717`, service account key in Key Vault `flkubi-kv-prd` (secret: `Google-Fluke-ServiceAccount-Json`)
@@ -48,14 +48,14 @@
 - [PPTX layout discipline](feedback_pptx_layout.md) — 3-stage QA, safe zone, add_picture_fit(), D2 grid-rows, Veritas clean header/footer, dashed border XML technique
 - [Diagram visual quality standard](feedback_diagram_visual_standard.md) — Veritas-derived: node shape variety, bracket connectors, numbered timelines, color restraint, 2 design systems (Bold Signal Light + Veritas Clean)
 - [Git push SSL fix](feedback_git_push_ssl.md) — use schannel SSL backend + bundle workflow for large pushes through corporate proxy
-- [O365 apps user context](feedback_o365_user.md) — open O365 apps as tmanyang, not adm-tmanyang
+- [O365 apps user context](feedback_o365_user.md) — open O365 apps as <USER>, not <ADMIN_USER>
 - [Keep skills intact](feedback_skill_no_split.md) — no progressive disclosure splits; decision trees at top instead; only split if context limits hit
 
 ## References
 - [Outlook Automation Pattern](reference_outlook_automation.md) — COM cross-session trick (explorer.exe), DASL filters, Edge PDF, daily scan + full export
 - [Daily Access Request Workflow](reference_access_request_workflow.md) — 3-step repeatable: scan inbox → identify new requests → update DOCX (16 requests, 19 pending seats as of Apr 24)
 - [cairosvg Windows Setup](reference_cairosvg_windows.md) — MSYS2 64-bit DLLs for cairosvg on Windows
-- [BigQuery / GCP Access](reference_bigquery_gcp.md) — cobalt-cider-279717, service account in flkubi-kv-prd, browser login via taashi.manyanga@gmail.com
+- [BigQuery / GCP Access](reference_bigquery_gcp.md) — cobalt-cider-279717, service account in flkubi-kv-prd, browser login via <USER>@<PERSONAL_DOMAIN>
 - [Miro Artifacts Folder](reference_miro_artifacts.md) — `AI\Miro\` for board assets (PNGs/SVGs), drag-drop since MCP has no image upload
 
 ## Patterns Learned
@@ -77,23 +77,23 @@
 - Accounts 410120, 410150, 410700 incorrectly mapped as Expense instead of Revenue
 - Root cause: Oracle source misconfiguration + no Silver-layer override
 - Fix: CASE WHEN ACCOUNT LIKE '4%' THEN 'Revenue' in Refresh_DimGlAccount.sql
-- Delivered: `C:\Users\tmanyang\OneDrive - Fortive\ADHOC\UBI\GL INC1555542\` (5 artifacts)
+- Delivered: `<USER_HOME>/OneDrive - <ORG>\ADHOC\UBI\GL INC1555542\` (5 artifacts)
 - GL/Revenue STM completed: 330 rows x 45 columns, 15 table groups
 
 ## Azure AI Foundry Configuration (Team — switched 2026-03-26)
 - **Resource**: `flk-team-ai-enablement-ai` (East US 2)
-- **Settings file**: `C:\Users\tmanyang\.claude\settings.json` (env section)
+- **Settings file**: `<USER_HOME>/.claude\settings.json` (env section)
 - **Models**: opus (750 TPM), sonnet (1,625 TPM), haiku (100 TPM)
 - **Auth (legacy)**: `ANTHROPIC_FOUNDRY_API_KEY` + `CLAUDE_CODE_USE_FOUNDRY=1`
 - **Auth (live for 4+ users)**: AAD via `az login` (no API key) — populates objectId in diagnostic logs
 - **Diagnostic logging**: `RequestResponse` category enabled on AI Services (2026-04-24), NDJSON → `flkaienablement` storage
 - **ETL v3**: 939 lines, processes LiteLLM logs + diagnostic logs, `sync_aad_users.py` pre-seeds 35 users
-- **VM scripts**: `/home/azureuser/{llm_usage_etl.py, sync_aad_users.py, infra_health_check.py}`
+- **VM scripts**: `<VM_HOME>/{llm_usage_etl.py, sync_aad_users.py, infra_health_check.py}`
 - **VM Azure CLI**: v2.85.0 installed (2026-04-27)
 - Billing: Fluke AI ML Technology subscription (Azure Marketplace)
 
 ## Claude Code Hooks (5 scripts)
-- **Location**: `C:\Users\adm-tmanyang\.claude\hooks\`
+- **Location**: `<ADMIN_HOME>/.claude\hooks\`
 - **secret-scanner.py**: PreToolUse on Bash, blocks git commits with secrets (30+ patterns)
 - **dangerous-command-blocker.py**: PreToolUse on Bash, 3-level protection
 - **change-logger.py**: PostToolUse on Edit/Write/MultiEdit/Bash, logs to `~/.claude/critical_log_changes.csv`
@@ -104,20 +104,20 @@
 
 ## MCP Servers (2 active — `~/.claude/.mcp.json`)
 - **context7**: `@upstash/context7-mcp@latest` — library/framework documentation lookup
-- **obsidian**: `@bitbonsai/mcpvault@latest` v0.11.0 — direct file access to Obsidian vault at `C:\Users\tmanyang\OneDrive - Fortive\Claude code\Obsidian` (no Obsidian app needed)
+- **obsidian**: `@bitbonsai/mcpvault@latest` v0.11.0 — direct file access to Obsidian vault at `<USER_HOME>/OneDrive - <ORG>\Claude code\Obsidian` (no Obsidian app needed)
 
 ## Document Beautification Skill
-- **Project dir**: `C:\Users\tmanyang\OneDrive - Fortive\Claude code\Document Beautification\`
+- **Project dir**: `<USER_HOME>/OneDrive - <ORG>\Claude code\Document Beautification\`
 - **Created**: 2026-03-20, **v6**: 2026-03-29
 - **Files**: `docx-beautify.md` (skill), `docx_beautify.py` (module, ~2760 lines), `PROJECT_MEMORY.md`
 - **Module**: 48+ functions, 4 presets, 4 palettes, diagram backends (Mermaid SVG, D2, matplotlib, cairosvg)
-- **D2 CLI**: v0.7.1 at `C:\Users\tmanyang\tools\d2\d2-v0.7.1\bin\d2.exe`
+- **D2 CLI**: v0.7.1 at `<USER_HOME>/tools\d2\d2-v0.7.1\bin\d2.exe`
 - **Azure icons**: `Azure_Public_Service_Icons_V23` in project dir (V23, SVG)
 - **D2 gotchas**: Forward-slash paths only, `$` triggers substitution, `|md|` blocks break on `<`
 - **cairosvg**: Working (2026-04-06) — requires MSYS2 64-bit DLLs, see [cairosvg Windows Setup](reference_cairosvg_windows.md)
 - **Promoted** to `~/.claude/commands/docx-beautify.md` on 2026-04-06
 
 ## SOX PCC20/PCC30 Audit Data
-- **Location**: `C:\Users\tmanyang\OneDrive - Fortive\SOX\PCC20 and PCC30 Extract\`
+- **Location**: `<USER_HOME>/OneDrive - <ORG>\SOX\PCC20 and PCC30 Extract\`
 - **File**: `latest-commits-linked-to-prs-20250715085713274` (.csv/.xlsx identical)
 - 1,000 commits, Apr 4 - Jul 15 2025, 9 devs, only 9.1% linked to PRs

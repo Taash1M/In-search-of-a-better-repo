@@ -42,7 +42,7 @@ For multi-step workflows (fan-out, sprint planning), create one parent task and 
 All persistent state is stored in JSON files under a single directory:
 
 ```
-C:\Users\tmanyang\Claude\deliverebles\paperclip\
+<USER_HOME>/Claude\deliverebles\paperclip\
   ├── agents.json          # registered agent definitions
   ├── issues.json          # task/ticket backlog
   ├── budgets.json         # budget policies + incidents
@@ -166,7 +166,7 @@ Default adapter is `claude_local`. Always include the agent's skills list in the
   "priority": "high",                  // critical | high | medium | low
   "projectTag": "UBI",                 // free-form project grouping
   "assigneeAgentId": null,             // agent assigned to execute
-  "assigneeUser": "tmanyang",          // human owner
+  "assigneeUser": "<USER>",          // human owner
   "parentId": null,                    // for sub-issues
   "labels": ["bug", "GL"],
   "executionRunId": null,              // locks issue to one agent run
@@ -282,7 +282,7 @@ BACKLOG (3)     TODO (5)      IN PROGRESS (2)    IN REVIEW (1)    DONE (12)
 
 The primary cost data source is the **LLM Gateway Usage Tracking** system (DuckDB on VM, Power BI v4 dashboard). When evaluating budgets:
 
-1. Read current spend from: `C:\Users\tmanyang\Claude\deliverebles\llm-usage\` (if available)
+1. Read current spend from: `<USER_HOME>/Claude\deliverebles\llm-usage\` (if available)
 2. Or query the DuckDB database via Bash if accessible
 3. Or accept manual spend input from the user
 
@@ -478,8 +478,8 @@ Before executing any job:
 
 Before writing ANY activity log entry, apply redaction:
 
-1. **Path redaction**: Replace `C:\Users\tmanyang\` → `C:\Users\t******\` in all string values.
-2. **Username redaction**: Replace `tmanyang` → `t******` and `adm-tmanyang` → `a**********` in all string values.
+1. **Path redaction**: Replace `<USER_HOME>/` → `C:\Users\t******\` in all string values.
+2. **Username redaction**: Replace `<USER>` → `t******` and `<ADMIN_USER>` → `a**********` in all string values.
 3. **Secret redaction**: Replace any value matching `ANTHROPIC_*`, `AZURE_*`, `*_KEY`, `*_SECRET`, `*_TOKEN` patterns with `[REDACTED]`.
 4. Apply recursively to all nested objects and arrays in `details`.
 
@@ -607,7 +607,7 @@ When the user asks to **plan a sprint**:
 On first invocation, if state directory does not exist:
 
 ```bash
-mkdir -p "C:\Users\tmanyang\Claude\deliverebles\paperclip"
+mkdir -p "<USER_HOME>/Claude\deliverebles\paperclip"
 ```
 
 Then create each state file with empty defaults:

@@ -1057,7 +1057,7 @@ dependencies = [
 
 | Resource | Location |
 |----------|----------|
-| Source repo | `C:\Users\tmanyang\OneDrive - Fortive\Claude code\AI UCB\AI-agentic-system-dev-to-prod-\` |
+| Source repo | `<USER_HOME>/OneDrive - <ORG>\Claude code\AI UCB\AI-agentic-system-dev-to-prod-\` |
 | AI UCB archetypes | `~/.claude/commands/ai-ucb/archetypes.md` (Archetype 7) |
 | AI UCB test phase | `~/.claude/commands/ai-ucb-test.md` (Phase 5) |
 | AI UCB deploy phase | `~/.claude/commands/ai-ucb-deploy.md` (Phase 7) |

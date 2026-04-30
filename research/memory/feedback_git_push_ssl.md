@@ -10,6 +10,6 @@ Git push to GitHub fails with `ssl/tls alert bad record mac` when pushing large 
 
 **How to apply:**
 1. Always set `git config http.sslBackend schannel` on any clone that needs to push
-2. For large pushes from OneDrive paths, use the bundle workflow: commit in OneDrive clone → `git bundle create` → pull into local clone at `C:\Users\tmanyang\In-search-of-a-better-repo` → push from local clone
+2. For large pushes from OneDrive paths, use the bundle workflow: commit in OneDrive clone → `git bundle create` → pull into local clone at `<USER_HOME>/In-search-of-a-better-repo` → push from local clone
 3. Use `push_to_github.py` which automates this entire workflow
 4. Setting `http.postBuffer 524288000` alone does NOT fix the issue — the SSL backend must be changed

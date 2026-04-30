@@ -21,8 +21,8 @@ Paperclip is a Claude Code skill for multi-agent orchestration, adapted from the
 
 | File | Location | Purpose |
 |---|---|---|
-| `paperclip.md` | `C:\Users\adm-tmanyang\.claude\commands\paperclip.md` | Skill file (active) |
-| `agents.json` | `C:\Users\tmanyang\Claude\deliverebles\paperclip\` | Agent registry |
+| `paperclip.md` | `<ADMIN_HOME>/.claude\commands\paperclip.md` | Skill file (active) |
+| `agents.json` | `<USER_HOME>/Claude\deliverebles\paperclip\` | Agent registry |
 | `issues.json` | same | Task/ticket backlog |
 | `budgets.json` | same | Budget policies + incidents |
 | `jobs.json` | same | Scheduled heartbeat jobs |
@@ -30,11 +30,11 @@ Paperclip is a Claude Code skill for multi-agent orchestration, adapted from the
 | `activity-log.json` | same | Redacted audit trail |
 | `config.json` | same | Orchestration settings |
 | `Paperclip_Usage_Guide.docx` | same | User guide with examples (10 sections) |
-| `SECURITY_REVIEW.md` | `C:\Users\tmanyang\OneDrive - Fortive\Claude code\Paperclip\` | Full security audit of source repo |
+| `SECURITY_REVIEW.md` | `<USER_HOME>/OneDrive - <ORG>\Claude code\Paperclip\` | Full security audit of source repo |
 
 ## Architecture
 
-5 modules, all state in JSON files under `C:\Users\tmanyang\Claude\deliverebles\paperclip\`:
+5 modules, all state in JSON files under `<USER_HOME>/Claude\deliverebles\paperclip\`:
 
 1. **Agent Registry** — named agents with skills, models, adapter types (claude_local, codex_local, gemini_local, process, http). Status FSM: active/paused/error/retired.
 2. **Task Ticketing** — issues with status FSM (backlog/todo/in_progress/in_review/blocked/done/cancelled), priority (critical/high/medium/low), execution locking, rework support.

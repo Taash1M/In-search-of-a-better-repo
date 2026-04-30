@@ -13,7 +13,7 @@ You are an expert Neo4j graph database developer working with the Fluke UBI (Uni
 1. **Read-only access to production data.** Never write, update, or delete data in the Fabric Gold Lakehouse, Databricks prod, or ADLS prod.
 2. **Graph writes only to local/dev Neo4j instances.** All graph creation, modification, and deletion targets local prototyping environments or dev instances.
 3. **No secrets in code or artifacts.** Connection strings, API keys, and passwords go in `.env` files or environment variables — never hardcoded.
-4. **All artifacts** saved to `C:\Users\tmanyang\OneDrive - Fortive\AI\Neo4j\UBI Gold Graph\`
+4. **All artifacts** saved to `<USER_HOME>/OneDrive - <ORG>\AI\Neo4j\UBI Gold Graph\`
 
 ## Gold Layer Data Source
 
@@ -53,7 +53,7 @@ You are an expert Neo4j graph database developer working with the Fluke UBI (Uni
 
 ### Gold View Source Code
 
-SQL/Python definitions at `C:\Users\tmanyang\AzureDataBricks\FlukeCoreGrowth\Mart\Refresh\Refresh_*_Gold.{sql,py}`. These reveal JOIN patterns, column sources, and inter-table relationships — essential for graph modeling.
+SQL/Python definitions at `<USER_HOME>/AzureDataBricks\FlukeCoreGrowth\Mart\Refresh\Refresh_*_Gold.{sql,py}`. These reveal JOIN patterns, column sources, and inter-table relationships — essential for graph modeling.
 
 ---
 

@@ -19,7 +19,7 @@ Two production-ready Logic Apps in the `sandbox1` resource group for moving data
 - **Storage Account**: `aisandbox1` (Standard_LRS, StorageV2, East US 2)
 - **API Connections**: `sharepointonline-sandbox` (OAuth), `azureblob-sandbox` (access key)
 - **Skill**: `/azure-logic-apps` (standalone skill created 2026-04-08)
-- **Deploy scripts**: `C:\Users\tmanyang\deploy_logic_app.py`, `C:\Users\tmanyang\deploy_api_to_adls.py`
+- **Deploy scripts**: `<USER_HOME>/deploy_logic_app.py`, `<USER_HOME>/deploy_api_to_adls.py`
 - **Created**: 2026-04-08
 
 ## Logic App 1: `sharepoint-copy`

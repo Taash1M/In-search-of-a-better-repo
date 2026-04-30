@@ -666,7 +666,7 @@ pip install pymongo               # MongoDB
 
 | Resource | Location |
 |----------|----------|
-| RAG-Anything repo | `C:\Users\tmanyang\OneDrive - Fortive\Claude code\RAG\rag-anything\` |
+| RAG-Anything repo | `<USER_HOME>/OneDrive - <ORG>\Claude code\RAG\rag-anything\` |
 | doc-intelligence skill | `~/.claude/commands/doc-intelligence.md` |
 | AI UCB archetypes | `~/.claude/commands/ai-ucb/archetypes.md` (Archetype 1: RAG) |
 | AI UCB AI setup | `~/.claude/commands/ai-ucb-ai.md` (Phase 3) |

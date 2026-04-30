@@ -14,7 +14,7 @@ MSIS 579 (Strategic Management of Technology & Innovation), UW Q4 2026. Assignme
 
 ## Key Files
 
-- **Project memory**: `C:\Users\tmanyang\OneDrive\Taashi M\UW\Q4\579\PROJECT_MEMORY.md` — full workflow, quality patterns, code snippets, skill evolution notes
+- **Project memory**: `<USER_HOME>/OneDrive\Taashi M\UW\Q4\579\PROJECT_MEMORY.md` — full workflow, quality patterns, code snippets, skill evolution notes
 - **Final output**: `Assignment_1_Sephora_Case_FINAL.docx`
 - **V2 generator**: `generate_case_v2.py` (reference implementation)
 - **Assignment materials**: `Assignment 1/` subfolder (instructions, rubric, structural guide)

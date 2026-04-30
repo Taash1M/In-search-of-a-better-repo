@@ -15,10 +15,10 @@ Private GitHub repo serving as the single source of truth for all Claude Code as
 ## Key Facts
 
 - **GitHub**: `https://github.com/Taash1M/In-search-of-a-better-repo` (private)
-- **Local clone**: `C:\Users\tmanyang\OneDrive - Fortive\Claude code\In search of a more perfect repo\`
+- **Local clone**: `<USER_HOME>/OneDrive - <ORG>\Claude code\In search of a more perfect repo\`
 - **Created**: 2026-04-08
 - **Initial commit**: 88 files, 42,712 lines
-- **gh CLI**: Extracted to `C:\Users\tmanyang\tools\gh\bin\gh.exe` (v2.67.0) — authenticated via git credential manager
+- **gh CLI**: Extracted to `<USER_HOME>/tools\gh\bin\gh.exe` (v2.67.0) — authenticated via git credential manager
 
 ## Content Inventory
 
@@ -68,7 +68,7 @@ Private GitHub repo serving as the single source of truth for all Claude Code as
 
 ## Completed Items
 
-- [x] gh CLI installed (zip extract to `C:\Users\tmanyang\tools\gh\bin\gh.exe`, v2.67.0)
+- [x] gh CLI installed (zip extract to `<USER_HOME>/tools\gh\bin\gh.exe`, v2.67.0)
 - [x] gh authenticated via git credential manager
 - [x] Initial commit and push to GitHub (88 files, 42,712 lines)
 - [x] Sync script created and tested (`sync_to_repo.py`)

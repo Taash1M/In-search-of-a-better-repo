@@ -115,7 +115,7 @@ Pillow>=10.0.0
 cairosvg requires native Cairo libraries. On Windows, place the MSYS2 64-bit DLLs in a folder on `PATH`:
 
 ```
-Location: C:\Users\tmanyang\tools\cairo-dlls\
+Location: <USER_HOME>/tools\cairo-dlls\
 ```
 
 See `research/memory/reference_cairosvg_windows.md` for the complete DLL list and installation steps.
@@ -156,7 +156,7 @@ export PYTHONPATH="path/to/repo/modules:$PYTHONPATH"
 Module files live in two places:
 
 1. **Canonical source**: `modules/` in this repo
-2. **Active copy**: `C:\Users\tmanyang\OneDrive - Fortive\Claude code\Document Beautification\`
+2. **Active copy**: `<USER_HOME>/OneDrive - <ORG>\Claude code\Document Beautification\`
 
 When changes are made to the OneDrive copy (during active development), sync back to the repo:
 

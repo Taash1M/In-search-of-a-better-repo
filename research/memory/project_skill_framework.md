@@ -27,13 +27,13 @@ Evaluated 19 skills from `https://github.com/mattpocock/skills.git`. Security: P
 | Durable issue templates | triage-issue, qa | eval-framework.md | No file paths/line numbers + TDD fix plan |
 | Trigger descriptions | write-a-skill | 5 skills (frontmatter) | YAML frontmatter added to azure-diagrams, azure-logic-apps, powerbi-desktop, flk-litellm, taashi-research |
 
-**Evaluation report:** `C:\Users\tmanyang\OneDrive - Fortive\Claude code\Skill Evaluation\mattpocock_skills_evaluation.md`
+**Evaluation report:** `<USER_HOME>/OneDrive - <ORG>\Claude code\Skill Evaluation\mattpocock_skills_evaluation.md`
 
 ---
 
 ## Prior Skill Inventory (as of 2026-04-07)
 
-### Active Skills (`C:\Users\adm-tmanyang\.claude\commands\`)
+### Active Skills (`<ADMIN_HOME>/.claude\commands\`)
 
 **Standalone Skills (8):**
 
@@ -87,7 +87,7 @@ Module: `azure_diagrams.py` v1.2.1 in `Document Beautification\`. Called by docx
 **AI UCB Reference Files (7, in commands/ai-ucb/):**
 `archetypes.md`, `pricing.md` (+ live API validation), `governance.md`, `infra-templates.md`, `pipeline-templates.md`, `frontend-templates.md` (+ security hardening), `doc-templates.md` (+ ADR + Model Card)
 
-**Versioned backup:** All 21 AI UCB files backed up in `C:\Users\tmanyang\OneDrive - Fortive\Claude code\AI UCB\skills\` (organized into orchestrator/, sub-skills/, companions/, reference/ subfolders).
+**Versioned backup:** All 21 AI UCB files backed up in `<USER_HOME>/OneDrive - <ORG>\Claude code\AI UCB\skills\` (organized into orchestrator/, sub-skills/, companions/, reference/ subfolders).
 
 ## AI UCB Comprehensive Quality Upgrade (2026-04-07)
 
@@ -122,12 +122,12 @@ Source: Review of github.com/tobihagemann/turbo (64 markdown skill files). Six p
 ## Skill Judge Evaluations
 
 ### 2026-03-12 (Initial)
-- Report: `C:\Users\tmanyang\Claude\deliverebles\skill-judge-evaluation-report.md`
+- Report: `<USER_HOME>/Claude\deliverebles\skill-judge-evaluation-report.md`
 - Top: powerbi-desktop (A, 108), ubi-dev (B, 102), fluke-ai (B, 97)
 - Need trimming: excel-create (D, 83 — 65% redundant), powerpoint-create (D, 75 — 70% redundant)
 
 ### 2026-04-16 (Re-Assessment — 4 skills)
-- Report: `C:\Users\tmanyang\OneDrive - Fortive\Claude code\Skill Evaluation\skill-judge-4skills-evaluation.md`
+- Report: `<USER_HOME>/OneDrive - <ORG>\Claude code\Skill Evaluation\skill-judge-4skills-evaluation.md`
 - azure-diagrams: **A+ (111/120)** — troubleshooting tree + NEVER list added
 - docx-beautify: **A (108/120)** — quick-start tree added; diagram split needed for A+
 - ubi-dev: **A (106/120)** — task decision tree + trigger keywords added; file split needed for A+
