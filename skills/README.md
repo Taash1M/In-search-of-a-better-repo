@@ -68,13 +68,13 @@ Domain-specific skills that don't belong to a larger system.
 
 | File | What It Does |
 |------|--------------|
-| `ubi-dev.md` | Fluke UBI platform development across 3 repos (ADB, ADF, PBI); medallion architecture; STM format |
+| `ubi-dev.md` | <ORG> UBI platform development across 3 repos (ADB, ADF, PBI); medallion architecture; STM format |
 | `ubi-neo4j.md` | Neo4j knowledge graph construction from 431 UBI Gold layer tables |
 | `audit-ubi.md` | Multi-agent codebase health audit; generates scored report |
 | `polish-notebook.md` | Iterative Databricks notebook quality loop (lint → test → simplify → review) |
 | `session-review.md` | Lesson extraction from a session with priority-ranked routing to memory files |
 | `paperclip.md` | Multi-agent orchestration skill, A+ grade, 5 modules; cherry-picked from paperclipai/paperclip |
-| `fluke-ai.md` | Fluke AI general patterns; Azure AI Foundry config; LLM Gateway |
+| `<ORG>-ai.md` | <ORG> AI general patterns; Azure AI Foundry config; LLM Gateway |
 | `flk-litellm.md` | LiteLLM gateway deployment on Azure App Service |
 | `taashi-research.md` | 4-phase deep research methodology (scope → gather → synthesize → deliver) |
 | `repo-eval.md` | Repository evaluation and pattern extraction for new skill creation |

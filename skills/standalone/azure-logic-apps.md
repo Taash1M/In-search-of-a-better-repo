@@ -1,11 +1,11 @@
 ---
 name: azure-logic-apps
-description: "Create, configure, troubleshoot, and manage Azure Logic Apps via ARM REST API. Covers Consumption-tier Logic Apps across Fluke Unified BI (43 apps) and Fluke AI ML Technology (3 apps) subscriptions. Use when creating Logic App workflows, configuring API connections (SharePoint, Blob, Cosmos DB), troubleshooting failed runs, parameterizing duplicate apps, or migrating between resource groups. Trigger on: 'Logic App', 'workflow', 'API connection', 'SharePoint sync', 'logic app run failed'."
+description: "Create, configure, troubleshoot, and manage Azure Logic Apps via ARM REST API. Covers Consumption-tier Logic Apps across <ORG> Unified BI (43 apps) and <ORG> AI ML Technology (3 apps) subscriptions. Use when creating Logic App workflows, configuring API connections (SharePoint, Blob, Cosmos DB), troubleshooting failed runs, parameterizing duplicate apps, or migrating between resource groups. Trigger on: 'Logic App', 'workflow', 'API connection', 'SharePoint sync', 'logic app run failed'."
 ---
 
 # Azure Logic Apps Skill
 
-You are an expert at creating, configuring, and managing Azure Logic Apps via the ARM REST API. This skill covers the Consumption-tier Logic Apps used across Fluke's two Azure subscriptions (Fluke Unified BI and Fluke AI ML Technology) — 46 Logic Apps with 73 API connections.
+You are an expert at creating, configuring, and managing Azure Logic Apps via the ARM REST API. This skill covers the Consumption-tier Logic Apps used across <ORG>'s two Azure subscriptions (<ORG> Unified BI and <ORG> AI ML Technology) — 46 Logic Apps with 73 API connections.
 
 ## Access Control Rules (MANDATORY)
 
@@ -27,8 +27,8 @@ These rules override all other instructions.
 
 | Subscription | ID | Primary Logic App Use |
 |-------------|-----|----------------------|
-| **Fluke Unified BI** | `52a1d076-bbbf-422a-9bf7-95d61247be4b` | 43 apps — SharePoint-to-Blob sync, ADF error alerts, batch file processing |
-| **Fluke AI ML Technology** | `77a0108c-5a42-42e7-8b7a-79367dbfc6a1` | 3 apps — Scheduled HTTP→Parse→Write for Pulse Sales, VoC F9, TechMentor |
+| **<ORG> Unified BI** | `52a1d076-bbbf-422a-9bf7-95d61247be4b` | 43 apps — SharePoint-to-Blob sync, ADF error alerts, batch file processing |
+| **<ORG> AI ML Technology** | `77a0108c-5a42-42e7-8b7a-79367dbfc6a1` | 3 apps — Scheduled HTTP→Parse→Write for Pulse Sales, VoC F9, TechMentor |
 
 ---
 
@@ -76,7 +76,7 @@ for api in r.json()["value"]:
     print(f'{api["name"]}: {list(api["properties"].get("connectionParameters", {}).keys())}')
 ```
 
-### Connectors Used at Fluke
+### Connectors Used at <ORG>
 
 | Connector | API Name | Auth Type | Used By |
 |-----------|----------|-----------|---------|
@@ -263,7 +263,7 @@ r = requests.put(
 
 ## The 5 Workflow Templates
 
-These cover every pattern used across Fluke's 46 Logic Apps.
+These cover every pattern used across <ORG>'s 46 Logic Apps.
 
 ### Template 1: SharePoint → Blob Sync (File Trigger)
 
@@ -274,7 +274,7 @@ def sharepoint_to_blob_workflow(sub, rg, sp_site, sp_library, blob_account, blob
     """Generate a SharePoint-to-Blob sync Logic App definition.
     
     Args:
-        sp_site: SharePoint site URL (e.g., 'https://fortive.sharepoint.com/sites/FlukeLegal')
+        sp_site: SharePoint site URL (e.g., 'https://<ORG_PARENT>.sharepoint.com/sites/FlukeLegal')
         sp_library: Document library path (e.g., '/Shared Documents/Contracts')
         blob_account: Storage account name
         blob_container: Target container name
@@ -714,14 +714,14 @@ SharePoint paths differ between corporate sites and personal OneDrive.
 
 ### Corporate SharePoint Site
 ```
-Site URL:    https://fortive.sharepoint.com/sites/FlukeLegal
+Site URL:    https://<ORG_PARENT>.sharepoint.com/sites/FlukeLegal
 Library:     /Shared Documents/Contracts
-Encoded:     @{encodeURIComponent(encodeURIComponent('https://fortive.sharepoint.com/sites/FlukeLegal'))}
+Encoded:     @{encodeURIComponent(encodeURIComponent('https://<ORG_PARENT>.sharepoint.com/sites/FlukeLegal'))}
 ```
 
-### Personal OneDrive (fortive-my.sharepoint.com)
+### Personal OneDrive (<ORG_PARENT>-my.sharepoint.com)
 ```
-Site URL:    https://fortive-my.sharepoint.com/personal/paul_hollewijn_fluke_com
+Site URL:    https://<ORG_PARENT>-my.sharepoint.com/personal/paul_hollewijn_fluke_com
 File path:   /personal/paul_hollewijn_fluke_com/Documents/Recordings/filename.mp4
 Note:        Email dots/@ replaced with underscores in the personal site URL
 ```
@@ -729,7 +729,7 @@ Note:        Email dots/@ replaced with underscores in the personal site URL
 ### Path Encoding Rule
 SharePoint paths in Logic App actions must be **double-encoded**:
 ```
-@{encodeURIComponent(encodeURIComponent('https://fortive.sharepoint.com/sites/MySite'))}
+@{encodeURIComponent(encodeURIComponent('https://<ORG_PARENT>.sharepoint.com/sites/MySite'))}
 ```
 
 This is because Logic Apps auto-decodes once, and the SharePoint API expects an encoded URL.

@@ -1,6 +1,6 @@
 ---
 name: Team AI Enablement (Claude Code for Team)
-description: Claude Code deployment for 44 active Fluke users across 6 nodes on Azure AI Foundry. Per-user token auth LIVE on nodes 0-3. Phase 6 EXECUTED + Foundry Key1 rotated 2026-06-08: old shared keys DEAD, gateway master keys rotated (sk-admin-*), gateways migrated Key1->Key2, Key1 regenerated (20 direct API key users cut off), all validation PASS. Enterprise prompt injector $8K/mo savings.
+description: Claude Code deployment for 44 active <ORG> users across 6 nodes on Azure AI Foundry. Per-user token auth LIVE on nodes 0-3. Phase 6 EXECUTED + Foundry Key1 rotated 2026-06-08: old shared keys DEAD, gateway master keys rotated (sk-admin-*), gateways migrated Key1->Key2, Key1 regenerated (20 direct API key users cut off), all validation PASS. Enterprise prompt injector $8K/mo savings.
 type: project
 originSessionId: f4d03941-dd0b-44f2-bb99-51b65b072972
 ---
@@ -9,7 +9,7 @@ originSessionId: f4d03941-dd0b-44f2-bb99-51b65b072972
 
 ## Azure AI Foundry
 - **Resource**: `flk-team-ai-enablement-ai` (East US 2)
-- **Subscription**: Fluke AI ML Technology (`77a0108c-5a42-42e7-8b7a-79367dbfc6a1`)
+- **Subscription**: <ORG> AI ML Technology (`77a0108c-5a42-42e7-8b7a-79367dbfc6a1`)
 - **Resource group**: `flk-team-ai-enablement-rg`
 - **Base URL**: `https://flk-team-ai-enablement-ai.services.ai.azure.com/anthropic`
 - **Auth**: API key via `ANTHROPIC_FOUNDRY_API_KEY` + `CLAUDE_CODE_USE_FOUNDRY=1`
@@ -38,10 +38,10 @@ originSessionId: f4d03941-dd0b-44f2-bb99-51b65b072972
 - **Manual upgrade**: Azure Portal (AI Services → Model deployments → Edit → change version) or REST API PUT with `properties.model.name: "claude-opus-4-7"`
 
 ## Users (45 active across nodes 1-4, verified 2026-06-10)
-- node1 (9): Kevin Davison (flukenetworks.com), Eshwari Mulpuru, Urvin Thakkar, Mihai Constantin-Pau, Rachel King, Richard Feng, Taashi Manyanga, Rohit Lokwani (fortive.com, Mac), **Josh Ciaramitaro** (Sr. InfoSec Compliance Lead, NEW 2026-06-10, AAD OID `a13b90e6-7b40-47d0-989d-d252f89c5415`, in SG `47a23ea8`)
+- node1 (9): Kevin Davison (flukenetworks.com), Eshwari Mulpuru, Urvin Thakkar, Mihai Constantin-Pau, Rachel King, Richard Feng, Taashi Manyanga, Rohit Lokwani (<ORG_PARENT>.com, Mac), **Josh Ciaramitaro** (Sr. InfoSec Compliance Lead, NEW 2026-06-10, AAD OID `a13b90e6-7b40-47d0-989d-d252f89c5415`, in SG `47a23ea8`)
 - node2 (14): Jd Giles, Richard Feng, Alex Chillman, Julian Knabe, Matt Markl, Jim Moeller, Peter Bergstrom, John Erickson, Sanjay Kalra, Taashi Manyanga, Kranthi Kothapally, Arpan Saha, Deep Katyal, **Elizaveta Petrenko** (NEW 2026-06-05, Excel add-in user, validation candidate)
 - node3 (16): Vineet Thuvara, Steven Moore, Taashi Manyanga, Daniel Pouley, Azra Jabeen, Sean Sparks, Treg Vanden Berg, Ryan Bryson (flukecal.com), Adelaide Hartmann, Lloyd Hung, Kendra Zimdars, Joe Seefried, Mark Galli, Gavin Smith, Evan Nebeker, **Kathleen Wang** (NEW 2026-05-21)
-- **PAUSED**: Michael Johnston (michael.johnston@flukecal.com) — removed from FLK-ai-enablement-node-3 SG on 2026-06-05. Re-add to restore access.
+- **PAUSED**: Michael Johnston (michael.johnston@flukecal.com) — removed from <ORG_ABBR>-ai-enablement-node-3 SG on 2026-06-05. Re-add to restore access.
 - node4 (13, L1 Excel): Parker Burke, Jay Hack, Claire Hu Weber, Kathya Kalinine, Katie Marquardt, Neal Nowick, Sue-Ann Prentice, Kathryn Sweers, Taashi Manyanga + cross-assigned: Alex Chillman (node2), Azra Jabeen (node3), Steven Moore (node3), Vineet Thuvara (node3)
 - **Taashi Manyanga** is a member of all 4 SGs (admin/testing access)
 - **Richard Feng** is in both node1 and node2 SGs
@@ -60,21 +60,21 @@ originSessionId: f4d03941-dd0b-44f2-bb99-51b65b072972
 - **Apr 28** (+1): Treg Vanden Berg (node3)
 - **Apr 30** (+1): Evan Nebeker (node3)
 - **Date unknown**: Joe Seefried (node3), Gavin Smith (node3) — found in SG during 2026-04-30 audit, no prior record
-- **Jun 2** (+1): Rohit Lokwani (node1, fortive.com, Mac user, AAD auth, OID `0ca934f3-b091-4269-98af-c07fad83e282`)
+- **Jun 2** (+1): Rohit Lokwani (node1, <ORG_PARENT>.com, Mac user, AAD auth, OID `0ca934f3-b091-4269-98af-c07fad83e282`)
 
 ### New Users Added 2026-04-07
 | User | Email | Node | Settings File |
 |------|-------|------|---------------|
-| Jim Moeller | jim.moeller@fluke.com | node2 | `user-config/settings_jim_moeller_node2.json` |
-| Peter Bergstrom | peter.bergstrom@fluke.com | node2 | `user-config/settings_peter_bergstrom_node2.json` |
-| John Erickson | john.erickson@fluke.com | node2 | `user-config/settings_john_erickson_node2.json` |
+| Jim Moeller | jim.moeller@<ORG>.com | node2 | `user-config/settings_jim_moeller_node2.json` |
+| Peter Bergstrom | peter.bergstrom@<ORG>.com | node2 | `user-config/settings_peter_bergstrom_node2.json` |
+| John Erickson | john.erickson@<ORG>.com | node2 | `user-config/settings_john_erickson_node2.json` |
 
 Settings JSONs generated. Onboarding email DOCX created (2026-04-07): `user-comms/Email_ClaudeCode_node2_onboarding_jim_peter_john.docx` (CLI setup + Excel gateway credentials, references attached Quick Start Guide). RBAC role assignment status unknown — verify before sending credentials. User list file updated at `user-comms/list of users to be granted access.txt` (19 users total).
 
 ### Sanjay Kalra Added 2026-04-22
 | User | Email | Node | Settings File |
 |------|-------|------|---------------|
-| Sanjay Kalra | sanjay.kalra@fluke.com | node2 | `user-config/settings_sanjay_kalra_node2.json` |
+| Sanjay Kalra | sanjay.kalra@<ORG>.com | node2 | `user-config/settings_sanjay_kalra_node2.json` |
 
 RBAC confirmed (Azure AI User, HTTP 201). Onboarding DOCX: `user-comms/Email_ClaudeCode_node2_onboarding_sanjay_kalra.docx` (settings.json approach with env table, 5-step CLI setup, Azure Portal key retrieval, Excel gateway creds). API key intentionally empty in settings JSON — user must retrieve from Azure Portal.
 
@@ -109,12 +109,12 @@ Each gateway has its OWN unique `LITELLM_MASTER_KEY`. Using the wrong key return
 ### Security Groups (Azure AI User on `flk-team-ai-enablement-ai`)
 | SG Name | OID | Assigned |
 |---------|-----|----------|
-| FLK-ai-enablement-node-1 | `47a23ea8-a6c7-457c-bdb9-490e386641da` | 2026-04-22 |
-| FLK-ai-enablement-node-2 | `78e46cdb-b147-444f-bfaf-ce5aeb043483` | 2026-04-22 |
-| FLK-ai-enablement-node-3 | `64967da1-9cd6-4e29-9d9a-2ba03421ed59` | 2026-04-22 |
-| FLK-ai-enablement-node-4 | `53bd21f1-b7e2-4c06-8e8b-8a81e31e5f45` | 2026-04-22 |
+| <ORG_ABBR>-ai-enablement-node-1 | `47a23ea8-a6c7-457c-bdb9-490e386641da` | 2026-04-22 |
+| <ORG_ABBR>-ai-enablement-node-2 | `78e46cdb-b147-444f-bfaf-ce5aeb043483` | 2026-04-22 |
+| <ORG_ABBR>-ai-enablement-node-3 | `64967da1-9cd6-4e29-9d9a-2ba03421ed59` | 2026-04-22 |
+| <ORG_ABBR>-ai-enablement-node-4 | `53bd21f1-b7e2-4c06-8e8b-8a81e31e5f45` | 2026-04-22 |
 
-Node 5 (UBI subscription) uses separate SG: `flkazu-ubi-FlkBIprojects-iam-group@fluke.com`
+Node 5 (UBI subscription) uses separate SG: `flkazu-ubi-FlkBIprojects-iam-group@<ORG>.com`
 
 ### Generic Onboarding Materials
 - **Settings files**: `user-config/settings_generic_node{1-4}.json` (API key blank)
@@ -158,7 +158,7 @@ Node 5 (UBI subscription) uses separate SG: `flkazu-ubi-FlkBIprojects-iam-group@
 | Fix 1: HTTPS Only | **DONE** | `httpsOnly: true` on all 5 gateways. HTTP → 301 redirect. Zero downtime. |
 | Fix 2: Disable Swagger | **DONE** | `NO_DOCS=true` env var on all 5 gateways. Root returns `"LiteLLM: RUNNING"`. |
 | Fix 3: API key redaction | OPEN | Requires Docker image config change to hide key in `/v1/model/info` |
-| Fix 4: IP restrictions | BLOCKED | Waiting on Fortive corporate egress IPs from IT Network team |
+| Fix 4: IP restrictions | BLOCKED | Waiting on <ORG_PARENT> corporate egress IPs from IT Network team |
 
 ### Key Finding
 - `NO_DOCS=true` works on LiteLLM 1.82.6 — `DOCS_URL=""` does **NOT** work (Swagger still renders)
@@ -199,7 +199,7 @@ Node 5 (UBI subscription) uses separate SG: `flkazu-ubi-FlkBIprojects-iam-group@
 - **Contents**: `system_prompt_injector.py` (v1.1, generic), `Enterprise_System_Prompt_v1.md`, `analyze_system_prompt_impact.py`, HowTo DOCX (5 pages), Infographic DOCX (6 pages, 3 GPT Image 2 panels)
 - **3-role review**: Solution Architect, Enterprise Architect, Elite Data Engineer — 8 gaps identified and fixed
 - **Key fixes**: LiteLLM v1.30+ compat note, `--deploy-date` required, `PROMPT_VERSION` constant, rate-independence note, removed phantom file refs, `--storage-key` CLI arg, skipped blob reporting, non-Claude model note
-- **Purpose**: Enable other teams to replicate the $8,120/mo savings. All Fluke-specific references generalized.
+- **Purpose**: Enable other teams to replicate the $8,120/mo savings. All <ORG>-specific references generalized.
 - See [[project-prompt-injector-pack]] for full details
 
 ### Usage Impact — 7-Day Validated Analysis (May 27, pre=May 14-20 vs post=May 21-27)
@@ -252,12 +252,12 @@ All 5 gateways now capture Azure's `apim-request-id` response header as `azure_c
 - **Correlation tracking**: `date_key` (YYYYMMDD) + `etl_run_id` (UUID) added to health_checks; `correlation_id` to job_runs. Backfill script deployed and run.
 
 ## Node 5+6 (UBI Subscription — 2026-04-17, gateway 2026-05-21)
-- **Subscription**: Fluke Unified BI (`52a1d076-bbbf-422a-9bf7-95d61247be4b`) — intentionally separate from nodes 1-4
+- **Subscription**: <ORG> Unified BI (`52a1d076-bbbf-422a-9bf7-95d61247be4b`) — intentionally separate from nodes 1-4
 - **Resource group**: `flkubi-prd-rg-001`
 - **Resource**: `flkubi-claude-enablemen-resource`
 - **Base URL**: `https://flkubi-claude-enablemen-resource.services.ai.azure.com/anthropic`
 - **Models**: `claude-opus-node-5` (425 TPM), `claude-sonnet-node-5` (425 TPM), `claude-haiku-node-5` (450 TPM), `claude-opus-node-6` (250 TPM), `claude-sonnet-node-6` (251 TPM) + 3 shared deployments
-- **Access**: Security group `flkazu-ubi-FlkBIprojects-iam-group@fluke.com` (group-based RBAC, not individual)
+- **Access**: Security group `flkazu-ubi-FlkBIprojects-iam-group@<ORG>.com` (group-based RBAC, not individual)
 - **Settings**: `user-config/Flkubi/settings.json` (currently direct-to-Foundry — pending switch to gateway)
 - **Docs**: `user-config/Flkubi/Node5_Claude_Enablement_Setup.docx` (7 sections)
 - **SG config**: `user-config/SG config.txt` updated with node-5 entry
@@ -287,7 +287,7 @@ All 5 gateways now capture Azure's `apim-request-id` response header as `azure_c
 5. **Manifest**: CSV with Date, Sender, Email, Subject, MatchedPhrase, Status
 
 ### Cross-session execution trick (<ADMIN_USER> → <USER>)
-- **Problem**: COM can't cross Windows user sessions. Graph API blocked by Fortive tenant (AADSTS65002/AADSTS50105 for all tested client IDs: Office, Graph CLI, Azure CLI).
+- **Problem**: COM can't cross Windows user sessions. Graph API blocked by <ORG_PARENT> tenant (AADSTS65002/AADSTS50105 for all tested client IDs: Office, Graph CLI, Azure CLI).
 - **Solution**: `run_export.bat` wraps Python call with full path (`<USER_HOME>/Python312\python.exe`). Launch via `explorer.exe "path\to\run_export.bat"` from admin session — Explorer runs as desktop user (<USER>), so the .bat inherits <USER>'s session. Output redirected to `export_log.txt` for polling from admin session.
 - **Python path**: <USER> profile has `<USER_HOME>/Python312\python.exe` (not on PATH for that user — must use full path in .bat)
 
@@ -295,7 +295,7 @@ All 5 gateways now capture Azure's `apim-request-id` response header as `azure_c
 - 13,232 Inbox items → 130 DASL matches → 60 exported PDFs, 2 Edge timeouts, 47 filtered out (no access language)
 - **False positives identified**: Microsoft PIM notifications (6), Outlook Reaction Digests (2), Teams notification emails (2), setup guide thread replies (~25), EOD status updates (4)
 - **Genuine requests**: Bergstrom, Knabe, King (5 licenses), Moeller, Johnston, Erickson, Schultz, plus forwarded business cases from Mulpuru
-- **Next run**: tighten filters to exclude system senders (microsoft.com, system-notification@fortive.com) and setup-guide-thread replies
+- **Next run**: tighten filters to exclude system senders (microsoft.com, system-notification@<ORG_PARENT>.com) and setup-guide-thread replies
 
 ## Deliverables (updated 2026-04-28)
 Three documents built from the email export analysis:
@@ -313,13 +313,13 @@ Three documents built from the email export analysis:
 - **Eshwari directive (Apr 22)**: All CLI requests must be routed through her for approval/cost justification
 
 ### 1b. Enterprise License Allocation — NEW 2026-05-28
-- **File**: `requests/Enterprise Licenses/Claude Users Access - Fluke.xlsx`
+- **File**: `requests/Enterprise Licenses/Claude Users Access - <ORG>.xlsx`
 - **Tabs**: Eligible (11 org columns), Blocked (11 users), Wave 1 Users (70 users)
 - **Orgs**: Finance (Azra Jabeen), Operations (Neal Nowick), eMaint (Jay Hack), Commercial Americas (Steven Moore), Engineering (Alex Chillman), HR (Katie Marquardt), Marketing (Sue-Ann Prentice), Product (Vineet Thuvara), Legal (Kathryn Sweers), CEO (Parker Burke), IT (Eshwari Mulpuru)
 - **Wave 1 Users**: 70 users, all "Standard" allocation, populated from Eligible tab + Access Requests + Current Users
 - **Blocked**: Claire Weber, Valeria Menes, Przemek Abramowicz, Sandra Baijens, Andrea Gratton, Geeta Miriyala, Chunyan Liu, Jai Gandhi, Jerry Paton, Sue-Ann Prentice, Olivia Kline (EMEA/legal restrictions)
 - **Scripts**: `update_enterprise.py` (adds users to both tabs), `fix_notice.py` (beautifies enablement notice)
-- **Enterprise rollout**: Wave 1 (Fluke, FHS, Fortive corporate) live May 26, Wave 2 (Gordian, ISC, ServiceChannel, Censis) May 27, Accruent+Provation May 28
+- **Enterprise rollout**: Wave 1 (<ORG>, FHS, <ORG_PARENT> corporate) live May 26, Wave 2 (Gordian, ISC, ServiceChannel, Censis) May 27, Accruent+Provation May 28
 
 ### 1c. Enablement Notice — UPDATED 2026-06-01
 - **v1 (DOCX)**: `requests/Enterprise Licenses/Claude Code enablement notice.docx` (May 2026, original)
@@ -332,8 +332,8 @@ Three documents built from the email export analysis:
 - **v2 changes from v1**:
   - Date updated to June 2026
   - New section "For Existing Claude POC & O365 Add-in Users" — thanks POC participants, POC ending, API key rotating end of week, 4-step logout/SSO re-auth instructions
-  - Clarifies: personal subscriptions on @fluke.com/@fortive.com email MUST re-auth to SSO; fully personal (non-Fortive email) NOT affected but should not be used on corporate devices
-  - Desktop App messaging updated: still being enabled, some features not fully functional, use claude.ai, Fortive will confirm Software Center availability
+  - Clarifies: personal subscriptions on @<ORG>.com/@<ORG_PARENT>.com email MUST re-auth to SSO; fully personal (non-<ORG_PARENT> email) NOT affected but should not be used on corporate devices
+  - Desktop App messaging updated: still being enabled, some features not fully functional, use claude.ai, <ORG_PARENT> will confirm Software Center availability
 - **Email list**: `requests/wave1_email_list.txt` — 62 semicolon-separated emails (Wave 1 minus 9 excluded users)
 - **FAQ topics**: Usage tracking reports, token limit adjustments, monthly billing, cross-charge timeline
 - **Names retained** (user override of no-PII policy): Bill Karazsia, Taashi Manyanga, Eshwari Mulpuru
@@ -503,7 +503,7 @@ All outputs in: `requests/`
 ### Node-1 Production Deploy (2026-06-04, LIVE)
 - **Image**: `litellm-gateway-node1:v10` (ACR run ca1v)
 - **Test results**: 5/5 PASS (Taashi per-user→200, master→200, invalid→401, deprecated→200, Rohit per-user→200)
-- **Usage blobs verified**: `user_api_key_user_id: <USER>@<ORG_DOMAIN>` + `rohit.lokwani@fortive.com` confirmed in blob metadata
+- **Usage blobs verified**: `user_api_key_user_id: <USER>@<ORG_DOMAIN>` + `rohit.lokwani@<ORG_PARENT>.com` confirmed in blob metadata
 - **Registry**: 43 users + 1 deprecated shared key, uploaded to blob `config/user_registry_node1.json`
 - **Token list**: `Per-User Token Migration/token_list_node1.json`
 
@@ -515,7 +515,7 @@ All outputs in: `requests/`
 ### Node-3 Production Deploy (2026-06-05, LIVE)
 - **Image**: `litellm-gateway-node3:v10` (ACR run ca1x)
 - **Test results**: 5/5 PASS (invalid→401, master→200, Taashi→200, Vineet→200, Steven→200)
-- **Usage blobs verified**: `<USER>@<ORG_DOMAIN>` + `vineet.thuvara@fluke.com` + `steven.moore@fluke.com` confirmed
+- **Usage blobs verified**: `<USER>@<ORG_DOMAIN>` + `vineet.thuvara@<ORG>.com` + `steven.moore@<ORG>.com` confirmed
 - **Registry**: 45 users, uploaded to blob `config/user_registry_node3.json`
 
 ### Current Docker Image Tags (deployed)
@@ -531,7 +531,7 @@ All outputs in: `requests/`
 ### Node-2 Production Deploy (2026-06-05, LIVE)
 - **Image**: `litellm-gateway-node2:v10` (ACR run ca1w)
 - **Test results**: 5/5 PASS (invalid→401, master→200, Taashi→200, Julian→200, old shared→200)
-- **Usage blobs verified**: `<USER>@<ORG_DOMAIN>` + `julian.knabe@fluke.com` confirmed in blob metadata
+- **Usage blobs verified**: `<USER>@<ORG_DOMAIN>` + `julian.knabe@<ORG>.com` confirmed in blob metadata
 - **Registry**: 43 users, uploaded to blob `config/user_registry_node2.json`
 - **Token list**: `Per-User Token Migration/token_list_node2.json`
 
@@ -633,7 +633,7 @@ Three layers rotated in one session:
 
 ## Access Revocation — Jul 1, 2026 (Exempt=N cleanup)
 
-**Trigger**: Jun 2026 active user audit (`user-config/Claude_Code_Active_User_Audit_Jun2026.xlsx`). All users with Exempt=N removed from all FLK-ai-enablement-node SGs + direct Foundry User RBAC on `flk-team-ai-enablement-ai`.
+**Trigger**: Jun 2026 active user audit (`user-config/Claude_Code_Active_User_Audit_Jun2026.xlsx`). All users with Exempt=N removed from all <ORG_ABBR>-ai-enablement-node SGs + direct Foundry User RBAC on `flk-team-ai-enablement-ai`.
 
 **What was removed:**
 - 34 SG memberships across 31 unique users (nodes 1–4)

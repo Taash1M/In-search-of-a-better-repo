@@ -126,7 +126,7 @@ Structure EVERY deep research output exactly as follows:
 | Scalability | ... | ... | ... |
 | Ease of Use | ... | ... | ... |
 | Maturity | ... | ... | ... |
-| Fit for Fluke/UBI | ... | ... | ... |
+| Fit for <ORG>/UBI | ... | ... | ... |
 
 ## Counter-Arguments and Risks
 - [Counter-argument 1 with source]

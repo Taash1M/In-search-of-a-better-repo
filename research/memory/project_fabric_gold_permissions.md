@@ -6,7 +6,7 @@ originSessionId: c75a0674-7e11-4fff-8068-f0ac01bd1e3f
 ---
 ## Overview
 
-Audited and resolved permissions for FLK-Americas-Commercial-Fabric downstream lakehouse, which has 23 OneLake shortcuts pointing to the Gold Lakehouse (FLK_UBI_LH_GOLDS) in FLK-UBI-GOLD-PROD workspace.
+Audited and resolved permissions for <ORG_ABBR>-Americas-Commercial-Fabric downstream lakehouse, which has 23 OneLake shortcuts pointing to the Gold Lakehouse (FLK_UBI_LH_GOLDS) in <ORG_ABBR>-UBI-GOLD-PROD workspace.
 
 **Why:** Commercial Americas Users need to query data in their downstream lakehouse without having any direct access or visibility to the Gold workspace or Gold Lakehouse.
 
@@ -14,11 +14,11 @@ Audited and resolved permissions for FLK-Americas-Commercial-Fabric downstream l
 
 ## Key Facts
 
-- **Gold Workspace**: FLK-UBI-GOLD-PROD (`4037a9f7-9627-4b77-a7bb-ae42bbdaf1bc`)
+- **Gold Workspace**: <ORG_ABBR>-UBI-GOLD-PROD (`4037a9f7-9627-4b77-a7bb-ae42bbdaf1bc`)
 - **Gold Lakehouse**: FLK_UBI_LH_GOLDS (`0a252e47-a44f-4002-8d96-4cbdb8dc1951`) — 441 tables
-- **Downstream Workspace**: FLK-Americas-Commercial-Fabric (`1b6e971e-c00a-4e39-9346-94f7c1aefca8`)
+- **Downstream Workspace**: <ORG_ABBR>-Americas-Commercial-Fabric (`1b6e971e-c00a-4e39-9346-94f7c1aefca8`)
 - **Downstream Lakehouse**: FLK_UBI_Commercial_LH — 23 shortcuts (21 from Gold, 2 from IIR lakehouse `8005cdb4-...`)
-- **Security group overlap**: `FLK-FLK-flkazu-ubi-commercialusers` has Viewer on BOTH Gold and downstream workspaces — must be resolved for any approach
+- **Security group overlap**: `<ORG_ABBR>-<ORG_ABBR>-flkazu-ubi-commercialusers` has Viewer on BOTH Gold and downstream workspaces — must be resolved for any approach
 - **Deliverables folder**: `<USER_HOME>/OneDrive - <ORG>\ADHOC\UBI\Fabric Gold Lakehouse\`
 
 ## Critical Technical Finding
@@ -35,7 +35,7 @@ Audited and resolved permissions for FLK-Americas-Commercial-Fabric downstream l
 | 4 | Managed tables via pipeline | Zero Gold access | Complete isolation | Scheduled | **Recommended** |
 
 ### DAR Blocker
-OneLake Data Access Roles require tenant admin to enable "Users can define OneLake data access roles" in Fabric Admin Portal. API returns `UniversalSecurityFeatureDisabledForWorkspace`. Cannot be enabled via workspace-level or lakehouse-level API — requires Fortive tenant admin action.
+OneLake Data Access Roles require tenant admin to enable "Users can define OneLake data access roles" in Fabric Admin Portal. API returns `UniversalSecurityFeatureDisabledForWorkspace`. Cannot be enabled via workspace-level or lakehouse-level API — requires <ORG_PARENT> tenant admin action.
 
 ## Deliverables (4 files, all PII-stripped)
 

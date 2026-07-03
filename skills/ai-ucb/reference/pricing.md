@@ -4,7 +4,7 @@ Pricing data for cost estimation during Phase 0 Discovery. All prices are East U
 
 **Usage:** The Discovery sub-skill (`ai-ucb-discover.md`) reads this file to generate cost estimates. Prices are approximate — actual costs vary by usage, reserved capacity, and enterprise agreements.
 
-**Accuracy note:** These are list prices. Fluke's Enterprise Agreement may provide discounts. Always present estimates as ranges, not exact figures. Flag any resource where usage-based pricing makes the estimate uncertain.
+**Accuracy note:** These are list prices. <ORG>'s Enterprise Agreement may provide discounts. Always present estimates as ranges, not exact figures. Flag any resource where usage-based pricing makes the estimate uncertain.
 
 **Last verified:** 2026-03-15. Prices should be re-validated via the Azure Retail Prices API before presenting estimates. See [Live Price Validation](#live-price-validation) section below.
 

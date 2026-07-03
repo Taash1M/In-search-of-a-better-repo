@@ -2,7 +2,7 @@
 
 ## Overview
 
-This folder tracks training materials and onboarding guides produced for the Fluke AI enablement program. The documents themselves are binary files (DOCX, PDF, PNG) stored on OneDrive — they are NOT committed to this git repo.
+This folder tracks training materials and onboarding guides produced for the <ORG> AI enablement program. The documents themselves are binary files (DOCX, PDF, PNG) stored on OneDrive — they are NOT committed to this git repo.
 
 This README serves as the authoritative inventory: what documents exist, where they live on OneDrive, and how to regenerate them.
 
@@ -26,7 +26,7 @@ OneDrive provides versioning, sharing, and backup for the binary files. Git prov
 |----------|--------|-------------------|
 | Claude Code Onboarding (Node 2) | DOCX | `AI\Claude code deployment\docs\Training\` |
 | Claude for Excel Quick Start Guide v3 | DOCX | `AI\Claude code deployment\docs\Training\` |
-| Claude for Excel Quick Start Guide (Fluke branded) | PDF | `CIO Deliverables\Claude in Excel - L1 onboarding\` |
+| Claude for Excel Quick Start Guide (<ORG> branded) | PDF | `CIO Deliverables\Claude in Excel - L1 onboarding\` |
 | Node 2 Onboarding Email (Jim/Peter/John) | DOCX | `AI\Claude code deployment\user-comms\` |
 | Step-by-step screenshots (Steps 0-4) | PNG | `AI\Claude code deployment\docs\Training\` |
 | Excel examples (Regional, Charts) | PNG | `AI\Claude code deployment\docs\Training\` |
@@ -38,7 +38,7 @@ All OneDrive paths are relative to `<USER_HOME>/OneDrive - <ORG>\`.
 
 ## Generator Scripts
 
-The DOCX and email documents are generated programmatically, not authored by hand. Generator scripts live on OneDrive alongside the output files (not in this repo, as they contain Fortive-specific content).
+The DOCX and email documents are generated programmatically, not authored by hand. Generator scripts live on OneDrive alongside the output files (not in this repo, as they contain <ORG_PARENT>-specific content).
 
 | Script | Output | OneDrive Location |
 |--------|--------|-------------------|

@@ -29,7 +29,7 @@ New UBI stream `AI_Usage_Analytics` that brings the existing LLM Gateway Usage T
 - **Plan file**: `<ADMIN_HOME>/.claude\plans\breezy-wandering-sparkle.md` (v3)
 - **Plan .md copy**: `AI_Usage_Analytics_Implementation_Plan_v3.md` (in project folder)
 - **Plan DOCX**: `AI_Usage_Analytics_Implementation_Plan_v3.docx` (beautified, in project folder)
-- **Dev resource group**: `flkubi-dev-rg-001` (Fluke Unified BI subscription `52a1d076-...`)
+- **Dev resource group**: `flkubi-dev-rg-001` (<ORG> Unified BI subscription `52a1d076-...`)
 - **Dev Databricks**: `adb-1943773873358740.0.azuredatabricks.net`
 - **Dev ADLS**: `flkubiadlsdev`
 - **Source**: `flkaienablement` storage (AI/ML subscription `77a0108c-...`)

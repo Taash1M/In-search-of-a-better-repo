@@ -15,6 +15,6 @@ When opening O365 apps (Word, Excel, PowerPoint, PDF) via CLI, open them as **GL
 ```
 runas /savecred /user:GLOBAL\<USER> "rundll32.exe url.dll,FileProtocolHandler C:\Windows\System32\notepad.exe"
 ```
-Enter <USER>'s password when prompted → stored in Credential Manager (target "RunAs"). After that every O365 open launches as <USER> non-interactively. The hook auto-detects the seed via `cmdkey /list` and switches from fallback to runas. (As of 2026-06-25 the seed was NOT yet done on FLK-36F0P34 — verify with `cmdkey /list` | grep RunAs before assuming <USER> context.)
+Enter <USER>'s password when prompted → stored in Credential Manager (target "RunAs"). After that every O365 open launches as <USER> non-interactively. The hook auto-detects the seed via `cmdkey /list` and switches from fallback to runas. (As of 2026-06-25 the seed was NOT yet done on <ORG_ABBR>-36F0P34 — verify with `cmdkey /list` | grep RunAs before assuming <USER> context.)
 
-<USER> is a **domain** account (`GLOBAL\<USER>`), machine `FLK-36F0P34`. [[user-workstation]] · enforcement infra: [[claude-code-hooks]].
+<USER> is a **domain** account (`GLOBAL\<USER>`), machine `<ORG_ABBR>-36F0P34`. [[user-workstation]] · enforcement infra: [[claude-code-hooks]].

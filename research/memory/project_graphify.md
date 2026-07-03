@@ -50,4 +50,4 @@ detect() → extract() → build_graph() → cluster() → analyze() → report(
 ## Status (2026-04-06)
 - Repo cloned and analyzed
 - Skill file created at `~/.claude/commands/graphify.md`
-- Not yet run on any Fortive codebase
+- Not yet run on any <ORG_PARENT> codebase

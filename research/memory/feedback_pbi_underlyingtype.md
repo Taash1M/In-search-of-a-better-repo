@@ -179,7 +179,7 @@ Internal OneLake shortcuts (lakehouse-to-lakehouse within the same tenant) alway
 
 **Implication:** Every downstream user who queries a shortcut must have at least ReadAll on the source lakehouse. To achieve complete permission isolation, replace shortcuts with managed tables populated by a pipeline (which runs under a workspace identity or service principal).
 
-**OneLake Data Access Roles (DAR)** can restrict access to specific tables without a workspace role, but require tenant admin to enable "Users can define OneLake data access roles" in Fabric Admin Portal. On Fortive tenant, this setting is currently **disabled** (returns `UniversalSecurityFeatureDisabledForWorkspace`).
+**OneLake Data Access Roles (DAR)** can restrict access to specific tables without a workspace role, but require tenant admin to enable "Users can define OneLake data access roles" in Fabric Admin Portal. On <ORG_PARENT> tenant, this setting is currently **disabled** (returns `UniversalSecurityFeatureDisabledForWorkspace`).
 
 **Why:** Discovered 2026-05-12 during Gold Lakehouse permissions audit. Explored 4 approaches; only managed tables provide complete isolation without tenant admin action.
 

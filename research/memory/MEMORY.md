@@ -11,9 +11,9 @@
 - [Claude Desktop Export](project_claude_desktop_export.md) — 40 skills + 11 hooks + MCP + 3-persona workflow exported to OneDrive with READMEs (2026-06-29)
 - [Customer MDM](project_customer_mdm.md) — 5-phase matching pipeline, CRM+EBS dedup, all phases production complete (2026-03-18)
 - [AI Use Case Builder](project_ai_use_case_builder.md) — v2.0, 21 skill files all A+ grade, comprehensive quality upgrade complete (2026-04-07)
-- [Copilot Studio Agents](project_copilot_studio_agents.md) — v3: structured C3 sub-criteria, Fluke catalog, commercial barrier flagging, 10/5/1 guardrail fix, DirectLine tested (2026-06-04)
+- [Copilot Studio Agents](project_copilot_studio_agents.md) — v3: structured C3 sub-criteria, <ORG> catalog, commercial barrier flagging, 10/5/1 guardrail fix, DirectLine tested (2026-06-04)
 - [Growth Kaizen KAS](project_growth_kaizen.md) — v3 C3 enhancement, custom wide canvas, Azure static site live, repo `custom-copilot-scoring-agent`, DirectLine PASS (2026-06-04)
-- [President's Letter](project_presidents_letter.md) — Monthly Fluke IT update, Section 9: Fortive GL (UBI) + AI Charter/Office Hours/Claude Enterprise (May 2026 done)
+- [President's Letter](project_presidents_letter.md) — Monthly <ORG> IT update, Section 9: <ORG_PARENT> GL (UBI) + AI Charter/Office Hours/Claude Enterprise (May 2026 done)
 - [Team AI Enablement](project_team_ai_enablement.md) — 45 users/6 nodes; Jun audit: 13/28 active, 15 dormant, 11 unregistered active (need RITM reconcile); audit Excel in user-config/ (2026-06-29)
 - [Prompt Injector Pack](project_prompt_injector_pack.md) — 5-artifact shareable package (injector+design doc+analysis script+HowTo+Infographic), 3-role review, 8 fixes applied (2026-06-17)
 - [UBI Claude Enablement](project_ubi_claude_enablement.md) — flkubi-claude-enablemen-resource (UBI sub), 9 deployments, Kranthi added Foundry User 2026-07-02 (3 direct users + group of 12)
@@ -32,7 +32,7 @@
 - [MSIS 579 Write-Up & Presentations](project_579_writeup.md) — IKEA 4-angle case (JTBD), 4 PPTX (v3 design), masters-deliverable skill v2.0 (2026-05-03)
 - [RAG Skills](project_rag_skills.md) — doc-intelligence (3-tier) + rag-multimodal (RAGAS eval + hybrid tuning), 3 repos reviewed, A+ grade (2026-04-07)
 - [AI BI Tool](project_ai_bi_tool.md) — Multi-agent BI tool, 8 phases + 3-wave hardening (38 fixes), 386 tests/80% cov, 8 DOCX + 4 PPTX, GA-ready (2026-04-13)
-- [Alex B Fortive GL](project_alex_b_fortive_gl.md) — Fortive GL (15 entities): full pipeline research, 2 options, handover DOCX + 32-account mapping + entity 8650 context (2026-04-22)
+- [Alex B <ORG_PARENT> GL](project_alex_b_fortive_gl.md) — <ORG_PARENT> GL (15 entities): full pipeline research, 2 options, handover DOCX + 32-account mapping + entity 8650 context (2026-04-22)
 - [Graphify Skill](project_graphify.md) — Knowledge graph skill based on safishamsi/graphify repo, project dir: Claude code\graphify (2026-04-06)
 - [Document Extraction Skill](project_doc_extract.md) — Unified doc-extract skill (ContextGem+RAG-Anything+agentic-doc), B+ 104/120 (2026-04-07)
 - [PLM Drawing Extraction](project_plm_drawing_extraction.md) — Build 4 FINAL (20,345 nodes, 820 drawings), GitHub synced. AWS BDA: 3 blueprints, comparison DOCX (2026-06-19)
@@ -50,11 +50,11 @@
 - [Fabric Gold Lakehouse Permissions](project_fabric_gold_permissions.md) — 23 shortcuts, 4 approaches (DAR blocked by tenant), managed tables recommended, 4 deliverables PII-stripped (2026-05-12)
 - [Codex Desktop Setup](project_codex_setup.md) — gpt-5.5 on Azure AI Foundry, chat-only (bug #16916 blocks tools), 33 skills copied, config clean (2026-05-17)
 - [AI Navigator Pro](project_ai_navigator_pro.md) — Enterprise AI onboarding app, 14-slide deck (GPT Image 2), v2 infographic, Perplexity→Claude Desktop, SNOW live
-- [AI Office Hours](project_ai_office_hours.md) — Monthly Fluke AI sessions (May-Nov 2026). Jun-17 minutes DONE (email+full DOCX+PDF); May-27: 3 PPTX (2026-06-22)
+- [AI Office Hours](project_ai_office_hours.md) — Monthly <ORG> AI sessions (May-Nov 2026). Jun-17 minutes DONE (email+full DOCX+PDF); May-27: 3 PPTX (2026-06-22)
 - [I-485 Expedite Request](project_i485_expedite.md) — EB-2 AOS expedite letter + cover email finalized, cites Dorcas v. USCIS, 6 exhibits + court order PDF, ready to submit (2026-06-07)
 - [AWS Twin](project_aws_twin.md) — BDA→Claude PLM twin in Aura 2467c721. Plan COMPLETE (0–9): 687-doc corpus loaded prod-parity, twin-vs-prod compared, sanitized local repo committed. **5-FG head-to-head DOCX+XLSX (Prod 80 vs Twin 65.5); fix plan: notes=0 is a field-name bug (manufacturing_notes≠general_notes), rev-41% is over-strict metric — zero-spend fixes pending** (2026-06-24)
-- [AI Gov Policy](project_ai_gov_policy.md) — Section 5.7 (User Responsibilities) authored, humanified, published to SharePoint FLK-InfoSec (2026-06-30)
-- [AI Assets Governance](project_ai_assets_governance.md) — Fortive Compliance AI-asset inventory: live read-only az scan of both subs, 543 evidence-backed rows, no hallucination, CSV+DOCX (2026-06-22)
+- [AI Gov Policy](project_ai_gov_policy.md) — Section 5.7 (User Responsibilities) authored, humanified, published to SharePoint <ORG_ABBR>-InfoSec (2026-06-30)
+- [AI Assets Governance](project_ai_assets_governance.md) — <ORG_PARENT> Compliance AI-asset inventory: live read-only az scan of both subs, 543 evidence-backed rows, no hallucination, CSV+DOCX (2026-06-22)
 - [GL Investigation INC1555542](project_gl_inc1555542.md) — accounts 410120/150/700 mis-mapped Expense→Revenue; fix CASE WHEN ACCOUNT LIKE '4%'; 5 artifacts + 330-row STM
 - [Data Dev Planning Skill](project_data_dev_planning_skill.md) — `/data-dev-planning`: orient→draft→scaffold→3-persona review to zero P0-P3 + qa-gate + smoke-test mandate
 - [Data-Engineering Skill Refinement](project_data_engineering_refinement.md) — COMPLETE: 4 Skill-Judge fixes + embedded 3-persona review gate; final judge 109/120 Grade A (+19 from 90), zero regression; plan 7 rounds + skill 5 rounds clean (2026-06-26)
@@ -75,14 +75,14 @@
 - [Azure AI Foundry Config](reference_foundry_config.md) — flk-team-ai-enablement-ai (East US 2), model TPM, AAD/legacy auth, AWS Bedrock alt, diag logging, usage-ETL VM scripts + MI
 - [Claude Code Hooks](reference_claude_hooks.md) — the 8 hooks (secret-scanner, dangerous-cmd, change-logger, repo-sync, 2× obsidian, aws-cost, qa-gate-enforcer) + env facts (python/Docker/sitecustomize/inventory)
 - [MCP Servers](reference_mcp_servers.md) — 5 active (context7/obsidian/azure/azure-devops/adf) + cloud Databricks/Fabric + ubi-mcp skill + MCP_Servers package set
-- [ServiceNow Prod API](reference_servicenow_api.md) — fortive.service-now.com, flkbiapiuser creds file, readable task/RITM/sys_user (mgr chain), rm_story BLOCKED (empty not 403), label dot-walk fails (2026-06-24)
+- [ServiceNow Prod API](reference_servicenow_api.md) — <ORG_PARENT>.service-now.com, flkbiapiuser creds file, readable task/RITM/sys_user (mgr chain), rm_story BLOCKED (empty not 403), label dot-walk fails (2026-06-24)
 - [Document Beautification Skill](reference_docx_beautify.md) — docx_beautify.py (~2760 lines, 48+ funcs, 4 presets), D2 CLI + gotchas, Azure icons V23, cairosvg, promoted to commands/
 - [SOX PCC20/PCC30 Audit Data](reference_sox_pcc_audit.md) — extract location, 1,000 commits Apr-Jul 2025, 9 devs, 9.1% linked to PRs
 
 ## Feedback
 - [PBI encoding & modelExtensions](feedback_pbi_underlyingtype.md) — underlyingType, modelExtensions, filterConfig (NOT bare filters), displayName, Fabric DirectQuery M folding, shortcuts don't auto-sync, DAR disabled
 - [Auto-invoke skills](feedback_skill_invocation.md) — Always activate skills proactively, FYI user as you go; don't ask permission first
-- [RBAC via REST API](feedback_rbac_rest_api.md) — az role assignment create fails on Fluke AI sub; always use REST API PUT
+- [RBAC via REST API](feedback_rbac_rest_api.md) — az role assignment create fails on <ORG> AI sub; always use REST API PUT
 - [Agents must use skills](feedback_agents_use_skills.md) — build/data sub-agents must be told to activate the relevant skill (e.g. data-engineering); they don't auto-inherit it
 - [AWS runtime permission audit](feedback_aws_runtime_permission_audit.md) — before first-spend AWS deploy, run IAM-simulator audit of deployed config; moto tests can't see IAM/bucket/SFN-integration denials
 - [Arrow direction in docs](feedback_arrow_direction.md) — arrows point TOWARD the other section, not both same direction
@@ -97,7 +97,7 @@
 - [No PII in deliverables](feedback_no_pii_in_deliverables.md) — never include personal names or emails in DOCX/XLSX/PPTX; use generic role labels (UBI Admin, Downstream User, etc.)
 - [LiteLLM "No connected db" gotcha](feedback_litellm_no_connected_db.md) — means wrong Bearer token, not config/DB issue; each gateway has unique LITELLM_MASTER_KEY
 - [LiteLLM callback patterns](feedback_litellm_callback_patterns.md) — v1.30+, call_type="acompletion", inline YAML list, in-place mutation, non-Claude awareness, PROMPT_VERSION audit
-- [Archive before changes](feedback_archive_before_changes.md) — always backup codebase to archive/ before edits; maintain code in Fortive GitHub repo `Claude-Code-POC-ETL`
+- [Archive before changes](feedback_archive_before_changes.md) — always backup codebase to archive/ before edits; maintain code in <ORG_PARENT> GitHub repo `Claude-Code-POC-ETL`
 - [HTML for Outlook email](feedback_html_for_outlook.md) — DOCX copy-paste loses formatting; generate HTML, open in browser, Ctrl+A/C paste into Outlook
 - [Illustrated panels over emoji](feedback_illustrated_panels.md) — GPT Image 2 flat illustrations preferred over emoji cartoon strips for consultant-grade decks
 - [Claude max_tokens truncation](feedback_claude_max_tokens.md) — use 64K+ max_tokens for extraction; 16K causes JSON truncation on large drawings
@@ -115,7 +115,7 @@
 - [User approval overrides sign-off gates](feedback_user_approval_overrides_signoff.md) — explicit "I approve" overrides os.path.exists() artifact gates; still honor all technical/data-quality gates (2026-06-29)
 
 ## User Profile
-- [Immigration Context](user_immigration.md) — EB-2 AOS pending, H-1B with Fluke (through 10/2027), Zimbabwe national, two U.S.-citizen children, Wolfsdorf Rosenthal LLP attorney
+- [Immigration Context](user_immigration.md) — EB-2 AOS pending, H-1B with <ORG> (through 10/2027), Zimbabwe national, two U.S.-citizen children, Wolfsdorf Rosenthal LLP attorney
 - [Workstation](user_workstation.md) — Dell 64 GB RAM, dual sessions (<ADMIN_USER> + <USER>), bloatware: Dell TechHub + Power Automate Desktop (2026-06-17)
 
 ## References
@@ -130,5 +130,5 @@
 - [GPT Image 2 Azure](reference_gpt_image2.md) — Azure AI Foundry endpoint, 1536x1024 high quality, ~170s/image, flat corporate illustration style
 - [Laptop Resource Management](reference_resource_mgmt.md) — temp_memcheck.ps1 audit script, kill commands for Dell TechHub + Power Automate Desktop (2026-06-17)
 - [ADO Bypass Deploy Pattern](reference_ado_bypass_deploy.md) — Complete grant/merge/revoke pattern with Python requests, repo IDs, descriptor format, all gotchas (2026-06-17)
-- [AWS BDA Config](reference_aws_bda.md) — BDA: 3 blueprints LIVE, 4 inference profiles, RG `FLK-PLM-Drawings-AI`, **Claude Code on Bedrock ACTIVE** (Opus 1M, us-east-2)
+- [AWS BDA Config](reference_aws_bda.md) — BDA: 3 blueprints LIVE, 4 inference profiles, RG `<ORG_ABBR>-PLM-Drawings-AI`, **Claude Code on Bedrock ACTIVE** (Opus 1M, us-east-2)
 - [GPT-Image not on Bedrock](reference_gpt_image_not_on_bedrock.md) — Bedrock does NOT host GPT-Image; use Amazon Nova Canvas (or Titan v2 / Stability) for AWS-native text-to-image

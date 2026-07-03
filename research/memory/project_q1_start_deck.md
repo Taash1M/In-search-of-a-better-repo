@@ -6,25 +6,25 @@ originSessionId: aa210407-a09e-461f-aa2f-83d0e2fa4475
 ---
 ## Q2 UPDATE (2026-06-26)
 
-Reused the Q1 2-slide design to build the **Q2 data slides** for the broader `Fluke IT 2026 Strat _Q2.pptx` deck.
+Reused the Q1 2-slide design to build the **Q2 data slides** for the broader `<ORG> IT 2026 Strat _Q2.pptx` deck.
 
 - **Source**: `<USER_HOME>/OneDrive - <ORG>\AI\Strat\Data\Q2\Apr-May-June Deliverables.xlsx` — 3 tabs (Sheet1, May-Week2, June), ~24 deliverables w/ cross-tab dupes. Treated **"Done"="Completed"**. ~19 completed, ~11 in-flight.
 - **File is OneDrive-locked** → `cp` to `%TEMP%` before openpyxl (shutil.copy hits PermissionError; `cp` works).
 - **Excel cp**: `<USER_HOME>/AppData\Local\Temp\q2_data.xlsx`.
 
 ### Deliverables built (all in `…\AI\Strat\Data\Q2\`)
-1. **`Drafted Q2.pptx`** (status-grouped, 2 slides) — UPDATED IN PLACE from Q1 leftover content. S1 Q2 Delivered: KPI 19/4/40%, 5 marquee highlights (UBI Funnel 8.8→5GB & 20→12min, Revenue stream 50% SLA, Account 360 Neo4j + Account Search AI, Fortive GL + Kaizen, AI GPT/Claude + 6 integrations), recomputed category bars (OpEff 8/12, BizEnable 7/13, FinAcc 1/2, CostOpt 3/5). S2 Q3–Q4 Roadmap: rebuilt 12-card grid clean (removed orphan Q1 shapes), KPI 10/2/1/13, Fabric callout. Footers → Q2 / Apr–Jun 2026.
+1. **`Drafted Q2.pptx`** (status-grouped, 2 slides) — UPDATED IN PLACE from Q1 leftover content. S1 Q2 Delivered: KPI 19/4/40%, 5 marquee highlights (UBI Funnel 8.8→5GB & 20→12min, Revenue stream 50% SLA, Account 360 Neo4j + Account Search AI, <ORG_PARENT> GL + Kaizen, AI GPT/Claude + 6 integrations), recomputed category bars (OpEff 8/12, BizEnable 7/13, FinAcc 1/2, CostOpt 3/5). S2 Q3–Q4 Roadmap: rebuilt 12-card grid clean (removed orphan Q1 shapes), KPI 10/2/1/13, Fabric callout. Footers → Q2 / Apr–Jun 2026.
 2. **`Q2 Strat-Grouped (2-slide).pptx`** — NEW. 2 slides, 2 pillars each, full-text badges.
 3. **`Q2 Strat-Grouped (1-slide).pptx`** — NEW. 1 slide, 4 pillars side-by-side, status dots + legend.
 
 ### Strategic buckets (used in both strat-grouped variants, 6 projects each, capped)
 - **Infrastructure & Platform** (navy 1B4F72): UBI Funnel opt✓, Revenue stream 50%✓, MS Fabric(Planning), ADB Unity Catalog(Ideation), Azure Resource cleanup, Power Automate→Logic Apps
-- **Business Enablement & Commercial** (green 1E8449): Fortive GL✓, President's Kaizen✓, IIR✓, SMC/RMC, Growth IQ, Inventory Rec Tool
+- **Business Enablement & Commercial** (green 1E8449): <ORG_PARENT> GL✓, President's Kaizen✓, IIR✓, SMC/RMC, Growth IQ, Inventory Rec Tool
 - **AI & Advanced Analytics** (purple 7D3C98): GPT/Claude✓, Account 360 Neo4j✓, Account Search AI✓, Tech Mentor✓, Account 360 P2, VoV Phase 2
 - **Data Integrations & Operations** (gold B9770E): TMO✓, WIP Jobs CoC✓, CSAT rewire✓, Employee/Shipping✓, Brazil Backlog, eMaint
 
 ### Status
-**AWAITING USER PICK** among the 3 drafts. After pick → inject winner into `Fluke IT 2026 Strat _Q2.pptx` **slides 19–20** (currently still carry Q1 content). User explicitly said NOT to inject yet.
+**AWAITING USER PICK** among the 3 drafts. After pick → inject winner into `<ORG> IT 2026 Strat _Q2.pptx` **slides 19–20** (currently still carry Q1 content). User explicitly said NOT to inject yet.
 - Build scripts: `%TEMP%\build_q2.py` (status-grouped in-place edit), `%TEMP%\build_q2_strat.py` (both strat variants).
 - Backup of pre-edit Drafted Q2: `%TEMP%\Drafted_Q2_BACKUP.pptx`.
 - 1-slide gotcha FIXED: 4 narrow columns can't fit bucket name + count chip on one line → overlap; use 2-line centered header (`show_count=False`) + taller header (HH 0.58).
@@ -41,8 +41,8 @@ Update the "Data Related Slides" (24 & 25) in the Q1 strategy deck with content 
 ## Key Facts
 
 - **Project dir**: `<USER_HOME>/OneDrive - <ORG>\AI\EM\Q1 Start Deck\`
-- **PPTX**: `Fluke IT 2026 Strat _Q1.pptx` (25 slides, 16:9) — original deck, not yet modified
-- **Target insert file**: `Fluke IT 2026 Data_Updates for _Q1.pptx` — final destination, not yet touched
+- **PPTX**: `<ORG> IT 2026 Strat _Q1.pptx` (25 slides, 16:9) — original deck, not yet modified
+- **Target insert file**: `<ORG> IT 2026 Data_Updates for _Q1.pptx` — final destination, not yet touched
 - **Excel source**: `Data and AI Updates_March impact deliverables.xlsx`
   - "Slide Data Review" tab: Raw extraction of 18 projects from slides 24-25
   - "Improved Draft" tab: Rewritten content grouped by category with color-coded sections
@@ -88,7 +88,7 @@ Update the "Data Related Slides" (24 & 25) in the Q1 strategy deck with content 
 ## Pending Work
 
 1. **User review** — Review Q1 Summary + Q2-Q4 Upcoming PPTX for content/direction accuracy
-2. **Final insert** — Merge chosen slides into `Fluke IT 2026 Data_Updates for _Q1.pptx`
+2. **Final insert** — Merge chosen slides into `<ORG> IT 2026 Data_Updates for _Q1.pptx`
 3. **Variation selection** — Original 3 variations still available if user wants different format
 
 ## Content Scope

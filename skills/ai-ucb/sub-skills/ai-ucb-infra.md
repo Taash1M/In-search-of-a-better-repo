@@ -36,7 +36,7 @@ Read `ai-ucb-state.json` and `ai-ucb/archetypes.md` to determine which resources
 INFRASTRUCTURE PLAN — {project_name}
 Archetype: {archetype} | Env: {env} | Model: {subscription_model}
 
-AI Subscription (Fluke AI ML Technology):
+AI Subscription (<ORG> AI ML Technology):
 | # | Resource | Type | SKU | Region | Name |
 |---|----------|------|-----|--------|------|
 | 1 | Resource Group | - | - | {primary} | flk-{app}-dev-rg |
@@ -304,7 +304,7 @@ az keyvault set-policy --name flk-{app}-kv-dev \
 
 ### Step 7: RBAC Setup (via REST API)
 
-Assign roles to Managed Identity on all resources. **Always use the REST API PUT method** — `az role assignment create` can fail on certain subscriptions (known issue with Fluke AI subscription).
+Assign roles to Managed Identity on all resources. **Always use the REST API PUT method** — `az role assignment create` can fail on certain subscriptions (known issue with <ORG> AI subscription).
 
 | Resource | Role | Role Definition ID | Purpose |
 |----------|------|--------------------|---------|
@@ -681,7 +681,7 @@ for r in reversed(resources):
 | `QuotaExceeded` on AI model deployment | Try secondary region, reduce TPM capacity, or use different model. `az cognitiveservices usage list --name {ai} -g {rg}` to check current usage |
 | `NameNotAvailable` on storage/cosmos | Append random 4-char suffix: `python3 -c "import secrets; print(secrets.token_hex(2))"` and retry |
 | `AuthorizationFailed` | Check subscription access: `az account show`. If expired: `az login --tenant 0f634ac3-b39f-41a6-83ba-8f107876c692` |
-| `AuthorizationFailed` on RBAC | Use REST API PUT instead of `az role assignment create` (known Fluke AI sub issue). See Step 7 |
+| `AuthorizationFailed` on RBAC | Use REST API PUT instead of `az role assignment create` (known <ORG> AI sub issue). See Step 7 |
 | `ResourceGroupNotFound` (UBI sub) | For split model, verify UBI subscription accessible: `az account list --query "[?id=='52a1d076-bbbf-422a-9bf7-95d61247be4b']"` |
 | `SkuNotAvailable` in region | Try secondary region, or `az cognitiveservices account list-skus --kind OpenAI --location eastus2` |
 | `429 TooManyRequests` | Built into `provision_resource()` — automatic retry with backoff |

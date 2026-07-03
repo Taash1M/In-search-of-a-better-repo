@@ -19,7 +19,7 @@ SO Backlog stream optimization to bring E2E refresh from ~60+ min to **≤40 min
 
 | Item | Detail |
 |---|---|
-| **URL** | https://dev.azure.com/flukeit/Fluke%20Data%20And%20Analytics/_git/AzureDataBricks/pullrequest/4159 |
+| **URL** | https://dev.azure.com/flukeit/<ORG>%20Data%20And%20Analytics/_git/AzureDataBricks/pullrequest/4159 |
 | **Branch** | `feature/SOBacklog-codereview-fixes` → `develop` |
 | **Status** | Active — awaiting Databricks Dev Approvers |
 | **Resolves** | AI reviewer threads 46463 (F1), 46466 (F2), 46467 (F3a/F3b), 46468 (F4) on PR #4132 |
@@ -43,7 +43,7 @@ SO Backlog stream optimization to bring E2E refresh from ~60+ min to **≤40 min
 
 | Item | Detail |
 |---|---|
-| **URL** | https://dev.azure.com/flukeit/Fluke%20Data%20And%20Analytics/_git/ADF/pullrequest/4146 |
+| **URL** | https://dev.azure.com/flukeit/<ORG>%20Data%20And%20Analytics/_git/ADF/pullrequest/4146 |
 | **Branch** | `feature/SOBacklog-perf-retrofit` → `Main` |
 | **Status** | Active — AI reviewer APPROVE (0 findings); pending skew query + smoke test |
 

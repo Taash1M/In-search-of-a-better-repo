@@ -6,7 +6,7 @@ allowed-tools: Read, Grep, Glob, Bash, Edit, Write, Agent, AskUserQuestion
 
 # GitHub Issue Triage
 
-**Source:** mattpocock/skills `github-triage` — adapted for Fluke AI team with product labels and HITL/AFK classification.
+**Source:** mattpocock/skills `github-triage` — adapted for <ORG> AI team with product labels and HITL/AFK classification.
 
 Triage issues in the current repo using a label-based state machine. Infer the repo from `git remote`. Use `gh` for all GitHub operations.
 

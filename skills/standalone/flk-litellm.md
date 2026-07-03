@@ -457,7 +457,7 @@ curl -H "Authorization: Bearer $TOKEN" \
 - **ACR Basic:** ~$5/month
 - **Claude inference:** Per-token pricing through Azure AI Foundry
 
-## Fluke Team Deployment Reference
+## <ORG> Team Deployment Reference
 
 | Resource | Value |
 |----------|-------|
@@ -472,7 +472,7 @@ curl -H "Authorization: Bearer $TOKEN" \
 | PBI Report | `LLM_Gateway_Usage_Tracking_DirectLake` (10 pages, 22 relationships) |
 | Delta Tables | 19 total (13 metadata + 6 content) |
 | Users | 31 across 4 SGs (AAD auth) |
-| Subscription | Fluke AI ML Technology (`77a0108c-5a42-42e7-8b7a-79367dbfc6a1`) |
+| Subscription | <ORG> AI ML Technology (`77a0108c-5a42-42e7-8b7a-79367dbfc6a1`) |
 
 ### Content Logging Env Vars (per App Service)
 

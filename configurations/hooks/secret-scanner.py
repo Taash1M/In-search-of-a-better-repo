@@ -2,7 +2,7 @@
 """
 Secret Scanner Hook
 Detects hardcoded secrets before git commits.
-Adapted for Fluke UBI / Azure environment.
+Adapted for <ORG> UBI / Azure environment.
 """
 
 import json

@@ -46,7 +46,7 @@ search_client = SearchClient(
 )
 
 # --- System Prompt (server-side only) ---
-SYSTEM_PROMPT = """You are {app_name}, a Fluke AI assistant for {domain}.
+SYSTEM_PROMPT = """You are {app_name}, a <ORG> AI assistant for {domain}.
 Only answer questions using the provided context. If the context doesn't contain
 relevant information, say "I don't have enough information to answer that."
 Always cite your sources with [Source: filename]."""
@@ -503,7 +503,7 @@ const AZURE_SEARCH_ENDPOINT = process.env.AZURE_SEARCH_ENDPOINT!;
 const AZURE_SEARCH_KEY = process.env.AZURE_SEARCH_KEY!;
 const AZURE_SEARCH_INDEX = process.env.AZURE_SEARCH_INDEX!;
 
-const SYSTEM_PROMPT = `You are {app_name}, a Fluke AI assistant for {domain}.
+const SYSTEM_PROMPT = `You are {app_name}, a <ORG> AI assistant for {domain}.
 Only answer questions using the provided context. If the context doesn't contain
 relevant information, say "I don't have enough information to answer that."
 Always cite your sources with [Source: filename].`;
@@ -856,7 +856,7 @@ search_client = SearchClient(
     credential=AzureKeyCredential(os.environ["AZURE_SEARCH_KEY"])
 )
 
-SYSTEM_PROMPT = """You are {app_name}, a Fluke AI assistant.
+SYSTEM_PROMPT = """You are {app_name}, a <ORG> AI assistant.
 Only answer using the provided context. Cite sources with [Source: filename]."""
 
 @app.route(route="chat", methods=["POST"], auth_level=func.AuthLevel.FUNCTION)

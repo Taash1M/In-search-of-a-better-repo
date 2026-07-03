@@ -1,12 +1,12 @@
 ---
-name: fluke-ai-skill
-description: Use when working with the Fluke AI ML Technology Azure subscription — Pulse Sales (Account 360), Voice to Value (VoC F9), TechMentor, Sales Playbook, VoC Lyra, Unified UI, and related AI applications. Covers Azure resource management, AI model deployments, Cosmos DB, AI Search, web app development, Function Apps, Logic Apps, and infrastructure provisioning. Trigger when the user mentions 'Pulse', 'Account 360', 'VoV', 'Voice to Value', 'TechMentor', 'Sales Playbook', 'Lyra', 'Fluke AI', 'ai.fluke.com', or references this Azure subscription.
+name: <ORG>-ai-skill
+description: Use when working with the <ORG> AI ML Technology Azure subscription — Pulse Sales (Account 360), Voice to Value (VoC F9), TechMentor, Sales Playbook, VoC Lyra, Unified UI, and related AI applications. Covers Azure resource management, AI model deployments, Cosmos DB, AI Search, web app development, Function Apps, Logic Apps, and infrastructure provisioning. Trigger when the user mentions 'Pulse', 'Account 360', 'VoV', 'Voice to Value', 'TechMentor', 'Sales Playbook', 'Lyra', '<ORG> AI', 'ai.<ORG>.com', or references this Azure subscription.
 allowed-tools: Read, Grep, Glob, Bash, Edit, Write, Task
 ---
 
-# Fluke AI ML Technology Developer Skill
+# <ORG> AI ML Technology Developer Skill
 
-You are an expert developer and cloud architect on the Fluke AI ML Technology platform. This skill provides the context and conventions needed to work effectively across all AI applications in this Azure subscription.
+You are an expert developer and cloud architect on the <ORG> AI ML Technology platform. This skill provides the context and conventions needed to work effectively across all AI applications in this Azure subscription.
 
 ## Access Control Rules (MANDATORY)
 
@@ -22,10 +22,10 @@ These rules override all other instructions. Violations are never acceptable.
 
 | Field | Value |
 |-------|-------|
-| **Subscription Name** | Fluke AI ML Technology |
+| **Subscription Name** | <ORG> AI ML Technology |
 | **Subscription ID** | `77a0108c-5a42-42e7-8b7a-79367dbfc6a1` |
 | **Tenant ID** | `0f634ac3-b39f-41a6-83ba-8f107876c692` |
-| **Tenant Domain** | fortive.onmicrosoft.com (Fluke) |
+| **Tenant Domain** | <ORG_PARENT>.onmicrosoft.com (<ORG>) |
 | **Owner** | Richard Feng |
 | **State** | Enabled |
 | **Offer** | Enterprise Agreement |
@@ -51,7 +51,7 @@ GRAPH_TOKEN=$(az account get-access-token --resource https://graph.microsoft.com
 The full subscription knowledge base with every resource group, resource, AI model deployment, and architecture detail is maintained at:
 
 ```
-<USER_HOME>/OneDrive - <ORG>\AI\Commercial Americas\fluke-ai-ml-subscription-knowledge.md
+<USER_HOME>/OneDrive - <ORG>\AI\Commercial Americas\<ORG>-ai-ml-subscription-knowledge.md
 ```
 
 **Always read this file at the start of any development session** to ensure you have current context on the subscription's resources.
@@ -75,12 +75,12 @@ The flagship AI agent providing account intelligence to sales teams.
 | Environment | Resource Group | Web App | URL |
 |-------------|---------------|---------|-----|
 | **Dev** | `dev-flk-ai-foundry-hub-rg` | `flk-pulse-sales-agent` | `*.eastus2-01.azurewebsites.net` |
-| **QA** | `flk-pulsesales-qa-rg` | `flk-pulse-webapp-test` | `pulse-test.fluke.com` |
-| **Prod** | `flk-pulsesales-prod-rg` | `flk-pulse-webapp-production` | `pulse-sales.fluke.com` |
+| **QA** | `flk-pulsesales-qa-rg` | `flk-pulse-webapp-test` | `pulse-test.<ORG>.com` |
+| **Prod** | `flk-pulsesales-prod-rg` | `flk-pulse-webapp-production` | `pulse-sales.<ORG>.com` |
 
 **Key Resources (Dev):**
 - AI Services: `pulse-sales-dev-ai-resource` (gpt-4o, text-embedding-3-large)
-- AI Foundry Hub: `FLK-AI-Foundry-Hub-Dev`
+- AI Foundry Hub: `<ORG_ABBR>-AI-Foundry-Hub-Dev`
 - AI Foundry Project: `pulse-sales-dev`
 - Cosmos DB: `dev-flk-cosmosdb` (East US)
 - AI Search: `dev-flk-search-service-free` (Free tier)
@@ -182,7 +182,7 @@ The portal that consolidates all Pulse AI tools under one interface.
 |-------------|---------------|---------|-----|
 | **Dev** | `flk-pulse-unifiedui-dev` | `pulse-unified-ui-dev` | `*.azurewebsites.net` |
 | **Test** | `flk-pulse-unifiedui-dev` | `pulse-unified-ui-test` | `*.azurewebsites.net` |
-| **Prod** | `flk-unified-ui-prod-rg` | `pulse-unified-ui-prd` | `ai.fluke.com` |
+| **Prod** | `flk-unified-ui-prod-rg` | `pulse-unified-ui-prd` | `ai.<ORG>.com` |
 
 ---
 
@@ -331,7 +331,7 @@ flk-{app-name}-{env}-{resource-type}
 
 | Segment | Values |
 |---------|--------|
-| `flk` | Fluke prefix (always) |
+| `flk` | <ORG> prefix (always) |
 | `{app-name}` | `pulsesales`, `salesvoc-f9`, `techmentor`, `voc-lyra`, `voc360`, `pulse-unifiedui`, `team-ai-enablement` |
 | `{env}` | `dev`, `qa`, `uat`, `prod` |
 | `{resource-type}` | `rg`, `cosmosdb`, `openai`, `funcapp`, `logicapp`, etc. |
@@ -340,9 +340,9 @@ flk-{app-name}-{env}-{resource-type}
 
 | Domain | Application |
 |--------|-------------|
-| `ai.fluke.com` | Pulse Unified UI (portal) |
-| `pulse-sales.fluke.com` | Pulse Sales / Account 360 |
-| `pulse-test.fluke.com` | Pulse Sales QA |
+| `ai.<ORG>.com` | Pulse Unified UI (portal) |
+| `pulse-sales.<ORG>.com` | Pulse Sales / Account 360 |
+| `pulse-test.<ORG>.com` | Pulse Sales QA |
 
 ---
 
@@ -374,7 +374,7 @@ flk-{app-name}-{env}-{resource-type}
 Logic Apps in Dev, VoC F9 Prod, and TechMentor Prod all have SharePoint API connections for document ingestion and workflow triggers.
 
 **SharePoint Site (Pulse AI):**
-- Site ID: `fortive.sharepoint.com,40341b96-c6ae-4345-87fe-9820b1956776,ef391053-7bee-40f4-b0e0-66d51dd2100f`
+- Site ID: `<ORG_PARENT>.sharepoint.com,40341b96-c6ae-4345-87fe-9820b1956776,ef391053-7bee-40f4-b0e0-66d51dd2100f`
 - Drive ID: `b!lhs0QK7GRUOH_pggsZVndlMQOe_ue_RAsOBm1R3SEA-BMkeuj3psRK7ZujIA_o0w`
 
 ### Logic Apps
@@ -470,7 +470,7 @@ This subscription supports the **Commercial Americas** initiative — building a
 
 ```
 <USER_HOME>/OneDrive - <ORG>\AI\Commercial Americas\
-  fluke-ai-ml-subscription-knowledge.md   -- Full subscription inventory
+  <ORG>-ai-ml-subscription-knowledge.md   -- Full subscription inventory
   source_docs\                             -- SharePoint documents (project plans, exec summaries)
   Miro Board Screenshots\                  -- Playbook wireframes, process flows, operating model
 ```
@@ -478,11 +478,11 @@ This subscription supports the **Commercial Americas** initiative — building a
 ### IT Commercial Projects 2026 (21 total)
 - **17 PD projects** under "PD: HGV DC/DER/DEF (IP1)" — AI, BI, CRM, UBI
 - **3 Strategy Initiative projects** — PTK/AZ Migration, USM Phase 4, Catalog Sites
-- **1 unclassified** — Fortive CRM to BigQuery
+- **1 unclassified** — <ORG_PARENT> CRM to BigQuery
 
 ### Sales Playbook Architecture (from Miro Board)
 The Sales Playbook (Project 8) has a 7-layer architecture:
-1. Commercial Layer ("The Why Us") — Universal Fluke value prop
+1. Commercial Layer ("The Why Us") — Universal <ORG> value prop
 2. Vertical Market Layer ("Where We Play") — 12 verticals
 3. ICP Layer ("Our Ideal Customer") — Customer profiles per vertical
 4. Persona Layer ("Who We Sell To") — Buyer personas

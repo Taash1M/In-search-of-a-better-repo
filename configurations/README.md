@@ -1,6 +1,6 @@
 # Configurations
 
-Everything needed to configure a Claude Code installation to work with Fluke's Azure AI Foundry
+Everything needed to configure a Claude Code installation to work with <ORG>'s Azure AI Foundry
 deployment — environment variables, settings files, security hooks, RBAC provisioning, and the
 LLM Gateway for the Excel add-in integration.
 
@@ -19,14 +19,14 @@ LLM Gateway for the Excel add-in integration.
 
 ## Azure AI Foundry Architecture
 
-Fluke's Claude Code deployment runs through **Azure AI Foundry**, not the Anthropic API directly.
+<ORG>'s Claude Code deployment runs through **Azure AI Foundry**, not the Anthropic API directly.
 All traffic routes through an Azure AI Services resource in East US 2.
 
 | Field | Value |
 |---|---|
 | Resource name | `flk-team-ai-enablement-ai` |
 | Resource group | `flk-team-ai-enablement-rg` |
-| Subscription | Fluke AI ML Technology (`77a0108c-5a42-42e7-8b7a-79367dbfc6a1`) |
+| Subscription | <ORG> AI ML Technology (`77a0108c-5a42-42e7-8b7a-79367dbfc6a1`) |
 | Region | East US 2 |
 | Base URL | `https://flk-team-ai-enablement-ai.services.ai.azure.com/anthropic` |
 | API version | `2025-12-01` (required — older versions fail) |
@@ -76,7 +76,7 @@ export ANTHROPIC_FOUNDRY_API_KEY="<node-specific-key>"
 
 `CLAUDE_CODE_USE_FOUNDRY=1` switches Claude Code from the Anthropic API to the Foundry endpoint.
 Without it, Claude Code will attempt to reach `api.anthropic.com` directly, which will fail in the
-Fluke network context.
+<ORG> network context.
 
 In practice, these variables live inside the `settings.json` (or `settings.local.json`) `env` block
 rather than being set at the shell level — see [Settings Templates](#settings-templates).
@@ -244,7 +244,7 @@ writes (`> /dev/sda`), and `chmod 777 /`.
 - `node_modules/`
 - Any `.env` file
 - `package.json` / `package-lock.json` / `requirements.txt`
-- `AzureDataBricks/` or `ADF/` directories (Fluke-specific)
+- `AzureDataBricks/` or `ADF/` directories (<ORG>-specific)
 - Any `settings.json` file
 
 **Level 3 — Suspicious patterns (warning only, command still runs):**
@@ -293,7 +293,7 @@ When onboarding a new user, grant them the **Azure AI User** role on the AI Serv
 | Role definition ID | `53ca6127-db72-4b80-b1b0-d745d6d5456d` |
 | Scope | `/subscriptions/77a0108c-5a42-42e7-8b7a-79367dbfc6a1/resourceGroups/flk-team-ai-enablement-rg/providers/Microsoft.CognitiveServices/accounts/flk-team-ai-enablement-ai` |
 
-**Bug:** `az role assignment create --scope` returns a `MissingSubscription` error on the Fluke AI
+**Bug:** `az role assignment create --scope` returns a `MissingSubscription` error on the <ORG> AI
 ML Technology subscription. Do not waste time debugging this — it is a known platform quirk.
 
 **Workaround — use the REST API directly:**
@@ -412,7 +412,7 @@ specifically requires `x-api-key`. The Claude Code SDK handles this correctly wh
 curl, use `-H "x-api-key: <your-key>"` and not `-H "api-key: <your-key>"`.
 
 **4. `az role assignment create --scope` fails on this subscription.**
-Do not attempt to use the Azure CLI for RBAC on the Fluke AI ML Technology subscription. Use the
+Do not attempt to use the Azure CLI for RBAC on the <ORG> AI ML Technology subscription. Use the
 REST API PUT workaround described in [RBAC Provisioning](#rbac-provisioning).
 
 **5. Settings file precedence.**

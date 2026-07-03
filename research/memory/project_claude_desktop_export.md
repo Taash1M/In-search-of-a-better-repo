@@ -31,7 +31,7 @@ Claude Code Desktop/
     ├── 04-powerpoint-create/ ★★★
     ├── 05-docx-beautify/ ★★★
     ├── 06-data-dev-planning/ ★★★
-    ├── 07-fluke-ai/ ★★★
+    ├── 07-<ORG>-ai/ ★★★
     ├── 08-flk-litellm/ ★★★
     ├── 09–15: powerbi-desktop, azure-diagrams, ubi-mcp, ai-use-case-builder, aws-dev, paperclip, taashi-research ★★
     ├── 16–26: eval-framework, rag-multimodal, doc-extract, web-ingest, ubi-neo4j, polish-notebook, audit-ubi, azure-logic-apps, agentic-deploy, graphify, session-review ★
@@ -59,5 +59,5 @@ All assets exported, QA'd, and documented.
 
 ### Portability notes
 - Hook READMEs now use `~/.claude/hooks/` (portable)
-- Fluke-specific skills (ubi-dev, fluke-ai, flk-litellm, plm-graph, ubi-mcp, audit-ubi, polish-notebook) contain hardcoded subscription IDs and file paths — require updates for non-Fluke installs
+- <ORG>-specific skills (ubi-dev, <ORG>-ai, flk-litellm, plm-graph, ubi-mcp, audit-ubi, polish-notebook) contain hardcoded subscription IDs and file paths — require updates for non-<ORG> installs
 - obsidian-session-logger and obsidian-memory-sync contain the Obsidian vault path — update `VAULT_PATH` in each script when installing on a different machine

@@ -1,6 +1,6 @@
 # Standalone Skills
 
-Catalog of 11 standalone Claude Code skills for the Fluke UBI platform, research, and general AI workflows. Each skill is a self-contained `.md` file that Claude Code activates when invoked via `/skill-name` or when the trigger conditions match.
+Catalog of 11 standalone Claude Code skills for the <ORG> UBI platform, research, and general AI workflows. Each skill is a self-contained `.md` file that Claude Code activates when invoked via `/skill-name` or when the trigger conditions match.
 
 ---
 
@@ -14,13 +14,13 @@ Standalone skills cover platform development (UBI, Neo4j, LiteLLM), code quality
 
 | Skill | Purpose | Key Capabilities | Lines | Grade/Status |
 |-------|---------|-----------------|------:|--------------|
-| `ubi-dev.md` | Fluke UBI platform development | 3 repos (AzureDataBricks, ADF, Power BI), medallion architecture (Landing/Bronze/Silver/Gold), Oracle EBS transforms, Delta Lake, access control rules (never write to Prod/QA) | 1,970 | Production |
+| `ubi-dev.md` | <ORG> UBI platform development | 3 repos (AzureDataBricks, ADF, Power BI), medallion architecture (Landing/Bronze/Silver/Gold), Oracle EBS transforms, Delta Lake, access control rules (never write to Prod/QA) | 1,970 | Production |
 | `ubi-neo4j.md` | Neo4j knowledge graph for UBI Gold layer | 431 Gold tables, Fabric Lakehouse integration, Cypher generation, lineage traversal | 779 | Production |
 | `audit-ubi.md` | Multi-agent UBI codebase health audit | Parallel fan-out by stream, P0–P3 severity classification, coverage across notebooks/ADF/Gold views | 191 | Production |
 | `polish-notebook.md` | Iterative Databricks notebook quality loop | Lint → test → simplify → review cycle, max 3 iterations, halts on pass | 160 | Production |
 | `session-review.md` | Lesson extraction with priority routing | 7 priority levels, routes findings to skill file / project memory / MEMORY.md | 140 | Production |
 | `paperclip.md` | Multi-agent orchestration | Task ticketing, budget tracking, heartbeat scheduling, cherry-picked from paperclipai/paperclip | 622 | A+ |
-| `fluke-ai.md` | Fluke AI general patterns | Azure AI services (AI Foundry, LLM Gateway, AI Search), Fluke-specific naming conventions and subscription topology | 475 | Production |
+| `<ORG>-ai.md` | <ORG> AI general patterns | Azure AI services (AI Foundry, LLM Gateway, AI Search), <ORG>-specific naming conventions and subscription topology | 475 | Production |
 | `flk-litellm.md` | LiteLLM gateway deployment | Azure App Service, Docker containerization, rate limiting, model routing, cost tracking | 440 | Production |
 | `taashi-research.md` | 4-phase deep research methodology | Discover → Analyze → Synthesize → Deliver; web search + repo analysis + structured deliverable generation | 200 | Production |
 | `repo-eval.md` | Repository evaluation and skill extraction | Clone repo, analyze architecture, score on rubric, extract patterns into reusable skill files | 221 | Production |
@@ -53,8 +53,8 @@ Scans the current conversation for lessons learned and routes each to the approp
 ### paperclip.md — Multi-Agent Orchestration
 Orchestration infrastructure cherry-picked from the paperclipai/paperclip open-source repo. Manages task tickets, assigns budgets per task, schedules heartbeats, and coordinates parallel agent workstreams. A+ grade.
 
-### fluke-ai.md — Fluke AI Patterns
-Reference skill for Azure AI work within the Fluke AI ML Technology subscription. Covers AI Foundry resource topology, LLM Gateway configuration, AI Search indexing conventions, and Fluke-specific naming.
+### <ORG>-ai.md — <ORG> AI Patterns
+Reference skill for Azure AI work within the <ORG> AI ML Technology subscription. Covers AI Foundry resource topology, LLM Gateway configuration, AI Search indexing conventions, and <ORG>-specific naming.
 
 ### flk-litellm.md — LiteLLM Gateway
 Step-by-step deployment skill for the LiteLLM proxy on Azure App Service with Docker. Covers rate limiting per team/user, model routing (Anthropic, OpenAI, Azure OpenAI), cost tracking, and health checks.

@@ -1,14 +1,14 @@
 {
   "notebooks": {
-    "fluke-2026-ai-strategy": {
-      "id": "fluke-2026-ai-strategy",
+    "<ORG>-2026-ai-strategy": {
+      "id": "<ORG>-2026-ai-strategy",
       "url": "https://notebooklm.google.com/notebook/414fdcbe-fc54-4871-9e4a-0992a7e7d481",
-      "name": "Fluke 2026 AI Strategy",
-      "description": "Fluke Corporation 2026 AI and Data Strategy document covering four strategic pillars, buy vs build framework, team collaboration model with The Studio/FORT, project portfolio and roadmap, platform architecture, governance, budget allocation, success metrics and KPIs",
+      "name": "<ORG> 2026 AI Strategy",
+      "description": "<ORG> Corporation 2026 AI and Data Strategy document covering four strategic pillars, buy vs build framework, team collaboration model with The Studio/FORT, project portfolio and roadmap, platform architecture, governance, budget allocation, success metrics and KPIs",
       "topics": [
         "AI strategy",
         "data strategy",
-        "Fluke Pulse",
+        "<ORG> Pulse",
         "Account 360",
         "Voice-to-Value",
         "The Studio",
@@ -27,6 +27,6 @@
       "last_used": null
     }
   },
-  "active_notebook_id": "fluke-2026-ai-strategy",
+  "active_notebook_id": "<ORG>-2026-ai-strategy",
   "updated_at": "2026-03-20T17:30:13.974011"
 }

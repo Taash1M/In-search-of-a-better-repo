@@ -9,9 +9,9 @@ metadata:
 
 Shareable package enabling any team to implement enterprise system prompt injection in their own LiteLLM gateway and validate the cost savings.
 
-**Why:** Multiple teams at Fluke/Fortive expressed interest in replicating the $8,120/mo savings from the enterprise system prompt injector. The pack generalizes the Fluke-specific implementation into a copy-paste-ready set of artifacts.
+**Why:** Multiple teams at <ORG>/<ORG_PARENT> expressed interest in replicating the $8,120/mo savings from the enterprise system prompt injector. The pack generalizes the <ORG>-specific implementation into a copy-paste-ready set of artifacts.
 
-**How to apply:** When asked about sharing the prompt injection approach, distributing to other teams, or explaining how to implement system prompt injection in LiteLLM, point to this pack. All artifacts are generic (no Fluke-specific references except the origin attribution).
+**How to apply:** When asked about sharing the prompt injection approach, distributing to other teams, or explaining how to implement system prompt injection in LiteLLM, point to this pack. All artifacts are generic (no <ORG>-specific references except the origin attribution).
 
 ## Location
 `<USER_HOME>/OneDrive - <ORG>\AI\Claude code deployment\LLM Gateway\Prompt injector pack\`

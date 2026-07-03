@@ -9,7 +9,7 @@ metadata:
 
 ## Overview
 
-Technical validation of AI models for extracting structured metadata from PLM engineering drawings (Fluke).
+Technical validation of AI models for extracting structured metadata from PLM engineering drawings (<ORG>).
 
 **Why:** Validate whether AI vision/OCR extraction can replace manual metadata entry for PLM documents and determine which model best fits production needs.
 
@@ -77,7 +77,7 @@ Re-ran all three models with **25+ fields across 8 categories** (title block, pe
 | `extract_drawings_mistral.py` | Mistral extraction (25+ fields, OCR API, supports both 2505/2512) |
 | `build_comprehensive_comparison.py` | 6-sheet Excel comparison builder |
 | `gen_summary_docx.py` | Executive summary DOCX generator |
-| `build_presentation.py` | 17-slide PPTX comparison builder (Fluke template, validated safe zones) |
+| `build_presentation.py` | 17-slide PPTX comparison builder (<ORG> template, validated safe zones) |
 | `build_infographic.py` | 3-page A4 landscape infographic builder (GPT Image 2 panels) |
 | `build_results_excel.py` | 9-tab consultant-grade Excel results workbook |
 | `claude_comprehensive_20260526_140351.json` | Claude raw results |
@@ -85,7 +85,7 @@ Re-ran all three models with **25+ fields across 8 categories** (title block, pe
 | `mistral_comprehensive_20260526_143743.json` | Mistral 2512 raw results |
 | `comprehensive_comparison_20260526_*.xlsx` | 6-sheet comparison workbook |
 | `Mistral_vs_Claude_Comprehensive_Evaluation.docx` | Executive summary document |
-| `PLM_Drawing_Extraction_Comparison.pptx` | 17-slide presentation (Fluke template) |
+| `PLM_Drawing_Extraction_Comparison.pptx` | 17-slide presentation (<ORG> template) |
 | `PLM_Drawing_Extraction_Infographic.docx` | 3-page A4 landscape infographic (GPT Image 2 panels + narrative) |
 | `PLM_Extraction_Results_Detailed.xlsx` | 9-tab detailed results (Cover, Title Block, 3x BOM, Notes, Tech Detail, Analysis, Summary) |
 | `panel_1_overview.png` / `panel_2_results.png` / `panel_3_recommendation.png` | GPT Image 2 infographic panels |
@@ -113,7 +113,7 @@ Full extraction + Neo4j knowledge graph + Graph-RAG agent for 20 drawings from S
 
 ### Key Issue: FSCM 89536 vs _doc_number
 
-Claude extracted FSCM code `89536` (Fluke manufacturer code from title blocks) as `drawing_number` for 13/19 drawings. Fixed by using Oracle `_doc_number` (D-prefix folder name) as primary key everywhere. Critical `replace_all` applied in `load_neo4j_graph.py`.
+Claude extracted FSCM code `89536` (<ORG> manufacturer code from title blocks) as `drawing_number` for 13/19 drawings. Fixed by using Oracle `_doc_number` (D-prefix folder name) as primary key everywhere. Critical `replace_all` applied in `load_neo4j_graph.py`.
 
 ### Documentation Deliverables (Updated 2026-05-30 with Phase 5 stats)
 
@@ -193,7 +193,7 @@ Pre-fix code archived in `Heather stack/archive/*.pre-fix1-fix2`.
 
 ## Phase 5 — Jason BOM Data Ingest (May 29-30, 2026) — COMPLETE
 
-Ingesting Jason's 29-May full BOM hierarchy extract: 50 parent Fluke products, 31,708 BOM rows (13 levels), 8,084 unique components, 458 DiagramsDrawings to extract via Claude.
+Ingesting Jason's 29-May full BOM hierarchy extract: 50 parent <ORG> products, 31,708 BOM rows (13 levels), 8,084 unique components, 458 DiagramsDrawings to extract via Claude.
 
 ### Data Profile
 
@@ -382,7 +382,7 @@ Canonical graph stats: **9** uniqueness constraints (Dimension and Revision node
 
 **3 remaining gaps**:
 1. **Conversation chaining broken** — agent ignores passed chat history (FAIL, rating 2)
-2. **No fuzzy matching** — "87V" doesn't resolve to "FLUKE-87-5" (FAIL, rating 3)
+2. **No fuzzy matching** — "87V" doesn't resolve to "<ORG>-87-5" (FAIL, rating 3)
 3. **Weak semantic ranking** — "thermal" returns label drawings, not thermal imager products (PARTIAL, rating 5)
 
 Results in Excel: `ADHOC test results from round 1.xlsx` → "Round 2 (Post-Fix UAT)" tab.
@@ -394,7 +394,7 @@ Results in Excel: `ADHOC test results from round 1.xlsx` → "Round 2 (Post-Fix 
 | Fix | Files Changed | Approach |
 |-----|---------------|----------|
 | Conversation chaining | `foundry_agent.py` | `_normalize_history()` handles tuple+dict formats; 2 system prompt rules for anaphoric resolution |
-| Fuzzy product matching | `query_graph.py` | `_normalize_product_query()` with Roman numeral mapping (87V→FLUKE-87-5); 3-step fallback cascade (CONTAINS→variants→Lucene fuzzy) |
+| Fuzzy product matching | `query_graph.py` | `_normalize_product_query()` with Roman numeral mapping (87V→<ORG>-87-5); 3-step fallback cascade (CONTAINS→variants→Lucene fuzzy) |
 | Semantic ranking | `query_graph.py` | `smart_search()` — hybrid vector+fulltext with Reciprocal Rank Fusion (k=60); registered as tool #13 |
 
 SIT: 5 tests pass (3 unit + 2 integration). UAT re-test of 8 failed/partial questions + 3 bonus:
@@ -402,7 +402,7 @@ SIT: 5 tests pass (3 unit + 2 integration). UAT re-test of 8 failed/partial ques
 | Q# | Category | Was | Now | Notes |
 |----|----------|-----|-----|-------|
 | Q3 | Conversation chain | FAIL (2) | PASS | History passes correctly; GPT-5.5 acknowledges prior context |
-| Q27 | Fuzzy "87V" | FAIL (3) | PASS | "87V maps to FLUKE-87-5", returns 15 drawings |
+| Q27 | Fuzzy "87V" | FAIL (3) | PASS | "87V maps to <ORG>-87-5", returns 15 drawings |
 | Q-87V | Fuzzy voltage | timeout | PASS | Returns CAT III 1000V from D1102614 |
 | Q21 | Thermal search | PARTIAL (5) | PASS | HEAT SINK ASSEMBLY ranked by smart_search |
 | Q24 | Surface finish | PARTIAL (6) | PASS | 145 drawings with finish specs found |
@@ -663,7 +663,7 @@ Two-tier architecture modeled on LLM Usage ETL pipeline:
 
 **Problem:** `BOM_CONTAINS` relationships have no `quantity` property. The Oracle BOM Excel file (`flkt28may2026_BOM_to_file.xlsx`) was loaded by `load_bom_metadata.py` reading columns 0-9 (level, parent, path, component, description, revision, class, docs) but the **quantity column was not extracted**. The CSV at `BoM\BoM for the 50 items in scope.csv` also lacks this field.
 
-**Why:** Users asking "what components are in the Fluke 87V with quantities?" get the hierarchy but no per-parent quantity. The `CONTAINS_COMPONENT` relationship (Drawing→Part) does carry `quantity`, but only for parts listed on a drawing's BOM table — not the full Oracle BOM hierarchy.
+**Why:** Users asking "what components are in the <ORG> 87V with quantities?" get the hierarchy but no per-parent quantity. The `CONTAINS_COMPONENT` relationship (Drawing→Part) does carry `quantity`, but only for parts listed on a drawing's BOM table — not the full Oracle BOM hierarchy.
 
 **How to apply:** User will obtain an updated Oracle BOM file that includes the quantity column. When received:
 1. Identify the quantity column index in the new file
@@ -684,7 +684,7 @@ Evaluated `microsoft/markitdown` (8.7/10, APPROVED) as potential alternative to 
 
 Benchmarking skill created: `/markitdown-bench`.
 
-### Benchmark Results — Product 5594650 (FLUKE-II905) — 2026-06-16
+### Benchmark Results — Product 5594650 (<ORG>-II905) — 2026-06-16
 
 **Sample:** 18 documents (17 PDF + 1 DOCX) across 11 components. Output at `<USER_HOME>/OneDrive - <ORG>\AI\Technical Validation\MarkItDown\`.
 

@@ -7,7 +7,7 @@ originSessionId: 16123451-50c1-4bd1-bf89-c33d5f382919
 ## The Problem
 Claude Code runs as `<ADMIN_USER>`. Outlook runs as `<USER>`. COM can't cross Windows user sessions — both `Dispatch` and `GetActiveObject` fail with `CO_E_SERVER_EXEC_FAILURE` (-2146959355) and `MK_E_UNAVAILABLE` (-2147221021).
 
-## What Doesn't Work on Fortive Tenant
+## What Doesn't Work on <ORG_PARENT> Tenant
 - **Microsoft Graph API**: All tested public client IDs are blocked:
   - `d3590ed6-52b3-4102-aeff-aad2292ab01c` (Microsoft Office) → AADSTS65002 pre-authorization error
   - `14d82eec-204b-4c2f-b7e8-296a70dab67e` (Graph CLI Tools) → AADSTS50105 user not assigned

@@ -47,7 +47,7 @@ shape polymorphism) → all fixed → **v3.4 converged at P0=P1=P2=P3=0**. Revie
 - **Infographic** uses **Amazon Nova Canvas** on Bedrock — see [[reference-gpt-image-not-on-bedrock]].
 
 ### AWS env
-Account `161643475055`, us-east-2, Fortive SSO (`<USER>@<ORG_DOMAIN>`). BDA project
+Account `161643475055`, us-east-2, <ORG_PARENT> SSO (`<USER>@<ORG_DOMAIN>`). BDA project
 `flk-ai-plmproject-techvalidation` (`72a21e628fc6`), S3 `flk-plm-drawings-ai-techval`. Current SSO role
 is `AdministratorAccess` — plan calls for a dedicated **least-privilege role** before execution.
 
@@ -58,7 +58,7 @@ is `AdministratorAccess` — plan calls for a dedicated **least-privilege role**
   detects AWS CLI/boto/BDA/Bedrock/S3 commands, estimates cost from rate card, appends granular JSONL.
   Non-blocking, never guesses volume (logs `needs_actuals:true` when units unknown).
 - Today's report: `costs/reports/cost_rollup_2026-06-19.md` — est. **$7.65** (BDA tests + optimization).
-- Estimates only; reconcile vs Cost Explorer on tags `FLK-PLM-Drawings-AI`/`env=techval-twin`.
+- Estimates only; reconcile vs Cost Explorer on tags `<ORG_ABBR>-PLM-Drawings-AI`/`env=techval-twin`.
 
 ### QA Gate (built + validated 2026-06-19)
 - **Sub-agent** `~/.claude/agents/qa-gate.md` (read-only, `subagent_type: "qa-gate"`) — terminal

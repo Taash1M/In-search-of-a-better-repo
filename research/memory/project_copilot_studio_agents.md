@@ -28,7 +28,7 @@ Test: `chat-directline`, `chat-sdk`, `chat-with-agent`, `directline-chat`, `test
 Advisor: `detect-mode`, `int-patterns`, `int-project-context`, `int-reference`
 
 ### Environment
-- **Tenant**: `0f634ac3-b39f-41a6-83ba-8f107876c692` (Fortive)
+- **Tenant**: `0f634ac3-b39f-41a6-83ba-8f107876c692` (<ORG_PARENT>)
 - **Dataverse**: `org2c21e028.crm.dynamics.com`
 - **Auth**: Browser-based AAD via `<USER>` — tokens cache after first sign-in per session
 
@@ -65,10 +65,10 @@ Updated from new 103KB scoring spreadsheet (6 tabs, ~125 real scored accounts).
 
 ### Agent v3 Update (2026-06-04) — Validated, Pushed, Published, Tested
 Enhanced C3 (Future Potential) scoring from team doc `Future Potential Scoring Prompt for Co-Pilot including 2 examples.docx`.
-1. **C3 restructured**: 3 explicit sub-criteria (Company Size: sites+geographic scope, Portfolio Alignment: Fluke product family count, Investment Activity: capital/contracts/growth)
-2. **Fluke product catalog in instructions**: Industrial (Power Quality, Renewable Energy, EV Charging, Reliability, Process Instruments, Thermal Imaging, Test Tools), Calibration (Electrical, Pressure, Temperature), Networks
+1. **C3 restructured**: 3 explicit sub-criteria (Company Size: sites+geographic scope, Portfolio Alignment: <ORG> product family count, Investment Activity: capital/contracts/growth)
+2. **<ORG> product catalog in instructions**: Industrial (Power Quality, Renewable Energy, EV Charging, Reliability, Process Instruments, Thermal Imaging, Test Tools), Calibration (Electrical, Pressure, Temperature), Networks
 3. **Scoring logic**: Best-fit judgement "ALL OR MOST", 10/5/1 only, no averaging
-4. **Penetration logic removed**: Old C3 used Fluke penetration (low=high); new model is purely external company profile
+4. **Penetration logic removed**: Old C3 used <ORG> penetration (low=high); new model is purely external company profile
 5. **Commercial barrier flagging**: Score normally, flag barriers in output (user decides whether to adjust) — Thales example
 6. **C3 output format**: Sub-criterion summaries + Commercial Barriers + Score + Rationale (2-4 sentences)
 7. **2 C3 calibration examples**: Rolls-Royce (score 10), Thales (score 10 with barrier flag)
@@ -121,7 +121,7 @@ This workflow has been validated E2E twice (Jun 2 initial build + Jun 3 v2 updat
 - Criterion 3 (Future Potential) uses structured 3 sub-criteria approach (Company Size, Portfolio Alignment, Investment Activity) — all publicly researchable. Old penetration logic removed.
 - Copilot Studio Sonnet model ignores "only 10/5/1" constraints unless reinforced in BOTH system instructions AND topic-level prompts — discovered during v3 testing (C2=8, C4=9 on first attempt)
 - C5, C6, C7 always need user input — never let the AI guess these from public data
-- C1 (Past Revenue) needs Fluke internal data — mark as "Unverified" unless user provides ranking
+- C1 (Past Revenue) needs <ORG> internal data — mark as "Unverified" unless user provides ranking
 - AnswerQuestionWithAI nodes are the workhorse — use them for research, clarification, and calculation steps
 - Question nodes with `StringPrebuiltEntity` capture free-text responses
 - ConditionGroup with `elseActions` → `AnswerQuestionWithAI` is the pattern for handling ambiguous user responses
@@ -136,7 +136,7 @@ Default Copilot Studio demo site chat widget (450x520px) is too narrow for the 7
 - **Critical CSS fix**: Web Chat SDK ignores `bubbleMessageMaxWidth` for table content — must add `#webchat [class*="bubble"] { max-width: 100% !important; }` and similar overrides for all bubble/content/row/stackedLayout classes
 - **Table CSS**: `th { white-space: nowrap }`, short columns (# / Score / Weight) get `nowrap + text-align: center`, markdown containers get `overflow-x: auto`
 - **Size presets**: Extra Wide 1100x750 (default), Wide 900x700, Full Page, Default 450x520
-- **Fluke branding**: Navy header (#003366), teal accents (#00838F), KAS avatar initials
+- **<ORG> branding**: Navy header (#003366), teal accents (#00838F), KAS avatar initials
 
 **Hosting**: Azure Storage static website on `aisandbox02` (flk-taashi-ai-sandbox RG)
 - **URL**: `https://aisandbox02.z13.web.core.windows.net/`

@@ -4,7 +4,7 @@ description: Orchestrator for building and deploying end-to-end AI solutions on 
 allowed-tools: Read, Grep, Glob, Bash, Edit, Write, Agent, Task, WebFetch, WebSearch, AskUserQuestion
 ---
 
-# Fluke AI Use Case Builder - Orchestrator
+# <ORG> AI Use Case Builder - Orchestrator
 
 You are the orchestrator for building end-to-end AI solutions on Azure. You coordinate 8 sub-skills (phases) that together provision infrastructure, build data pipelines, deploy AI models, scaffold frontends, run tests, generate documentation, and package deployments.
 
@@ -124,7 +124,7 @@ def rollback_phase(state, phase_name, scope="individual"):
 
 When evaluating architecture during Discovery (Phase 0) or reviewing existing systems, classify each dependency into one of 4 categories. This determines the right testing and integration strategy for each phase.
 
-| Category | Definition | Testing Strategy | Example at Fluke |
+| Category | Definition | Testing Strategy | Example at <ORG> |
 |----------|-----------|-----------------|------------------|
 | **In-process** | Code you own, running in the same process | Unit test directly, mock nothing | LangGraph agent nodes within Pulse Sales |
 | **Local-substitutable** | Code you own, separate service, replaceable with a stub | Integration test with in-memory substitute | Cosmos DB accessed via repository pattern → use in-memory dict for tests |
@@ -160,12 +160,12 @@ Add to `ai-ucb-state.json`:
 
 | Subscription | ID | Purpose | Default |
 |---|---|---|---|
-| **Fluke AI ML Technology** | `77a0108c-5a42-42e7-8b7a-79367dbfc6a1` | AI application resources (AI Services, Cosmos DB, AI Search, Web App, Function App, Logic App, Key Vault) | Primary |
+| **<ORG> AI ML Technology** | `77a0108c-5a42-42e7-8b7a-79367dbfc6a1` | AI application resources (AI Services, Cosmos DB, AI Search, Web App, Function App, Logic App, Key Vault) | Primary |
 | **Unified BI** | `52a1d076-bbbf-422a-9bf7-95d61247be4b` | Data engineering (Databricks, ADF, ADLS Gen2, Fabric, Azure SQL metadata) | Secondary (split model) |
 
 **Subscription model** is chosen at Phase 0:
-- **Split** (default): Data engineering in UBI, AI resources in Fluke AI ML Technology
-- **Single**: Everything in Fluke AI ML Technology
+- **Split** (default): Data engineering in UBI, AI resources in <ORG> AI ML Technology
+- **Single**: Everything in <ORG> AI ML Technology
 - **Override**: User specifies custom placement
 
 **Azure CLI access pattern:**
@@ -525,7 +525,7 @@ def should_execute_step(state, phase_name, step_id):
 
 The builder supports 8 proven AI solution archetypes. Full definitions are in `ai-ucb/archetypes.md`.
 
-| # | Archetype | Short Description | Fluke Example |
+| # | Archetype | Short Description | <ORG> Example |
 |---|-----------|-------------------|---------------|
 | 1 | **RAG** | Retrieval-augmented generation over documents | Pulse Sales, TechMentor |
 | 2 | **Conversational Agent** | Multi-turn dialogue with tool use | Pulse Unified UI |
@@ -627,7 +627,7 @@ When the user invokes a sub-skill directly (e.g., `/ai-ucb-pipeline`):
 
 ## Naming Conventions
 
-Inherited from fluke-ai skill:
+Inherited from <ORG>-ai skill:
 
 ```
 Resource Group:    flk-{app-name}-{env}-rg
@@ -640,7 +640,7 @@ Notebooks:         {Layer}_{StreamName}_{Purpose}
 
 | Segment | Values |
 |---------|--------|
-| `flk` | Fluke prefix (always) |
+| `flk` | <ORG> prefix (always) |
 | `{app-name}` | Use case slug from project_name (e.g., `product-kb`) |
 | `{env}` | `dev` (default), `qa`, `uat`, `prod` |
 | `{resource-type}` | `rg`, `cosmosdb`, `ai`, `search`, `funcapp`, `webapp`, `kv`, `storage`, `logicapp` |
@@ -649,7 +649,7 @@ Notebooks:         {Layer}_{StreamName}_{Purpose}
 
 | System | How This Skill Uses It |
 |--------|----------------------|
-| **fluke-ai skill** | Read subscription context, naming conventions, existing resource inventory |
+| **<ORG>-ai skill** | Read subscription context, naming conventions, existing resource inventory |
 | **ubi-dev skill** | Read medallion architecture patterns, ADF pipeline patterns, status control |
 | **doc-intelligence skill** | 3-tier document parsing and extraction. Activated by: (a) `doc-intelligence` archetype → full Tier 1+2+3 pipeline, (b) RAG archetype with `enhanced_parsing: true` → Tier 1 only for Bronze-layer parsing |
 | **rag-multimodal skill** | Cross-modal RAG with knowledge graph + VLM retrieval. Activated by RAG archetype with `multimodal_rag: true`. Extends Phase 2 (Bronze→Gold with multimodal templates), Phase 3 (9-field AI Search index + VLM model), Phase 4 (image display in frontend) |
@@ -782,7 +782,7 @@ On resume, if a phase has been `in_progress` for longer than its timeout, warn t
 
 ## Azure DevOps Integration
 
-All repositories live at `dev.azure.com/flukeit/Fluke Data And Analytics`:
+All repositories live at `dev.azure.com/flukeit/<ORG> Data And Analytics`:
 
 | Repository | Purpose | Usage |
 |-----------|---------|-------|

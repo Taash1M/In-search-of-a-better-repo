@@ -1,6 +1,6 @@
 ---
 name: Sandbox Logic Apps
-description: Two dynamic Logic Apps in sandbox1 RG (Fluke Unified BI sub) — sharepoint-copy (SP→ADLS) and api-to-adls (REST API→ADLS). Both parameterized via HTTP trigger with run_ID folder hierarchy.
+description: Two dynamic Logic Apps in sandbox1 RG (<ORG> Unified BI sub) — sharepoint-copy (SP→ADLS) and api-to-adls (REST API→ADLS). Both parameterized via HTTP trigger with run_ID folder hierarchy.
 type: project
 ---
 
@@ -14,7 +14,7 @@ Two production-ready Logic Apps in the `sandbox1` resource group for moving data
 
 ## Key Facts
 
-- **Subscription**: Fluke Unified BI (`52a1d076-bbbf-422a-9bf7-95d61247be4b`)
+- **Subscription**: <ORG> Unified BI (`52a1d076-bbbf-422a-9bf7-95d61247be4b`)
 - **Resource Group**: `sandbox1`
 - **Storage Account**: `aisandbox1` (Standard_LRS, StorageV2, East US 2)
 - **API Connections**: `sharepointonline-sandbox` (OAuth), `azureblob-sandbox` (access key)
@@ -29,7 +29,7 @@ Copies files from any SharePoint site/folder to ADLS.
 **Trigger payload:**
 ```json
 {
-  "sp_site": "https://fortive.sharepoint.com/sites/SITE-NAME",
+  "sp_site": "https://<ORG_PARENT>.sharepoint.com/sites/SITE-NAME",
   "sp_folder": "/Shared Documents/path/to/folder",
   "blob_container": "container-name",
   "blob_subfolder": "optional-subfolder"
@@ -42,13 +42,13 @@ Copies files from any SharePoint site/folder to ADLS.
 
 **Response:** `{ status, filesCopied, destination, timestamp }`
 
-**Tested with:** FLK-Procurement site → `BI Steering Committee/AI Tools/Test Drawings` (20 PDFs, 34 MB) → `unstructured-data/Test Drawings/2026/04/08/run_210535/`
+**Tested with:** <ORG_ABBR>-Procurement site → `BI Steering Committee/AI Tools/Test Drawings` (20 PDFs, 34 MB) → `unstructured-data/Test Drawings/2026/04/08/run_210535/`
 
 **SP connector notes:**
-- Uses `/tables/@{encodeURIComponent('Documents')}/items` with `folderPath` query (the working pattern from existing Fluke Logic Apps)
+- Uses `/tables/@{encodeURIComponent('Documents')}/items` with `folderPath` query (the working pattern from existing <ORG> Logic Apps)
 - `foldersV2` endpoint returns 404 — do NOT use it
 - `GetFileByServerRelativePath` not a valid operation — use `GetFileContentByPath` or file ID-based `/files/{id}/content`
-- Personal OneDrive (`fortive-my.sharepoint.com`) requires the file owner to have shared access with the authenticated user
+- Personal OneDrive (`<ORG_PARENT>-my.sharepoint.com`) requires the file owner to have shared access with the authenticated user
 
 ## Logic App 2: `api-to-adls`
 

@@ -5,11 +5,11 @@ description: "Extract a DDD-style ubiquitous language glossary from the current 
 
 # Ubiquitous Language
 
-**Source:** mattpocock/skills `ubiquitous-language` — adapted for Fluke AI team with pre-seeded domain terms.
+**Source:** mattpocock/skills `ubiquitous-language` — adapted for <ORG> AI team with pre-seeded domain terms.
 
 Extract and formalize domain terminology from the current conversation into a consistent glossary, saved to a local file.
 
-## Pre-Seeded Fluke AI Domain Terms
+## Pre-Seeded <ORG> AI Domain Terms
 
 These terms have known ambiguity across the team. When encountered, apply these canonical definitions:
 
@@ -18,8 +18,8 @@ These terms have known ambiguity across the team. When encountered, apply these 
 | **Agent** | An autonomous LLM-powered process that perceives, reasons, and acts toward a goal | Bot, assistant, chatbot (unless specifically non-agentic) |
 | **Skill** | A Claude Code markdown instruction file that extends Claude's capabilities for a specific domain | Plugin, command, prompt, template |
 | **Tool** | A function or API that an agent can invoke during execution | Skill (when referring to MCP tools), function |
-| **Account** | A Fluke customer organization in CRM/Dynamics | Customer (when referring to the CRM record specifically) |
-| **Customer** | A person or organization that buys Fluke products | Account (when referring to the person, not the CRM record) |
+| **Account** | A <ORG> customer organization in CRM/Dynamics | Customer (when referring to the CRM record specifically) |
+| **Customer** | A person or organization that buys <ORG> products | Account (when referring to the person, not the CRM record) |
 | **Prospect** | A potential customer not yet in the sales pipeline | Lead (unless referring to Dynamics lead entity specifically) |
 | **Hook** | A Claude Code PreToolUse/PostToolUse script that runs before/after tool execution | Guard, interceptor, middleware |
 | **Node** | A Claude Code Azure AI Foundry deployment slot (node1/node2/node3) | Instance, endpoint, deployment (when referring to team allocation) |
@@ -73,7 +73,7 @@ Write a `UBIQUITOUS_LANGUAGE.md` file with this structure:
 - **Show relationships.** Use bold term names, express cardinality where obvious.
 - **Group terms into multiple tables** when natural clusters emerge (by subdomain, lifecycle, or actor).
 - **Write an example dialogue.** 3-5 exchanges between a dev and domain expert showing terms used precisely.
-- **Incorporate pre-seeded terms.** Always include relevant pre-seeded Fluke terms from the table above. Override them if the conversation establishes a different consensus.
+- **Incorporate pre-seeded terms.** Always include relevant pre-seeded <ORG> terms from the table above. Override them if the conversation establishes a different consensus.
 
 ## Re-Running
 

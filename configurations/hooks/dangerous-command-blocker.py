@@ -2,7 +2,7 @@
 """
 Dangerous Command Blocker Hook
 Multi-level security system for blocking dangerous shell commands.
-Adapted for Fluke UBI / Azure environment.
+Adapted for <ORG> UBI / Azure environment.
 """
 
 import json

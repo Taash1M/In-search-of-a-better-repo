@@ -8,7 +8,7 @@ allowed-tools: Read, Grep, Glob, Bash, Edit, Write, Agent, AskUserQuestion
 
 You are a production deployment expert for AI agents. You scaffold, harden, evaluate, and deploy LangGraph-based agents on Azure — covering the full path from working prototype to monitored, auto-recovering production service. You combine battle-tested runtime patterns with Azure-native infrastructure.
 
-**Cherry-picked from:** [AI-agentic-system-dev-to-prod](https://github.com/Taash1M/AI-agentic-system-dev-to-prod-.git) — circular LLM fallback, LLM-as-Judge eval framework, structured observability, middleware patterns. Fluke-adapted for Azure AI Foundry, Azure Monitor, Entra ID.
+**Cherry-picked from:** [AI-agentic-system-dev-to-prod](https://github.com/Taash1M/AI-agentic-system-dev-to-prod-.git) — circular LLM fallback, LLM-as-Judge eval framework, structured observability, middleware patterns. <ORG>-adapted for Azure AI Foundry, Azure Monitor, Entra ID.
 
 ## When This Skill Activates
 
@@ -206,7 +206,7 @@ class LLMService:
         raise RuntimeError(f"All {total_models} models failed after retries")
 ```
 
-**Key adaptation from source repo:** The original uses OpenAI-only models (`gpt-5-mini`, `gpt-5`, `gpt-4o`). The Fluke version uses Azure AI Foundry with Claude models as primary + GPT-4o as fallback.
+**Key adaptation from source repo:** The original uses OpenAI-only models (`gpt-5-mini`, `gpt-5`, `gpt-4o`). The <ORG> version uses Azure AI Foundry with Claude models as primary + GPT-4o as fallback.
 
 ### Long-Term Memory
 
@@ -248,13 +248,13 @@ async def update_memory(user_id: str, messages: list, metadata: dict):
         search_client.upload_documents([doc])
 ```
 
-**Critical fix from source repo:** The original fires `asyncio.create_task()` for memory updates without error handling — if the app crashes, updates are lost. The Fluke version should use `asyncio.TaskGroup` or explicit error logging:
+**Critical fix from source repo:** The original fires `asyncio.create_task()` for memory updates without error handling — if the app crashes, updates are lost. The <ORG> version should use `asyncio.TaskGroup` or explicit error logging:
 
 ```python
 # WRONG (source repo pattern — fire and forget)
 asyncio.create_task(update_memory(user_id, messages, metadata))
 
-# RIGHT (Fluke pattern — logged background task)
+# RIGHT (<ORG> pattern — logged background task)
 async def safe_background_task(coro, task_name: str):
     try:
         await coro
@@ -553,7 +553,7 @@ Think step by step.
 
 ### Improvements Over Source Repo
 
-| Source Repo Issue | Fluke Fix |
+| Source Repo Issue | <ORG> Fix |
 |-------------------|-----------|
 | Hard-coded 100 trace limit | Paginated fetch with configurable batch size |
 | `sleep(10)` between traces | Async batch with semaphore-based concurrency control |
@@ -607,7 +607,7 @@ async def health():
 
 ### Authentication (Azure-adapted)
 
-| Source Repo | Fluke Version |
+| Source Repo | <ORG> Version |
 |-------------|---------------|
 | Custom JWT with `python-jose` + `passlib` | **Azure Entra ID** (formerly AAD) via `msal` |
 | Local user table in PostgreSQL | Entra ID directory — no local user storage |
@@ -808,7 +808,7 @@ from typing import List, Optional
 
 # Define expected output schema
 class ProductRecommendation(BaseModel):
-    product_name: str = Field(description="Fluke product model name")
+    product_name: str = Field(description="<ORG> product model name")
     model_number: str = Field(description="Product model number (e.g., 87V)")
     reason: str = Field(description="Why this product fits the user's need")
     price_range: Optional[str] = Field(description="Approximate price range")
@@ -824,7 +824,7 @@ guard = Guard().use_many(
     ToxicLanguage(on_fail="fix"),             # Remove toxic content
     DetectPII(on_fail="fix"),                 # Redact any leaked PII
     RestrictToTopic(                           # Stay on-topic
-        valid_topics=["Fluke products", "test instruments", "calibration", "measurement"],
+        valid_topics=["<ORG> products", "test instruments", "calibration", "measurement"],
         invalid_topics=["politics", "personal advice", "competitor products"],
         on_fail="reask",
     ),
@@ -855,18 +855,18 @@ define user express harmful intent
   "Help me break into"
 
 define bot refuse harmful request
-  "I'm designed to help with Fluke products and measurement solutions. I can't assist with that request."
+  "I'm designed to help with <ORG> products and measurement solutions. I can't assist with that request."
 
 define flow harmful intent
   user express harmful intent
   bot refuse harmful request
 
 define user ask about competitor
-  "Is Fluke better than {competitor}?"
-  "Compare Fluke to {competitor}"
+  "Is <ORG> better than {competitor}?"
+  "Compare <ORG> to {competitor}"
 
 define bot redirect competitor comparison
-  "I focus on Fluke solutions. I can help you find the right Fluke product for your needs. What measurements are you working with?"
+  "I focus on <ORG> solutions. I can help you find the right <ORG> product for your needs. What measurements are you working with?"
 
 define flow competitor redirect
   user ask about competitor

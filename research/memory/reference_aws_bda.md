@@ -11,28 +11,28 @@ metadata:
 
 **Project**: `flk-ai-plmproject-techvalidation` (ARN: `arn:aws:bedrock:us-east-2:161643475055:data-automation-project/72a21e628fc6`)
 **Console URL**: `https://us-east-2.console.aws.amazon.com/bedrock/home?region=us-east-2#/bda/project/details/72a21e628fc6`
-**Account**: `161643475055`, Fortive SSO (`<USER>@<ORG_DOMAIN>`), role `SSODelegated_AdministratorAccess`
+**Account**: `161643475055`, <ORG_PARENT> SSO (`<USER>@<ORG_DOMAIN>`), role `SSODelegated_AdministratorAccess`
 **Stage**: LIVE, ASYNC, created 2026-06-19, optimized 2026-06-19
 **SSO Region**: us-east-1 (Identity Center), resources in us-east-2
 **Profile ARN**: `arn:aws:bedrock:us-east-2:161643475055:data-automation-profile/us.data-automation-v1` (required for runtime invocations)
-**S3 Bucket**: `flk-plm-drawings-ai-techval` (us-east-2, tagged FLK-PLM-Drawings-AI)
+**S3 Bucket**: `flk-plm-drawings-ai-techval` (us-east-2, tagged <ORG_ABBR>-PLM-Drawings-AI)
 
 ### Blueprints (3)
 
 | Blueprint | Class | Leaf Fields | Cost/Page |
 |---|---|---|---|
-| `fluke-component-spec` | Fluke Component Specification | 41 | $0.0455 |
-| `fluke-engineering-drawing` | Fluke Engineering Drawing | 34 | $0.0420 |
-| `fluke-product-datasheet` | Vendor Product Datasheet | 31 | $0.0405 |
+| `<ORG>-component-spec` | <ORG> Component Specification | 41 | $0.0455 |
+| `<ORG>-engineering-drawing` | <ORG> Engineering Drawing | 34 | $0.0420 |
+| `<ORG>-product-datasheet` | Vendor Product Datasheet | 31 | $0.0405 |
 
 All validated against AWS limits (100 leaf fields max, 30 definitions max, 100K char schema max).
 
 ### Files
 
 **Location**: `<USER_HOME>/OneDrive - <ORG>\AI\Technical Validation\AWS\blueprints\`
-- `fluke-component-spec.json` — component spec blueprint (6 definitions, 25 top-level properties)
-- `fluke-engineering-drawing.json` — engineering drawing blueprint (6 definitions, 20 top-level properties)
-- `fluke-product-datasheet.json` — vendor datasheet blueprint (4 definitions, 14 top-level properties)
+- `<ORG>-component-spec.json` — component spec blueprint (6 definitions, 25 top-level properties)
+- `<ORG>-engineering-drawing.json` — engineering drawing blueprint (6 definitions, 20 top-level properties)
+- `<ORG>-product-datasheet.json` — vendor datasheet blueprint (4 definitions, 14 top-level properties)
 - `deploy_bda_project.py` — creates/updates blueprints + project, validates limits, runs test invocations
 - `optimize_blueprint.py` — converts hybrid Claude extraction results to BDA ground truth format
 - `ground_truth/` — 8 ground truth JSON files for blueprint optimization
@@ -55,8 +55,8 @@ Compared AWS BDA standard output vs our Claude hybrid extraction vs Neo4j graph:
 
 ### AWS Resource Group (2026-06-19)
 
-**Group**: `FLK-PLM-Drawings-AI` (ARN: `arn:aws:resource-groups:us-east-2:161643475055:group/FLK-PLM-Drawings-AI`)
-**Tags**: Project=FLK-PLM-Drawings-AI, Owner=PLM-Engineering, Environment=Technical-Validation, CostCenter=Fluke-IT
+**Group**: `<ORG_ABBR>-PLM-Drawings-AI` (ARN: `arn:aws:resource-groups:us-east-2:161643475055:group/<ORG_ABBR>-PLM-Drawings-AI`)
+**Tags**: Project=<ORG_ABBR>-PLM-Drawings-AI, Owner=PLM-Engineering, Environment=Technical-Validation, CostCenter=<ORG>-IT
 
 6 resources in group:
 | Resource | Type | ID |
@@ -66,7 +66,7 @@ Compared AWS BDA standard output vs our Claude hybrid extraction vs Neo4j graph:
 | plm-claude-haiku-4-5 | Application Inference Profile | `4gzyegl9cbp3` |
 | plm-claude-opus-4-8 | Application Inference Profile | `9mvlo9l4xc37` |
 | flk-plm-drawings-ai-techval | S3 Bucket | us-east-2 |
-| FLK-PLM-Drawings-AI | Resource Group | us-east-2 |
+| <ORG_ABBR>-PLM-Drawings-AI | Resource Group | us-east-2 |
 
 All inference profiles tested and ACTIVE. Sonnet 4.6: 1.2s latency, Opus 4.6: 1.6s latency.
 
@@ -89,7 +89,7 @@ All inference profiles tested and ACTIVE. Sonnet 4.6: 1.2s latency, Opus 4.6: 1.
 ```
 
 **Verified via `/status`** (2026-06-19): API provider=Amazon Bedrock, region=us-east-2, model=us.anthropic.claude-opus-4-7[1m]
-**Auth**: AWS SSO via `aws sso login --profile default` (Fortive SSO, `fortive-aws.awsapps.com/start`)
+**Auth**: AWS SSO via `aws sso login --profile default` (<ORG_PARENT> SSO, `<ORG_PARENT>-aws.awsapps.com/start`)
 **AWS config**: `<USER_HOME>/.aws\config` + `<ADMIN_HOME>/.aws\config` (both identical)
 **Switch back to Azure**: `cp ~/.claude/settings.azure-foundry.json.bak ~/.claude/settings.json` + restore Windows env vars
 **Swap procedure**: `<USER_HOME>/.claude\Swap\credentials_swap_azure_to_bedrock.md`
@@ -100,7 +100,7 @@ All inference profiles tested and ACTIVE. Sonnet 4.6: 1.2s latency, Opus 4.6: 1.
 - 3-blueprint strategy (one per document class) for accurate auto-classification
 - `inferred` type for semantic fields (drawing type, standard context, confidence)
 - Dual-unit dimensions (metric + imperial as separate fields)
-- Section-numbered electrical requirements matching Fluke's standard structure
+- Section-numbered electrical requirements matching <ORG>'s standard structure
 - Blueprint optimization pipeline uses our existing hybrid Claude results as ground truth
 
 ### Cost Estimate

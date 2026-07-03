@@ -133,7 +133,7 @@ datasets:
 
   - name: Brazil
     id: ""
-    description: "Brazil operations — Fluke Brazil specific reporting, localized metrics."
+    description: "Brazil operations — <ORG> Brazil specific reporting, localized metrics."
     workspace: prod
     stream: brazil
     refresh_schedule: "daily"

@@ -7,7 +7,7 @@ originSessionId: f4d03941-dd0b-44f2-bb99-51b65b072972
 ---
 ## Overview
 
-Cloned and evaluated `https://github.com/mattpocock/skills.git` (19 skills) for security, quality, and applicability to the Fluke AI team's 40-skill framework.
+Cloned and evaluated `https://github.com/mattpocock/skills.git` (19 skills) for security, quality, and applicability to the <ORG> AI team's 40-skill framework.
 
 **Why:** Identify valuable patterns and capabilities to upgrade existing skills or create new ones. Standing initiative to keep the skill framework competitive.
 
@@ -49,9 +49,9 @@ Cloned and evaluated `https://github.com/mattpocock/skills.git` (19 skills) for 
 
 | Skill | Source | Adaptation | Lines |
 |-------|--------|-----------|-------|
-| qa-session.md | mattpocock/qa | Added Fluke product labels (6 products), HITL/AFK markers, `gh issue create` with labels | 148 |
-| github-triage.md | mattpocock/github-triage | Added product labels, HITL/AFK assessment in triage, Fluke-specific label taxonomy | 151 |
-| ubiquitous-language.md | mattpocock/ubiquitous-language | Pre-seeded 10 Fluke domain terms (Agent, Skill, Tool, Account, Customer, etc.) | 86 |
+| qa-session.md | mattpocock/qa | Added <ORG> product labels (6 products), HITL/AFK markers, `gh issue create` with labels | 148 |
+| github-triage.md | mattpocock/github-triage | Added product labels, HITL/AFK assessment in triage, <ORG>-specific label taxonomy | 151 |
+| ubiquitous-language.md | mattpocock/ubiquitous-language | Pre-seeded 10 <ORG> domain terms (Agent, Skill, Tool, Account, Customer, etc.) | 86 |
 
 ### 4. Progressive Disclosure Audit (documented, not executed)
 
@@ -163,7 +163,7 @@ Used `/repo-eval` skill for full evaluations. Reports in `Skill Evaluation/` fol
 - **License:** MIT
 - **Strengths:** Architecture (8/10), feature completeness (9/10), documentation (8/10), deployment automation (`setup_workspace.py` — 1,602 lines, 14-step idempotent provisioner)
 - **Gaps:** Zero tests (0/10), wide-open CORS, user impersonation via X-User-Id header, SQL keyword blacklist bypassable, no CI/CD
-- **Valuable patterns for Fluke:**
+- **Valuable patterns for <ORG>:**
   - LangGraph coordinator -> specialist routing with graceful fallback (fabric_agent -> account_agent)
   - Fabric workspace deployment automation (idempotent, retry loops, token injection, interactive/CI modes)
   - Real-time monitoring: App events -> Eventstream -> Eventhouse -> KQL Dashboard
@@ -181,7 +181,7 @@ Used `/repo-eval` skill for full evaluations. Reports in `Skill Evaluation/` fol
 - **Key patterns:** Converter `accepts()`/`convert()` contract, priority-based registration, Magika content-type detection, defusedxml for all XML, plugin system via entry_points, frozen StreamInfo dataclass
 - **Security:** defusedxml, html.escape, JS stripping, Docker non-root, SSRF documented as caller responsibility, ExifTool path restricted
 - **MCP server:** `markitdown-mcp` — STDIO + SSE + Streamable HTTP, single `convert_to_markdown(uri)` tool
-- **Valuable for Fluke:** Direct doc-extract replacement, MCP server for Claude Code fleet, Azure CU integration for PLM drawings, plugin system for Fluke-specific converters, PDF table extraction with adaptive column clustering
+- **Valuable for <ORG>:** Direct doc-extract replacement, MCP server for Claude Code fleet, Azure CU integration for PLM drawings, plugin system for <ORG>-specific converters, PDF table extraction with adaptive column clustering
 - **Action:** Install (`pip install markitdown[all]`), add MCP server, evaluate as doc-extract replacement, test Azure CU integration
-- **Benchmark (2026-06-16):** Product 5594650 (FLUKE-II905), 18 docs, 11 components. **24x faster, 5.5x cheaper** than Claude Vision. 5 EXCELLENT, 3 GOOD, 7 WEAK, 3 FAIL (image-only). Hybrid routing recommended: >=2K chars use MarkItDown, <500 chars fall back to vision. 80% cost reduction projected. Results at `Technical Validation\MarkItDown\`.
+- **Benchmark (2026-06-16):** Product 5594650 (<ORG>-II905), 18 docs, 11 components. **24x faster, 5.5x cheaper** than Claude Vision. 5 EXCELLENT, 3 GOOD, 7 WEAK, 3 FAIL (image-only). Hybrid routing recommended: >=2K chars use MarkItDown, <500 chars fall back to vision. 80% cost reduction projected. Results at `Technical Validation\MarkItDown\`.
 - **Reports:** `markitdown-evaluation.md` (repo eval), `Technical Validation\MarkItDown\benchmark_report.md` (benchmark)

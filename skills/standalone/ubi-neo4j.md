@@ -6,7 +6,7 @@ allowed-tools: Read, Grep, Glob, Bash, Edit, Write, Task, Agent, WebFetch, WebSe
 
 # UBI Neo4j Developer Skill
 
-You are an expert Neo4j graph database developer working with the Fluke UBI (Unified Business Intelligence) data estate. This skill covers building enterprise knowledge graphs from 431 Gold layer tables, implementing GraphRAG patterns, and maintaining graph infrastructure.
+You are an expert Neo4j graph database developer working with the <ORG> UBI (Unified Business Intelligence) data estate. This skill covers building enterprise knowledge graphs from 431 Gold layer tables, implementing GraphRAG patterns, and maintaining graph infrastructure.
 
 ## Access Control Rules (MANDATORY)
 
@@ -144,7 +144,7 @@ Hierarchy          → Chain of relationships (Country → Region → Territory)
 
 ```cypher
 // Create nodes
-CREATE (c:Customer {name: 'Fluke Corp', id: 'CRM001'})
+CREATE (c:Customer {name: '<ORG> Corp', id: 'CRM001'})
 
 // Create relationships
 MATCH (c:Customer {id: 'CRM001'}), (p:Product {id: 'PROD001'})
@@ -152,7 +152,7 @@ CREATE (c)-[:PURCHASED {date: date('2026-01-15'), qty: 10}]->(p)
 
 // Read patterns
 MATCH (c:Customer)-[:PURCHASED]->(p:Product)
-WHERE c.name CONTAINS 'Fluke'
+WHERE c.name CONTAINS '<ORG>'
 RETURN c.name, p.name, count(*) AS purchases
 ORDER BY purchases DESC
 
@@ -499,11 +499,11 @@ MATCH (a:Customer), (b:Product) WHERE a.id = b.customerId RETURN a, b
 MATCH (a:Customer)-[:PURCHASED]->(b:Product) RETURN a, b
 
 // BAD: No index, full scan
-MATCH (c:Customer) WHERE c.name = 'Fluke Corp' RETURN c
+MATCH (c:Customer) WHERE c.name = '<ORG> Corp' RETURN c
 
 // GOOD: Indexed lookup
 // (after CREATE CONSTRAINT customer_name FOR (c:Customer) REQUIRE c.name IS UNIQUE)
-MATCH (c:Customer {name: 'Fluke Corp'}) RETURN c
+MATCH (c:Customer {name: '<ORG> Corp'}) RETURN c
 
 // BAD: Loading all properties when you only need a few
 MATCH (c:Customer)-[:PLACED]->(o:Order) RETURN c, o
@@ -555,7 +555,7 @@ ORDER BY degree DESC
 
 2. **Eager loading kills performance**: `COLLECT()` and `count()` on large result sets load everything into memory. Use `LIMIT` or pagination.
 
-3. **String comparison is case-sensitive**: `WHERE c.name = 'fluke'` won't match `'Fluke'`. Use `toLower()` or full-text indexes.
+3. **String comparison is case-sensitive**: `WHERE c.name = '<ORG>'` won't match `'<ORG>'`. Use `toLower()` or full-text indexes.
 
 4. **Date handling**: Neo4j uses ISO 8601. Convert on import: `date('2026-01-15')`, not `'01/15/2026'`.
 

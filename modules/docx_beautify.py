@@ -36,7 +36,7 @@ from lxml import etree
 # ═══════════════════════════════════════════════════════════════════════════
 
 PALETTES = {
-    "fortive": {
+    "<ORG_PARENT>": {
         "primary":    "003366",  # Dark navy
         "secondary":  "005EB8",  # Corporate blue
         "accent":     "F3C13A",  # Gold
@@ -136,7 +136,7 @@ PRESETS = {
         "table_style": "professional",
     },
     "technical": {
-        "palette": "fortive",
+        "palette": "<ORG_PARENT>",
         "font_body": "Calibri",
         "font_heading": "Calibri",
         "font_code": "Consolas",
@@ -182,7 +182,7 @@ PRESETS = {
         "table_style": "simple",
     },
     "report": {
-        "palette": "fortive",
+        "palette": "<ORG_PARENT>",
         "font_body": "Calibri",
         "font_heading": "Calibri",
         "font_code": "Consolas",
@@ -326,7 +326,7 @@ def set_no_spacing(paragraph):
 def create_document(preset="executive", palette_override=None):
     """Create a new Document with preset styles applied."""
     cfg = PRESETS.get(preset, PRESETS["executive"]).copy()
-    pal = PALETTES.get(palette_override or cfg["palette"], PALETTES["fortive"]).copy()
+    pal = PALETTES.get(palette_override or cfg["palette"], PALETTES["<ORG_PARENT>"]).copy()
 
     doc = Document()
     _apply_preset(doc, cfg, pal)
@@ -389,7 +389,7 @@ def _apply_preset(doc, cfg, pal):
 def apply_preset_to_existing(doc, preset="executive", palette_override=None):
     """Apply preset styles to an existing document (for post-processing)."""
     cfg = PRESETS.get(preset, PRESETS["executive"]).copy()
-    pal = PALETTES.get(palette_override or cfg["palette"], PALETTES["fortive"]).copy()
+    pal = PALETTES.get(palette_override or cfg["palette"], PALETTES["<ORG_PARENT>"]).copy()
     _apply_preset(doc, cfg, pal)
     return doc
 
@@ -398,7 +398,7 @@ def apply_preset_to_existing(doc, preset="executive", palette_override=None):
 # TABLE FORMATTING
 # ═══════════════════════════════════════════════════════════════════════════
 
-def add_professional_table(doc, headers, rows, palette="fortive", auto_size=True,
+def add_professional_table(doc, headers, rows, palette="<ORG_PARENT>", auto_size=True,
                            alt_rows=True, compact=False):
     """
     Add a professionally formatted table.
@@ -412,7 +412,7 @@ def add_professional_table(doc, headers, rows, palette="fortive", auto_size=True
         alt_rows: alternating row shading
         compact: reduce cell padding for dense tables
     """
-    pal = PALETTES.get(palette, PALETTES["fortive"])
+    pal = PALETTES.get(palette, PALETTES["<ORG_PARENT>"])
     n_cols = len(headers)
     n_rows = len(rows)
 
@@ -461,7 +461,7 @@ def add_professional_table(doc, headers, rows, palette="fortive", auto_size=True
     return table
 
 
-def add_key_value_table(doc, pairs, palette="fortive", key_width_pct=30):
+def add_key_value_table(doc, pairs, palette="<ORG_PARENT>", key_width_pct=30):
     """
     Add a two-column key-value table (for metadata, parameters, etc).
 
@@ -469,7 +469,7 @@ def add_key_value_table(doc, pairs, palette="fortive", key_width_pct=30):
         pairs: list of (key, value) tuples
         key_width_pct: percentage of table width for the key column
     """
-    pal = PALETTES.get(palette, PALETTES["fortive"])
+    pal = PALETTES.get(palette, PALETTES["<ORG_PARENT>"])
     table = doc.add_table(rows=len(pairs), cols=2)
     table.style = "Table Grid"
     table.alignment = WD_TABLE_ALIGNMENT.CENTER
@@ -503,7 +503,7 @@ def add_key_value_table(doc, pairs, palette="fortive", key_width_pct=30):
     return table
 
 
-def add_status_table(doc, items, palette="fortive"):
+def add_status_table(doc, items, palette="<ORG_PARENT>"):
     """
     Add a table with status badges (colored dots + text).
 
@@ -511,7 +511,7 @@ def add_status_table(doc, items, palette="fortive"):
         items: list of dicts with keys: name, status, detail (optional)
                status values: "pass"/"success"/"complete", "fail"/"error", "warn"/"warning", "info"/"pending"
     """
-    pal = PALETTES.get(palette, PALETTES["fortive"])
+    pal = PALETTES.get(palette, PALETTES["<ORG_PARENT>"])
     status_colors = {
         "pass": pal["success"], "success": pal["success"], "complete": pal["success"],
         "fail": pal["danger"], "error": pal["danger"],
@@ -586,9 +586,9 @@ def _auto_size_columns(table, headers, rows):
 # CONTENT HELPERS
 # ═══════════════════════════════════════════════════════════════════════════
 
-def add_code_block(doc, text, palette="fortive", language=None):
+def add_code_block(doc, text, palette="<ORG_PARENT>", language=None):
     """Add a monospace code block with background shading."""
-    pal = PALETTES.get(palette, PALETTES["fortive"])
+    pal = PALETTES.get(palette, PALETTES["<ORG_PARENT>"])
     p = doc.add_paragraph()
     p.paragraph_format.space_before = Pt(4)
     p.paragraph_format.space_after = Pt(4)
@@ -604,14 +604,14 @@ def add_code_block(doc, text, palette="fortive", language=None):
     return p
 
 
-def add_callout_box(doc, text, style="info", palette="fortive"):
+def add_callout_box(doc, text, style="info", palette="<ORG_PARENT>"):
     """
     Add a colored callout box (like a GitHub alert).
 
     Args:
         style: "info", "warning", "success", "danger"
     """
-    pal = PALETTES.get(palette, PALETTES["fortive"])
+    pal = PALETTES.get(palette, PALETTES["<ORG_PARENT>"])
     color_map = {
         "info": pal["info"],
         "warning": pal["warning"],
@@ -660,9 +660,9 @@ def add_callout_box(doc, text, style="info", palette="fortive"):
 
 
 def add_cover_page(doc, title, subtitle=None, author=None, date_str=None,
-                   palette="fortive"):
+                   palette="<ORG_PARENT>"):
     """Add a simple cover page with title, subtitle, author, and date."""
-    pal = PALETTES.get(palette, PALETTES["fortive"])
+    pal = PALETTES.get(palette, PALETTES["<ORG_PARENT>"])
     date_str = date_str or date.today().strftime("%B %d, %Y")
 
     # Spacer — moderate, not excessive
@@ -717,9 +717,9 @@ def add_cover_page(doc, title, subtitle=None, author=None, date_str=None,
 
 
 def add_header_footer(doc, header_text=None, footer_text=None, page_numbers=True,
-                      palette="fortive"):
+                      palette="<ORG_PARENT>"):
     """Add header and/or footer to all sections."""
-    pal = PALETTES.get(palette, PALETTES["fortive"])
+    pal = PALETTES.get(palette, PALETTES["<ORG_PARENT>"])
 
     for section in doc.sections:
         if header_text:
@@ -774,9 +774,9 @@ def add_header_footer(doc, header_text=None, footer_text=None, page_numbers=True
 # INLINE TEXT FORMATTING
 # ═══════════════════════════════════════════════════════════════════════════
 
-def add_formatted_text(paragraph, text, palette="fortive"):
+def add_formatted_text(paragraph, text, palette="<ORG_PARENT>"):
     """Parse inline Markdown formatting: **bold**, `code`, *italic*, [links]."""
-    pal = PALETTES.get(palette, PALETTES["fortive"])
+    pal = PALETTES.get(palette, PALETTES["<ORG_PARENT>"])
     parts = re.split(r"(\*\*[^*]+\*\*|`[^`]+`|\*[^*]+\*)", text)
 
     for part in parts:
@@ -1003,9 +1003,9 @@ def _flush_table(doc, table_lines, in_table, palette):
 # CONVENIENCE: Beautify an existing DOCX
 # ═══════════════════════════════════════════════════════════════════════════
 
-def beautify_tables(doc, palette="fortive", alt_rows=True):
+def beautify_tables(doc, palette="<ORG_PARENT>", alt_rows=True):
     """Re-format all tables in an existing document with professional styling."""
-    pal = PALETTES.get(palette, PALETTES["fortive"])
+    pal = PALETTES.get(palette, PALETTES["<ORG_PARENT>"])
 
     for table in doc.tables:
         if not table.rows:

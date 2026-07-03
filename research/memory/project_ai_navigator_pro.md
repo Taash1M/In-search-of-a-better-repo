@@ -15,7 +15,7 @@ Enterprise AI tool onboarding and governance platform — conversational mind-ma
 
 ## Deployment & Auth Decisions (2026-05-17)
 - **Hosting**: Deploying on Pulse platform (local/internal) — NOT Lovable Cloud or Cloudflare Workers
-- **SSO**: Already in place on `ai.fluke.com` — consume existing auth (Azure AD / Entra ID), don't build new
+- **SSO**: Already in place on `ai.<ORG>.com` — consume existing auth (Azure AD / Entra ID), don't build new
 - **ServiceNow**: Integration live with `flkbiapiuser` against `fortivedev.service-now.com` (dev)
 - **Scope**: Code changes only — SNOW integration complete (Step 1), SSO token consumption next
 
@@ -48,20 +48,20 @@ Enterprise AI tool onboarding and governance platform — conversational mind-ma
 ## ServiceNow Integration — E2E Validated (2026-05-19)
 - **Credentials**: `flkbiapiuser` / password in `.env`, works on BOTH prod and dev
 - **Dev instance**: `fortivedev.service-now.com` (cloned 2026-02-08), full read+write confirmed
-- **Prod instance**: `fortive.service-now.com`, read confirmed, sys_user ACL-filtered (empty)
+- **Prod instance**: `<ORG_PARENT>.service-now.com`, read confirmed, sys_user ACL-filtered (empty)
 - **Catalog item**: `sys_id=4f192d371bcbbd505e38ff3f034bcbe2` = "Data And Analytics Request"
-- **Application service**: `356abe9cdb07470044e9f15aaf961944` = "Business Intelligence (FLK)"
+- **Application service**: `356abe9cdb07470044e9f15aaf961944` = "Business Intelligence (<ORG_ABBR>)"
 - **Variable names** (confirmed via API):
   - `itss_std_vsvar_requested_for` (sys_user sys_id, mandatory)
   - `itss_std_vsvar_urgency` ("1"/"2"/"3", optional)
   - `application_service` (cmdb_ci_service sys_id, mandatory)
-  - `type_of_request` ("Fluke AI" | "Fluke ML", mandatory)
+  - `type_of_request` ("<ORG> AI" | "<ORG> ML", mandatory)
   - `request_category` ("1"=AI Frontend, "2"=AI Backend, "3"=O365 CoPilot, "4"=PBI CoPilot, "5"=ML Model)
   - `itss_std_vsvar_business_justification` (free text, mandatory)
 - **E2E tested**: order_now → REQ → RITM, state updates, user lookup by email, manager resolution via `sysparm_display_value=all`
 - **Tool-to-category mapping**: m365-copilot→"3", claude-code/github-copilot/amazon-q→"2", all others→"1"
 - **Gotchas**: dept/manager/location are references (need display_value=all), opened_by is always API user (requested_for is correct), delete returns 403 (close instead), sys_user empty on prod
-- **<USER> on dev**: 50 roles (itil, snc_platform_rest_api_access), 13 groups (FLK-AI-Dev, FLK_BI_L1/L2, FLK_Data_Analytics_Approvers)
+- **<USER> on dev**: 50 roles (itil, snc_platform_rest_api_access), 13 groups (<ORG_ABBR>-AI-Dev, FLK_BI_L1/L2, FLK_Data_Analytics_Approvers)
 
 ## ServiceNow REST Client — Implementation Complete (2026-05-19)
 - **Architecture**: Facade pattern with mock fallback (checks `isSnowConfigured()` at call time)
@@ -89,7 +89,7 @@ Enterprise AI tool onboarding and governance platform — conversational mind-ma
 - **Perplexity replaced by Claude Desktop** (2026-05-20): bundled tool (Claude AI + Code + Cowork), Enterprise license required, 15 capabilities, SNOW category "2" (AI Backend)
 - **5 Supabase migrations**: schema evolution (tables → RLS tightening → audit logs)
 - **ServiceNow**: Real integration via REST client, mock fallback when SNOW_* env vars absent
-- **Zero auth (MVP)**: anonymous-friendly, RLS hardened in v3 → SSO already live on ai.fluke.com
+- **Zero auth (MVP)**: anonymous-friendly, RLS hardened in v3 → SSO already live on ai.<ORG>.com
 
 ## Key Files
 - `src/lib/engine/scoring.ts` — recommendation scoring algorithm
@@ -146,8 +146,8 @@ Enterprise AI tool onboarding and governance platform — conversational mind-ma
 - **12 panels generated**: 6 problem scenes + 6 solution scenes, saved to `%TEMP%\ai_nav_panels\`
 
 ## Pending
-- Move source repo to Fortive GitHub (`Taashi-Manyanga_fortive`)
-- Sign into Supabase with Fortive GitHub EMU account
+- Move source repo to <ORG_PARENT> GitHub (`Taashi-Manyanga_fortive`)
+- Sign into Supabase with <ORG_PARENT> GitHub EMU account
 - Deploy on Pulse platform
 - SSO token consumption (Azure AD / Entra ID)
 - Prod SNOW credentials (currently dev-only)

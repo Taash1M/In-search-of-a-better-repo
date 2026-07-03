@@ -64,9 +64,9 @@ Four built-in presets control the entire document appearance. Select one and ove
 | Preset | Use Case | Body Font | H1 Size | Palette |
 |--------|----------|-----------|---------|---------|
 | `executive` | Board decks, strategy docs | Calibri 11pt | 26pt | Deep navy + muted gold |
-| `technical` | Engineering specs, STMs | Calibri 10pt | 24pt | Fortive navy + corporate blue |
+| `technical` | Engineering specs, STMs | Calibri 10pt | 24pt | <ORG_PARENT> navy + corporate blue |
 | `memo` | Internal memos, quick notes | Calibri 11pt | 20pt | Minimal grayscale |
-| `report` | Formal reports, deliverables | Calibri 11pt | 28pt | Fortive navy + gold accent |
+| `report` | Formal reports, deliverables | Calibri 11pt | 28pt | <ORG_PARENT> navy + gold accent |
 
 ### Preset Structure
 
@@ -104,7 +104,7 @@ Four palettes available. Each has 15 named colors for consistent theming.
 
 | Palette | Primary | Secondary | Accent | Best For |
 |---------|---------|-----------|--------|----------|
-| `fortive` | #003366 (Dark navy) | #005EB8 (Corporate blue) | #F3C13A (Gold) | Branded corporate docs |
+| `<ORG_PARENT>` | #003366 (Dark navy) | #005EB8 (Corporate blue) | #F3C13A (Gold) | Branded corporate docs |
 | `executive` | #1A3A5C (Deep navy) | #2F5496 (Royal blue) | #C5A55A (Muted gold) | C-suite deliverables |
 | `modern` | #4A90D9 (Bright blue) | #6C5CE7 (Purple) | #00B894 (Emerald) | Innovation / tech docs |
 | `minimal` | #333333 (Charcoal) | #555555 (Gray) | #0066CC (Blue) | Clean, distraction-free |
@@ -214,7 +214,7 @@ rows = [
     ["Revenue", "Complete", "1,500,000", "8m 12s"],
     ["Inventory", "Running", "—", "—"],
 ]
-add_professional_table(doc, headers, rows, palette="fortive")
+add_professional_table(doc, headers, rows, palette="<ORG_PARENT>")
 ```
 
 ### Key-Value Table (Metadata Blocks)
@@ -229,7 +229,7 @@ pairs = [
     ("Last Run", "2026-03-20 06:00 PST"),
     ("Row Count", "2,807,243"),
 ]
-add_key_value_table(doc, pairs, palette="fortive")
+add_key_value_table(doc, pairs, palette="<ORG_PARENT>")
 ```
 
 ### Status Table (With Colored Badges)
@@ -243,7 +243,7 @@ items = [
     {"name": "Null check", "status": "warning", "detail": "3 nulls in optional field"},
     {"name": "Schema validation", "status": "fail", "detail": "Missing column: region"},
 ]
-add_status_table(doc, items, palette="fortive")
+add_status_table(doc, items, palette="<ORG_PARENT>")
 ```
 
 ### Inline Table (When Module Not Available)
@@ -316,7 +316,7 @@ from docx_beautify import add_code_block
 add_code_block(doc, """SELECT customer_id, COUNT(*) as order_count
 FROM flukebi_Gold.FactSalesOrders
 GROUP BY customer_id
-HAVING COUNT(*) > 10""", palette="fortive")
+HAVING COUNT(*) > 10""", palette="<ORG_PARENT>")
 ```
 
 ### Callout Boxes (Info / Warning / Success / Danger)
@@ -339,7 +339,7 @@ add_cover_page(doc,
     title="Customer MDM — Phase 5 Deployment",
     subtitle="Golden Record Creation and Bridge Tables",
     author="Taashi Manyanga",
-    palette="fortive"
+    palette="<ORG_PARENT>"
 )
 ```
 
@@ -349,10 +349,10 @@ add_cover_page(doc,
 from docx_beautify import add_header_footer
 
 add_header_footer(doc,
-    header_text="Fluke UBI — Confidential",
-    footer_text="Fluke Corporation",
+    header_text="<ORG> UBI — Confidential",
+    footer_text="<ORG> Corporation",
     page_numbers=True,
-    palette="fortive"
+    palette="<ORG_PARENT>"
 )
 ```
 
@@ -537,7 +537,7 @@ from docx import Document
 from docx_beautify import beautify_tables
 
 doc = Document("plain_report.docx")
-beautify_tables(doc, palette="fortive")
+beautify_tables(doc, palette="<ORG_PARENT>")
 doc.save("beautified_report.docx")
 ```
 
@@ -603,7 +603,7 @@ add_code_block(doc, "SELECT COUNT(*) FROM flukebi_Gold.FactSOBacklog WHERE pk IS
 add_callout_box(doc, "All tests passed. Stream is ready for QA promotion.", style="success")
 
 # Footer
-add_header_footer(doc, header_text="Fluke UBI — Confidential", page_numbers=True)
+add_header_footer(doc, header_text="<ORG> UBI — Confidential", page_numbers=True)
 
 doc.save("TestResults_SOBacklog_20260320.docx")
 ```
@@ -856,7 +856,7 @@ set_paragraph_flow(table_title, keep_next=True, widow_control=True)
 Search all paragraphs and table cells. Handles text split across runs. Returns count of replacements.
 
 ```python
-count = find_and_replace(doc, "{{COMPANY}}", "Fluke Corporation")
+count = find_and_replace(doc, "{{COMPANY}}", "<ORG> Corporation")
 count = find_and_replace(doc, "tbd", "completed", match_case=False)
 ```
 

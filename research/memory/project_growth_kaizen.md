@@ -20,7 +20,7 @@ metadata:
 - **Key settings**: `--chat-width: 900px`, `--chat-height: 700px`, `bubbleMessageMaxWidth: 850`
 - **Auth method**: Direct Line secret (from Settings > Security > Web channel security), embedded in HTML
 - **Size presets**: Wide (900x700), Extra Wide (1100x750), Full Page, Default (450x520)
-- **Fluke branding**: Navy blue header, teal accents, KAS avatar initials
+- **<ORG> branding**: Navy blue header, teal accents, KAS avatar initials
 
 ### Hosting Decision
 - **Decision**: Azure Static Web App (Option 2) for Kaizen team access
@@ -33,13 +33,13 @@ metadata:
 - Expected: 30-90 seconds for a full account score with web research
 
 ### Deliverables Created (2026-06-04)
-1. `key-account-scorer-wide.html` — Custom wide chat canvas with Fluke branding
+1. `key-account-scorer-wide.html` — Custom wide chat canvas with <ORG> branding
 2. `Key Account Scorer - How It Works.docx` — 2-page A4 landscape infographic (architecture + how-to)
 3. `chat_widget_research.md` — Research report on widget resize + DOCX/Excel export options
 
 ### Agent v3 — C3 Future Potential Enhancement (2026-06-04)
-- C3 now uses structured 3 sub-criteria: Company Size (sites + geographic scope), Portfolio Alignment (Fluke product family count), Investment Activity (capital/contracts/growth)
-- Fluke product catalog embedded in instructions (Industrial, Calibration, Networks)
+- C3 now uses structured 3 sub-criteria: Company Size (sites + geographic scope), Portfolio Alignment (<ORG> product family count), Investment Activity (capital/contracts/growth)
+- <ORG> product catalog embedded in instructions (Industrial, Calibration, Networks)
 - Commercial barrier flagging: score normally, flag barriers, user decides
 - Penetration logic removed — purely external company profile now
 - 10/5/1 scoring guardrail reinforced (Sonnet used intermediate values on first test)

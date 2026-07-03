@@ -1,6 +1,6 @@
 ---
 name: ai-assets-governance
-description: "Fortive Compliance AI-asset inventory of Fluke — live read-only az scan of both Azure subs (AI ML Technology + Unified BI), 543 evidence-backed rows, no hallucination. CSV + DOCX for AI_Governance.pptx (2026-06-22)"
+description: "<ORG_PARENT> Compliance AI-asset inventory of <ORG> — live read-only az scan of both Azure subs (AI ML Technology + Unified BI), 543 evidence-backed rows, no hallucination. CSV + DOCX for AI_Governance.pptx (2026-06-22)"
 metadata: 
   node_type: memory
   type: project
@@ -9,12 +9,12 @@ metadata:
 
 ## AI Assets Governance — Compliance reporting inventory
 
-Fortive Compliance asked for a comprehensive list of Fluke's AI tools/assets. Reference format (a sister
+<ORG_PARENT> Compliance asked for a comprehensive list of <ORG>'s AI tools/assets. Reference format (a sister
 opco's list) = `AI\AI Assets Governance\ProvationAIList.docx` (categorized Vendor AI / Internal AI, "Name
 — Status"). Target deck to populate later = `AI\AI Assets Governance\AI_Governance.pptx` (23 slides).
 
 **Method (NON-NEGOTIABLE — Compliance): live read-only `az` CLI only, every row traceable to a captured
-command, gaps flagged not filled, ZERO inference.** Scanned BOTH subs: **Fluke AI ML Technology** + **Fluke
+command, gaps flagged not filled, ZERO inference.** Scanned BOTH subs: **<ORG> AI ML Technology** + **<ORG>
 Unified BI** (sub `52a1d076-...`). Status = provisioning + recent-usage (Azure Monitor `TotalTokens`, ~45d).
 Security Group resolved from RBAC group assignments → Entra group displayName (verbatim; SG often encodes
 project/status).
@@ -24,8 +24,8 @@ project/status).
 (LiteLLM gateways, Databricks, container apps, App Services), 75 use-case RGs. **8 cognitive accounts show
 recent token usage** (e.g. flk-team-ai-enablement-ai, flk-rfeng-sandbox, pulse-sales-prod, flukeflc,
 voc-prodopenai, depot-repair-openai); rest = provisioned/no-recent-usage or usage-unknown (metric N/A for
-FormRecognizer/Speech/Translation/Vision kinds). SGs found verbatim incl. FLK-ubi-AI-admins,
-FLK-ubi-AI-internal-dev, flkazu-ubi-ai-dev, Flk-azu-ai-admins, TM-GlobalApps-BI-Fluke.
+FormRecognizer/Speech/Translation/Vision kinds). SGs found verbatim incl. <ORG_ABBR>-ubi-AI-admins,
+<ORG_ABBR>-ubi-AI-internal-dev, flkazu-ubi-ai-dev, Flk-azu-ai-admins, TM-GlobalApps-BI-<ORG>.
 
 **Gaps flagged (not filled):** most RGs have no RG-level group RBAC (access via users/SPs — not captured by
 a group-only scan); 3 unresolvable group principals (deleted/AD-read gap), recorded verbatim; App-Service

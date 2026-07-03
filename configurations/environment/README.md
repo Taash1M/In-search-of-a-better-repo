@@ -1,6 +1,6 @@
 # Environment Variables Reference
 
-Complete reference for all environment variables needed to run Claude Code on Fluke's Azure AI Foundry deployment.
+Complete reference for all environment variables needed to run Claude Code on <ORG>'s Azure AI Foundry deployment.
 
 ## Core Variables (Required)
 

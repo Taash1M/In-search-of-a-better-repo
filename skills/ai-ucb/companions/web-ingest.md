@@ -8,7 +8,7 @@ allowed-tools: Read, Grep, Glob, Bash, Edit, Write, Agent, AskUserQuestion
 
 You are a web data collection specialist. You build reliable, polite, and production-ready web crawling pipelines that feed clean, structured content into AI systems. You combine async crawling (Crawl4AI), structured extraction (Firecrawl), article cleaning (Trafilatura), and LLM-guided scraping (ScrapeGraphAI) to handle any web source — from simple article pages to complex JS-rendered applications.
 
-**Cherry-picked from:** ai-engineering-toolkit catalog — Crawl4AI, Firecrawl, Trafilatura, ScrapeGraphAI. Fluke-adapted for Azure storage, Delta Lake, and AI UCB medallion pipeline.
+**Cherry-picked from:** ai-engineering-toolkit catalog — Crawl4AI, Firecrawl, Trafilatura, ScrapeGraphAI. <ORG>-adapted for Azure storage, Delta Lake, and AI UCB medallion pipeline.
 
 ## When This Skill Activates
 
@@ -72,7 +72,7 @@ def discover_urls_from_sitemap(base_url: str, max_urls: int = 1000) -> list[str]
 
     try:
         resp = requests.get(sitemap_url, timeout=15,
-                          headers={"User-Agent": "FlukeCrawler/1.0 (+https://fluke.com)"})
+                          headers={"User-Agent": "FlukeCrawler/1.0 (+https://<ORG>.com)"})
         resp.raise_for_status()
         root = ET.fromstring(resp.content)
 
@@ -199,7 +199,7 @@ async def crawl_urls(urls: list[str], rate_limit: float = 1.0) -> list[dict]:
     return results
 
 # Usage
-urls = discover_urls_from_sitemap("https://docs.fluke.com")
+urls = discover_urls_from_sitemap("https://docs.<ORG>.com")
 results = asyncio.run(crawl_urls(urls))
 ```
 
@@ -258,13 +258,13 @@ from firecrawl import FirecrawlApp
 app = FirecrawlApp(api_key=os.getenv("FIRECRAWL_API_KEY"))
 
 # Single page scrape → clean markdown
-result = app.scrape_url("https://docs.fluke.com/getting-started", params={
+result = app.scrape_url("https://docs.<ORG>.com/getting-started", params={
     "formats": ["markdown"],
 })
 print(result["markdown"])
 
 # Crawl entire site
-crawl_result = app.crawl_url("https://docs.fluke.com", params={
+crawl_result = app.crawl_url("https://docs.<ORG>.com", params={
     "limit": 500,
     "scrapeOptions": {"formats": ["markdown"]},
 })
@@ -293,7 +293,7 @@ graph_config = {
 # Describe what you want in natural language
 scraper = SmartScraperGraph(
     prompt="Extract all product specifications: model number, accuracy, range, certifications, price",
-    source="https://www.fluke.com/en-us/product/electrical-testing/digital-multimeters/fluke-87v",
+    source="https://www.<ORG>.com/en-us/product/electrical-testing/digital-multimeters/<ORG>-87v",
     config=graph_config,
 )
 
@@ -332,7 +332,7 @@ Database = dbutils.widgets.get("Database")
 web_sources = [
     {
         "name": "fluke_docs",
-        "base_url": "https://docs.fluke.com",
+        "base_url": "https://docs.<ORG>.com",
         "method": "crawl4ai",           # crawl4ai | trafilatura | firecrawl
         "max_pages": 500,
         "include_patterns": ["/en-us/"],
@@ -438,7 +438,7 @@ df_silver.write.format("delta").mode("overwrite") \
       "web_sources": [
         {
           "name": "fluke_docs",
-          "base_url": "https://docs.fluke.com",
+          "base_url": "https://docs.<ORG>.com",
           "method": "crawl4ai",
           "max_pages": 500,
           "include_patterns": ["/en-us/"],

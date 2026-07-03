@@ -785,7 +785,7 @@ df = pd.read_excel('file.xlsx',
 | **Berry** | `#7030A0` | `#E8D5F5` | `#9B59B6` | `#000000` | Innovation, premium |
 | **Teal** | `#2E75B6` | `#DAEEF3` | `#00B0F0` | `#000000` | Technology, data |
 | **Charcoal Minimal** | `#333333` | `#F2F2F2` | `#333333` | `#000000` | Minimal, modern |
-| **Fortive Corporate** | `#005EB8` | `#E6F0FA` | `#00A3E0` | `#000000` | Fortive brand |
+| **<ORG_PARENT> Corporate** | `#005EB8` | `#E6F0FA` | `#00A3E0` | `#000000` | <ORG_PARENT> brand |
 
 #### Financial Model Color Coding (Investment Banking Standard)
 

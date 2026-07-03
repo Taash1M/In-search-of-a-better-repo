@@ -34,7 +34,7 @@ Catalog)").
   - **§Performance & Cost Tuning** · **§Governance, Security & Compliance** · **§Observability, Operations & DataOps** · **§Documenting Data Pipelines**
   - Language idioms: **§Python / PySpark Patterns** · **§SQL & dbt Patterns** · **§Scala / Spark Patterns**
   - Platforms: **§Cloud Overview — Azure / AWS / GCP** · **§Databricks (Spark + Delta + Unity Catalog)** · **§Azure Data Factory (ADF)** · **§BigQuery** · **§AWS Glue** · **§Amazon Redshift**
-  - **§UBI Platform Notes** — Fluke-specific medallion, DuckDB, Fabric, and engine-corruption deltas
+  - **§UBI Platform Notes** — <ORG>-specific medallion, DuckDB, Fabric, and engine-corruption deltas
 
 ## Start here — route the task
 

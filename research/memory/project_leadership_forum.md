@@ -6,7 +6,7 @@ originSessionId: aa210407-a09e-461f-aa2f-83d0e2fa4475
 ---
 ## Overview
 
-Deliverables for an EM Leadership Forum presentation on Agentic AI at Fluke. Audience: **Techno-Functional leaders** (mixed technical + executive). Target: **30-45 minutes**.
+Deliverables for an EM Leadership Forum presentation on Agentic AI at <ORG>. Audience: **Techno-Functional leaders** (mixed technical + executive). Target: **30-45 minutes**.
 
 **Why:** Leadership needs a high-impact presentation covering AI direction, 90-day accomplishments, deployed agents, Claude Code enablement, and forward-looking initiatives.
 
@@ -76,7 +76,7 @@ Unstamped: slides 1 (Title), 2 (Journey), 3 (Agenda), 29 (Closing).
 Synthesized from external reference deck `Agentic-AI-The-Next-Frontier-in-Intelligent-Systems.pptx` (5 slides, 16"x9"). Content adapted to Bold Signal Light design system and inserted after Industry Framing (slide 4):
 - **Slide 4b** `build_slide_4b_defining_agentic()` — 3 characteristic cards (Autonomous Perception, Goal-Oriented Reasoning, Continuous Learning Loop) + Perceive-Reason-Act-Learn cycle diagram
 - **Slide 4c** `build_slide_4c_agentic_advantages()` — Left: 5-level capability spectrum (RPA→Chatbots→RAG→Workflow→Agentic), Right: 2x2 advantage cards
-- **Slide 4d** `build_slide_4d_design_principles()` — 6 numbered principles in 3x2 grid with colored separator lines + italic "At Fluke:" examples linking each principle to actual agent implementations
+- **Slide 4d** `build_slide_4d_design_principles()` — 6 numbered principles in 3x2 grid with colored separator lines + italic "At <ORG>:" examples linking each principle to actual agent implementations
 
 Both v4 and D1 decks now **28 slides** each. PDFs regenerated.
 
@@ -122,7 +122,7 @@ Both v4 and D1 decks now **28 slides** each. PDFs regenerated.
 | `V2V Basic Architecture and code Flow.pptx` | 4 LLM agents (Search Query, Query Analyzer, Reviewer, Synthesizer), Cosmos DB vector search, 10 functions | 12a |
 | `LLM_Gateway_What_Was_Deployed_20260324.docx` | 4 figures: E2E flow, protocol translation, resource landscape, access control | 6c, 13b |
 | `last 90 days and detailed videos.pptx` | 9 initiatives (8 complete), 5 agents with video links | 5a, 5b |
-| `Fluke IT 2026 Strat _Q1.pptx` slide 22 | 17 initiatives (9 Q2, 3 Q3, 4 Q4) across 4 pillars | 17 |
+| `<ORG> IT 2026 Strat _Q1.pptx` slide 22 | 17 initiatives (9 Q2, 3 Q3, 4 Q4) across 4 pillars | 17 |
 
 ## Diagram Engine Selection (Proven 2026-04-14)
 
@@ -141,7 +141,7 @@ All 4 engines confirmed working with test renders:
 
 **Key learning**: Mermaid CLI was available but underutilized — stronger than D2 for sequence diagrams and flowcharts. D2 remains better for architecture/structural diagrams with nested containers.
 
-**Visual quality standard (proven 2026-04-14):** Veritas Suite deck (44 slides) analyzed for design patterns. Sample slide 18 adaptation built and validated — "Agentic AI Technology Stack at Fluke" (`sample_veritas_slide18.pptx`). Key proven patterns:
+**Visual quality standard (proven 2026-04-14):** Veritas Suite deck (44 slides) analyzed for design patterns. Sample slide 18 adaptation built and validated — "Agentic AI Technology Stack at <ORG>" (`sample_veritas_slide18.pptx`). Key proven patterns:
 - **Icon strip with bracket connectors** — colored circles, horizontal bracket bar + vertical drops, FLOWCHART_EXTRACT triangle arrowheads rotated 90°
 - **Numbered vertical timeline** — navy circles (1,2,3) connected by gray line, title + description to right
 - **Hierarchy tags** — rounded rect work items with color-coded borders per level (Agent → Skill → Tool)
@@ -150,9 +150,9 @@ All 4 engines confirmed working with test renders:
 **Mermaid CLI location**: `<ADMIN_HOME>/AppData\Roaming\npm\mmdc`
 **D2 location**: `<USER_HOME>/tools\d2\d2-v0.7.1\bin\d2.exe`
 
-## Design System: Bold Signal Light — Fluke Edition
+## Design System: Bold Signal Light — <ORG> Edition
 
-- **Palette**: Fluke Yellow #FFC000 (primary accent), Navy #003366 (depth), White #FFFFFF (backgrounds)
+- **Palette**: <ORG> Yellow #FFC000 (primary accent), Navy #003366 (depth), White #FFFFFF (backgrounds)
 - **Fonts**: Arial Black (headers), Arial (body)
 - **Layout**: LAYOUT_WIDE (13.333" × 7.5"), 0.6" margins
 - **Style**: Light backgrounds, split-panel hero (left white / right navy), yellow accent bars, rounded cards, consulting-grade action titles
@@ -180,14 +180,14 @@ All 4 engines confirmed working with test renders:
 1. `Overarching presentation prompt.txt` — thesis: agentic AI transforming business, products, pricing
 2. `info.docx` (updated 2026-04-12) — 8-section narrative talk track (most recent source)
 3. `Recommended 30 minute flow.docx` — 9-section timed blueprint with 2 video slots
-4. `AI Applicability Direction at Fluke.docx` — strategic direction doc (not finalized strategy)
+4. `AI Applicability Direction at <ORG>.docx` — strategic direction doc (not finalized strategy)
 5. `last 90 days and detailed videos.pptx` — 9 initiatives across 4 pillars, 5 named agents
 
 ## Content Summary (from source docs)
 
 **Narrative Arc (maps to 30-min flow):**
 1. Industry framing: Task AI → Agentic AI
-2. Fluke's current state: task-based, assistive, deliberately disciplined
+2. <ORG>'s current state: task-based, assistive, deliberately disciplined
 3. Foundations before agents: architecture > models, cloud-first, MCP
 4. Internal-first delivery: PM acceleration, engineering productivity, agent swarms
 5. Customer-facing evolution: invisible, embedded, outcome-driven
@@ -237,7 +237,7 @@ All 4 engines confirmed working with test renders:
 ## Placeholder Sections (User to Provide)
 
 - Claude Code business user use cases
-- Fusion SAAS Fluke-specific plans
+- Fusion SAAS <ORG>-specific plans
 
 ## QA History
 

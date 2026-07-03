@@ -6,13 +6,13 @@ originSessionId: aa210407-a09e-461f-aa2f-83d0e2fa4475
 ---
 ## Project Directory
 `<USER_HOME>/OneDrive - <ORG>\AI\AI BI Tool\`
-Code: `fluke-ai-bi-tool/` subdirectory
+Code: `<ORG>-ai-bi-tool/` subdirectory
 
 **Why:** Internal BI assistant accessible via SharePoint. Users point at PBI models or OneDrive files, answer a 3-5 question interview, then conversationally create publication-quality BI reports. Zero data storage.
 **How to apply:** 8-phase plan (16 weeks). All 8 phases complete as of 2026-04-11. E2E production review (10 critical fixes) + MCP metadata integration completed 2026-04-11. **3-wave production hardening completed 2026-04-13** — 38 issues fixed (7 critical, 11 high, 16 medium, 4 low). 386 tests at 80% code coverage. 8 markdown docs updated. 5 beautified deliverables generated (4 DOCX + 1 PPTX). GA-ready for pilot deployment.
 
 ## Architecture
-Multi-agent: Supervisor (Sonnet 4.6) → Data Agent (Haiku), Analysis Agent (Sonnet), Visual Agent (Sonnet, Plotly+Fluke theme), Export Agent (Haiku), Session Agent (Haiku, Cosmos DB).
+Multi-agent: Supervisor (Sonnet 4.6) → Data Agent (Haiku), Analysis Agent (Sonnet), Visual Agent (Sonnet, Plotly+<ORG> theme), Export Agent (Haiku), Session Agent (Haiku, Cosmos DB).
 
 Backend: FastAPI + DuckDB in-memory (per-session isolation via DuckDBSessionManager). Frontend: Streamlit MVP → SharePoint SPFx. LLM: Azure AI Foundry (circuit breaker: 5 fail → 60s open). Auth: Entra ID delegated tokens (WebSocket first-message auth). API versioned: `/api/v1/` prefix, health unversioned. Structured JSON logging with X-Request-ID correlation IDs.
 
@@ -102,36 +102,36 @@ test_main_app.py (24), test_export_agent.py (30), test_sources_routes.py (11), t
 **Metadata**: models.py, schema_discovery.py, registry.py (MCP-integrated), loader.py (YAML→Registry)
 **Theme**: fluke_theme.py (Plotly template), templates.py (8 report templates)
 **Interview**: engine.py (5-dimension, auto-skip)
-**Export**: csv_export.py, excel_export.py (Fluke-branded), html_export.py (interactive Plotly)
+**Export**: csv_export.py, excel_export.py (<ORG>-branded), html_export.py (interactive Plotly)
 **Session**: models.py, cosmos_store.py (graceful degradation)
 **Monitoring**: token_tracker.py, usage.py, telemetry.py, health.py (5-component probes)
 **Routes**: health.py, chat.py, sources.py, export.py, sessions.py
-**Frontend**: streamlit/app.py (Fluke-branded, source browser, export, sessions)
+**Frontend**: streamlit/app.py (<ORG>-branded, source browser, export, sessions)
 **Infra**: main.bicep + modules (app-service, cosmos-db, key-vault, app-insights, container-registry)
 **CI/CD**: backend-ci.yml, infra-deploy.yml, release.yml
 **Docs**: user-guide, admin-runbook, architecture-decisions (16 ADRs), troubleshooting, onboarding, api-reference, pilot-onboarding, ga-checklist
 
 ## Deliverables
 
-### Phase 1-8 DOCX (in fluke-ai-bi-tool/docs/)
+### Phase 1-8 DOCX (in <ORG>-ai-bi-tool/docs/)
 - `02-E2E-Development-Plan.md` + `.docx` — 8-phase plan (638 lines)
-- `03-Architecture-Admin-Runbook.docx` — Fortive-branded tech runbook with Azure architecture diagram (160KB)
+- `03-Architecture-Admin-Runbook.docx` — <ORG_PARENT>-branded tech runbook with Azure architecture diagram (160KB)
 - `04-User-Guide.docx` — Executive-preset user guide (42KB)
 - `05-Deployment-Guide.docx` — 8-step deployment guide with 4 embedded diagrams (430KB)
 - `architecture_diagram.png` + 4x deploy diagram PNGs
 
-### Phase 1-8 PPTX (in fluke-ai-bi-tool/)
+### Phase 1-8 PPTX (in <ORG>-ai-bi-tool/)
 - `docs/06-Solution-Overview.pptx` — Master 19-slide (PptxGenJS, Midnight Executive, 6 diagrams, 1.1MB)
 - `AI-BI-Tool-Presentation-v3-fixed.pptx` — 26-slide LAYOUT_WIDE with azure_diagrams (2963 KB)
 - `AI-BI-Tool-Presentation-v2-fixed.pptx` — 26-slide LAYOUT_WIDE (2551 KB)
 - 10 embedded diagram PNGs (pptx_*.png + _fix_diagrams/s*.png)
 
 ### Production Hardening Deliverables (2026-04-13, in deliverables/)
-- `AI_BI_Tool_Approach_Design_20260412.docx` — Executive preset, Fortive palette, 11 sections: exec summary, problem, solution, principles, agent arch, tech stack, MCP metadata, security, 16 ADRs, hardening waves, cost model (46KB)
+- `AI_BI_Tool_Approach_Design_20260412.docx` — Executive preset, <ORG_PARENT> palette, 11 sections: exec summary, problem, solution, principles, agent arch, tech stack, MCP metadata, security, 16 ADRs, hardening waves, cost model (46KB)
 - `AI_BI_Tool_Architecture_20260412.docx` — Technical preset, 3 Azure architecture diagrams (system, agent flow, data flow), 9 sections: system overview, agent arch, data flow, resource inventory, security layers, monitoring, scaling, CI/CD, cost (43KB)
 - `AI_BI_Tool_Deployment_Guide_20260412.docx` — Technical preset, 12 sections: prerequisites, Bicep IaC, 24 env vars, Docker, CI/CD, secret management, staging validation, monitoring, rollback, scaling, troubleshooting, GA checklist (46KB)
 - `AI_BI_Tool_User_Guide_20260412.docx` — Executive preset, 11 sections: welcome, getting started, data sources, interview, templates, examples, exporting, sessions, limits, tips, FAQ (43KB)
-- `AI_BI_Tool_Implementation_20260412.pptx` — 20-slide deck (PptxGenJS, Fortive Corporate palette): title, agenda, 5 section dividers, problem comparison, agent architecture, 7-step pipeline, tech stack table, 8-layer security, 3-wave hardening, Wave 1 detail, test coverage, CI/CD pipeline, cost model, GA readiness (31/31), pilot roadmap, thank-you. 3-stage QA passed (505KB)
+- `AI_BI_Tool_Implementation_20260412.pptx` — 20-slide deck (PptxGenJS, <ORG_PARENT> Corporate palette): title, agenda, 5 section dividers, problem comparison, agent architecture, 7-step pipeline, tech stack table, 8-layer security, 3-wave hardening, Wave 1 detail, test coverage, CI/CD pipeline, cost model, GA readiness (31/31), pilot roadmap, thank-you. 3-stage QA passed (505KB)
 
 ## MCP Metadata Integration (2026-04-11)
 

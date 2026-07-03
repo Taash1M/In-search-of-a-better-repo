@@ -5,7 +5,7 @@ terms:
     definition: "Open (unfulfilled) sales orders — the queue of customer orders awaiting shipment. Measured in $ value and line count."
 
   - term: Operating Unit
-    definition: "Organizational unit within UBI (e.g., Fluke Industrial, Fluke Calibration, Fluke Networks). Maps to Oracle OU."
+    definition: "Organizational unit within UBI (e.g., <ORG> Industrial, <ORG> Calibration, <ORG> Networks). Maps to Oracle OU."
 
   - term: Book-to-Bill
     definition: "Ratio of new orders booked to orders shipped in a period. >1 means backlog is growing."
@@ -23,7 +23,7 @@ terms:
     definition: "New Product Introduction — the process from concept through first customer shipment."
 
   - term: FRS
-    definition: "Fluke Reliability Solutions — the reliability/condition monitoring business unit."
+    definition: "<ORG> Reliability Solutions — the reliability/condition monitoring business unit."
 
   - term: IIR
     definition: "Installed Instrument Registry — database of all instruments by serial number, calibration status, and service history."
@@ -44,10 +44,10 @@ terms:
     definition: "Currency conversion rate from transaction currency to USD via a conversion view. Applied at the Silver layer."
 
   - term: Fiscal Year
-    definition: "Fortive fiscal year runs Jan-Dec. Periods align to calendar months. FY2026 = Jan 2026 - Dec 2026."
+    definition: "<ORG_PARENT> fiscal year runs Jan-Dec. Periods align to calendar months. FY2026 = Jan 2026 - Dec 2026."
 
   - term: UBI
-    definition: "Unified Business Intelligence — the consolidated data platform serving Fluke and related OpCos."
+    definition: "Unified Business Intelligence — the consolidated data platform serving <ORG> and related OpCos."
 
   - term: VOC
     definition: "Voice of Customer — unified storage of customer feedback, survey data, call transcripts, and video interactions."

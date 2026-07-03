@@ -1,15 +1,15 @@
 ---
 name: presidents-letter
-description: "Monthly Fluke IT president's letter — format, file location, section ownership, and writing conventions for Analytics (UBI) updates"
+description: "Monthly <ORG> IT president's letter — format, file location, section ownership, and writing conventions for Analytics (UBI) updates"
 metadata: 
   node_type: memory
   type: project
   originSessionId: f671a56c-6a38-47dd-9bf6-fc7b222e1875
 ---
 
-Monthly update document prepared for Parker Burke and Azra Jabeen (cc Fluke L1 Team, Fortive CIO).
+Monthly update document prepared for Parker Burke and Azra Jabeen (cc <ORG> L1 Team, <ORG_PARENT> CIO).
 
-**File location:** `<USER_HOME>/OneDrive - <ORG>\Projects\UBI\Fluke IT Monthly Update - {Month}.docx`
+**File location:** `<USER_HOME>/OneDrive - <ORG>\Projects\UBI\<ORG> IT Monthly Update - {Month}.docx`
 
 **Section we own:** "Analytics (UBI)" under the "Analytics (UBI) and AI Updates" heading. We do NOT touch the AI sub-section or any other part of the document.
 
@@ -53,14 +53,14 @@ Monthly update document prepared for Parker Burke and Azra Jabeen (cc Fluke L1 T
 Section 9 now has both UBI and AI entries:
 
 *Analytics (UBI):*
-1. Fortive Corporate GL Reporting — Delivered. Self-service PBI replacing manual CSV export for 15 Fortive entities, 32-account mapping, ~4 hrs/month savings during close.
+1. <ORG_PARENT> Corporate GL Reporting — Delivered. Self-service PBI replacing manual CSV export for 15 <ORG_PARENT> entities, 32-account mapping, ~4 hrs/month savings during close.
 
 *AI (Taashi's entries — added under existing Sales Playbook, VoV, Account 360 entries):*
 1. AI Charter Deployment (level 0) — umbrella entry with 2 sub-bullets:
    - AI Office Hours Launched (level 1) — May 27 inaugural session, 7 agenda items, 6 presenters, monthly cadence May–Nov
    - Claude Enterprise License Rollout — Wave 1 (level 1) — 70 users across 11 orgs, SSO stabilization, enablement comms, migration guidance
 
-**Template file:** `<USER_HOME>/OneDrive - <ORG>\CIO Deliverables\President's Letter\Fluke IT Monthly Update - Template.docx`
+**Template file:** `<USER_HOME>/OneDrive - <ORG>\CIO Deliverables\President's Letter\<ORG> IT Monthly Update - Template.docx`
 **Backup:** same path with `.bak` extension
 **Helper scripts:** `update_template.py` (AI section), `update_ubi_section.py` (UBI section) — both in same folder
 

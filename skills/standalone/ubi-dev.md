@@ -1,12 +1,12 @@
 ---
 name: ubi-dev-skill
-description: "Use when working with the Fluke UBI (Unified Business Intelligence) platform repositories — AzureDataBricks, ADF, and Power BI UBI Curated Datasets. Covers creating new streams, modifying existing streams, troubleshooting code and data issues, Databricks notebook development, ADF pipeline configuration, Power BI semantic models, and Power BI refresh setup. Trigger on: 'UBI', 'Oracle EBS', 'Bronze Silver Gold', 'Medallion Architecture', 'Delta Lake', 'ADF pipeline', 'Databricks notebook', 'Gold layer', 'ADLS publish', 'Power BI refresh'."
+description: "Use when working with the <ORG> UBI (Unified Business Intelligence) platform repositories — AzureDataBricks, ADF, and Power BI UBI Curated Datasets. Covers creating new streams, modifying existing streams, troubleshooting code and data issues, Databricks notebook development, ADF pipeline configuration, Power BI semantic models, and Power BI refresh setup. Trigger on: 'UBI', 'Oracle EBS', 'Bronze Silver Gold', 'Medallion Architecture', 'Delta Lake', 'ADF pipeline', 'Databricks notebook', 'Gold layer', 'ADLS publish', 'Power BI refresh'."
 allowed-tools: Read, Grep, Glob, Bash, Edit, Write, Task
 ---
 
-# Fluke UBI Developer Skill
+# <ORG> UBI Developer Skill
 
-You are an expert developer on the Fluke UBI (Unified Business Intelligence) platform. This skill provides the context and conventions needed to work effectively across the three core repositories.
+You are an expert developer on the <ORG> UBI (Unified Business Intelligence) platform. This skill provides the context and conventions needed to work effectively across the three core repositories.
 
 ## Access Control Rules (MANDATORY)
 
@@ -35,7 +35,7 @@ What do you need?
 
 ### 1. AzureDataBricks (Compute Layer)
 - **Local path:** `<USER_HOME>/AzureDataBricks`
-- **Remote:** `https://dev.azure.com/flukeit/Fluke%20Data%20And%20Analytics/_git/AzureDataBricks`
+- **Remote:** `https://dev.azure.com/flukeit/<ORG>%20Data%20And%20Analytics/_git/AzureDataBricks`
 - **Branch:** `main`
 - **Purpose:** Databricks notebooks implementing the Medallion Architecture (Bronze → Silver → Gold)
 - **Languages:** Python (224 files), SQL (386 files), Scala (6 files)
@@ -43,14 +43,14 @@ What do you need?
 
 ### 2. ADF (Orchestration Layer)
 - **Local path:** `<USER_HOME>/ADF`
-- **Remote:** `https://dev.azure.com/flukeit/Fluke%20Data%20And%20Analytics/_git/ADF`
+- **Remote:** `https://dev.azure.com/flukeit/<ORG>%20Data%20And%20Analytics/_git/ADF`
 - **Branch:** `Main`
 - **Purpose:** Azure Data Factory pipelines, triggers, datasets, and linked services that orchestrate the Databricks notebooks
 - **Resources:** 91 pipelines, 113 datasets, 31 linked services, 102 triggers
 
 ### 3. Power BI UBI Curated Datasets (Reporting Layer)
 - **Local path:** `<USER_HOME>/Power BI UBI Curated Datasets`
-- **Remote:** `https://dev.azure.com/flukeit/Fluke%20Data%20And%20Analytics/_git/Power%20BI%20UBI%20Curated%20Datasets`
+- **Remote:** `https://dev.azure.com/flukeit/<ORG>%20Data%20And%20Analytics/_git/Power%20BI%20UBI%20Curated%20Datasets`
 - **Branch:** `main`
 - **Purpose:** Power BI semantic models (.pbix files, dataset definitions) that consume the Gold layer data for reporting and analytics
 - **Power BI Workspace:** `https://app.powerbi.com/groups/a59d3713-6f5a-470e-833e-15bbf60e8c97`
@@ -101,15 +101,15 @@ Post-Logging (status_control update)
 |----------|-----|---------|------|
 | **Databricks URL** | `https://adb-1943773873358740.0.azuredatabricks.net` | `https://adb-8730269443112808.8.azuredatabricks.net` | `https://adb-427149968829263.3.azuredatabricks.net` |
 | **ADLS Account(s)** | `flkubiadlsdev` | `flkubiadlsqa` | `flkubiadlsprd`, `flkubiadlsprdwest` |
-| **Power BI Workspace** | **FLK-BI-DEV** `6fec84af-8245-4738-b317-f29326432ae3` | **FLK-BI-QA** `7f77ddaf-78e7-471c-b104-9000eb5fd761` | **FLK-BI-PROD** `a59d3713-6f5a-470e-833e-15bbf60e8c97` |
-| **Power BI Workspace 2** | — | — | **FLK-BI-PROD2** `77022434-8325-4d68-9b96-02ea76d7319d` |
+| **Power BI Workspace** | **<ORG_ABBR>-BI-DEV** `6fec84af-8245-4738-b317-f29326432ae3` | **<ORG_ABBR>-BI-QA** `7f77ddaf-78e7-471c-b104-9000eb5fd761` | **<ORG_ABBR>-BI-PROD** `a59d3713-6f5a-470e-833e-15bbf60e8c97` |
+| **Power BI Workspace 2** | — | — | **<ORG_ABBR>-BI-PROD2** `77022434-8325-4d68-9b96-02ea76d7319d` |
 | **ADF Factory** | `flkubi-adf-dev` | — | `flkubi-adf-prd` |
 | **Azure SQL Server** | `etlmetadata.database.windows.net` | — | `etlmetadata-prod.database.windows.net` |
 | **Azure SQL Database** | `dev` | `qa` | `prd` |
 | **Key Vault Scope** | `FlukeDevKeyVault` | `flukeqaadbscope` | `flukeprdadbscope` |
-| **Azure Subscription** | `52a1d076-bbbf-422a-9bf7-95d61247be4b` (Fluke Unified BI) | Same | Same |
+| **Azure Subscription** | `52a1d076-bbbf-422a-9bf7-95d61247be4b` (<ORG> Unified BI) | Same | Same |
 | **PBI Tenant ID** | `0f634ac3-b39f-41a6-83ba-8f107876c692` | Same | Same |
-| **Oracle Server** | `flkonv-odb01-p.oci.fluke.com:1591` | Same | Same |
+| **Oracle Server** | `flkonv-odb01-p.oci.<ORG>.com:1591` | Same | Same |
 | **Oracle SID** | `flkp` | `flkp` | `flkp` |
 | **Oracle User** | `flkubi` | `flkubi` | `flkubi` |
 
@@ -706,15 +706,15 @@ test_rows = spark.sql(f"""
 
 ```python
 # BAD: Only happy-path test data
-test_data = [("US", "Fluke Corp", 100.0, "2024-01-15")]
+test_data = [("US", "<ORG> Corp", 100.0, "2024-01-15")]
 
 # GOOD: Include the edge cases that actually break pipelines
 test_data = [
-    ("US", "Fluke Corp", 100.0, "2024-01-15"),        # Happy path
+    ("US", "<ORG> Corp", 100.0, "2024-01-15"),        # Happy path
     ("US", None, 0.0, "2024-01-15"),                    # NULL company name
     ("", "Acme Inc", -50.0, "2024-01-15"),              # Empty country, negative amount
-    ("US", "Fluke\tCorp", 100.0, "1900-01-01"),         # Tab in name, epoch date
-    ("US", "  Fluke Corp  ", 999999999.99, None),       # Whitespace padding, NULL date
+    ("US", "<ORG>\tCorp", 100.0, "1900-01-01"),         # Tab in name, epoch date
+    ("US", "  <ORG> Corp  ", 999999999.99, None),       # Whitespace padding, NULL date
     ("CA", "Societe Generale", 100.0, "2024-12-31"),    # Unicode, year boundary
 ]
 ```
@@ -942,7 +942,7 @@ Skynet_SIT, Capex, PartShortage, UCP, SSD, Five9CallLog
 | Name | Type | Target |
 |------|------|--------|
 | `AzureDatabricksDev` | AzureDatabricks | Databricks workspace |
-| `flkubi_oci_oracle` | Oracle | `flkonv-odb01-p.oci.fluke.com:1591` (SID: flkp) |
+| `flkubi_oci_oracle` | Oracle | `flkonv-odb01-p.oci.<ORG>.com:1591` (SID: flkp) |
 | `AzureDataLakeStorage2` | ADLS Gen2 | `flkubiadlsdev.dfs.core.windows.net` |
 | `AzureSqlDatabaseLinked` | Azure SQL | `etlmetadata.database.windows.net` |
 | `Azure_Flkubi_KV` | Key Vault | Secrets management |
@@ -1345,7 +1345,7 @@ Or use the ADF pipeline `FlukeUBI_Reset_Stream` with parameter `Stream = '<Strea
 
 ### Branch Naming
 - Feature: `feature/<description>` or `Users/<username>/<description>`
-- Commit format: `Fluke | <Domain> | <TaskID> | <Description>`
+- Commit format: `<ORG> | <Domain> | <TaskID> | <Description>`
 
 ### Deployment
 - **Databricks:** PR to `main` → CI validates → notebooks deployed to workspace

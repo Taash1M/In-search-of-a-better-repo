@@ -10,7 +10,7 @@ All content pushed to the GitHub sync repo (Taash1M/In-search-of-a-better-repo) 
 
 **What caused the alert:**
 - The push contained files synced by `repo-sync.py` — hooks, memory files, skills, and MCP server code
-- These files contained hardcoded local Windows paths like `<USER_HOME>/OneDrive - <ORG>/Claude code/Obsidian/` (specifically in `obsidian-session-logger.py`), personal email addresses (`<USER>@<ORG_DOMAIN>`, `@fortive.com`, `@gmail.com`), Windows usernames (`<USER>`, `<ADMIN_USER>`), and org-specific identifiers (`OneDrive - <ORG>`)
+- These files contained hardcoded local Windows paths like `<USER_HOME>/OneDrive - <ORG>/Claude code/Obsidian/` (specifically in `obsidian-session-logger.py`), personal email addresses (`<USER>@<ORG_DOMAIN>`, `@<ORG_PARENT>.com`, `@gmail.com`), Windows usernames (`<USER>`, `<ADMIN_USER>`), and org-specific identifiers (`OneDrive - <ORG>`)
 - The `repo-sync.py` hook had redaction for API keys/secrets in `settings.json` but did NOT sanitize personal identifiers in any other file type — that was the gap
 - The corporate DLP scanner (runs on GitHub push, not on local drives) pattern-matched these identifiers and escalated
 
@@ -21,5 +21,5 @@ All content pushed to the GitHub sync repo (Taash1M/In-search-of-a-better-repo) 
 2. Before every `git push` to the sync repo, run a grep scan for the 9 PII patterns (usernames, local paths, email addresses, org identifiers) on the OneDrive clone
 3. If adding new file types or new watched directories to repo-sync.py, ensure they go through `_sanitize_content()`
 4. If adding new usernames, paths, or email addresses to the local environment, add corresponding patterns to `SANITIZE_RULES` in repo-sync.py
-5. Brand names (Fluke, Fortive) are public company names and acceptable in descriptive content — only personal/account-specific identifiers need sanitization
+5. Brand names (<ORG>, <ORG_PARENT>) are public company names and acceptable in descriptive content — only personal/account-specific identifiers need sanitization
 6. The `sync_to_repo.py` batch script also needs sanitization if used directly — currently repo-sync.py is the primary path

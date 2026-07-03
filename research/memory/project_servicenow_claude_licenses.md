@@ -9,7 +9,7 @@ metadata:
 
 ServiceNow "Claude Licenses" workstream. Artifacts folder: `<USER_HOME>/OneDrive - <ORG>\AI\Claude Licenses\ServiceNow for Claude\`. Data pulled READ-ONLY from ServiceNow Production — see [[reference_servicenow_api]] for creds/table-access facts.
 
-**Task 1 — Escalation (2026-06-24).** SCTASK1354578 → STRY0260370 (parent RITM0873057 / REQ0880466): request to change the AI-tool catalog form (approval routing L2→Eshwari→Fluke AI Team; add Claude Code/Codex/Amazon Q/Other to the dropdown). Opened 23 Apr 2026, closed-complete 11 May (story created, handed to demand-mgmt per KB0013371); 18 Jun follow-up unanswered. Built escalation as DOCX + Outlook-ready HTML (14-row timeline from ticket journals + 4 dated asks). `rm_story` not readable by API account so STRY status not pulled — flagged.
+**Task 1 — Escalation (2026-06-24).** SCTASK1354578 → STRY0260370 (parent RITM0873057 / REQ0880466): request to change the AI-tool catalog form (approval routing L2→Eshwari→<ORG> AI Team; add Claude Code/Codex/Amazon Q/Other to the dropdown). Opened 23 Apr 2026, closed-complete 11 May (story created, handed to demand-mgmt per KB0013371); 18 Jun follow-up unanswered. Built escalation as DOCX + Outlook-ready HTML (14-row timeline from ticket journals + 4 dated asks). `rm_story` not readable by API account so STRY status not pulled — flagged.
 
 **Task 2 — Consolidated Claude requester roster (refreshed 2026-06-30).** Source = catalog item "Data And Analytics Request" (sys_id `4f192d371bcbbd505e38ff3f034bcbe2`). Screened ALL 92 submissions (up from 73 on 24 Jun); 30 mention Claude (up from 11). 23 Open, 7 Closed-Incomplete. Output `Claude_Access_Requests_Consolidated.xlsx` (3 sheets: requests w/ dates+status, Approval Summary by L1, Notes). Script saved: `ServiceNow for Claude\pull_snow_claude_requests.py`.
 
@@ -23,7 +23,7 @@ ServiceNow "Claude Licenses" workstream. Artifacts folder: `<USER_HOME>/OneDrive
 - Moore, Steven (Commercial Americas): 1 open
 - Chillman, Alex (Engineering): 1 open
 
-**L1 definition (key):** L1 = requester's HIGHEST manager before the President, NOT the direct manager. Valid L1 list = row 1 of the "Eligible" sheet in `...\Claude Licenses\Archive\Enterprise Licenses\Claude Users Access - Fluke.xlsx` (Azra Jabeen/Finance, Neal Nowick/Ops, Jay Hack/eMaint, Steven Moore/Commercial, Alex Chillman/Eng, Katie Marquardt/HR, Sue-Ann Prentice/Mktg, Vineet Thuvara/Product, Kathryn Sweers/Legal, Parker Burke/CEO, Eshwari Mulpuru/IT). Resolved by walking `sys_user.manager` chain until hitting one. Gotcha: spreadsheet "Neal Norwick" = ServiceNow "Nowick, Neal" (alias both). Sansoucie chain tops at Olumide Soroye (President & CEO of a different OpCo) → no Fluke L1, needs manual call.
+**L1 definition (key):** L1 = requester's HIGHEST manager before the President, NOT the direct manager. Valid L1 list = row 1 of the "Eligible" sheet in `...\Claude Licenses\Archive\Enterprise Licenses\Claude Users Access - <ORG>.xlsx` (Azra Jabeen/Finance, Neal Nowick/Ops, Jay Hack/eMaint, Steven Moore/Commercial, Alex Chillman/Eng, Katie Marquardt/HR, Sue-Ann Prentice/Mktg, Vineet Thuvara/Product, Kathryn Sweers/Legal, Parker Burke/CEO, Eshwari Mulpuru/IT). Resolved by walking `sys_user.manager` chain until hitting one. Gotcha: spreadsheet "Neal Norwick" = ServiceNow "Nowick, Neal" (alias both). Sansoucie chain tops at Olumide Soroye (President & CEO of a different OpCo) → no <ORG> L1, needs manual call.
 
 **CRITICAL GOTCHA — sc_item_option variable values (discovered 2026-06-30):**
 - Variable values live in `sc_item_option.value` — NOT in `sc_item_option_mtom` directly.
@@ -39,7 +39,7 @@ ServiceNow "Claude Licenses" workstream. Artifacts folder: `<USER_HOME>/OneDrive
 
 **Task 3 — July 2026 net-new additions review (2026-06-30).**
 
-Cross-referenced all 23 open RITMs against the 77 June active users (from `June 2026/Fluke June 24 2026 spend Report.xlsx`). Result: **20 net-new users** pending provisioning (not yet in June spend), **2 already active** (open RITM but already provisioned: evan.nebeker, venkata.mahesh.nandam — no action needed).
+Cross-referenced all 23 open RITMs against the 77 June active users (from `June 2026/<ORG> June 24 2026 spend Report.xlsx`). Result: **20 net-new users** pending provisioning (not yet in June spend), **2 already active** (open RITM but already provisioned: evan.nebeker, venkata.mahesh.nandam — no action needed).
 
 **Neal Nowick email context (received 2026-06-30 05:18 AM):** Neal replied to the L1 nomination email declining to reconcile his list ("end of quarter, not going to hunt people down"). His direction: keep everyone currently active, follow up with individuals directly (re: Esven Carreno, Lloyd Hung who have no SNOW RITMs on file). Net result: no new nominations and no removals from Neal's org — only alex.wanamaker (RITM0889823, pre-existing approved RITM) advances.
 

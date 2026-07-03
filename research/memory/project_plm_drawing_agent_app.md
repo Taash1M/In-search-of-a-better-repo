@@ -104,7 +104,7 @@ System prompt includes an EFFICIENCY section that prevents GPT-5.5 from exhausti
 - Summarize what was found when tool budget is nearly exhausted
 - **Forced summarization**: when all rounds are used, a final API call **without tools** forces the model to summarize rather than returning a generic fallback message
 
-Before: "What voltage rating does the Fluke 179 have?" → 44.8s, 25 tool calls, generic fallback.
+Before: "What voltage rating does the <ORG> 179 have?" → 44.8s, 25 tool calls, generic fallback.
 After: same query → 9.2s, 2 tool calls, real cited answer.
 
 ### RBAC (2026-06-03)

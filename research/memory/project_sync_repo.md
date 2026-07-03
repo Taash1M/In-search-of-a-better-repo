@@ -101,4 +101,4 @@ rm /c/Users/<USER>/repo-sync-bundle.bundle
 | `<ADMIN_USER>` | `<ADMIN_USER>` |
 | `<USER>` | `<USER>` |
 
-**Verification**: Full scan confirmed zero remaining personal identifiers in all tracked files. Brand names (Fluke, Fortive) retained in descriptive content — these are public company names, not PII.
+**Verification**: Full scan confirmed zero remaining personal identifiers in all tracked files. Brand names (<ORG>, <ORG_PARENT>) retained in descriptive content — these are public company names, not PII.

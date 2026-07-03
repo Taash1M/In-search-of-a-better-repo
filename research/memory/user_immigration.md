@@ -1,6 +1,6 @@
 ---
 name: user-immigration
-description: "Taashi's immigration status — EB-2 AOS pending, H-1B with Fluke, Zimbabwe national, two U.S.-citizen children"
+description: "Taashi's immigration status — EB-2 AOS pending, H-1B with <ORG>, Zimbabwe national, two U.S.-citizen children"
 metadata: 
   node_type: memory
   type: user
@@ -14,7 +14,7 @@ metadata:
 - **Country of Birth/Citizenship**: Zimbabwe
 - **Current Status**: H-1B (valid through 10/10/2027)
 - **A-Number**: A-209492662
-- **Employer**: Fluke Corporation (Fortive subsidiary), since April 2, 2018
+- **Employer**: <ORG> Corporation (<ORG_PARENT> subsidiary), since April 2, 2018
 - **Green Card Category**: EB-2 (employment-based, second preference)
 - **Priority Date**: August 24, 2022
 - **I-485 Filed**: December 2024 (Receipt IOE0929138841)

@@ -337,7 +337,7 @@ These are the decisions that shaped the system. Before changing any of them, und
 | State format | JSON + MD checkpoints | JSON for machine-readable state passing; MD checkpoint summaries for human-readable audit trail |
 | Azure subscription | Hybrid (UBI subscription for data, AI subscription for services) | Organizational reality — UBI infra lives in one sub, AI services in another |
 | IaC tooling | Bicep AVM modules only (no raw ARM, no Terraform) | AVM gives consistent module interface, built-in RBAC, and stays current with Azure resource APIs |
-| CI/CD | Azure DevOps only (no GitHub Actions) | Fortive standard; GitHub Actions not approved for production workloads |
+| CI/CD | Azure DevOps only (no GitHub Actions) | <ORG_PARENT> standard; GitHub Actions not approved for production workloads |
 | Notebook deployment | Databricks Asset Bundles (DABs) | DABs are the Databricks-recommended deployment unit; replaces older DBFS-based approaches |
 | Deployment strategy | Blue/green as default | Safest for AI systems where rollback must be instant; canary available as option |
 | Cost estimation | Azure Retail Prices API (live) | Static price tables go stale within weeks; live API call at discover time gives accurate estimates |

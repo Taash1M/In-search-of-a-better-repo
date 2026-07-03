@@ -55,12 +55,12 @@ SANITIZE_RULES = [
     # Regular user paths
     (re.compile(r"C:[/\\]Users[/\\]<USER>[/\\]?"), "<USER_HOME>/"),
     # Company name in OneDrive paths
-    (re.compile(r"OneDrive\s*-\s*Fortive"), "OneDrive - <ORG>"),
+    (re.compile(r"OneDrive\s*-\s*<ORG_PARENT>"), "OneDrive - <ORG>"),
     # VM user paths
     (re.compile(r"<VM_HOME>/?"), "<VM_HOME>/"),
     # Email addresses (before standalone username)
-    (re.compile(r"taashi\.manyanga@fluke\.com"), "<USER>@<ORG_DOMAIN>"),
-    (re.compile(r"taashi\.manyanga@fortive\.com"), "<USER>@<ORG_DOMAIN>"),
+    (re.compile(r"taashi\.manyanga@<ORG>\.com"), "<USER>@<ORG_DOMAIN>"),
+    (re.compile(r"taashi\.manyanga@<ORG_PARENT>\.com"), "<USER>@<ORG_DOMAIN>"),
     (re.compile(r"taashi\.manyanga@gmail\.com"), "<USER>@<PERSONAL_DOMAIN>"),
     # Standalone usernames (word-boundary)
     (re.compile(r"\badm-<USER>\b"), "<ADMIN_USER>"),

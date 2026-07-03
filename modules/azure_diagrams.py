@@ -125,7 +125,7 @@ OUTPUT_PRESETS = {
     },
 }
 
-# Fluke/Fortive brand colors
+# <ORG>/<ORG_PARENT> brand colors
 COLORS = {
     "primary":       "#1E2761",
     "secondary":     "#4472C4",
@@ -1123,7 +1123,7 @@ def quick_landscape(
     Example:
         quick_landscape(
             subscriptions=[{
-                "name": "Fluke AI ML Technology",
+                "name": "<ORG> AI ML Technology",
                 "resource_groups": [{
                     "name": "rg-ai-bi-tool-dev",
                     "services": [

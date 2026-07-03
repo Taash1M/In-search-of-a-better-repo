@@ -10,7 +10,7 @@ originSessionId: 9accd003-3d3b-4227-b58a-870575044110
 ## Connection Status
 - **MCP Server**: Official Miro MCP at `https://mcp.miro.com/` (HTTP transport)
 - **Auth**: OAuth 2.1 — connected and authenticated as `<USER>@<ORG_DOMAIN>`
-- **Enabled by**: Laura Williams (laura.williams@fortive.com) on 2026-04-13 via Fortive admin (Miro Enterprise)
+- **Enabled by**: Laura Williams (laura.williams@<ORG_PARENT>.com) on 2026-04-13 via <ORG_PARENT> admin (Miro Enterprise)
 - **Config**: Already in Claude Code local MCP config (`claude mcp add --transport http miro https://mcp.miro.com`)
 - **Status check**: `claude mcp list` — should show `miro: https://mcp.miro.com (HTTP) - Connected`
 
@@ -99,6 +99,6 @@ originSessionId: 9accd003-3d3b-4227-b58a-870575044110
 - **Diagrams require "Apply to canvas"** — API-created diagrams land in draft state; user must click to commit.
 
 ## Planned: Custom Miro Skill
-- Wraps 13 MCP tools for Fluke-specific workflows
+- Wraps 13 MCP tools for <ORG>-specific workflows
 - Architecture diagrams, project boards, meeting notes, sprint planning
 - Skill file target: `~/.claude/commands/miro.md`

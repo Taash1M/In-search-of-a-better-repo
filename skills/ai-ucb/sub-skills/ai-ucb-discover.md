@@ -97,8 +97,8 @@ Ask these for ALL archetypes (present as a group, allow batch answers):
    Validation: lowercase, alphanumeric + hyphens, 3-24 chars, no leading/trailing hyphens
 
 2. Subscription model:
-   [a] Split (recommended) — Data engineering in UBI, AI resources in Fluke AI ML
-   [b] Single — Everything in Fluke AI ML Technology
+   [a] Split (recommended) — Data engineering in UBI, AI resources in <ORG> AI ML
+   [b] Single — Everything in <ORG> AI ML Technology
    [c] Override — Custom placement
 
 3. Primary region: eastus2 (default) or ___________
@@ -307,7 +307,7 @@ Create an ASCII architecture diagram tailored to the archetype and selected reso
 {Project Name} — {Archetype} Architecture
 
 ┌─────────────────────────────────────────────────────────────────┐
-│ Fluke AI ML Technology Subscription                             │
+│ <ORG> AI ML Technology Subscription                             │
 │                                                                 │
 │  ┌──────────┐  ┌───────────┐  ┌──────────┐  ┌──────────────┐ │
 │  │ AI       │  │ AI Search │  │ Cosmos   │  │ App Service  │ │
@@ -427,7 +427,7 @@ This is the FULL `ai-ucb-state.json` schema that Phase 0 produces. Downstream ph
         {
           "name": "sharepoint-product-docs",
           "type": "sharepoint",
-          "site": "fortive.sharepoint.com/sites/FlukeSales",
+          "site": "<ORG_PARENT>.sharepoint.com/sites/FlukeSales",
           "extraction_method": "adf-rest-oauth",
           "estimated_size": "5GB",
           "update_frequency": "daily"

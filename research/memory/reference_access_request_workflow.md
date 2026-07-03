@@ -27,7 +27,7 @@ The script searches Inbox for emails with "claude", "Claude Code", "CLI access",
 Compare scan results against the current DOCX table. Look for:
 - Direct requests ("I would like access", "requesting access", "please enable", "can you provide claude code to")
 - Forwarded requests from Eshwari Mulpuru (CC'd people = the requestees)
-- Teams chat notifications (from `system-notification@fortive.com`) containing access requests
+- Teams chat notifications (from `system-notification@<ORG_PARENT>.com`) containing access requests
 
 Filter OUT:
 - Setup guide thread replies (existing team members)
@@ -85,8 +85,8 @@ def sort_key(row):
 - **Pending**: Cornely(1), Schultz(2), Bridges(6), McNeal(1), Straka(1), Poondla(1), Schuster(1), Johnson(1), Pilla(1), Jack Henry(1), **Venkata Mahesh Nandam(1)** (new May 28), **Marco Rossi(1)** (new May 28)
 - **Routed to GitHub Copilot**: Andy Nguyen, Todd Tomlinson (+Sandeep)
 - **Undocumented SG additions**: Joe Seefried, Gavin Smith, Kathleen Wang (all node-3, no request on file)
-- **Enterprise rollout**: Fortive signed enterprise Claude contract with Anthropic. Wave 1 (Fluke, FHS, Fortive corporate) live May 26, Wave 2 (Gordian, ISC, ServiceChannel, Censis) May 27, Accruent+Provation May 28
-- **Enterprise workbook**: `Enterprise Licenses/Claude Users Access - Fluke.xlsx` — 70 Wave 1 users across 11 orgs (Eligible/Blocked/Wave 1 tabs)
+- **Enterprise rollout**: <ORG_PARENT> signed enterprise Claude contract with Anthropic. Wave 1 (<ORG>, FHS, <ORG_PARENT> corporate) live May 26, Wave 2 (Gordian, ISC, ServiceChannel, Censis) May 27, Accruent+Provation May 28
+- **Enterprise workbook**: `Enterprise Licenses/Claude Users Access - <ORG>.xlsx` — 70 Wave 1 users across 11 orgs (Eligible/Blocked/Wave 1 tabs)
 - **Enablement notice**: `Enterprise Licenses/Claude Code enablement notice.docx` — consultant-grade 2-pager with FAQ for C-Suite/Directors
 - **Also check**: .msg files and .docx files in the requests folder for non-email submissions
 - **Eshwari directive (Apr 22)**: All CLI requests should be routed through her for approval

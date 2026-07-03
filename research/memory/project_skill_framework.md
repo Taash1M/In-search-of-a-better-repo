@@ -13,9 +13,9 @@ Evaluated 19 skills from `https://github.com/mattpocock/skills.git`. Security: P
 **New skills installed:**
 | Skill | Source | Key Feature |
 |---|---|---|
-| `qa-session.md` | mattpocock/qa | Interactive bug filing with background codebase exploration, Fluke product labels |
+| `qa-session.md` | mattpocock/qa | Interactive bug filing with background codebase exploration, <ORG> product labels |
 | `github-triage.md` | mattpocock/github-triage | Label-based state machine for issue triage, HITL/AFK classification |
-| `ubiquitous-language.md` | mattpocock/ubiquitous-language | DDD glossary extraction, pre-seeded with 10 Fluke domain terms |
+| `ubiquitous-language.md` | mattpocock/ubiquitous-language | DDD glossary extraction, pre-seeded with 10 <ORG> domain terms |
 
 **Patterns extracted and implemented:**
 | Pattern | Source Skill | Applied To | Description |
@@ -124,7 +124,7 @@ Source: Review of github.com/tobihagemann/turbo (64 markdown skill files). Six p
 
 ### 2026-03-12 (Initial)
 - Report: `<USER_HOME>/Claude\deliverebles\skill-judge-evaluation-report.md`
-- Top: powerbi-desktop (A, 108), ubi-dev (B, 102), fluke-ai (B, 97)
+- Top: powerbi-desktop (A, 108), ubi-dev (B, 102), <ORG>-ai (B, 97)
 - Need trimming: excel-create (D, 83 — 65% redundant), powerpoint-create (D, 75 — 70% redundant)
 
 ### 2026-04-16 (Re-Assessment — 4 skills)

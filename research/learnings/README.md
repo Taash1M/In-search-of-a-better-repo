@@ -12,7 +12,7 @@ Patterns, anti-patterns, and gotchas extracted from 3+ months of Claude Code usa
 
 **x-api-key header.** When calling Foundry endpoints directly (not via SDK), the auth header is `x-api-key`, not `Authorization: Bearer`. The SDK handles this transparently, but raw HTTP callers must set it explicitly.
 
-**RBAC via REST API.** `az role assignment create` fails silently on the Fluke AI ML Technology subscription — it returns success but the assignment does not persist. Always use the Azure REST API PUT endpoint (`/providers/Microsoft.Authorization/roleAssignments/{guid}`) with a fresh UUID for the assignment name. Verify with `az role assignment list` after.
+**RBAC via REST API.** `az role assignment create` fails silently on the <ORG> AI ML Technology subscription — it returns success but the assignment does not persist. Always use the Azure REST API PUT endpoint (`/providers/Microsoft.Authorization/roleAssignments/{guid}`) with a fresh UUID for the assignment name. Verify with `az role assignment list` after.
 
 ---
 

@@ -9,7 +9,7 @@ metadata:
 
 ServiceNow Production REST API (read-only service account, used for [[project_servicenow_claude_licenses]]).
 
-- **Base URL:** `https://fortive.service-now.com` | Table API: `/api/now/table/<table>` | Stats: `/api/now/stats/<table>?sysparm_count=true`
+- **Base URL:** `https://<ORG_PARENT>.service-now.com` | Table API: `/api/now/table/<table>` | Stats: `/api/now/stats/<table>?sysparm_count=true`
 - **Creds file (plaintext, user-maintained):** `<USER_HOME>/OneDrive - <ORG>\AI\Onboarding Tools\ServiceNow Credetials prod.txt` — user `flkbiapiuser` (BI API account). Dev instance: `https://fortivedev.service-now.com` (<USER> SSO).
 - **Auth:** HTTP Basic. The password contains `^|` chars — single-quote it in bash: `curl -u 'flkbiapiuser:<pw>' ...`. Account is a **BI/reporting account** — broad read on task/RITM/sys_user but **ACL-scoped elsewhere**.
 

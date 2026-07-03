@@ -185,13 +185,13 @@ tables:
         is_key: true
       - name: OperatingUnitName
         data_type: STRING
-        description: "Operating unit name (e.g., Fluke Industrial US)"
+        description: "Operating unit name (e.g., <ORG> Industrial US)"
       - name: LegalEntity
         data_type: STRING
         description: "Legal entity name"
       - name: BusinessUnit
         data_type: STRING
-        description: "Business unit (Fluke, Fluke Cal, Fluke Networks)"
+        description: "Business unit (<ORG>, <ORG> Cal, <ORG> Networks)"
 
   - name: DimSalesRep
     description: "Sales representative dimension."

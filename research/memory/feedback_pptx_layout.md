@@ -34,7 +34,7 @@ Never place shapes or images that overflow slide boundaries. Every visual must f
   - `draw_dotted_segment()` must use NO fill (`seg.fill.background()`) + border-only `a:ln` with `prstDash val="dot"` for thin dotted connectors — never solid fill + dotted border (looks thick)
   - Horizontal connector from bubble edge to agent's (x, y) position in diagram
 - **Veritas clean header/footer pattern (proven 2026-04-21):**
-  - `v_header()`: 34pt bold black title at (0.60, 0.30), "FLUKE" watermark 34pt light gray at right, 14pt gray subtitle, thin blue accent line at y=1.28
+  - `v_header()`: 34pt bold black title at (0.60, 0.30), "<ORG>" watermark 34pt light gray at right, 14pt gray subtitle, thin blue accent line at y=1.28
   - `v_footer()`: thin LGRAY line at y=7.12, 8pt silver centered text at y=7.16
   - Content safe zone: y=1.42 to y=7.05, x=0.60 to x=12.73
   - `add_dashed_rect()`: use XML `a:prstDash val="dash"` on the `a:ln` element (more reliable than `MSO_LINE_DASH_STYLE` enum import)
@@ -65,4 +65,4 @@ Never place shapes or images that overflow slide boundaries. Every visual must f
   - Use `add_picture_fit()` or `fit_image()` with dashed LGRAY border around image area
   - Run `validate.py` on ALL versions: data points, exhibits, speaker notes, bounds, font caps, cross-version note consistency
   - All versions share identical speaker notes and analytical content
-  - **3-version tier proven on Fluke AI Office Hours**: V1 Veritas (text), V2 Illustrated (8 key slides), V3 Full (all 14 slides with 17 images)
+  - **3-version tier proven on <ORG> AI Office Hours**: V1 Veritas (text), V2 Illustrated (8 key slides), V3 Full (all 14 slides with 17 images)

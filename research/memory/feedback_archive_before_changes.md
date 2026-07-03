@@ -1,6 +1,6 @@
 ---
 name: feedback-archive-before-changes
-description: Always archive/backup current codebase before making changes; maintain code in Fortive GitHub repo
+description: Always archive/backup current codebase before making changes; maintain code in <ORG_PARENT> GitHub repo
 metadata: 
   node_type: memory
   type: feedback
@@ -17,7 +17,7 @@ Always create a timestamped archive backup of affected code files BEFORE making 
 3. Then proceed with code changes
 4. Commit changes to the GitHub repo with descriptive message
 
-**GitHub repo for ETL code:** `Taashi-Manyanga_fortive/Claude-Code-POC-ETL` (private, Fortive EMU)
+**GitHub repo for ETL code:** `Taashi-Manyanga_fortive/Claude-Code-POC-ETL` (private, <ORG_PARENT> EMU)
 - Repo path: `<USER_HOME>/OneDrive - <ORG>\AI\Claude code deployment\claude-code-poc-etl`
 - Push with `gh auth setup-git` first (needed for EMU auth via keyring)
 - .gitignore excludes: credentials.txt, etl_env.sh, *.env, litellm configs, *.docx/pptx, node_modules, archive/

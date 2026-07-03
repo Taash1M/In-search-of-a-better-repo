@@ -1,6 +1,6 @@
 ---
 name: ai-office-hours
-description: "Fluke AI Office Hours monthly series (May-Nov 2026), 3 PPTX versions (Veritas/Illustrated/Full Illustrated), 17 GPT Image 2 panels, Fluke Template + Aptos fonts"
+description: "<ORG> AI Office Hours monthly series (May-Nov 2026), 3 PPTX versions (Veritas/Illustrated/Full Illustrated), 17 GPT Image 2 panels, <ORG> Template + Aptos fonts"
 metadata: 
   node_type: memory
   type: project
@@ -9,23 +9,23 @@ metadata:
 
 ## Overview
 
-Fluke AI Office Hours — monthly internal sessions for AI enablement, guidance, and community. First session May 27, 2026. 3rd Tuesday of every month through November 2026, 9:00-10:00 AM PST.
+<ORG> AI Office Hours — monthly internal sessions for AI enablement, guidance, and community. First session May 27, 2026. 3rd Tuesday of every month through November 2026, 9:00-10:00 AM PST.
 
 **Why:** Employees face 6 friction points with AI adoption (The Spark, Tool Overload, Request Chaos, The Black Hole, Zero Visibility, Governance Gap). Office Hours provide structured resolution for each through onboarding, role-based guidance, standard processes, visible pipelines, monthly metrics, and audit-ready governance.
 
-**How to apply:** Deck content is reusable for future sessions. Update schedule dates and agenda items per session. The Fluke Template + Veritas Clean design system is the standard for all Fluke AI presentations going forward.
+**How to apply:** Deck content is reusable for future sessions. Update schedule dates and agenda items per session. The <ORG> Template + Veritas Clean design system is the standard for all <ORG> AI presentations going forward.
 
 ## June 17 (Session 2) Meeting Minutes — DONE (2026-06-22)
 
 Built the June 17 minutes the SAME way as May 27 (email-body DOCX + full minutes DOCX→PDF) but with an
-**executive / less-loud** treatment per user: SAME Fluke palette (navy/blue/green/gold) used SPARINGLY —
+**executive / less-loud** treatment per user: SAME <ORG> palette (navy/blue/green/gold) used SPARINGLY —
 KPI cards unified to light bg + navy value + one thin blue rule (was 6 saturated fills), highlight cards
 white with thin left navy rule (was filled gray), hairline table grid, no hero image, more whitespace,
 green/gold only tiny accents. Generator: `17-Jun-2026/Meeting Minutes/generate_meeting_docs.py`. Source =
-the full session TRANSCRIPT `17-Jun-2026/Fluke AI Office Hours (Monthly).docx` + `Agenda_June_17.pptx`.
+the full session TRANSCRIPT `17-Jun-2026/<ORG> AI Office Hours (Monthly).docx` + `Agenda_June_17.pptx`.
 Content (transcript-accurate, no May leakage): Amazon Quick (agentic-AI+BI on QuickSight) + Kiro
 spec-driven dev (Hassnain Rizvi/Yang Chen/Brian Dooley), Julian Knabe Claude-in-Excel (M&A model ~10min,
-churn, gray-market) + daily workflow, 4 approved tools + Fortive monthly Claude-license window bottleneck,
+churn, gray-market) + daily workflow, 4 approved tools + <ORG_PARENT> monthly Claude-license window bottleneck,
 eMaint deferred, next session July. Outputs: `Fluke_AI_Office_Hours_June_Email_Body.docx` +
 `_June_Full_Minutes.docx` + `.pdf`. OPEN: confirm July session date; KPIs are transcript-derived (no chat-
 export metrics like May). docx2pdf (Word COM) used for PDF.
@@ -33,7 +33,7 @@ export metrics like May). docx2pdf (Word COM) used for PDF.
 ## Key Files
 
 - **Project folder**: `<USER_HOME>/OneDrive - <ORG>\AI\Office Hours\27-May-2026\`
-- **Fluke Template**: `<USER_HOME>/OneDrive - <ORG>\AI\Office Hours\Fluke_Template.pptx` (10 layouts, Aptos fonts)
+- **<ORG> Template**: `<USER_HOME>/OneDrive - <ORG>\AI\Office Hours\Fluke_Template.pptx` (10 layouts, Aptos fonts)
 - **Original deck**: `<USER_HOME>/OneDrive - <ORG>\AI\Office Hours\Fluke_AI_Office_Hours_27_May.pptx` (5 slides, pre-restyle)
 
 ## 3 PPTX Versions (14 slides each, all QA-passed 2026-05-27)
@@ -55,14 +55,14 @@ export metrics like May). docx2pdf (Word COM) used for PDF.
 | `generate_images_v3.py` | 7 additional illustrations for V3 |
 | `validate.py` | 3-stage QA (content, layout, cross-version) |
 
-## Design System (Fluke Template + Veritas Clean)
+## Design System (<ORG> Template + Veritas Clean)
 
 - **Base template**: `Fluke_Template.pptx` (Blank layout idx 9)
 - **Fonts**: Aptos (body), Aptos Display (titles) — NOT Calibri
 - **Palette**: NAVY `#0F172A`, BLUE `#0066CC`, GREEN `#5BB12F`, GOLD `#EEB000`, Card fill `#F0F2F5`, Light gray `#E2E8F0`
-- **Veritas pattern**: White bg, `v_header()` (20pt title, 12pt subtitle, blue accent line at y=1.15, "FLUKE" watermark right), `v_footer()` (gray line at y=7.05, 8pt text)
+- **Veritas pattern**: White bg, `v_header()` (20pt title, 12pt subtitle, blue accent line at y=1.15, "<ORG>" watermark right), `v_footer()` (gray line at y=7.05, 8pt text)
 - **Safe zone**: x=0.60 to x=12.73, y=0.00 to y=7.30
-- **Reference script**: `<USER_HOME>/OneDrive - <ORG>\AI\Plan\build_next_steps_v3.py` (Veritas on Fluke template)
+- **Reference script**: `<USER_HOME>/OneDrive - <ORG>\AI\Plan\build_next_steps_v3.py` (Veritas on <ORG> template)
 - **OneDrive lock workaround**: Copy template to `template_base.pptx` before python-pptx opens it
 
 ## 14-Slide Structure
@@ -77,7 +77,7 @@ export metrics like May). docx2pdf (Word COM) used for PDF.
 | 6 | The Solution (6 pain→fix) | solution.png (right panel) | same |
 | 7 | Section: What to Expect | No | section_expect.png |
 | 8 | Intro & Session Details | No (schedule on right) | calendar.png (bottom) |
-| 9 | AI at Fluke (TechMentor) | ai_at_fluke.png (right panel) | same |
+| 9 | AI at <ORG> (TechMentor) | ai_at_fluke.png (right panel) | same |
 | 10 | Where We Are Today | metrics.png (right panel) | same |
 | 11 | Monthly Format (4 pillars) | No | monthly_pillars.png |
 | 12 | Next Steps & Resources | No | next_steps_path.png |
@@ -100,7 +100,7 @@ May 27 (Session 1), Jun 17, Jul 15, Aug 19, Sep 16, Oct 21, Nov 18
 ## Agenda (May 27 Session)
 
 1. Intro & Session Details — Taashi Manyanga
-2. AI at Fluke Showcase — Richard Feng (TechMentor video)
+2. AI at <ORG> Showcase — Richard Feng (TechMentor video)
 3. Business AI Projects — Ryan Bryson & Evan Nebeker
 4. IT AI / GitHub Copilot — Kevin Davison
 5. Microsoft AI Presentation — Microsoft Team
@@ -125,7 +125,7 @@ All 3 versions passed 3-stage validation:
 ## June 17 Session (Session 2) — 2026-06-16
 
 **Folder:** `<USER_HOME>/OneDrive - <ORG>\AI\Office Hours\17-Jun-2026\`
-**File:** `Agenda_June_17.pptx` — single agenda slide built from `template_base.pptx` (Fluke CIO deck template)
+**File:** `Agenda_June_17.pptx` — single agenda slide built from `template_base.pptx` (<ORG> CIO deck template)
 **Design:** Gold circles (#FFC000), Aptos Slab SemiBold numbers (24pt), Aptos SemiBold titles (20pt), gold separator lines (#EEB000), background image from template
 
 ### Agenda (6 items)

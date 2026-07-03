@@ -95,7 +95,7 @@ Auto-connects stages in order if `connections` is not provided.
 ```python
 quick_landscape(
     subscriptions=[{
-        "name": "Fluke AI ML Technology",
+        "name": "<ORG> AI ML Technology",
         "resource_groups": [{
             "name": "rg-ai-bi-tool-dev",
             "services": [
@@ -366,7 +366,7 @@ When no explicit `color` is set on a node, the module auto-assigns a category co
 
 ---
 
-## Fluke Brand Colors
+## <ORG> Brand Colors
 
 Available via `COLORS` dict:
 

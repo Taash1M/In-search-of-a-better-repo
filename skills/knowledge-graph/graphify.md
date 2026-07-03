@@ -354,7 +354,7 @@ Find best-matching node → show label, source, type, degree, all connections �
 
 ---
 
-## Integration Points (Fortive-Specific)
+## Integration Points (<ORG_PARENT>-Specific)
 
 ### UBI Platform (AzureDataBricks repo — 646 files)
 Run on specific stream folders (e.g., `FlukeCoreGrowth/Mart/Refresh/`) not the repo root. The repo has 386 SQL + 224 Python files — too many for a single graph. Scope by stream.

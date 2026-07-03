@@ -373,7 +373,7 @@ def process_with_tracking(file_path, pipeline, llm):
 
 ## Engineering Drawing Extraction — Detailed Schema
 
-For Fluke/Fortive engineering drawings (the Test Drawings folder), use this extraction pipeline:
+For <ORG>/<ORG_PARENT> engineering drawings (the Test Drawings folder), use this extraction pipeline:
 
 ```python
 from contextgem import (
@@ -426,7 +426,7 @@ drawing_pipeline = ExtractionPipeline(
 
 ---
 
-## Azure AI Foundry LLM Config (Fortive)
+## Azure AI Foundry LLM Config (<ORG_PARENT>)
 
 ```python
 # For ContextGem

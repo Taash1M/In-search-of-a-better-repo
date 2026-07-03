@@ -6,11 +6,11 @@ allowed-tools: Read, Grep, Glob, Bash, Edit, Write, Agent, AskUserQuestion
 
 # QA Session
 
-**Source:** mattpocock/skills `qa` — adapted for Fluke AI team with product labels and Azure context.
+**Source:** mattpocock/skills `qa` — adapted for <ORG> AI team with product labels and Azure context.
 
 Run an interactive QA session. The user describes problems they're encountering. You clarify, explore the codebase for context, and file GitHub issues that are durable, user-focused, and use the project's domain language.
 
-## Fluke Product Labels
+## <ORG> Product Labels
 
 When filing issues, apply the appropriate product label:
 

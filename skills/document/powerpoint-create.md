@@ -738,7 +738,7 @@ Agent(subagent_type=Explore, run_in_background=True):
 | **Berry & Cream** | `6D2E46` | `A26769` | `ECE2D0` | Luxury, fashion, premium |
 | **Sage Calm** | `84B59F` | `69A297` | `50808E` | Calm, nature, mindfulness |
 | **Cherry Bold** | `990011` | `FCF6F5` | `2F3C7E` | Bold statements, alerts, urgency |
-| **Fortive Corporate** | `005EB8` | `F4F4F4` | `00A3E0` | Fortive brand presentations |
+| **<ORG_PARENT> Corporate** | `005EB8` | `F4F4F4` | `00A3E0` | <ORG_PARENT> brand presentations |
 
 **Dark Mode Palettes (2026 trend — premium tech feel):**
 

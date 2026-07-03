@@ -584,7 +584,7 @@ ARTIFACT INVENTORY
   Total Files: {total_file_count}
 
 REPOSITORY
-  Repo: dev.azure.com/flukeit/Fluke Data And Analytics/_git/{repo}
+  Repo: dev.azure.com/flukeit/<ORG> Data And Analytics/_git/{repo}
   Branch: Users/{username}/{app}
   Status: {ready to push / already pushed}
 

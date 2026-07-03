@@ -1,6 +1,6 @@
 ---
 name: Daily Report (Weekly Close-Out)
-description: Weekly project status reports for 8 active projects. DOCX close-out + Excel carry-forward format. Fluke-branded. Executive Summary redesigned for C-suite.
+description: Weekly project status reports for 8 active projects. DOCX close-out + Excel carry-forward format. <ORG>-branded. Executive Summary redesigned for C-suite.
 type: project
 ---
 
@@ -14,7 +14,7 @@ type: project
 - **March impact deliverables**: `Updates/Data and AI Updates_March impact deliverables.xlsx` — user-refined version of the C-suite Executive Summary
 
 ## Generator Scripts
-- `generate_daily_update_20260327.py` — DOCX generator (python-docx, Fluke branding)
+- `generate_daily_update_20260327.py` — DOCX generator (python-docx, <ORG> branding)
 - `generate_daily_excel_20260329.py` — Excel generator (openpyxl, carry-forward format)
 - `build_exec_summary.py` — Executive Summary redesign script (openpyxl)
 
@@ -36,6 +36,6 @@ type: project
 8. AI Acceleration
 
 ## Format
-- **DOCX**: Landscape, Calibri, Fluke Yellow (#FFC600), 3 sections (Executive Summary, Detailed Status, Key Next Steps)
+- **DOCX**: Landscape, Calibri, <ORG> Yellow (#FFC600), 3 sections (Executive Summary, Detailed Status, Key Next Steps)
 - **Excel**: 4 sheets, status badge coloring (Green/Blue/Amber/Red), dropdown validation for Status column, carry-forward design for weekly updates
 - **Executive Summary**: 7-column impact table, alternating row shading, landscape print-ready

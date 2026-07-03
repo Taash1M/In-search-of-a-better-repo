@@ -96,7 +96,7 @@ If the user wants to change archetypes after Phase 0:
 
 **Description:** Answers questions by retrieving relevant chunks from a document corpus and generating responses grounded in source material.
 
-**Fluke Examples:** Pulse Sales (Account 360), TechMentor
+**<ORG> Examples:** Pulse Sales (Account 360), TechMentor
 
 ### Required Azure Resources
 
@@ -174,7 +174,7 @@ AI Application: LLM + Retrieval + Content Safety → Frontend
 
 **Description:** Multi-turn dialogue agent with tool calling capabilities. Can access APIs, databases, and external services to complete tasks on behalf of users.
 
-**Fluke Examples:** Pulse Unified UI (multi-tool agent)
+**<ORG> Examples:** Pulse Unified UI (multi-tool agent)
 
 ### Required Azure Resources
 
@@ -227,7 +227,7 @@ User Message → Agent Framework (Foundry Agent Service)
 
 **Description:** Extracts structured data from unstructured documents — invoices, forms, receipts, contracts. Uses the `/doc-intelligence` skill with 3-tier architecture: Tier 1 (layout-aware parsing), Tier 2 (declarative extraction), Tier 3 (Azure AI Document Intelligence).
 
-**Fluke Examples:** Invoice processing (potential)
+**<ORG> Examples:** Invoice processing (potential)
 
 ### Required Azure Resources
 
@@ -303,7 +303,7 @@ AI Search Index + Cosmos DB → Application
 
 **Description:** Traditional machine learning — classification, regression, forecasting, clustering, anomaly detection. Uses Databricks MLflow + Azure ML for training, tracking, and deployment.
 
-**Fluke Examples:** Demand forecasting (potential), predictive maintenance (potential)
+**<ORG> Examples:** Demand forecasting (potential), predictive maintenance (potential)
 
 ### Required Azure Resources
 
@@ -366,7 +366,7 @@ Inference Endpoint (Azure ML / Function App) → Application
 
 **Description:** Builds entity-relationship graphs for multi-hop reasoning, entity resolution, and GraphRAG. Combines graph databases with LLM-powered question answering.
 
-**Fluke Examples:** Product knowledge graph (potential), Customer MDM graph
+**<ORG> Examples:** Product knowledge graph (potential), Customer MDM graph
 
 ### Required Azure Resources
 
@@ -432,7 +432,7 @@ GraphRAG: Graph traversal + vector retrieval + LLM → Application
 
 **Description:** Extracts signals, sentiment, entities, and themes from voice recordings, call transcripts, survey responses, and text feedback.
 
-**Fluke Examples:** Voice to Value (VoC F9)
+**<ORG> Examples:** Voice to Value (VoC F9)
 
 ### Required Azure Resources
 
@@ -496,7 +496,7 @@ Dashboard / API → Application
 
 **Description:** Multiple specialized AI agents coordinated by an orchestrator agent. Each sub-agent has its own tools, data access, and expertise domain. Built on LangGraph state machines with circular LLM fallback, LLM-as-Judge evaluation, and Azure-native observability. See `/agentic-deploy` skill for full runtime patterns.
 
-**Fluke Examples:** Sales Playbook (potential)
+**<ORG> Examples:** Sales Playbook (potential)
 
 ### Required Azure Resources
 
@@ -577,7 +577,7 @@ User Request → FastAPI + Entra ID Auth + Rate Limiting
 
 **Description:** Image and video analysis — classification, object detection, defect inspection, OCR on visual content.
 
-**Fluke Examples:** Quality inspection (potential)
+**<ORG> Examples:** Quality inspection (potential)
 
 ### Required Azure Resources
 
@@ -637,7 +637,7 @@ Inference API / Dashboard → Application
 
 **Description:** Specialized variant for extracting structured data from engineering drawings, schematics, datasheets, and other technical PDFs using LLM vision capabilities rather than traditional OCR. Distinct from Doc Intelligence (which handles forms and contracts) — Document Vision targets visual-heavy documents where layout understanding and icon/symbol recognition are critical.
 
-**Fluke Examples:** PLM engineering drawing extraction (validated: 94% title block accuracy, 80% BOM accuracy across 18 drawings), product datasheets, assembly schematics, test equipment calibration certificates.
+**<ORG> Examples:** PLM engineering drawing extraction (validated: 94% title block accuracy, 80% BOM accuracy across 18 drawings), product datasheets, assembly schematics, test equipment calibration certificates.
 
 **When to use Document Vision vs Doc Intelligence:**
 
@@ -746,7 +746,7 @@ Every archetype provisions these resources as a minimum:
 
 ### Subscription Placement Rules
 
-1. **AI subscription (Fluke AI ML Technology):** AI Services, AI Search, Cosmos DB, App Service, Function App, Logic App, Key Vault, App Insights, Front Door, Content Safety, AI Foundry, Azure ML, Container Registry
+1. **AI subscription (<ORG> AI ML Technology):** AI Services, AI Search, Cosmos DB, App Service, Function App, Logic App, Key Vault, App Insights, Front Door, Content Safety, AI Foundry, Azure ML, Container Registry
 2. **UBI subscription (Unified BI):** Databricks, ADF, ADLS Gen2, Fabric, Azure SQL (status control metadata)
 3. **Single-subscription model:** Everything goes to AI subscription; Databricks/ADF created there instead
 4. **Override:** User specifies custom placement per resource

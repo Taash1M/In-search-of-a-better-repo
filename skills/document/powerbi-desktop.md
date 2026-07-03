@@ -931,15 +931,15 @@ GET https://api.powerbi.com/v1.0/myorg/groups/{workspaceId}/reports/{reportId}/E
 ```
 **Note:** This ONLY works for import mode reports. Live connection reports return error `ExportPBIX_ModelessWorkbookNotFound`.
 
-## Environment Notes (Fluke UBI)
+## Environment Notes (<ORG> UBI)
 
 ### Power BI Workspaces
 | Environment | Workspace ID |
 |-------------|-------------|
-| Dev (FLK-BI-DEV) | `6fec84af-8245-4738-b317-f29326432ae3` |
-| QA (FLK-BI-QA) | `7f77ddaf-78e7-471c-b104-9000eb5fd761` |
-| Prod (FLK-BI-PROD) | `a59d3713-6f5a-470e-833e-15bbf60e8c97` |
-| Prod2 (FLK-BI-PROD2) | `77022434-8325-4d68-9b96-02ea76d7319d` |
+| Dev (<ORG_ABBR>-BI-DEV) | `6fec84af-8245-4738-b317-f29326432ae3` |
+| QA (<ORG_ABBR>-BI-QA) | `7f77ddaf-78e7-471c-b104-9000eb5fd761` |
+| Prod (<ORG_ABBR>-BI-PROD) | `a59d3713-6f5a-470e-833e-15bbf60e8c97` |
+| Prod2 (<ORG_ABBR>-BI-PROD2) | `77022434-8325-4d68-9b96-02ea76d7319d` |
 
 ### Auth Token for Power BI API
 ```bash

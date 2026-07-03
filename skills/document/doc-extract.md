@@ -552,7 +552,7 @@ df.to_excel("extraction_results.xlsx", index=False)
 ## LLM Provider Configuration
 
 ```python
-# Azure AI Foundry (Fortive)
+# Azure AI Foundry (<ORG_PARENT>)
 llm = DocumentLLM(
     model="anthropic/claude-sonnet-4-20250514",
     api_key=os.environ["ANTHROPIC_FOUNDRY_API_KEY"],

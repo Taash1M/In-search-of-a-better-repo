@@ -9,7 +9,7 @@ metadata:
 
 ## UBI Claude Enablement Resource
 
-**Why:** Claude and GPT models provisioned in the UBI subscription (`52a1d076`) for the BI/data engineering team, separate from the Fluke AI ML Technology subscription's Team AI Enablement resource.
+**Why:** Claude and GPT models provisioned in the UBI subscription (`52a1d076`) for the BI/data engineering team, separate from the <ORG> AI ML Technology subscription's Team AI Enablement resource.
 
 **How to apply:** When anyone on the UBI team needs Claude/AI model access, check this resource's RBAC first.
 
@@ -17,7 +17,7 @@ metadata:
 - **Resource**: `flkubi-claude-enablemen-resource` (AIServices, S0)
 - **Location**: East US 2
 - **Resource Group**: `flkubi-prd-rg-001`
-- **Subscription**: Fluke Unified BI (`52a1d076-bbbf-422a-9bf7-95d61247be4b`)
+- **Subscription**: <ORG> Unified BI (`52a1d076-bbbf-422a-9bf7-95d61247be4b`)
 - **Endpoint**: `https://flkubi-claude-enablemen-resource.services.ai.azure.com/anthropic/v1/messages`
 - **Cognitive Services endpoint**: `https://flkubi-claude-enablemen-resource.cognitiveservices.azure.com/`
 - **AI Foundry Project**: `flkubi-claude-enablement`

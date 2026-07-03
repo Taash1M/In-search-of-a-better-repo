@@ -20,7 +20,7 @@ MCP server exposing UBI Power BI semantic models to Claude Code. Users connect a
 - **Plan file**: `<ADMIN_HOME>/.claude\plans\generic-hopping-coral.md`
 - **Created**: 2026-04-10
 - **Status**: Phase 1 foundation + docs complete — 6 tools, 28 tests, 2 DOCX deliverables with architecture diagrams
-- **Metadata integrated into AI BI Tool** (2026-04-11): registry.py, loader.py, YAML data files copied + adapted into `fluke-ai-bi-tool/backend/app/metadata/` and `fluke-ai-bi-tool/data/`
+- **Metadata integrated into AI BI Tool** (2026-04-11): registry.py, loader.py, YAML data files copied + adapted into `<ORG>-ai-bi-tool/backend/app/metadata/` and `<ORG>-ai-bi-tool/data/`
 
 ## Phase Status
 

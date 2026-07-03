@@ -15,4 +15,4 @@ metadata:
 - Delivered: `<USER_HOME>/OneDrive - <ORG>\ADHOC\UBI\GL INC1555542\` (5 artifacts)
 - GL/Revenue STM completed: 330 rows x 45 columns, 15 table groups
 
-Related: [[ubi-platform-key-facts]] · [[alex-b-fortive-gl]]
+Related: [[ubi-platform-key-facts]] · [[alex-b-<ORG_PARENT>-gl]]

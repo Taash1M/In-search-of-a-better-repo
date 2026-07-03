@@ -34,8 +34,8 @@ AI UCB/
 - **File map**: `FILE_MAP.md` in root (complete inventory)
 - **Project memory**: `AI_UCB_PROJECT_MEMORY.md` in root
 - **Spec**: `docs/design/ai-use-case-builder-spec.md` (v1.0, APPROVED)
-- **Design doc**: `docs/design/fluke-ai-usecase-builder-design.md` (v1.0)
-- **Build plan**: `docs/design/fluke-ai-usecase-builder-build-plan.md` (v1.1)
+- **Design doc**: `docs/design/<ORG>-ai-usecase-builder-design.md` (v1.0)
+- **Build plan**: `docs/design/<ORG>-ai-usecase-builder-build-plan.md` (v1.1)
 - **Doc suite**: `docs/suite/01-*.md` through `05-*.md` (v2.0)
 - **Summary deck**: `docs/presentations/AI-Use-Case-Builder-Summary.pptx`
 
@@ -93,7 +93,7 @@ Documentation suite: 5 docs (EA, Solution Design, Approach, Mappings, How-To) in
 - Skills organized: `skills/orchestrator/`, `skills/sub-skills/`, `skills/companions/`, `skills/reference/`
 - Docs organized: `docs/suite/` (5 numbered v2.0), `docs/design/` (spec, design, build plan), `docs/presentations/`
 - Deliverables, scripts, assets, source-repos each in own subfolder
-- Regenerated all 5 documentation suite DOCX files from updated v2.0 MDs (Fluke-branded styling)
+- Regenerated all 5 documentation suite DOCX files from updated v2.0 MDs (<ORG>-branded styling)
 - Added `regenerate_suite_docx.py` script for future DOCX refreshes
 - Rule: update live skills in `~/.claude/commands/` first, then sync to AI UCB folder
 

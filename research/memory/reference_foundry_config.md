@@ -21,6 +21,6 @@ metadata:
 - **Canonical blob script**: `_scripts/llm_usage_etl_v2.py` (wrapper deploys from here); backup: `scripts/llm_usage_etl_v3_sonnet.py`
 - **VM Managed Identity**: SystemAssigned MI (`3dde942e-1f7a-4d87-8040-cb15d246eb4c`), Storage Blob Data Contributor on `flkaienablement` (2026-05-05)
 - **VM Azure CLI**: v2.85.0 installed (2026-04-27)
-- Billing: Fluke AI ML Technology subscription (Azure Marketplace)
+- Billing: <ORG> AI ML Technology subscription (Azure Marketplace)
 
 Related: [[llm-gateway-usage-tracking]] · [[team-ai-enablement]] · [[claude-code-env-override]]

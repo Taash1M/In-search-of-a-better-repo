@@ -22,7 +22,7 @@ Raw Document (PDF / DOCX / image / scan / engineering drawing)
         ├──────────────────────────────────────────────┐
         ▼                                              ▼
 /docx-beautify            Professional Word docs      /excel-create
-  4 presets, 4 palettes     Fortive-branded             openpyxl + xlsxwriter
+  4 presets, 4 palettes     <ORG_PARENT>-branded             openpyxl + xlsxwriter
   Mermaid + D2 + cairosvg   cover pages, TOC            sparklines, VBA macros
         │
         ▼
@@ -42,7 +42,7 @@ Raw Document (PDF / DOCX / image / scan / engineering drawing)
 
 | Skill | Purpose | Key Capabilities | Lines | Grade/Status |
 |-------|---------|-----------------|------:|--------------|
-| `docx-beautify.md` | Professional DOCX creation and formatting | 4 presets (executive/technical/memo/report), 4 palettes, Mermaid SVG + D2 + matplotlib + cairosvg diagram backends, cover pages, TOC auto-generation, Fortive branding | 1,086 | Production |
+| `docx-beautify.md` | Professional DOCX creation and formatting | 4 presets (executive/technical/memo/report), 4 palettes, Mermaid SVG + D2 + matplotlib + cairosvg diagram backends, cover pages, TOC auto-generation, <ORG_PARENT> branding | 1,086 | Production |
 | `doc-extract.md` | Unified document extraction | ContextGem (7 concept types), RAG-Anything (multimodal), agentic-doc (batch patterns), PDF/DOCX/image/scan input | 589 | B+ (104/120) |
 | `doc-extract-reference.md` | Advanced extraction patterns reference | Converter options, JsonObject patterns, batch pipeline design, engineering drawing schema, on-demand loading | 452 | Reference |
 | `excel-create.md` | Excel workbook creation | openpyxl (read/write/modify), xlsxwriter (rich formatting), sparklines, charts, VBA macros, named ranges, conditional formatting | 2,005 | Production |
@@ -61,7 +61,7 @@ The primary output skill for Word documents. Backed by the `docx_beautify.py` mo
 - **memo** — short-form internal communication
 - **report** — full-length with cover page, TOC, appendices
 
-Palettes: Fortive Blue, Slate Gray, Warm Neutral, High Contrast. Diagram backends are composable — Mermaid SVG for flowcharts, D2 (v0.7.1) for architecture diagrams, matplotlib for charts, cairosvg for SVG-to-PNG conversion.
+Palettes: <ORG_PARENT> Blue, Slate Gray, Warm Neutral, High Contrast. Diagram backends are composable — Mermaid SVG for flowcharts, D2 (v0.7.1) for architecture diagrams, matplotlib for charts, cairosvg for SVG-to-PNG conversion.
 
 ### doc-extract.md — Unified Extraction (B+ 104/120)
 Integrates three extraction approaches under a single interface:
@@ -110,7 +110,7 @@ Sub-skill that generates Azure architecture and data flow diagrams. Key componen
 # Returns: PNG diagram file
 
 # Step 3 — Compose the final Word document
-/docx-beautify preset="executive" palette="Fortive Blue"
+/docx-beautify preset="executive" palette="<ORG_PARENT> Blue"
 #   - Embeds extracted content
 #   - Inserts architecture diagram
 #   - Generates cover page and TOC

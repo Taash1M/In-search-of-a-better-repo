@@ -15,6 +15,6 @@ metadata:
 - **Skill file**: `<ADMIN_HOME>/.claude\commands\ubi-dev.md`
 - **STM format**: 45 columns, 7 stages (Source, Landing, Bronze, Silver, Gold DB, Gold ADLS, PBI)
 - Landing = Bronze in UBI architecture (no separate raw zone)
-- **BigQuery GCP project**: `cobalt-cider-279717`, service account key in Key Vault `flkubi-kv-prd` (secret: `Google-Fluke-ServiceAccount-Json`)
+- **BigQuery GCP project**: `cobalt-cider-279717`, service account key in Key Vault `flkubi-kv-prd` (secret: `Google-<ORG>-ServiceAccount-Json`)
 
 Related: [[ubi-medallion-patterns]] · [[so-backlog-stream-specifics]] · [[reference-bigquery-gcp]]

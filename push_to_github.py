@@ -28,7 +28,8 @@ from pathlib import Path
 # ─── Configuration ───────────────────────────────────────────────────────────
 
 ONEDRIVE_CLONE = Path(__file__).resolve().parent
-LOCAL_CLONE = Path(os.path.expanduser("~")) / "In-search-of-a-better-repo"
+LOCAL_CLONE = Path(os.environ.get("CLAUDE_SYNC_LOCAL_CLONE",
+                   str(ONEDRIVE_CLONE.parent.parent.parent / "In-search-of-a-better-repo")))
 BRANCH = "main"
 BUNDLE_PATH = Path(tempfile.gettempdir()) / "repo-sync-bundle.bundle"
 

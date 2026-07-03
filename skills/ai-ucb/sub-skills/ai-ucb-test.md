@@ -319,8 +319,8 @@ result = pii_client.recognize_pii_entities(pii_input)
 
 # Test 5.4: Safe content passes through
 safe_inputs = [
-    "What is the return policy for Fluke multimeters?",
-    "How do I calibrate a Fluke 87V?",
+    "What is the return policy for <ORG> multimeters?",
+    "How do I calibrate a <ORG> 87V?",
 ]
 for safe_input in safe_inputs:
     result = content_safety_client.shield_prompt(
@@ -384,10 +384,10 @@ class AIEndpointUser(HttpUser):
     def on_start(self):
         """Load test queries from state-driven test cases."""
         self.test_queries = [
-            "What is the return policy for Fluke multimeters?",
-            "How do I calibrate a Fluke 87V?",
-            "What certifications does the Fluke 1587 have?",
-            "Compare Fluke 87V and Fluke 117",
+            "What is the return policy for <ORG> multimeters?",
+            "How do I calibrate a <ORG> 87V?",
+            "What certifications does the <ORG> 1587 have?",
+            "Compare <ORG> 87V and <ORG> 117",
             "What is the warranty period?",
         ]
 
@@ -501,13 +501,13 @@ Run specialized tests based on the archetype:
 # Test multi-turn conversation coherence
 conversations = [
     [
-        {"role": "user", "content": "What is the Fluke 87V?"},
+        {"role": "user", "content": "What is the <ORG> 87V?"},
         {"role": "user", "content": "What is its accuracy?"},  # Should reference 87V
         {"role": "user", "content": "How does that compare to the 117?"},  # Should compare
     ]
 ]
 for convo in conversations:
-    messages = [{"role": "system", "content": "You are a Fluke product expert."}]
+    messages = [{"role": "system", "content": "You are a <ORG> product expert."}]
     for turn in convo:
         messages.append(turn)
         response = chat(messages)
@@ -522,7 +522,7 @@ for convo in conversations:
 # Test extraction accuracy on known documents
 test_docs = [
     {"path": "tests/fixtures/sample_invoice.pdf", "expected": {"vendor": "Acme Corp", "total": 1250.00}},
-    {"path": "tests/fixtures/sample_contract.pdf", "expected": {"parties": ["Fluke", "Acme"], "type": "NDA"}},
+    {"path": "tests/fixtures/sample_contract.pdf", "expected": {"parties": ["<ORG>", "Acme"], "type": "NDA"}},
 ]
 for test in test_docs:
     result = extract_document(test["path"])

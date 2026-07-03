@@ -955,8 +955,8 @@ class RAGAnswer(dspy.Module):
 from dspy.teleprompt import BootstrapFewShot
 
 trainset = [
-    dspy.Example(question="What is the accuracy of the Fluke 87V?",
-                 answer="The Fluke 87V has DC accuracy of ±0.05% + 1 digit."),
+    dspy.Example(question="What is the accuracy of the <ORG> 87V?",
+                 answer="The <ORG> 87V has DC accuracy of ±0.05% + 1 digit."),
     # ... 10-20 examples from domain experts
 ]
 
@@ -978,7 +978,7 @@ compiled_rag.save("optimized_rag_prompts.json")
 # - One-click deployment to Azure App Service
 
 pf flow init --flow rag-flow --type chat
-pf flow test --flow rag-flow --inputs question="What is Fluke?"
+pf flow test --flow rag-flow --inputs question="What is <ORG>?"
 pf run create --flow rag-flow --data test_data.jsonl --name eval_run_1
 ```
 

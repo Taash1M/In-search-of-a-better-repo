@@ -6,7 +6,7 @@ allowed-tools: Read, Grep, Glob, Bash, Edit, Write, Agent, AskUserQuestion
 
 # AI Use Case Builder - Governance & Content Safety Reference
 
-This reference file contains all governance templates consumed by Phase 1 (RBAC), Phase 3 (Content Safety), and Phase 5 (Testing). Every AI deployment at Fluke must pass through these guardrails — no exceptions.
+This reference file contains all governance templates consumed by Phase 1 (RBAC), Phase 3 (Content Safety), and Phase 5 (Testing). Every AI deployment at <ORG> must pass through these guardrails — no exceptions.
 
 ---
 
@@ -64,7 +64,7 @@ curl -X POST "https://{content-safety-name}.cognitiveservices.azure.com/contents
 
 **Threshold guide:**
 - `Low` — blocks only severe content (permissive)
-- `Medium` — default for Fluke business apps (recommended)
+- `Medium` — default for <ORG> business apps (recommended)
 - `High` — blocks borderline content (use for public-facing apps)
 
 ### 1.3 Groundedness Detection
@@ -135,8 +135,8 @@ For domain-specific content filtering:
 
 ```json
 {
-  "categoryName": "fluke-proprietary-data",
-  "definition": "Content that contains Fluke proprietary product specifications, pricing strategies, or internal financial data that should not be shared externally.",
+  "categoryName": "<ORG>-proprietary-data",
+  "definition": "Content that contains <ORG> proprietary product specifications, pricing strategies, or internal financial data that should not be shared externally.",
   "sampleBlobUrl": "{sas-url-to-training-samples}"
 }
 ```
@@ -164,7 +164,7 @@ For domain-specific content filtering:
 
 ## 3. RBAC Role Definitions
 
-### 3.1 AI Subscription Roles (Fluke AI ML Technology)
+### 3.1 AI Subscription Roles (<ORG> AI ML Technology)
 
 | Principal | Role | Scope | Role ID | Purpose |
 |-----------|------|-------|---------|---------|
@@ -395,7 +395,7 @@ az monitor metrics alert create \
 ## 7. System Prompt Security Template
 
 ```python
-SYSTEM_PROMPT_TEMPLATE = """You are {app_name}, a Fluke AI assistant for {domain}.
+SYSTEM_PROMPT_TEMPLATE = """You are {app_name}, a <ORG> AI assistant for {domain}.
 
 RULES:
 1. Only answer questions related to {domain}. For off-topic questions, say: "I can only help with {domain}-related questions."
@@ -421,7 +421,7 @@ CONTEXT HANDLING:
 
 1. **NEVER deploy without Content Safety.** Even internal tools need Prompt Shields. "We trust our users" is not a security strategy.
 2. **NEVER use API keys when Managed Identity is available.** Key rotation is a liability. MI eliminates key management entirely.
-3. **NEVER set content filter thresholds to "Low" for user-facing apps.** Medium is the minimum for any Fluke business application.
+3. **NEVER set content filter thresholds to "Low" for user-facing apps.** Medium is the minimum for any <ORG> business application.
 4. **NEVER store PII in AI Search indexes without redaction.** If source documents contain PII, redact before embedding — not after retrieval.
 5. **NEVER skip diagnostic logging in any environment.** Dev logs are how you catch safety issues before they reach production.
 6. **NEVER grant Cognitive Services Contributor to application identities.** Use the least-privilege role (OpenAI User for inference, User for safety).

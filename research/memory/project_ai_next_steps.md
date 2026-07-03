@@ -6,7 +6,7 @@ originSessionId: faaf5843-504f-4b3d-9ee4-577c3fbf4d12
 ---
 ## Overview
 
-Fluke AI Next Steps Plan — a C-Suite executive deck presenting 7 strategic decisions for AI rollout, Steering Committee formation, and a 90-day roadmap. Sourced from AI Office Hours meeting minutes (Apr 10, 2026) and the Fluke AI Charter (Mar 2026).
+<ORG> AI Next Steps Plan — a C-Suite executive deck presenting 7 strategic decisions for AI rollout, Steering Committee formation, and a 90-day roadmap. Sourced from AI Office Hours meeting minutes (Apr 10, 2026) and the <ORG> AI Charter (Mar 2026).
 
 **Why:** The Office Hours meeting surfaced 5 key rollout questions with no clear decision authority. The Steering Committee fills the governance gap the Charter requires but doesn't explicitly create. Each of 7 open questions gets 2 options with justification and a clear recommendation.
 
@@ -16,9 +16,9 @@ Fluke AI Next Steps Plan — a C-Suite executive deck presenting 7 strategic dec
 
 | Version | Build Script | Output File | Design Language |
 |---------|-------------|-------------|-----------------|
-| v1 | `rebuild_deck.py` (slides 13-15 of 15-slide deck) | `Fluke_2026_AI_Plan_Deck_v2.pptx` | Original Fortive blue theme |
-| v2 | `build_next_steps.py` | `Fluke AI Next Steps Plan_v2.pptx` | Gold-accent C-Suite (dark header bars, gold recommendations) |
-| v3 | `build_next_steps_v3.py` | `Fluke AI Next Steps Plan_v3.pptx` | Veritas clean (white bg, large titles, thin borders, FLUKE watermark) |
+| v1 | `rebuild_deck.py` (slides 13-15 of 15-slide deck) | `Fluke_2026_AI_Plan_Deck_v2.pptx` | Original <ORG_PARENT> blue theme |
+| v2 | `build_next_steps.py` | `<ORG> AI Next Steps Plan_v2.pptx` | Gold-accent C-Suite (dark header bars, gold recommendations) |
+| v3 | `build_next_steps_v3.py` | `<ORG> AI Next Steps Plan_v3.pptx` | Veritas clean (white bg, large titles, thin borders, <ORG> watermark) |
 
 ## Content (6 slides, all versions)
 
@@ -44,15 +44,15 @@ Fluke AI Next Steps Plan — a C-Suite executive deck presenting 7 strategic dec
 ## Meeting Cadences (added 2026-04-21)
 
 - **AI Steering Committee**: Every 6 weeks — tool/access decisions, investment review, progress review, guardrail policy, use case pipeline, vendor strategy
-- **Fluke AI Office Hours**: Monthly — use case demos, latest & greatest, tips & tricks, look ahead, open Q&A
+- **<ORG> AI Office Hours**: Monthly — use case demos, latest & greatest, tips & tricks, look ahead, open Q&A
 - First meeting: April 23, 2026
 
 ## Veritas Clean Design (v3, 2026-04-21)
 
 Inspired by user's reference slides (Veritas product deck — TIMELINE and DEPLOYMENT slides). Key traits:
 - White backgrounds, no dark header bars
-- Large bold black ALL-CAPS titles (34pt) top-left + "FLUKE" watermark (34pt, light gray #D4D4D4) top-right
-- Thin blue accent line below header (0.025" height, Fortive blue #005EB8)
+- Large bold black ALL-CAPS titles (34pt) top-left + "<ORG>" watermark (34pt, light gray #D4D4D4) top-right
+- Thin blue accent line below header (0.025" height, <ORG_PARENT> blue #005EB8)
 - Thin borders instead of filled panels — `add_bordered_rect()` with 1-1.5pt lines
 - Dashed blue borders (`add_dashed_rect()` via XML `a:prstDash val="dash"`) for grouping boxes
 - Gold (#D48B06) borders for recommended options, light gray (#E2E8F0) for non-recommended

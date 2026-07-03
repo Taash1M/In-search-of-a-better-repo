@@ -261,7 +261,7 @@ SUBSCRIPTION: {ai_subscription_name}
 - Databricks CLI >= 0.18
 - Python >= 3.10
 - Node.js >= 20 (for React frontend)
-- Azure DevOps access to `flukeit/Fluke Data And Analytics`
+- Azure DevOps access to `flukeit/<ORG> Data And Analytics`
 
 ## 2. Repository Structure
 ```
@@ -289,7 +289,7 @@ SUBSCRIPTION: {ai_subscription_name}
 ## 3. Local Development Setup
 ```bash
 # Clone repo
-git clone https://dev.azure.com/flukeit/Fluke%20Data%20And%20Analytics/_git/{repo}
+git clone https://dev.azure.com/flukeit/<ORG>%20Data%20And%20Analytics/_git/{repo}
 cd {repo}
 git checkout -b Users/{username}/{feature}
 
@@ -341,7 +341,7 @@ cp frontend/.env.template frontend/.env
 
 ## Getting Started
 1. Navigate to {app_url}
-2. Sign in with your Fluke email (Entra ID)
+2. Sign in with your <ORG> email (Entra ID)
 3. You'll see the {main_interface} interface
 
 ## Features

@@ -61,7 +61,7 @@ Feedback files include a `Why:` line explaining the root cause and a `How to app
 | `project_579_writeup.md` | Two-pass case write-up workflow, JTBD framework |
 | `project_rag_skills.md` | doc-intelligence (3-tier) + rag-multimodal (RAGAS eval + hybrid tuning) |
 | `project_ai_bi_tool.md` | Multi-agent BI tool, Supervisor+5 Workers, SharePoint UI |
-| `project_alex_b_fortive_gl.md` | Fortive corporate GL (co 11/13), Gold view SQL, DOCX report |
+| `project_alex_b_fortive_gl.md` | <ORG_PARENT> corporate GL (co 11/13), Gold view SQL, DOCX report |
 | `project_graphify.md` | Knowledge graph skill based on safishamsi/graphify repo |
 | `project_doc_extract.md` | Unified doc-extract skill (ContextGem+RAG-Anything+agentic-doc) |
 | `project_plm_drawing_extraction.md` | Technical validation: 18/19 drawings, 94% title block accuracy |
@@ -72,7 +72,7 @@ Feedback files include a `Why:` line explaining the root cause and a `How to app
 |------|-------------|
 | `feedback_pbi_underlyingtype.md` | PBI encoding: 261=Double, 518=DateTime; used for axis formatting |
 | `feedback_skill_invocation.md` | Always activate skills proactively; FYI user as you go |
-| `feedback_rbac_rest_api.md` | `az role assignment create` fails on Fluke AI sub; always use REST API PUT |
+| `feedback_rbac_rest_api.md` | `az role assignment create` fails on <ORG> AI sub; always use REST API PUT |
 | `feedback_arrow_direction.md` | Arrows point TOWARD the other section, not both in the same direction |
 | `feedback_diagram_quality_gate.md` | Validate every diagram visually before embedding; fix+regenerate loop |
 

@@ -11,7 +11,7 @@ allowed-tools: Read, Grep, Glob, Bash, Edit, Write, Task
 
 # PLM Graph Operations Skill
 
-You are an expert operator of the Fluke PLM Knowledge Graph pipeline. This skill provides the
+You are an expert operator of the <ORG> PLM Knowledge Graph pipeline. This skill provides the
 commands, conventions, validation protocols, and code improvement patterns needed to extract
 engineering drawings, load them into Neo4j, validate the graph, and maintain the agent app.
 
@@ -87,7 +87,7 @@ Always `cd` to this directory before running any pipeline script.
 
 ## S1: Extract New Parent Item
 
-**When:** User wants to process drawings for a specific Fluke product (parent item number).
+**When:** User wants to process drawings for a specific <ORG> product (parent item number).
 
 ### Steps
 
@@ -451,7 +451,7 @@ Overall: 6/6 PASS
 
 4. **Smoke test** the agent by opening `https://flk-plm-drawing-agent.azurewebsites.net` and asking:
    - "How many drawings are in the graph?" (should use `graph_statistics`)
-   - "Show me drawings for the FLUKE-179" (should use `get_product_drawings`)
+   - "Show me drawings for the <ORG>-179" (should use `get_product_drawings`)
 
 ### Common Deploy Issues
 
@@ -525,7 +525,7 @@ After any code change:
        ("get_bom_tree", lambda: get_bom_tree("1564549", 2)),
        ("graph_statistics", lambda: graph_statistics()),
        ("find_components_by_spec", lambda: find_components_by_spec("Resistor", "0603")),
-       ("get_assembly_breakdown", lambda: get_assembly_breakdown("FLUKE-179")),
+       ("get_assembly_breakdown", lambda: get_assembly_breakdown("<ORG>-179")),
    ]
    for name, fn in checks:
        try:
@@ -682,7 +682,7 @@ https://flk-plm-drawing-agent.azurewebsites.net
 **11 Node Types:**
 - `Drawing` (3,282+) — Engineering drawings with embeddings
 - `BOMComponent` (8,084) — Oracle BOM components with parsed specs
-- `Product` (50) — Finished goods (FLUKE-179, FLUKE-1587 FC, etc.)
+- `Product` (50) — Finished goods (<ORG>-179, <ORG>-1587 FC, etc.)
 - `Part` (756+) — Parts from BOM tables on drawings
 - `Dimension` (5,014+) — Dimensional callouts
 - `Document` (1,260) — Referenced documents

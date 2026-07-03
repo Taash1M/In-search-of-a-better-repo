@@ -1,6 +1,6 @@
 ---
 name: Paperclip Agent Orchestration
-description: Multi-agent orchestration skill cherry-picked from paperclipai/paperclip (MIT). Covers agent registry, task ticketing, budget tracking, heartbeat scheduling, and activity logging for the Fluke AI team.
+description: Multi-agent orchestration skill cherry-picked from paperclipai/paperclip (MIT). Covers agent registry, task ticketing, budget tracking, heartbeat scheduling, and activity logging for the <ORG> AI team.
 type: project
 ---
 
@@ -63,7 +63,7 @@ Paperclip is a Claude Code skill for multi-agent orchestration, adapted from the
 | Name | Skills | Model | Use Case |
 |---|---|---|---|
 | UBI-Dev | ubi-dev, audit-ubi | opus | Databricks, ADF, Gold views |
-| AI-Builder | fluke-ai, ai-use-case-builder | opus | Azure AI solutions |
+| AI-Builder | <ORG>-ai, ai-use-case-builder | opus | Azure AI solutions |
 | Audit-Bot | audit-ubi | sonnet | Scheduled health checks |
 | Doc-Writer | excel-create, powerpoint-create | sonnet | Reports and decks |
 | Research-Agent | taashi-research | opus | Deep research |

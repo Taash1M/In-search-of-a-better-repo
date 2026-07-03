@@ -273,7 +273,7 @@ client = AzureOpenAI(
 )
 
 def chat(message, history):
-    messages = [{"role": "system", "content": "You are a helpful Fluke product assistant."}]
+    messages = [{"role": "system", "content": "You are a helpful <ORG> product assistant."}]
     for h in history:
         messages.append({"role": "user", "content": h[0]})
         messages.append({"role": "assistant", "content": h[1]})
@@ -290,7 +290,7 @@ def chat(message, history):
 
 demo = gr.ChatInterface(
     chat, title="{project_name}", theme=gr.themes.Soft(),
-    examples=["What Fluke multimeter is best for HVAC?", "How do I calibrate my Fluke 87V?"],
+    examples=["What <ORG> multimeter is best for HVAC?", "How do I calibrate my <ORG> 87V?"],
 )
 demo.launch(server_name="0.0.0.0", server_port=8000)
 ```

@@ -1,13 +1,13 @@
 ---
 name: paperclip
-description: "Multi-agent orchestration, task ticketing, budget tracking, and heartbeat scheduling for the Fluke AI team. Use when the user wants to coordinate multiple Claude Code agents, manage work items across projects, track LLM spend against budgets, schedule recurring agent jobs, or run a standup/sprint. Trigger on: 'paperclip', 'orchestrate agents', 'agent registry', 'task board', 'budget check', 'heartbeat', 'schedule job', 'standup report', 'sprint plan', 'fan-out'."
+description: "Multi-agent orchestration, task ticketing, budget tracking, and heartbeat scheduling for the <ORG> AI team. Use when the user wants to coordinate multiple Claude Code agents, manage work items across projects, track LLM spend against budgets, schedule recurring agent jobs, or run a standup/sprint. Trigger on: 'paperclip', 'orchestrate agents', 'agent registry', 'task board', 'budget check', 'heartbeat', 'schedule job', 'standup report', 'sprint plan', 'fan-out'."
 allowed-tools: Read, Grep, Glob, Bash, Edit, Write, Agent, Task
 ---
 
 # Paperclip — Agent Orchestration Skill
 
 > Cherry-picked from [paperclipai/paperclip](https://github.com/paperclipai/paperclip) (MIT).
-> Adapted for Fluke AI: Azure AI Foundry, 3 gateway nodes, 16 users, enterprise governance.
+> Adapted for <ORG> AI: Azure AI Foundry, 3 gateway nodes, 16 users, enterprise governance.
 
 ---
 
@@ -253,7 +253,7 @@ BACKLOG (3)     TODO (5)      IN PROGRESS (2)    IN REVIEW (1)    DONE (12)
   "id": "uuid",
   "name": "Q2 2026 AI Spend",
   "scopeType": "company",             // company | agent | project
-  "scopeId": "fluke-ai",              // matches agent.id or projectTag
+  "scopeId": "<ORG>-ai",              // matches agent.id or projectTag
   "metric": "billed_cents",
   "windowKind": "calendar_month_utc", // calendar_month_utc | lifetime
   "amountCents": 50000,               // $500.00
@@ -563,7 +563,7 @@ When the user asks to **plan a sprint**:
    | Agent | Status | Current Load | Skills |
    |---|---|---|---|
    | UBI-Dev-Agent | ▶ active | 1 in_progress | ubi-dev, audit-ubi |
-   | AI-Builder | ▶ active | 0 | fluke-ai, ai-use-case-builder |
+   | AI-Builder | ▶ active | 0 | <ORG>-ai, ai-use-case-builder |
 
 3. Show budget remaining:
    Q2 AI Spend: $187.60 remaining of $500.00 (62% consumed)
@@ -595,7 +595,7 @@ When the user asks to **plan a sprint**:
 |---|---|
 | **Azure AI Foundry** | Agent spawns use existing `ANTHROPIC_FOUNDRY_API_KEY` + model deployments |
 | **LLM Usage Tracking** | Budget module reads from DuckDB / Power BI data |
-| **Existing Skills** | Agents reference skills by name (ubi-dev, audit-ubi, fluke-ai, etc.) |
+| **Existing Skills** | Agents reference skills by name (ubi-dev, audit-ubi, <ORG>-ai, etc.) |
 | **Hooks** | All Bash/Agent calls go through existing secret-scanner + command-blocker |
 | **Memory** | Activity log supplements (not replaces) auto-memory system |
 | **Session Review** | `/session-review` can scan paperclip activity for lessons learned |

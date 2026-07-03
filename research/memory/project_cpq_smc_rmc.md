@@ -135,7 +135,7 @@ Oracle CPQ (Configure Price Quote), SMC (Subscription Management Cloud), and RMC
 - **Contract columns that DO exist**: `CONTRACT_START_DATE`, `CONTRACT_END_DATE`, `CONTRACT_DURATION`, `DEFERRED_PERCENT`, `SERVICED_PRODUCT_NUM`
 - **Contract data population**: 6.8M rows have CONTRACT_START_DATE, 6.8M have CONTRACT_END_DATE, 6.8M have CONTRACT_DURATION, 23.1M have DEFERRED_PERCENT, 8.1M have SERVICED_PRODUCT_NUM
 - **BUT** these contract rows come from `JE_SOURCE = 'Receivables'`, `JE_CATEGORY = 'Sales Invoices'` — i.e., AR invoice data, NOT RMC revenue recognition
-- **`Revenue Management` JE_SOURCE**: Only 18 rows total (all from Fluke Poland/Europe, FEB-25 and MAY-24 periods), with JE_CATEGORY = `Revenue Contract`. These are the only true RMC-sourced rows, and they have NO contract detail columns populated (all NULL for CONTRACT_START_DATE, CONTRACT_END_DATE, CONTRACT_DURATION, DEFERRED_PERCENT, SERVICED_PRODUCT_NUM)
+- **`Revenue Management` JE_SOURCE**: Only 18 rows total (all from <ORG> Poland/Europe, FEB-25 and MAY-24 periods), with JE_CATEGORY = `Revenue Contract`. These are the only true RMC-sourced rows, and they have NO contract detail columns populated (all NULL for CONTRACT_START_DATE, CONTRACT_END_DATE, CONTRACT_DURATION, DEFERRED_PERCENT, SERVICED_PRODUCT_NUM)
 - **No RMC/SMC/subscription tables** exist in Silver or Bronze (searched `*rmc*`, `*subscri*`, `*smc*`)
 - **No JE_SOURCE** with 'RMC', 'subscri', 'contract', or 'deferred' keywords (0 rows)
 - **Conclusion**: RMC subscription revenue data is essentially NOT in UBI. The 18 "Revenue Management" rows are a tiny fraction with no detail. A new stream is definitively required.

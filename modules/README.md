@@ -30,7 +30,7 @@ Each palette defines 15 named colors (primary, secondary, accent, background, te
 
 | Palette | Character |
 |---------|-----------|
-| `fortive` | Fortive brand blues and grays |
+| `<ORG_PARENT>` | <ORG_PARENT> brand blues and grays |
 | `executive` | Deep navy, gold, white |
 | `modern` | Teal, slate, warm white |
 | `minimal` | Near-black, near-white, single accent |
@@ -55,7 +55,7 @@ Each palette defines 15 named colors (primary, secondary, accent, background, te
 
 ```bash
 python docx_beautify.py input.md -o output.docx -p executive --cover
-python docx_beautify.py input.md -o output.docx -p technical --palette fortive
+python docx_beautify.py input.md -o output.docx -p technical --palette <ORG_PARENT>
 ```
 
 ### Dependencies

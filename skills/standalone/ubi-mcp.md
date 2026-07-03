@@ -6,7 +6,7 @@ allowed-tools: Read, Grep, Glob, Bash, Edit, Write, Task
 
 # UBI MCP Operations Skill
 
-You are an expert operator of the Fluke UBI platform's Azure services via MCP (Model Context Protocol) servers. This skill provides the context needed to select, configure, and use the right MCP server for any UBI operational task.
+You are an expert operator of the <ORG> UBI platform's Azure services via MCP (Model Context Protocol) servers. This skill provides the context needed to select, configure, and use the right MCP server for any UBI operational task.
 
 **Companion skill:** `/ubi-dev` handles code conventions, notebook patterns, STM format, and development workflows. This skill handles **live service interaction** — querying, monitoring, managing, and investigating.
 
@@ -91,10 +91,10 @@ What do you need?
 | **ADLS Account** | `flkubiadlsdev` | `flkubiadlsqa` | `flkubiadlsprd` |
 | **ADF Factory** | `flkubi-adf-dev` | — | `flkubi-adf-prd` |
 | **Azure SQL** | `etlmetadata.database.windows.net` / `dev` | — / `qa` | `etlmetadata-prod.database.windows.net` / `prd` |
-| **PBI Workspace** | `FLK-BI-DEV` (`6fec84af-...`) | `FLK-BI-QA` (`7f77ddaf-...`) | `FLK-BI-PROD` (`a59d3713-...`) |
+| **PBI Workspace** | `<ORG_ABBR>-BI-DEV` (`6fec84af-...`) | `<ORG_ABBR>-BI-QA` (`7f77ddaf-...`) | `<ORG_ABBR>-BI-PROD` (`a59d3713-...`) |
 | **ADO Organization** | `https://dev.azure.com/flukeit` | Same | Same |
-| **ADO Project** | `Fluke Data And Analytics` | Same | Same |
-| **Azure Subscription** | `52a1d076-bbbf-422a-9bf7-95d61247be4b` (Fluke Unified BI) | Same | Same |
+| **ADO Project** | `<ORG> Data And Analytics` | Same | Same |
+| **Azure Subscription** | `52a1d076-bbbf-422a-9bf7-95d61247be4b` (<ORG> Unified BI) | Same | Same |
 | **Tenant ID** | `0f634ac3-b39f-41a6-83ba-8f107876c692` | Same | Same |
 
 ### Unity Catalog Structure
@@ -317,7 +317,7 @@ Delete blob (DEV ONLY)        → delete_blob
       "args": ["-y", "@azure-devops/mcp@latest"],
       "env": {
         "AZURE_DEVOPS_ORG_URL": "https://dev.azure.com/flukeit",
-        "AZURE_DEVOPS_PROJECT": "Fluke Data And Analytics",
+        "AZURE_DEVOPS_PROJECT": "<ORG> Data And Analytics",
         "AZURE_DEVOPS_PAT": "${AZURE_DEVOPS_PAT}"
       }
     }
@@ -357,7 +357,7 @@ Manage wiki pages             → get_wiki_page / update_wiki_page
 ```sql
 SELECT [System.Id], [System.Title], [System.State], [System.AssignedTo]
 FROM WorkItems
-WHERE [System.TeamProject] = 'Fluke Data And Analytics'
+WHERE [System.TeamProject] = '<ORG> Data And Analytics'
   AND [System.Title] CONTAINS 'SOBacklog'
   AND [System.State] <> 'Closed'
 ```
@@ -401,7 +401,7 @@ For cloud access via XMLA:
 ```json
 {
   "PBI_CONNECTION_MODE": "xmla",
-  "PBI_XMLA_ENDPOINT": "powerbi://api.powerbi.com/v1.0/myorg/FLK-BI-DEV",
+  "PBI_XMLA_ENDPOINT": "powerbi://api.powerbi.com/v1.0/myorg/<ORG_ABBR>-BI-DEV",
   "PBI_DATASET_NAME": "UBI Curated Datasets"
 }
 ```

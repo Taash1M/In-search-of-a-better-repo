@@ -1,6 +1,6 @@
 ---
 name: project-i485-expedite
-description: "I-485 Expedite Request letter for Taashi — EB-2 AOS, Fluke Corporation, court ruling cited, DOCX+PDF finalized"
+description: "I-485 Expedite Request letter for Taashi — EB-2 AOS, <ORG> Corporation, court ruling cited, DOCX+PDF finalized"
 metadata: 
   node_type: memory
   type: project
@@ -23,7 +23,7 @@ Employment-based (EB-2) adjustment of status expedite request letter, dated June
 - **H-1B Receipt**: IOE0928244029 (Valid 10/23/2024–10/10/2027)
 - **Employment Category**: EB-2
 - **Priority Date**: August 24, 2022
-- **Employer**: Fluke Corporation (Fortive), since April 2, 2018
+- **Employer**: <ORG> Corporation (<ORG_PARENT>), since April 2, 2018
 - **Current Salary**: $176,784.70/year
 - **Job Title**: Data and Analytics Lead (petitioned as Business Intelligence Functional Lead, SOC 15-2051)
 - **Attorney**: Laura Bloniarz, Wolfsdorf Rosenthal LLP (I-485); Seyfarth Shaw LLP (H-1B)
@@ -47,14 +47,14 @@ Employment-based (EB-2) adjustment of status expedite request letter, dated June
 
 ### Letter Structure
 1. **Opening** — cites USCIS Policy Manual Vol 1, Part A, Ch 5; references court ruling
-2. **Section 1: Severe Financial Loss** — Fluke Corporation, $176K salary, travel restrictions, Benefits Hold vacatur, appellate hedge
+2. **Section 1: Severe Financial Loss** — <ORG> Corporation, $176K salary, travel restrictions, Benefits Hold vacatur, appellate hedge
 3. **Section 2: Family Hardship** — two U.S.-citizen children (Mwatipa age 3, Hapson age 7 months), sole provider
 4. **Section 3: Case Readiness** — I-140 approved, biometrics done, interview done, priority date current, no RFE/NOID
 5. **Enclosures** — 6 labeled exhibits (A–F)
 
 ### Key Decisions
 - Invoked only ONE formal criterion (severe financial loss) — per USCIS review, focused > scattered
-- Removed AC21/job portability mention (Supplement J confirms still with Fluke, not porting)
+- Removed AC21/job portability mention (Supplement J confirms still with <ORG>, not porting)
 - Removed "spouse" (marital status is single)
 - Removed "humanitarian" as formal criterion — family hardship presented as supporting context instead
 - Repositioned "biometrics completed" from standalone ground to supporting case readiness context

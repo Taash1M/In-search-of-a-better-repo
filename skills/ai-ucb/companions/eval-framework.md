@@ -8,7 +8,7 @@ allowed-tools: Read, Grep, Glob, Bash, Edit, Write, Agent, AskUserQuestion
 
 You are an AI evaluation and quality assurance specialist. You build comprehensive test suites that validate LLM outputs across correctness, safety, and performance — combining unit-test-style assertions (DeepEval), RAG-specific metrics (RAGAS), automated red-teaming (Garak), and production observability (Phoenix). Every AI system you touch ships with measurable quality guarantees.
 
-**Cherry-picked from:** ai-engineering-toolkit catalog — DeepEval, RAGAS, Garak, Phoenix/Opik. Fluke-adapted for Azure AI Foundry, Azure Monitor, CI/CD via Azure DevOps.
+**Cherry-picked from:** ai-engineering-toolkit catalog — DeepEval, RAGAS, Garak, Phoenix/Opik. <ORG>-adapted for Azure AI Foundry, Azure Monitor, CI/CD via Azure DevOps.
 
 ## When This Skill Activates
 
@@ -91,11 +91,11 @@ from deepeval.metrics import (
 
 # A test case captures one input → output pair with optional context
 test_case = LLMTestCase(
-    input="What is Fluke's return policy for multimeters?",
-    actual_output="Fluke offers a 30-day return policy for all multimeters purchased directly.",
+    input="What is <ORG>'s return policy for multimeters?",
+    actual_output="<ORG> offers a 30-day return policy for all multimeters purchased directly.",
     expected_output="30-day return policy for direct purchases.",
-    context=["Fluke Corporation offers a 30-day return policy for instruments purchased through authorized channels."],
-    retrieval_context=["Fluke return policy document, page 3, section 2.1"],
+    context=["<ORG> Corporation offers a 30-day return policy for instruments purchased through authorized channels."],
+    retrieval_context=["<ORG> return policy document, page 3, section 2.1"],
 )
 ```
 
@@ -157,11 +157,11 @@ def test_rag_quality(test_case: LLMTestCase):
 from deepeval.metrics import GEval
 from deepeval.test_case import LLMTestCaseParams
 
-# Custom metric: Does the response follow Fluke's brand voice?
+# Custom metric: Does the response follow <ORG>'s brand voice?
 brand_voice = GEval(
     name="Brand Voice Compliance",
     criteria=(
-        "Evaluate whether the response follows Fluke Corporation's brand voice: "
+        "Evaluate whether the response follows <ORG> Corporation's brand voice: "
         "professional, technically accurate, customer-focused, and confident "
         "without being arrogant. Deduct points for casual language, humor, "
         "or marketing hyperbole."
@@ -225,23 +225,23 @@ from datasets import Dataset
 # Prepare evaluation dataset
 eval_data = {
     "question": [
-        "What is the accuracy of the Fluke 87V?",
-        "How do I calibrate a Fluke 376 FC?",
-        "What certifications does the Fluke ii900 have?",
+        "What is the accuracy of the <ORG> 87V?",
+        "How do I calibrate a <ORG> 376 FC?",
+        "What certifications does the <ORG> ii900 have?",
     ],
     "answer": [
-        "The Fluke 87V has a DC accuracy of ±0.05%.",
-        "Connect to PC via Fluke Connect app, follow calibration wizard.",
+        "The <ORG> 87V has a DC accuracy of ±0.05%.",
+        "Connect to PC via <ORG> Connect app, follow calibration wizard.",
         "The ii900 is certified to IEC 61010-1 CAT II 600V.",
     ],
     "contexts": [
-        ["Fluke 87V specs: DC voltage accuracy ±0.05% + 1 digit."],
-        ["Fluke 376 FC calibration: Use Fluke Connect software, select instrument, run wizard."],
-        ["Fluke ii900 certifications: IEC 61010-1 CAT II 600V, IP 54."],
+        ["<ORG> 87V specs: DC voltage accuracy ±0.05% + 1 digit."],
+        ["<ORG> 376 FC calibration: Use <ORG> Connect software, select instrument, run wizard."],
+        ["<ORG> ii900 certifications: IEC 61010-1 CAT II 600V, IP 54."],
     ],
     "ground_truth": [
         "DC accuracy is ±0.05% + 1 digit",
-        "Use Fluke Connect app calibration wizard",
+        "Use <ORG> Connect app calibration wizard",
         "IEC 61010-1 CAT II 600V",
     ],
 }
