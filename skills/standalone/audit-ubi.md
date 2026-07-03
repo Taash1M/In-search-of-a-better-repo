@@ -184,8 +184,113 @@ Create a Markdown report at `<USER_HOME>/Claude\deliverebles\UBI_Audit_<YYYYMMDD
 - "The stream is well-established" is not a reason to skip review.
 - "There are too many files" is not a reason to reduce scope — partition smaller instead.
 - Context window concerns are not a reason to skip a partition. Use subagents.
-- If any agent fails or times out, proceed with findings from remaining agents and note the gap.
+- If any agent fails or times out, re-dispatch it once; if the re-dispatch also fails, proceed with findings from remaining agents and note the gap.
 - Do NOT create findings for patterns that are consistent with the rest of the codebase — only flag deviations.
 - Severity P0 means "fix before next production run." Do not use P0 for style issues.
 - Every finding must include a file path and line range. "General concern" findings are not actionable.
 - Do NOT rewrite code as part of the audit. The audit produces a report, not fixes.
+
+## Six-Step Flow (mapping)
+
+1 Orientation = Step 1 (scope). 1.5 Planning = the partition map + run plan (Step 1 output).
+2 Checks-first = analysis categories defined before scanning (Step 2). 3 Execute = agents + the
+independent evaluator pass and QA gate per batch. 4 E2E = ledger/report consistency validation
+(write ordering + delta reconciliation) before handback. 5 Documentation = report + ledger +
+inbox summary.
+
+## Agent Dispatch
+
+When `agents\principal-de-reviewer.md` / `agents\qa-gate.md` exist (export or `~/.claude/agents/`),
+dispatch them (evaluator = principal-de-reviewer in **evaluator mode**, naming that section;
+terminal artifact checks = qa-gate). When absent, fall back to the inline prompts in this skill.
+Evaluator-mode dispatches MUST NOT emit the `QA-GATE-VERDICT-V1` sentinel or any `"gate"` JSON
+object. Memory writes go through the orchestrator only (single-writer).
+
+## State Ledger & Delta Reporting
+
+Ledger: `<USER_HOME>/Claude\deliverebles\ubi_audit_ledger.md`. Test invocations may override
+ledger/report/inbox/memory paths (never mix test and real paths in one run).
+- **Header:** `run_id` (UTC ISO-8601 basic, e.g. `20260703T0630Z`; scheduled reports suffix their
+  filename with it), `last_run_utc`, `discovery_mode` (git|hash|mtime|full), `consecutive_failures`.
+- **Findings table:** `finding_id | file | category | issue_type | severity | scope | status |
+  status_reason | decided_by | decided_utc | first_seen_run | last_seen_run | downgraded_from |
+  inconclusive_runs | regressions`. `accepted` rows without `decided_by/decided_utc` are invalid.
+- **File-hash table:** `relpath | content_hash | last_scanned_run` for every globbed file;
+  `content_hash` = SHA-256 over raw file bytes (no newline normalization).
+- **finding_id** = first 12 hex of SHA-256 over
+  `lower(relpath-from-glob-root, "/"-separated) + "|" + category + "|" + issue_type`.
+  Out-of-root artifacts (ADF pipelines) use logical relpaths: `adf:/<pipeline-name>`.
+  Match rule: fresh finding ↔ ledger row iff `finding_id` equal.
+- **issue_type enum (closed):** DQ: `DQ-missing-pk-null-check, DQ-missing-rowcount-validation,
+  DQ-missing-freshness-check, DQ-missing-referential-check, DQ-merge-not-idempotent`. SEC:
+  `SEC-hardcoded-credential, SEC-plaintext-secret-access, SEC-missing-secure-io,
+  SEC-hardcoded-env-value`. CQ: `CQ-missing-header, CQ-missing-status-check,
+  CQ-missing-error-handling, CQ-debug-output-in-prod, CQ-nonstandard-naming`. PERF:
+  `PERF-missing-skew-mitigation, PERF-missing-broadcast-hint, PERF-cache-misuse,
+  PERF-missing-partition-pruning, PERF-collect-on-large-df`. ADF: `ADF-nesting-depth,
+  ADF-default-timeout, ADF-missing-error-path, ADF-trigger-state`. GOLD:
+  `GOLD-missing-silver-ref, GOLD-nonfriendly-alias, GOLD-orphan-view`.
+- **Statuses:** `open|fixed|regressed|accepted|unverified|dropped|closed-gone`. Transitions:
+  any of {open, regressed, unverified} → `fixed` when an in-scope run no longer detects it;
+  `accepted` is terminal (user decision only — the audit never self-accepts); `scope=project`
+  findings (ADF, Gold Views) re-evaluate every run; `fixed→regressed` on re-detection (latest
+  severity; keep `first_seen_run`); `regressions`+1 on ANY transition into `regressed`, escalate
+  to inbox at 2; `dropped→open` on re-detection (re-verify at every severity); file absent →
+  `closed-gone`; `closed-gone→regressed` if the file returns with the issue; `unverified→open`
+  (original severity restored) on full evidence; `inconclusive_runs` resets on conclusive
+  disposition or non-detection, escalates at 3.
+- **Write ordering:** findings + report first; file-hash table, then header `run_id`/`last_run_utc`
+  LAST (completion marker). Hash rows newer than header `run_id` → ledger unparseable →
+  cold-start full sweep.
+- **Zero-change rule:** zero changed files and no scope=project firing → delta section says
+  "no new findings"; open findings are not re-listed.
+- **Hygiene:** NEVER quote secret values — cite file+line only. Ledger is not committed/pushed
+  without sanitizing paths/usernames/creds first.
+- **Handoff:** each P0/P1 row with status ∈ {open, regressed, unverified} emits
+  `file=<path> issue=<finding_id> goal=<fix condition>` — consumable by `data-engineering`.
+
+## Independent Evaluator Pass (before report generation)
+
+Scope: every P0/P1; every P2/P3 on first ledger entry; every downgraded finding on every
+appearance; every re-detection of a `dropped` finding. Evaluator = a separately dispatched fresh
+`principal-de-reviewer` (evaluator mode) that produced none of the findings and receives only the
+structured fields (title, file, line range, category, issue_type, severity). Default: assume the
+finding is wrong until the cited lines prove it; run read-only checks where executable and paste
+output. Disposition: contradicted → `dropped`; fully evidenced → `open` (downgraded rows: original
+severity restored); plausible-not-evidenced → downgrade one level to `unverified`, once per
+lifetime (P3 floor: severity unchanged, still `unverified`, downgrade spent). May shard per
+partition group; shards count toward the 86 ceiling. Every disposition is written to a report
+appendix + the ledger — nothing vanishes silently.
+
+## Scheduling (specified, not activated)
+
+Trigger the NAMED skill (`audit-ubi`) via Claude Code automations or Cowork scheduled tasks.
+Decision rule: LOCAL scheduling by default — the source glob and output paths are local-only;
+cloud only if/when the codebase is mirrored to a remote repo. Owner: Taashi.
+- **Preflight:** source glob, report dir, ledger, or inbox unreachable → abort with an inbox
+  entry — NEVER a zero-finding "clean" report. Fallback chain for EVERY inbox write: inbox →
+  report dir → direct user message; increment `consecutive_failures` in any abort path that can
+  still reach the ledger.
+- **Inbox:** `<USER_HOME>/Claude\deliverebles\ubi_audit_inbox.md`, rows
+  `| entry_type | run_id | utc | detail |`, `entry_type ∈ {abort, summary, escalation}`.
+- **Caps (ALL runs, scheduled or manual):** ≤43 initial dispatches (10 partition-units × 4
+  per-partition categories + 2 project-wide + 1 evaluator; sub-partitions share their stream's
+  unit; oversized 50+-file streams may shard category agents with explicit accounting) + ≤1
+  re-dispatch per failed agent + shards; ABSOLUTE CEILING 86 → abort to inbox. Delta scope > 200
+  files → report-and-escalate instead of full fan-out.
+- **Run-start self-gate (after preflight):** `consecutive_failures ≥ 2` → write inbox entry and
+  exit without auditing until a human resets the counter.
+- **Human door:** every scheduled run ends by surfacing the delta summary (inbox `summary` entry
+  + message) — never silently filed.
+- **Stop boundary (scheduled runs):** writes limited to report/ledger/inbox paths (+ memory via
+  the orchestrator); no code edits; no git/network mutations; evaluator restricted to read-only
+  commands; any violation → abort to inbox.
+
+## Discovery Modes
+
+Scheduled/ledger-present runs scope to files changed since `last_run_utc` (plus ALL scope=project
+categories, every run). Manual runs keep the existing full partition-by-stream default. Change
+detection order: git log (if the target is a repo) → content hash vs the ledger's file-hash
+table → mtime last resort (caveat: sync rewrites mtimes — expect false positives). Record
+`discovery_mode` each run. Cold start (no/unparseable ledger, incl. the completion-marker
+inconsistency) → full sweep + ledger rebuild.

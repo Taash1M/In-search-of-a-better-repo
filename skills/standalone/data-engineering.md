@@ -169,6 +169,11 @@ A fix isn't done until it can't silently break again:
 - Add a regression test reproducing any bug you fixed, so it stays fixed.
 - Document the contract and any non-obvious decisions (*§Documenting Data Pipelines*).
 
+**Persist state at every phase boundary:** update PROJECT_MEMORY.md (or the project's stated
+equivalent) with the data contract, decisions taken, test/gate outcomes, and open items — at the
+end of every operating-loop phase, not just at handback. A build that dies mid-flight must be
+resumable from that record: the agent forgets, the repo does not.
+
 ## Task-type quick routing
 
 The loop adapts to the task. Use these entry points, but the validation and review phases always apply.
@@ -319,6 +324,59 @@ one, flag the risk explicitly (above). Detail and platform variants are in the r
 8. **NEVER transform/mutate the raw (Bronze) layer in place.** It's the replayable source of truth;
    land it append-only and fix bugs by rebuilding downstream layers, not by editing raw.
 
+## Six-Step Flow (mapping onto the operating loop)
+
+This skill follows the standard six-step flow; the operating loop already implements most of it:
+- **1 Orientation** = phase 1 (Orient).
+- **1.5 Planning** — for non-trivial builds (multi-phase efforts, a new pipeline, a migration, or
+  anything crossing systems), invoke/redirect to `data-dev-planning` BEFORE building and take its
+  reviewed plan as the build contract. Trivial single-artifact edits may skip 1.5.
+- **2 TDD** = phase 2 (tests first).
+- **3 Build** = phases 3–4, with the 3-persona + QA review gate (phase 5) run **per milestone**,
+  not only at the end. A **milestone** is each phase boundary of the 1.5 planning output, or,
+  absent a plan, each discrete artifact of phases 3–4. Gate dispatches count against the per-task
+  budget (see Parallel work & budget below).
+- **4 E2E testing** — after all milestones pass their gates, run the full pipeline end-to-end on
+  fixtures or a sample slice and re-run every quality gate (reconciliation, contract checks) on
+  the assembled whole. This complements phase 6's regression guard: phase 6 protects the future;
+  E2E proves the present composition.
+- **5 Documentation** = *§Documenting Data Pipelines*, mandated as the closing step of every
+  non-trivial build (contract, grain, reload semantics, gates, ownership).
+
+## Stop — boundaries (authority limits the loop cannot infer)
+
+In unattended / sub-agent execution, NEVER: write to prod targets; delete data; push to remotes;
+merge or deploy. Interactively, each of these requires explicit user authorization recorded in the
+session. Anything uncertain → surface directly to the user (this is an interactive skill). In
+unattended contexts, write escalations using the audit inbox entry format
+(`| entry_type | run_id | utc | detail |`) at a project-local inbox path — do not share the UBI
+audit inbox. These boundaries bind reviewers and sub-agents too.
+
+## Parallel work & budget (handoff)
+
+- **Worktrees:** one isolated git worktree per parallel build/fix task (precondition: the target
+  is a git repo; fallback: a per-task copy directory, or single-writer serialization when
+  isolation is unavailable).
+- **Parallelism last:** parallel fan-out is permitted only after the review gate has caught at
+  least one real defect on a single-task run — prove the checks before you scale them.
+- **Per-task budget:** ≤40 sub-agent dispatches per task (default, user-adjustable), which
+  includes per-milestone gate dispatches, alongside the review gate's existing round caps.
+  Breach → stop and escalate to the user.
+- **Work intake:** accepts audit handoff task lines of the form
+  `file=<path> issue=<finding_id> goal=<fix condition>` (emitted by `audit-ubi`'s ledger) as
+  build/fix work items; the `goal` is the stop condition for that task.
+
+## Agent Dispatch
+
+When the named review agents exist (`agents\sa-reviewer.md`, `agents\ea-reviewer.md`,
+`agents\principal-de-reviewer.md`, `agents\qa-gate.md` — export or `~/.claude/agents/`), the
+phase-5 review gate dispatches them with the **built-artifact lens** named; the terminal check
+dispatches `qa-gate` (passing a non-inherited model override where the host supports it). When
+absent, fall back to the inline persona checklists in *§Review Gate (3-Persona + QA)* — the
+inline text remains authoritative for the fallback path. Persona dispatches never emit the
+`QA-GATE-VERDICT-V1` sentinel or any `"gate"` JSON object; only qa-gate does. Reviewer lessons
+return to the orchestrator, which appends to agent memory serially (single-writer).
+
 ---
 
 # Reference Sections
@@ -344,7 +402,7 @@ Run review **rounds** until a full round yields **zero findings at every severit
    Principal Data Engineer (Principal DE). Run them concurrently (a single message with three
    sub-agent calls, or three focused passes). Each gets the artifact, the data contract (grain/keys/
    write-mode/idempotency), and the real inputs/conventions it touches.
-2. **Reviewers are read-only and adversarial** — they return findings only, each as
+2. **Reviewers make no artifact edits and are adversarial** — they must verify by non-mutating execution (run tests, SELECT-only probes on fixtures/dev targets — never prod write paths) and paste real output; they return findings only, each as
    `[P<n>] <persona>-<seq> — <title>` + exact location + the data consequence + a concrete fix. The
    highest-value finding is **claim-vs-artifact**: "the code says X but the data/contract shows Y".
 3. **Apply every finding**, then **re-run a fresh round**. Later rounds must (a) verify prior fixes

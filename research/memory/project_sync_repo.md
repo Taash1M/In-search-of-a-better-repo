@@ -1,6 +1,6 @@
 ---
 name: Master Sync Repo
-description: Private GitHub repo (Taash1M/In-search-of-a-better-repo) for syncing Claude Code skills, hooks, configs, memory, MCPs across devices. Auto-sync hook wired in settings.json. 3 scripts (sync, push, hook). Content sanitization layer active since 2026-04-30.
+description: Private GitHub repo (Taash1M/In-search-of-a-better-repo) for syncing Claude Code skills, hooks, configs, memory, MCPs across devices. Auto-sync hook wired in settings.json. 3 scripts (sync, push, hook). Full sanitization: personal IDs + <ORG>/<ORG_PARENT> company names. Last synced 2026-07-02 (c1f543b).
 type: project
 originSessionId: aa210407-a09e-461f-aa2f-83d0e2fa4475
 ---
@@ -19,7 +19,28 @@ Master sync repo for all Claude Code assets. Enables identical setups across mul
 - **Local clone**: `<USER_HOME>/In-search-of-a-better-repo` (use for push — avoids OneDrive SSL issues)
 - **PROJECT_MEMORY**: In repo root (not in `~/.claude/projects/` — lives with the project)
 - **Created**: 2026-04-08
-- **Content**: 52 skills, 4 hooks, 30 memory files, 3 Python modules, 1 MCP server (PBI Semantic), sanitized settings.json, .mcp.json (2 servers: context7 + obsidian)
+- **Last synced**: 2026-07-02, commit `c1f543b` — 114 files, 3 commits
+- **Content**: 60+ skills, 10 hooks, 110+ memory files, 3 Python modules, 1 MCP server (PBI Semantic), sanitized settings.json
+
+## Sanitization Rules (as of 2026-07-02)
+
+Two layers — both `sync_to_repo.py` (on copy) and a one-time `sanitize_repo.py` pass:
+
+| Pattern | Replacement |
+|---------|-------------|
+| `<ADMIN_HOME>/` | `<ADMIN_HOME>/` |
+| `<USER_HOME>/` | `<USER_HOME>/` |
+| `OneDrive - <ORG>` | `OneDrive - <ORG>` |
+| `<ADMIN_USER>` | `<ADMIN_USER>` |
+| `<USER>` | `<USER>` |
+| personal emails | `<USER>@<ORG_DOMAIN>` etc. |
+| `\bFluke\b` | `<ORG>` |
+| `\bFortive\b` | `<ORG_PARENT>` |
+| `\bFLK\b` | `<ORG_ABBR>` |
+
+**SANITIZE_RULES are env-parameterized** in `sync_to_repo.py` — loaded from `CLAUDE_SYNC_USER` / `CLAUDE_SYNC_ADMIN` env vars so the rules themselves don't get self-sanitized.
+
+`sync_to_repo.py` and `push_to_github.py` use `Path(__file__).resolve().parent` for `REPO_ROOT` / `ONEDRIVE_CLONE` — survives sanitization passes.
 
 ## Three Scripts
 

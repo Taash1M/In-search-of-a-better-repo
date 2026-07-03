@@ -31,6 +31,27 @@ v1 DESIGN DECISIONS (applied as defaults; built from the approved design doc §9
   7. Gate vocabulary: ship a canonical gate catalog (G0–G6) as a STARTING MENU to adapt, not mandatory.
 ──────────────────────────────────────────────────────────────────────────── -->
 
+<!-- ───────────────────────────────────────────────────────────────────────────
+v2 DESIGN DECISIONS (2026-07-03; extend v1 — nothing below removes a v1 rule)
+  1. Named reusable sub-agents (fulfils v1 decision 4's "future enhancement"): when
+     `agents\sa-reviewer.md` / `agents\ea-reviewer.md` / `agents\principal-de-reviewer.md` /
+     `agents\qa-gate.md` exist (export or ~/.claude/agents/), dispatch them as the persona
+     reviewers with the **plan-review lens** named. When absent, the inline prompts in this
+     skill remain the fallback. Persona dispatches never emit the QA-GATE-VERDICT-V1 sentinel
+     or any "gate" JSON object; only qa-gate does.
+  2. Model separation (supersedes v1 decision 2): per-persona model override is available, and
+     the terminal qa-gate invocation passes a non-inherited model override by default where the
+     host supports it (invocation parameter only — qa-gate agent internals unchanged).
+  3. Reviewer verification probes: reviewers may run read-only execution probes (schema checks,
+     provider/model-availability checks) — "verify claims against the real platform/artifact
+     before asserting", generalizing L9's kernel from model-hosting to any asserted fact.
+  4. Loop budget (stated): ≤18 persona dispatches nominal (3 personas × 6 rounds) + ≤1
+     re-dispatch per failed persona per round + qa-gate invocations; hard ceiling 36 dispatches
+     per planning engagement — breach → stop and escalate to the user.
+  5. Reviewer lessons: subagents return lessons to the orchestrator, which appends to
+     agents\memory\ serially (single-writer); dream-cycle rules per agents\dreaming.md.
+──────────────────────────────────────────────────────────────────────────── -->
+
 ## Decision tree
 
 ```
@@ -222,7 +243,7 @@ needs all seven, and a project may add its own:
   path to the current plan**, (c) the **absolute paths to the real artifacts** the plan references
   (scripts, CSVs, schemas), (d) the severity rubric, (e) the per-finding output contract.
 - Subagents are **read-only reviewers** — they do not edit the plan. They return findings only.
-- All three personas run on the inherited model (v1 decision 2 — no per-persona override).
+- All three personas run on the inherited model by default (v1 decision 2 — superseded by v2 decision 2: per-persona override available; the terminal qa-gate invocation passes a non-inherited model by default where supported).
 - If a subagent fails/times out, re-dispatch that one persona; never proceed with a missing persona
   (a clean round requires all three).
 
@@ -553,4 +574,19 @@ ADF+Databricks to Fabric with a reviewed execution plan."
 - If a persona subagent fails or times out, re-dispatch that persona; never declare a round (clean or
   otherwise) with a missing persona.
 - Run every checklist item for every round. "This is well-established" is not a reason to skip a check.
+
+## Six-Step Flow (labels)
+
+This skill IS step 1.5 (Planning) of the standard six-step flow for the build skills. Internally
+its loop maps as: 1 Orientation = Step 1 (Orient); 2 "TDD for plans" = the falsifiable success
+criteria + fail-closed gates defined before drafting (the template's quality bars); 3 Build = the
+draft + adversarial 3-persona review rounds (via the named agents, v2 decision 1); 4 E2E = the
+fully-clean-round exit + terminal QA gate; 5 Documentation = the versioned plan + per-round
+consolidated review trail.
+
+## Agent Dispatch (v2)
+
+Dispatch the named agents when present (v2 decision 1) with the plan-review lens; inline persona
+checklists below remain the fallback and stay authoritative for it. qa-gate invocations pass the
+model override (v2 decision 2). Memory writes go through the orchestrator only.
 ```

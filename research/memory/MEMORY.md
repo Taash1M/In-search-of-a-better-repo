@@ -17,7 +17,7 @@
 - [Team AI Enablement](project_team_ai_enablement.md) — 45 users/6 nodes; Jun audit: 13/28 active, 15 dormant, 11 unregistered active (need RITM reconcile); audit Excel in user-config/ (2026-06-29)
 - [Prompt Injector Pack](project_prompt_injector_pack.md) — 5-artifact shareable package (injector+design doc+analysis script+HowTo+Infographic), 3-role review, 8 fixes applied (2026-06-17)
 - [UBI Claude Enablement](project_ubi_claude_enablement.md) — flkubi-claude-enablemen-resource (UBI sub), 9 deployments, Kranthi added Foundry User 2026-07-02 (3 direct users + group of 12)
-- [Skill Framework](project_skill_framework.md) — 41 skills, +ubi-mcp.md (714 lines), 6 patterns extracted, 5 frontmatter fixes (2026-05-12)
+- [Skill Framework](project_skill_framework.md) — 60+ skills; Loop-Engineering pkg v1.0 installed 2026-07-03: 3 skills upgraded + 5 agents + 4 memory files, 24/24 PASS
 - [Skill Evaluation](project_skill_evaluation.md) — 3 repo evals: markitdown 8.7/10 APPROVED, rayfin 2.8/10, agentic-app-with-fabric 6.3/10. Skill Judge A+ tier intact (2026-06-16)
 - [Daily Report](project_daily_report.md) — Weekly status for 8 projects, DOCX close-out + Excel carry-forward
 - [UBI Gold Graph](project_ubi_gold_graph.md) — Neo4j knowledge graph from 431 Gold layer tables, Fabric Lakehouse
@@ -37,7 +37,7 @@
 - [Document Extraction Skill](project_doc_extract.md) — Unified doc-extract skill (ContextGem+RAG-Anything+agentic-doc), B+ 104/120 (2026-04-07)
 - [PLM Drawing Extraction](project_plm_drawing_extraction.md) — Build 4 FINAL (20,345 nodes, 820 drawings), GitHub synced. AWS BDA: 3 blueprints, comparison DOCX (2026-06-19)
 - [PLM Drawing Agent App](project_plm_drawing_agent_app.md) — Build 4 + BoM Quantity DEPLOYED: 1142 USES edges (15/50 FGs), 19 tools, 15/15 test bed PASS, backup in Bkps/ (2026-06-19)
-- [Master Sync Repo](project_sync_repo.md) — GitHub sync repo, 3 scripts, content sanitization active (2026-04-30 security incident + remediation), schannel SSL fix
+- [Master Sync Repo](project_sync_repo.md) — Taash1M/In-search-of-a-better-repo; c1f543b 2026-07-02; +<ORG>/<ORG_PARENT> names sanitized; __file__ path fix; 110+ memory files
 - [Sandbox Logic Apps](project_sandbox_logic_apps.md) — 2 dynamic Logic Apps: sharepoint-copy + api-to-adls, parameterized HTTP triggers, run_ID hierarchy (2026-04-08)
 - [EM Leadership Forum](project_leadership_forum.md) — 29-slide deck, hybrid slide (scorecard+agents), 7-section stamps on 25 slides, Bold Signal Light design (2026-04-17)
 - [Q1 Start Deck](project_q1_start_deck.md) — +Q2 update: status-grouped Drafted Q2 (19 delivered, 40% platform opt) + 2 strat-grouped variants (4 pillars), awaiting user pick before inject to Strat_Q2 slides 19-20 (2026-06-26)

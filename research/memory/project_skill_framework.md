@@ -1,9 +1,43 @@
 ---
 name: Skill Framework and Inventory
-description: 41 skill files (was 40). +ubi-mcp.md (714 lines, MCP operations skill, A grade 109/120). 6 patterns extracted, 5 frontmatter fixes (2026-05-12).
+description: 60+ skill files. Loop-Engineering Upgrade Package v1.0 installed 2026-07-03 — 3 skills upgraded + 5 named review agents + 4 memory files. 24/24 verification PASS.
 type: project
 originSessionId: aa210407-a09e-461f-aa2f-83d0e2fa4475
 ---
+
+## Loop-Engineering Upgrade Package v1.0 (installed 2026-07-03)
+
+**Package:** `<USER_HOME>/OneDrive - <ORG>\Claude Code Desktop\loop-upgrade-package\`
+**Provenance:** `LOOP_SKILL_UPGRADE_PLAN.md` v7, 6 adversarial review rounds, 154 findings, Phase-4 verification PASS.
+**Verification:** 24/24 PASS (line counts + section markers + agent sentinel + memory enum).
+
+### Skills upgraded
+
+| Skill | Old lines | New lines | Key additions |
+|-------|-----------|-----------|---------------|
+| `audit-ubi.md` | 191 | 296 | State Ledger & Delta Reporting, Independent Evaluator, Scheduling (caps 43/86), Discovery Modes |
+| `data-engineering.md` | 2,185 | 2,243 | Six-Step Flow, Stop boundaries, Parallel work & budget (≤40/task), Agent Dispatch, milestone gates, reviewer rule |
+| `data-dev-planning.md` | 556 | 592 | v2 DESIGN DECISIONS, Agent Dispatch v2 (named agents, model separation, verification probes) |
+
+### Agents installed (`~/.claude/agents/`)
+
+| Agent | Type | Purpose |
+|-------|------|---------|
+| `sa-reviewer.md` | NEW | Solutions Architect — adversarial plan + artifact review |
+| `ea-reviewer.md` | NEW | Enterprise Architect — governance, security, cost |
+| `principal-de-reviewer.md` | NEW | Principal DE — contracts, correctness, determinism, audit evaluator mode |
+| `qa-gate.md` | UPGRADED | Terminal verifier — emits `QA-GATE-VERDICT-V1` contract |
+| `dreaming.md` | NEW | Shared consolidation cycle — proposals only, human approves |
+
+**Memory files seeded** (`~/.claude/agents/memory/`): `qa-gate-memory.md`, `sa-reviewer-memory.md`, `ea-reviewer-memory.md`, `principal-de-reviewer-memory.md`. Single-writer (orchestrator); 200-active-row cap; never store secrets.
+
+### Invariants (must not be simplified away)
+- Persona agents NEVER emit the qa-gate sentinel or any `"gate"` JSON object — only `qa-gate` does
+- `accepted` in audit ledger is a user decision — never auto-accept
+- `runtime memory copies are writable`; back-copy to export never overwrites these
+- Audit ledger write ordering: header last = completion marker
+
+
 ## Skill Inventory (updated 2026-04-16)
 
 ### mattpocock/skills Evaluation (2026-04-16)
