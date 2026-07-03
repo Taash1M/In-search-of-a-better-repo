@@ -1,9 +1,35 @@
 ---
 name: Q1 Start Deck
-description: Q1 Summary + Q2-Q4 Upcoming slides with donut chart, 11 initiative cards, Fabric callout, 3-stage QA passed (2026-04-10)
+description: Q1+Q2 Strat data slides (donut, initiative cards, Fabric); Q2 update done — status-grouped + 2 strat-grouped variants, awaiting user pick (2026-06-26)
 type: project
 originSessionId: aa210407-a09e-461f-aa2f-83d0e2fa4475
 ---
+## Q2 UPDATE (2026-06-26)
+
+Reused the Q1 2-slide design to build the **Q2 data slides** for the broader `Fluke IT 2026 Strat _Q2.pptx` deck.
+
+- **Source**: `<USER_HOME>/OneDrive - <ORG>\AI\Strat\Data\Q2\Apr-May-June Deliverables.xlsx` — 3 tabs (Sheet1, May-Week2, June), ~24 deliverables w/ cross-tab dupes. Treated **"Done"="Completed"**. ~19 completed, ~11 in-flight.
+- **File is OneDrive-locked** → `cp` to `%TEMP%` before openpyxl (shutil.copy hits PermissionError; `cp` works).
+- **Excel cp**: `<USER_HOME>/AppData\Local\Temp\q2_data.xlsx`.
+
+### Deliverables built (all in `…\AI\Strat\Data\Q2\`)
+1. **`Drafted Q2.pptx`** (status-grouped, 2 slides) — UPDATED IN PLACE from Q1 leftover content. S1 Q2 Delivered: KPI 19/4/40%, 5 marquee highlights (UBI Funnel 8.8→5GB & 20→12min, Revenue stream 50% SLA, Account 360 Neo4j + Account Search AI, Fortive GL + Kaizen, AI GPT/Claude + 6 integrations), recomputed category bars (OpEff 8/12, BizEnable 7/13, FinAcc 1/2, CostOpt 3/5). S2 Q3–Q4 Roadmap: rebuilt 12-card grid clean (removed orphan Q1 shapes), KPI 10/2/1/13, Fabric callout. Footers → Q2 / Apr–Jun 2026.
+2. **`Q2 Strat-Grouped (2-slide).pptx`** — NEW. 2 slides, 2 pillars each, full-text badges.
+3. **`Q2 Strat-Grouped (1-slide).pptx`** — NEW. 1 slide, 4 pillars side-by-side, status dots + legend.
+
+### Strategic buckets (used in both strat-grouped variants, 6 projects each, capped)
+- **Infrastructure & Platform** (navy 1B4F72): UBI Funnel opt✓, Revenue stream 50%✓, MS Fabric(Planning), ADB Unity Catalog(Ideation), Azure Resource cleanup, Power Automate→Logic Apps
+- **Business Enablement & Commercial** (green 1E8449): Fortive GL✓, President's Kaizen✓, IIR✓, SMC/RMC, Growth IQ, Inventory Rec Tool
+- **AI & Advanced Analytics** (purple 7D3C98): GPT/Claude✓, Account 360 Neo4j✓, Account Search AI✓, Tech Mentor✓, Account 360 P2, VoV Phase 2
+- **Data Integrations & Operations** (gold B9770E): TMO✓, WIP Jobs CoC✓, CSAT rewire✓, Employee/Shipping✓, Brazil Backlog, eMaint
+
+### Status
+**AWAITING USER PICK** among the 3 drafts. After pick → inject winner into `Fluke IT 2026 Strat _Q2.pptx` **slides 19–20** (currently still carry Q1 content). User explicitly said NOT to inject yet.
+- Build scripts: `%TEMP%\build_q2.py` (status-grouped in-place edit), `%TEMP%\build_q2_strat.py` (both strat variants).
+- Backup of pre-edit Drafted Q2: `%TEMP%\Drafted_Q2_BACKUP.pptx`.
+- 1-slide gotcha FIXED: 4 narrow columns can't fit bucket name + count chip on one line → overlap; use 2-line centered header (`show_count=False`) + taller header (HH 0.58).
+- All variants passed programmatic layout QA (0 OOB, 0 overlap, 0 tiny-text) + PNG visual check.
+
 ## Overview
 
 Update the "Data Related Slides" (24 & 25) in the Q1 strategy deck with content from the March impact deliverables Excel, plus a visual upgrade. Three standalone variation PPTXs built with an executive summary slide, then a focused 2-slide update (Q1 Summary + Q2-Q4 Upcoming) with UBI Data Coverage donut chart and initiative cards.

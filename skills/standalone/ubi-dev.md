@@ -27,6 +27,7 @@ What do you need?
 ├─ Create/modify ADF pipeline → §ADF Conventions (naming, parameters, triggers, ARM templates)
 ├─ Create/modify Power BI model → §PBI Semantic Models (dataset definitions, refresh setup)
 ├─ Run tests or validate changes → §TDD Workflow (gate functions, characterization tests)
+├─ Query live services (Databricks, ADF, ADLS, ADO, PBI, Fabric) → Use /ubi-mcp instead
 └─ Investigate production data → Read-only in Prod (Access Control Rule 1), compare with Dev
 ```
 

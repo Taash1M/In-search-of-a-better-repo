@@ -1,6 +1,6 @@
 ---
 name: Obsidian SecondBrain
-description: Obsidian vault as Claude's persistent second brain — auto-logging hook, CLAUDE.md read/write instructions, session logs in 1-Projects/Claude Sessions/, MCP (npx.cmd fix), 8 templates
+description: Obsidian vault as Claude's persistent second brain — session logger hook, memory sync hook (68 files → 3-Resources/Claude Memory/), CLAUDE.md read/write instructions, MCP (npx.cmd fix), 8 templates
 type: project
 originSessionId: aa210407-a09e-461f-aa2f-83d0e2fa4475
 ---
@@ -66,3 +66,16 @@ originSessionId: aa210407-a09e-461f-aa2f-83d0e2fa4475
 - **Project note**: `1-Projects/Obsidian Second Brain.md` seeded
 - **Self-protecting**: Hook skips writes to its own session file (no recursion)
 - **Read-only filter**: Skips logging for cat/ls/grep/git-status type commands
+
+## Memory Sync Hook (2026-06-04)
+- **Hook**: `obsidian-memory-sync.py` — PostToolUse on Edit/Write/MultiEdit, auto-syncs memory files to `3-Resources/Claude Memory/`
+- **Trigger**: Any write to `~/.claude/projects/C--WINDOWS-system32/memory/*.md` (excludes MEMORY.md index)
+- **Protections**:
+  - Content-hash comparison (SHA-256, trailing whitespace stripped) — skips if unchanged
+  - 60-second dedup window on session log entries per filename
+  - Daily orphan detection — flags Obsidian notes whose source was deleted with `[!warning] ORPHANED` callout
+  - Atomic writes (.tmp → os.replace) to prevent OneDrive sync conflicts
+  - `.sync_state.json` tracks per-file hashes, timestamps, last orphan check
+- **Obsidian output**: Each synced note gets `auto-synced` tag, `synced_from`/`last_synced`/`source_hash` frontmatter, and info callout
+- **Initial backfill**: 68 memory files synced on creation (2026-06-04)
+- **Session log**: Appends `MemorySync` entries only when content actually changed

@@ -27,7 +27,7 @@ The script searches Inbox for emails with "claude", "Claude Code", "CLI access",
 Compare scan results against the current DOCX table. Look for:
 - Direct requests ("I would like access", "requesting access", "please enable", "can you provide claude code to")
 - Forwarded requests from Eshwari Mulpuru (CC'd people = the requestees)
-- Teams chat notifications (from `system-notification@<ORG_DOMAIN>`) containing access requests
+- Teams chat notifications (from `system-notification@fortive.com`) containing access requests
 
 Filter OUT:
 - Setup guide thread replies (existing team members)
@@ -79,10 +79,14 @@ def sort_key(row):
 - Paragraphs with `FP&A`: the `&` can get mangled — always verify after save
 - The explorer.exe trick: exit code 1 is normal (explorer returns immediately), poll the log file
 
-## Current State (2026-04-28)
-- **16 total requests**: 8 fulfilled (17 seats), 8 pending (17 seats)
-- **Fulfilled**: Knabe, Bergstrom, Erickson, Moeller(5), Johnston, Kalra, Eshwari team(6), Treg Vanden Berg(1)
-- **Pending**: King(5), Cornely(1), Moore/Hartmann(1), Nebeker(1), Schultz(1), Bridges(6), Tomlinson/Sandeep(1), McNeal(1)
-- **Routed to GitHub Copilot**: Andy Nguyen (from original Treg+Andy request)
+## Current State (2026-05-28)
+- **26 total requests**: 12 fulfilled (~21 seats), 12 pending (~23 seats), 2 routed to GitHub Copilot
+- **Fulfilled**: Knabe(1), Bergstrom(1), Erickson(1), Moeller(5), Johnston(1), Kalra(1), Eshwari team(6), Treg(1), Nebeker(1), Hartmann(1), Kathleen Wang(1), **Rachel King(5)** (moved from Pending May 28)
+- **Pending**: Cornely(1), Schultz(2), Bridges(6), McNeal(1), Straka(1), Poondla(1), Schuster(1), Johnson(1), Pilla(1), Jack Henry(1), **Venkata Mahesh Nandam(1)** (new May 28), **Marco Rossi(1)** (new May 28)
+- **Routed to GitHub Copilot**: Andy Nguyen, Todd Tomlinson (+Sandeep)
+- **Undocumented SG additions**: Joe Seefried, Gavin Smith, Kathleen Wang (all node-3, no request on file)
+- **Enterprise rollout**: Fortive signed enterprise Claude contract with Anthropic. Wave 1 (Fluke, FHS, Fortive corporate) live May 26, Wave 2 (Gordian, ISC, ServiceChannel, Censis) May 27, Accruent+Provation May 28
+- **Enterprise workbook**: `Enterprise Licenses/Claude Users Access - Fluke.xlsx` — 70 Wave 1 users across 11 orgs (Eligible/Blocked/Wave 1 tabs)
+- **Enablement notice**: `Enterprise Licenses/Claude Code enablement notice.docx` — consultant-grade 2-pager with FAQ for C-Suite/Directors
 - **Also check**: .msg files and .docx files in the requests folder for non-email submissions
 - **Eshwari directive (Apr 22)**: All CLI requests should be routed through her for approval

@@ -292,7 +292,7 @@ info:
   description: "AI-powered API for {{ archetype }} use case"
   contact:
     name: "Fluke AI Team"
-    email: "ai-team@<ORG_DOMAIN>"
+    email: "ai-team@fluke.com"
 servers:
   - url: "https://flk-{{ app_slug }}-func-{{ env }}.azurewebsites.net/api"
     description: "{{ env | upper }} environment"

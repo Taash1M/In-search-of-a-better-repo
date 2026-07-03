@@ -1,6 +1,6 @@
 ---
 name: flk-litellm
-description: "Deploy and configure LiteLLM proxy gateways on Azure App Service for routing Claude/Anthropic models through Azure AI Foundry. Translates OpenAI-format requests to Anthropic Messages API. Use when deploying a LiteLLM gateway, configuring OpenAI-compatible endpoints for Claude, troubleshooting Claude for Excel/PowerPoint connectivity, or managing API key rotation. Trigger on: 'LiteLLM', 'litellm', 'gateway', 'OpenAI proxy', 'Claude for Excel', 'Claude for PowerPoint', 'API translation'."
+description: "Deploy and configure LiteLLM proxy gateways on Azure App Service for routing Claude/Anthropic models through Azure AI Foundry. 5 production gateways (POC + Nodes 0-3), Docker v6, content logging + Haiku safety analysis, 19 Delta tables, DuckDB ETL on VM, 10 PBI pages, 31 users. Trigger on: 'LiteLLM', 'litellm', 'gateway', 'OpenAI proxy', 'Claude for Excel', 'Claude for PowerPoint', 'API translation', 'content logging', 'safety analysis'."
 ---
 
 # LiteLLM Gateway Deployment Skill for Azure App Service
@@ -21,29 +21,65 @@ However, clients like the **Claude for Excel/PowerPoint add-in** require OpenAI-
 
 Azure AI Foundry returns **HTTP 404 `api_not_supported`** for these endpoints. LiteLLM bridges the gap by translating OpenAI-format requests into Anthropic Messages API calls.
 
-## Architecture
+## Architecture (Multi-Node, v6)
+
+5 production gateways serving 31 users across 4 SGs. All on Docker v6 with content logging.
 
 ```
-Claude for Excel/PowerPoint Add-in
+Claude for Excel/PowerPoint / Claude Code / Direct API
     |
     | POST /chat/completions (OpenAI format)
-    | GET /v1/models
     | Authorization: Bearer <LITELLM_MASTER_KEY>
     v
-Azure App Service (Linux, B1)
+5x Azure App Service (Linux, B1) — Docker v6
+    ├── POC:    flk-team-ai-llm-gateway           (GATEWAY_NODE=poc)
+    ├── Node 0: flk-team-ai-llm-gateway-node-0    (GATEWAY_NODE=node0)
+    ├── Node 1: flk-team-ai-llm-gateway-node1     (GATEWAY_NODE=node1)
+    ├── Node 2: flk-team-ai-llm-gateway-node2     (GATEWAY_NODE=node2)
+    └── Node 3: flk-team-ai-llm-gateway-node3     (GATEWAY_NODE=node3)
     |
-    | Custom Docker image: litellm-gateway:v1
-    | LiteLLM proxy with baked-in config.yaml
-    |
-    | POST /anthropic/v1/messages (Anthropic format)
-    | x-api-key: <AZURE_AI_API_KEY>
-    v
-Azure AI Foundry (AI Services resource)
-    |
-    | Claude Opus 4.6, Sonnet 4.6, Haiku 4.5
-    v
-Anthropic (via Azure backbone)
+    ├──→ Anthropic API (inference via Azure AI Foundry)
+    ├──→ litellm-logs/ (metadata blobs — existing)
+    └──→ litellm-content-logs/ (full request/response — NEW in v6)
+              └──→ {node}/{YYYY}/{MM}/{DD}/{HH}/{request_id}.json
+
+ETL (every 6h on VM — llm-usage-duckdb-vm):
+  litellm-logs/ + litellm-content-logs/ + diagnostic logs
+    ──→ Bronze → Silver → Haiku Analysis → Gold → Delta Lake
+    ──→ Fabric Lakehouse shortcuts → PBI DirectLake (10 pages)
 ```
+
+### Gateway Inventory
+
+| App Service | Node | Image Tag | Models |
+|-------------|------|-----------|--------|
+| `flk-team-ai-llm-gateway` | poc | v6 | opus, sonnet, haiku |
+| `flk-team-ai-llm-gateway-node-0` | node0 | v6 | opus, sonnet, haiku |
+| `flk-team-ai-llm-gateway-node1` | node1 | v6 | opus, sonnet, haiku |
+| `flk-team-ai-llm-gateway-node2` | node2 | v6 | opus, sonnet, haiku |
+| `flk-team-ai-llm-gateway-node3` | node3 | v6 | opus, sonnet, haiku |
+
+### Content Logging (v6 Addition)
+
+Each gateway runs a `ContentLogger` async callback that captures full request/response content to Azure Blob Storage. Zero impact on API response latency — callback fires post-response via `asyncio.create_task()`.
+
+**Key files per node:**
+- `content_logger.py` — async callback, blob writes via `run_in_executor`
+- `config.yaml` — includes `callbacks: content_logger.logger_instance`
+
+**Kill switch:** `CONTENT_LOGGING_ENABLED=false` env var disables per-node in <30s.
+
+**Blob path:** `litellm-content-logs/{node}/{YYYY}/{MM}/{DD}/{HH}/{request_id}_{epoch_ms}.json`
+
+### Usage Tracking Pipeline
+
+19 Delta tables processed by `llm_usage_etl_v2.py` on `llm-usage-duckdb-vm` (DuckDB, 6h cron):
+- **Metadata ETL:** LiteLLM logs → llm_usage fact table + dimensions
+- **Diagnostic ETL:** Azure AI diagnostic NDJSON → user_activity + dim_aad_users
+- **Content ETL:** Content blobs → Bronze → Silver → Haiku safety analysis → Gold aggregates + alerts
+- **Health checks:** 7 checks across all gateways
+
+**PBI Report:** 10 pages (Dashboard, Data Table, User Tracking, Health Monitoring, ETL Monitor, User Activity, AAD Diagnostics, README-Safety, Content Analysis, Content Alerts). 22 relationships in semantic model. Fabric DirectLake mode.
 
 ## What Works
 
@@ -51,18 +87,15 @@ Anthropic (via Azure backbone)
 
 Build a custom image that copies `config.yaml` into the image at build time. This is the **only reliable method** for Azure App Service.
 
-**Dockerfile:**
+**Dockerfile (v6 — with content logging):**
 ```dockerfile
 FROM ghcr.io/berriai/litellm:main-latest
-
-# Bake config into the image - bypasses Azure App Service /home/ mount issues
+COPY content_logger.py /app/content_logger.py
 COPY config.yaml /app/config.yaml
-
-# Override CMD to use the baked-in config
 CMD ["--config", "/app/config.yaml", "--port", "4000"]
 ```
 
-**config.yaml:**
+**config.yaml (v6 — with callbacks):**
 ```yaml
 model_list:
 - model_name: claude-opus-4-6
@@ -88,7 +121,13 @@ model_list:
       x-api-key: os.environ/AZURE_AI_API_KEY
 litellm_settings:
   drop_params: true
+  num_retries: 2
+  request_timeout: 120
+  callbacks: content_logger.logger_instance
+  failure_callback: content_logger.logger_instance
 ```
+
+**Note:** `callbacks` is a bare string, NOT a list. LiteLLM splits on `.` to load `/app/content_logger.py` and get `logger_instance`.
 
 **Build and push via ACR cloud build (no local Docker needed):**
 ```bash
@@ -409,6 +448,7 @@ curl -H "Authorization: Bearer $TOKEN" \
 | `api_not_supported` (404 from Foundry) | Client hitting Foundry directly | Route through LiteLLM |
 | Health timeout on first deploy | Image pulling (~4 min for 1.2GB) | Wait longer, check docker.log |
 | `401 Unauthorized` on inference | Wrong `LITELLM_MASTER_KEY` | Check `Authorization: Bearer <key>` |
+| `No connected db.` (400) | **Misleading.** In config-only mode (no DATABASE_URL), this means the Bearer token doesn't match that node's `LITELLM_MASTER_KEY`. Each gateway has its OWN unique master key — POC key does NOT work on nodes 0-3. | Use the correct per-node key. Query: `az webapp config appsettings list --name <app> --resource-group flk-team-ai-enablement-rg --query "[?name=='LITELLM_MASTER_KEY'].value" -o tsv` |
 | Model not found | `model_name` in config doesn't match request | Names are case-sensitive |
 
 ### Cost
@@ -421,15 +461,29 @@ curl -H "Authorization: Bearer $TOKEN" \
 
 | Resource | Value |
 |----------|-------|
-| App Service | `flk-team-ai-llm-gateway` |
+| App Services (5) | POC: `flk-team-ai-llm-gateway`, Node 0-3 (see Gateway Inventory above) |
 | Resource Group | `flk-team-ai-enablement-rg` |
 | ACR | `flkdockerregistry` |
-| Image | `flkdockerregistry.azurecr.io/litellm-gateway:v1` |
-| AI Services | `flk-team-ai-enablement-ai` |
-| Gateway URL | `https://flk-team-ai-llm-gateway.azurewebsites.net` |
-| Health Check | `https://flk-team-ai-llm-gateway.azurewebsites.net/health/liveliness` |
+| Current Image Tag | `litellm-{node}:latest` (all nodes, updated 2026-05-12 with azure_correlation_id) |
+| AI Services | `flk-team-ai-enablement-ai` (East US 2) |
 | Models | claude-opus-4-6, claude-sonnet-4-6, claude-haiku-4-5 |
+| Storage Account | `flkaienablement` (metadata + content blobs + Delta Lake) |
+| ETL VM | `llm-usage-duckdb-vm` (DuckDB, 6h cron, auto-deallocate) |
+| PBI Report | `LLM_Gateway_Usage_Tracking_DirectLake` (10 pages, 22 relationships) |
+| Delta Tables | 19 total (13 metadata + 6 content) |
+| Users | 31 across 4 SGs (AAD auth) |
 | Subscription | Fluke AI ML Technology (`77a0108c-5a42-42e7-8b7a-79367dbfc6a1`) |
+
+### Content Logging Env Vars (per App Service)
+
+| Variable | Purpose |
+|----------|---------|
+| `GATEWAY_NODE` | Node identifier (poc, node0, node1, node2, node3) |
+| `CONTENT_LOGGING_ENABLED` | Kill switch (true/false) |
+| `AZURE_STORAGE_CONNECTION_STRING` | Blob storage access |
+| `AZURE_AI_API_KEY` | AI Foundry model access |
+| `LITELLM_MASTER_KEY` | Client authentication |
+| `WEBSITES_PORT` | Container port (4000) |
 
 ## Key Lessons Learned
 

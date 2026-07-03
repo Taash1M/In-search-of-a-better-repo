@@ -1,6 +1,6 @@
 ---
 name: Skill Framework and Inventory
-description: 40 skill files (was 37). +3 new from mattpocock/skills (qa-session, github-triage, ubiquitous-language), 6 patterns extracted, 5 frontmatter fixes (2026-04-16).
+description: 41 skill files (was 40). +ubi-mcp.md (714 lines, MCP operations skill, A grade 109/120). 6 patterns extracted, 5 frontmatter fixes (2026-05-12).
 type: project
 originSessionId: aa210407-a09e-461f-aa2f-83d0e2fa4475
 ---
@@ -40,6 +40,7 @@ Evaluated 19 skills from `https://github.com/mattpocock/skills.git`. Security: P
 | Skill | Purpose | Enhanced |
 |---|---|---|
 | `ubi-dev.md` | UBI platform development (streams, notebooks, ADF, PBI) | Task tracking, workflow rules, severity levels (2026-03-30) |
+| `ubi-mcp.md` | MCP server operations — ADF, Databricks, ADLS, ADO, PBI, Fabric | NEW (2026-05-12) — 714 lines, standalone peer to ubi-dev, A grade (109/120) |
 | `audit-ubi.md` | Multi-agent UBI codebase health audit | NEW (2026-03-30) — parallel fan-out by stream, P0-P3 severity |
 | `polish-notebook.md` | Iterative Databricks notebook quality loop | NEW (2026-03-30) — lint/test/simplify/review, max 3 iterations |
 | `session-review.md` | Lesson extraction with priority-ranked routing | NEW (2026-03-30) — 7 priority levels, skill>project>memory routing |

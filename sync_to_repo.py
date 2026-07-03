@@ -27,7 +27,7 @@ if sys.stdout.encoding != "utf-8":
 
 # ─── Configuration ───────────────────────────────────────────────────────────
 
-REPO_ROOT = Path(r"<USER_HOME>/OneDrive - <ORG>\Claude code\In search of a more perfect repo")
+REPO_ROOT = Path(__file__).resolve().parent
 CLAUDE_DIR = Path(os.path.expanduser("~")) / ".claude"
 
 SECRET_KEY_PATTERNS = re.compile(r"(KEY|SECRET|TOKEN|PASSWORD)", re.IGNORECASE)
@@ -143,14 +143,53 @@ def resolve_path(p: str) -> Path:
     return Path(p)
 
 
+# Sanitization rules — loaded from environment so the repo copy stays free of
+# personal identifiers. Set CLAUDE_SYNC_USER / CLAUDE_SYNC_ADMIN in your shell
+# profile before running (defaults keep the script functional on first clone).
+_U = os.environ.get("CLAUDE_SYNC_USER", "<USER>")
+_A = os.environ.get("CLAUDE_SYNC_ADMIN", "<ADMIN_USER>")
+_EMAIL_ORG = os.environ.get("CLAUDE_SYNC_EMAIL_ORG", "<USER>@<ORG_DOMAIN>")
+_EMAIL_GMAIL = os.environ.get("CLAUDE_SYNC_EMAIL_GMAIL", "<USER>@<PERSONAL_DOMAIN>")
+
+SANITIZE_RULES = [
+    (re.compile(r"C:[/\\]Users[/\\]" + re.escape(_A) + r"[/\\]?"), "<ADMIN_HOME>/"),
+    (re.compile(r"C:[/\\]Users[/\\]" + re.escape(_U) + r"[/\\]?"), "<USER_HOME>/"),
+    (re.compile(r"OneDrive - Fortive"), "OneDrive - <ORG>"),
+    (re.compile(r"/home/azureuser/"), "<VM_HOME>/"),
+    (re.compile(r"\b" + re.escape(_EMAIL_ORG.split("@")[0]) + r"@fluke\.com\b"), "<USER>@<ORG_DOMAIN>"),
+    (re.compile(r"\b" + re.escape(_EMAIL_ORG.split("@")[0]) + r"@fortive\.com\b"), "<USER>@<ORG_DOMAIN>"),
+    (re.compile(r"\b" + re.escape(_EMAIL_GMAIL.split("@")[0]) + r"@gmail\.com\b"), "<USER>@<PERSONAL_DOMAIN>"),
+    (re.compile(r"\b" + re.escape(_A) + r"\b"), "<ADMIN_USER>"),
+    (re.compile(r"\b" + re.escape(_U) + r"\b"), "<USER>"),
+]
+
+TEXT_EXTENSIONS = {".md", ".py", ".json", ".yaml", ".yml", ".toml", ".txt"}
+
+
+def _sanitize_text(text: str) -> str:
+    """Apply all sanitization rules to a text string."""
+    for pattern, replacement in SANITIZE_RULES:
+        text = pattern.sub(replacement, text)
+    return text
+
+
 def sanitize_settings(src: Path) -> str:
-    """Read settings.json, redact secrets, return sanitized JSON string."""
+    """Read settings.json, redact secrets, sanitize paths, return sanitized JSON string."""
     data = json.loads(src.read_text(encoding="utf-8"))
     env = data.get("env", {})
     for key in env:
         if SECRET_KEY_PATTERNS.search(key):
             env[key] = "<REDACTED — set via environment>"
-    return json.dumps(data, indent=2, ensure_ascii=False)
+    return _sanitize_text(json.dumps(data, indent=2, ensure_ascii=False))
+
+
+def _sanitized_copy(src: Path, dest: Path) -> None:
+    """Copy a file to dest, sanitizing text files. Binary files are copied as-is."""
+    if src.suffix.lower() in TEXT_EXTENSIONS:
+        text = src.read_text(encoding="utf-8", errors="replace")
+        dest.write_text(_sanitize_text(text), encoding="utf-8")
+    else:
+        shutil.copy2(str(src), str(dest))
 
 
 def sync_file(src_str: str, dest_rel: str, dry_run: bool = False, sanitize: bool = False) -> str:
@@ -173,7 +212,7 @@ def sync_file(src_str: str, dest_rel: str, dry_run: bool = False, sanitize: bool
         if sanitize:
             dest.write_text(sanitize_settings(src), encoding="utf-8")
         else:
-            shutil.copy2(str(src), str(dest))
+            _sanitized_copy(src, dest)
 
     return "copied"
 
@@ -265,7 +304,7 @@ def auto_discover(category: str, dry_run: bool = False) -> list:
                     if not dry_run:
                         dest = REPO_ROOT / "skills/standalone"
                         dest.mkdir(parents=True, exist_ok=True)
-                        shutil.copy2(str(f), str(dest / f.name))
+                        _sanitized_copy(f, dest / f.name)
             for d in commands_dir.iterdir():
                 if d.is_dir() and d.name not in known_dirs and d.name != "ai-ucb" and d.name != "__pycache__":
                     dest_rel = f"skills/standalone/{d.name}/"
@@ -283,7 +322,7 @@ def auto_discover(category: str, dry_run: bool = False) -> list:
                     if not dry_run:
                         dest = REPO_ROOT / "research/memory"
                         dest.mkdir(parents=True, exist_ok=True)
-                        shutil.copy2(str(f), str(dest / f.name))
+                        _sanitized_copy(f, dest / f.name)
 
     elif category == "hooks":
         known = {resolve_path(src).name for src, _ in SYNC_MAP["hooks"]}
@@ -295,7 +334,7 @@ def auto_discover(category: str, dry_run: bool = False) -> list:
                     if not dry_run:
                         dest = REPO_ROOT / "configurations/hooks"
                         dest.mkdir(parents=True, exist_ok=True)
-                        shutil.copy2(str(f), str(dest / f.name))
+                        _sanitized_copy(f, dest / f.name)
 
     return new_files
 

@@ -1,7 +1,8 @@
 ---
-name: Skill Evaluation (mattpocock/skills + Cocoon-AI)
-description: Evaluated mattpocock/skills (19 skills) + Cocoon-AI/architecture-diagram-generator — semantic color system added to 3 skills, dark arch pattern for PPTX, 6 patterns extracted. Skill Judge re-eval (revised 2026-04-17): azure-diagrams A+ (112), docx-beautify A+ (112), ubi-dev A (110), powerpoint-create A (106). D5 re-scored per no-split policy.
-type: project
+name: Skill Evaluation (skills + repos)
+description: Skill evaluations (mattpocock/skills, Cocoon-AI, ubi-mcp) + repo evaluations (microsoft/rayfin 2.8/10, Azure-Samples/agentic-app-with-fabric 6.3/10). Skill Judge scores and repo-eval reports in Skill Evaluation folder (2026-06-16).
+metadata:
+  type: project
 originSessionId: f4d03941-dd0b-44f2-bb99-51b65b072972
 ---
 ## Overview
@@ -118,6 +119,69 @@ Key finding: the 3 highest-rated skills all use progressive disclosure. Our skil
 
 User decided against progressive disclosure splits. Rationale: skills are slash commands (pay-per-use context), not ambient. A 2,885-line file is ~2% of 200k context window. Decision trees at the top provide fast routing without file management overhead. Only revisit if context limits hit in practice.
 
+### ubi-mcp.md Evaluation (2026-05-12)
+
+New standalone MCP operations skill — peer to ubi-dev (not sub-skill). 714 lines after 5 quality fixes.
+
+| Dimension | Score | Notes |
+|---|---|---|
+| D1 Knowledge Delta (20) | 17 | Operational discoveries, anti-patterns, cross-server workflows |
+| D2 Mindset+Procedures (15) | 13 | Master decision tree (9 branches), diagnostic reasoning in walkthrough |
+| D3 Anti-Patterns (15) | 13 | 8 gotchas (G1-G8) with BAD/GOOD examples |
+| D4 Spec Compliance (15) | 14 | YAML frontmatter, imperative voice, env context |
+| D5 Progressive Disclosure (15) | 14 | Decision tree routing, section independence |
+| D6 Freedom Calibration (15) | 13 | Env-gated writes (Dev only), explicit read-only for Prod/QA |
+| D7 Pattern Recognition (10) | 9 | SOBacklog walkthrough, cross-server chaining |
+| D8 Practical Usability (15) | 13 | Installation status, auth troubleshooting, env table |
+| **TOTAL** | **109/120** | **A** |
+
+**5 fixes applied** (96→109): operational discoveries section, cross-server diagnostic reasoning, severity markers on gotchas, end-to-end walkthrough, expanded anti-patterns with BAD/GOOD.
+
+**5 additional improvements identified** for A+ (115): UBI-specific pipeline mappings (D1+2), severity markers on remaining gotchas (D3+1), error recovery in walkthrough (D8+1), diagnostic reasoning on remaining workflows (D2+1), MCP vs Local decision heuristic (D6+1).
+
 ### powerpoint-create Decision Tree Added (2026-04-16)
 
 7-branch decision tree added to powerpoint-create.md (the last of the 4 skills to get one). All 4 skills now have top-level decision trees. Pushed to GitHub (`f89482b`).
+
+## Repo Evaluations (2026-06-16)
+
+Used `/repo-eval` skill for full evaluations. Reports in `Skill Evaluation/` folder. Repos cloned to `rayfin-review/` and `agentic-app-with-fabric-review/`.
+
+### microsoft/rayfin — 2.8/10 — Not Recommended
+
+- **What:** Microsoft BaaS platform for Fabric — define data models with TS decorators, get DB/auth/APIs/storage/hosting
+- **State:** Hub repo with zero source code. All 15 packages published on npm (v1.33.2) but repo is README stubs only ("source code coming soon")
+- **License:** MIT
+- **Interesting:** Claude Code plugin skill (SKILL.md) uses "route, don't improvise" anti-hallucination pattern — always defers to version-locked in-project docs
+- **Action:** Star and revisit when source is opened. Test `npm create @microsoft/rayfin@latest` against our Fabric workspace
+- **Report:** `rayfin-evaluation.md`
+
+### Azure-Samples/agentic-app-with-fabric — 6.3/10 — Conditional (study only)
+
+- **What:** Full-stack multi-agent banking demo (LangGraph + Flask + React + Fabric)
+- **Stack:** Python/Flask (11,890 LOC), React/Vite/TS (19 files), LangGraph (5 agents), Fabric SQL DB + Cosmos DB + Lakehouse + Semantic Model + PBI Report + Eventhouse + Data Agent MCP
+- **License:** MIT
+- **Strengths:** Architecture (8/10), feature completeness (9/10), documentation (8/10), deployment automation (`setup_workspace.py` — 1,602 lines, 14-step idempotent provisioner)
+- **Gaps:** Zero tests (0/10), wide-open CORS, user impersonation via X-User-Id header, SQL keyword blacklist bypassable, no CI/CD
+- **Valuable patterns for Fluke:**
+  - LangGraph coordinator -> specialist routing with graceful fallback (fabric_agent -> account_agent)
+  - Fabric workspace deployment automation (idempotent, retry loops, token injection, interactive/CI modes)
+  - Real-time monitoring: App events -> Eventstream -> Eventhouse -> KQL Dashboard
+  - Fabric Data Agent as MCP tool in LangGraph workflow
+- **Action:** Study patterns, extract `setup_workspace.py` for UBI Fabric automation. Do not deploy as-is.
+- **Report:** `agentic-app-with-fabric-evaluation.md`
+
+### microsoft/markitdown — 8.7/10 — Approved for Adoption
+
+- **What:** Python utility + CLI for converting files to Markdown, optimized for LLM ingestion
+- **Stack:** Python 3.10+ (12,558 LOC), 20 built-in converters, Hatch build system, 3 packages (core, MCP, OCR)
+- **Version:** 0.1.6, 309 commits, MIT license, built by Microsoft AutoGen team
+- **Strengths:** Architecture (9/10), code quality (9/10), security (8/10), feature completeness (10/10 — 20 converters), deployment (9/10 — Dockerfile+MCP+CLI+PyPI), testing (7/10 — 14 test files, CI on PRs), documentation (9/10)
+- **Formats:** PDF, DOCX, PPTX, XLSX/XLS, HTML, CSV, RSS/XML, EPUB, images (EXIF+OCR), audio, Outlook .msg, Jupyter notebooks, ZIP, YouTube URLs, Wikipedia, Bing SERP, Azure Doc Intel, Azure Content Understanding
+- **Key patterns:** Converter `accepts()`/`convert()` contract, priority-based registration, Magika content-type detection, defusedxml for all XML, plugin system via entry_points, frozen StreamInfo dataclass
+- **Security:** defusedxml, html.escape, JS stripping, Docker non-root, SSRF documented as caller responsibility, ExifTool path restricted
+- **MCP server:** `markitdown-mcp` — STDIO + SSE + Streamable HTTP, single `convert_to_markdown(uri)` tool
+- **Valuable for Fluke:** Direct doc-extract replacement, MCP server for Claude Code fleet, Azure CU integration for PLM drawings, plugin system for Fluke-specific converters, PDF table extraction with adaptive column clustering
+- **Action:** Install (`pip install markitdown[all]`), add MCP server, evaluate as doc-extract replacement, test Azure CU integration
+- **Benchmark (2026-06-16):** Product 5594650 (FLUKE-II905), 18 docs, 11 components. **24x faster, 5.5x cheaper** than Claude Vision. 5 EXCELLENT, 3 GOOD, 7 WEAK, 3 FAIL (image-only). Hybrid routing recommended: >=2K chars use MarkItDown, <500 chars fall back to vision. 80% cost reduction projected. Results at `Technical Validation\MarkItDown\`.
+- **Reports:** `markitdown-evaluation.md` (repo eval), `Technical Validation\MarkItDown\benchmark_report.md` (benchmark)

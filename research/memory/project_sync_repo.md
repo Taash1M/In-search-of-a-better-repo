@@ -1,6 +1,6 @@
 ---
 name: Master Sync Repo
-description: Private GitHub repo (Taash1M/In-search-of-a-better-repo) for syncing Claude Code skills, hooks, configs, memory, MCPs across devices. Auto-sync hook wired in settings.json. 3 scripts (sync, push, hook).
+description: Private GitHub repo (Taash1M/In-search-of-a-better-repo) for syncing Claude Code skills, hooks, configs, memory, MCPs across devices. Auto-sync hook wired in settings.json. 3 scripts (sync, push, hook). Content sanitization layer active since 2026-04-30.
 type: project
 originSessionId: aa210407-a09e-461f-aa2f-83d0e2fa4475
 ---
@@ -28,6 +28,7 @@ Master sync repo for all Claude Code assets. Enables identical setups across mul
 - **What it does**: Copies modified files from live Claude Code locations to OneDrive clone
 - **Watches**: skills (`~/.claude/commands/`), hooks, memory, settings.json, MCP source dirs
 - **Settings.json**: Auto-redacts secrets (API keys → `<REDACTED>`) before copying
+- **Content sanitization** (added 2026-04-30): ALL text files (.md, .py, .json, .yaml, .yml, .toml) are sanitized before writing. Replaces local paths, usernames, email addresses, and org names with generic placeholders (`<USER_HOME>/`, `<ADMIN_HOME>/`, `<USER>`, `<ADMIN_USER>`, `<ORG>`, `<USER>@<ORG_DOMAIN>`, etc.). Implemented via `SANITIZE_RULES` list of 9 compiled regex patterns and `_sanitize_content()` function.
 - **Skill routing**: 23 named overrides (ai-ucb, document, knowledge-graph), default → standalone/
 - **Skill subdirs**: Handles `commands/frontend-slides/`, `commands/notebooklm/` etc. recursively
 - **MCP routing**: More-specific paths ordered first (data/ before general src/)
@@ -76,3 +77,28 @@ rm /c/Users/<USER>/repo-sync-bundle.bundle
 - **SSL fix required**: Both clones need `git config http.sslBackend schannel` for push to work through corporate proxy
 - MCP servers synced under `modules/mcp-servers/<name>/` — repo-sync.py watches MCP source dirs
 - `sync_to_repo.py` SYNC_MAP must be kept in sync with `repo-sync.py` SKILL_OVERRIDES — both route files to the same destinations
+
+## Security Incident & Remediation (2026-04-30)
+
+**Incident**: GitHub push on 2026-04-29 (commit `91cd35b`) triggered a DLP/security alert for containing "User details or company related projects" — local file paths with usernames, email addresses, and org names in synced content (hooks, memory, skills).
+
+**Root cause**: `repo-sync.py` redacted API keys in settings.json but did NOT sanitize personal identifiers (paths, usernames, emails) in other file types.
+
+**Fix (two-layer)**:
+1. **Preventive**: Added `SANITIZE_RULES` (9 regex patterns) and `_sanitize_content()` to `repo-sync.py` — ALL future synced text files are auto-sanitized before writing to the repo clone
+2. **Corrective**: One-time sanitization pass on 72 existing tracked files in the repo (committed as `e4d6843`, pushed 2026-04-30)
+
+**Sanitization patterns**:
+| Pattern | Replacement |
+|---------|-------------|
+| `<ADMIN_HOME>/` | `<ADMIN_HOME>/` |
+| `<USER_HOME>/` | `<USER_HOME>/` |
+| `OneDrive - <ORG>` | `OneDrive - <ORG>` |
+| `<VM_HOME>/` | `<VM_HOME>/` |
+| `<USER>@<ORG_DOMAIN>` | `<USER>@<ORG_DOMAIN>` |
+| `<USER>@<ORG_DOMAIN>` | `<USER>@<ORG_DOMAIN>` |
+| `<USER>@<PERSONAL_DOMAIN>` | `<USER>@<PERSONAL_DOMAIN>` |
+| `<ADMIN_USER>` | `<ADMIN_USER>` |
+| `<USER>` | `<USER>` |
+
+**Verification**: Full scan confirmed zero remaining personal identifiers in all tracked files. Brand names (Fluke, Fortive) retained in descriptive content — these are public company names, not PII.

@@ -174,6 +174,49 @@ When PBI bar/donut charts show a blank bar, it means fact table records have a f
 
 **How to apply:** When adding new LiteLLM gateway deployments or model configurations, always check that DIM_MODELS and DIM_NODES have matching entries. Add catch-all rows for any potential orphans.
 
+## OneLake shortcuts use delegated identity — no owner-identity mode
+Internal OneLake shortcuts (lakehouse-to-lakehouse within the same tenant) always use **delegated user identity**. When a user queries a shortcut, Fabric authenticates the data read against the SOURCE lakehouse using that user's credentials. There is no "owner identity" or "service account" mode for internal shortcuts.
+
+**Implication:** Every downstream user who queries a shortcut must have at least ReadAll on the source lakehouse. To achieve complete permission isolation, replace shortcuts with managed tables populated by a pipeline (which runs under a workspace identity or service principal).
+
+**OneLake Data Access Roles (DAR)** can restrict access to specific tables without a workspace role, but require tenant admin to enable "Users can define OneLake data access roles" in Fabric Admin Portal. On Fortive tenant, this setting is currently **disabled** (returns `UniversalSecurityFeatureDisabledForWorkspace`).
+
+**Why:** Discovered 2026-05-12 during Gold Lakehouse permissions audit. Explored 4 approaches; only managed tables provide complete isolation without tenant admin action.
+
+## Visual-level filterConfig in .pbip schema 2.8.0 — CRITICAL
+Visual-level filters use `filterConfig` (containing a `filters` array) as a **root-level** property on the visual container JSON, NOT `filters` directly. Using `"filters": [...]` at root causes: "An additional property 'filters' was included in the root property."
+
+**Correct structure:**
+```json
+{
+  "visual": { ... },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "filter_name",
+        "field": { "Column": { ... } },
+        "type": "Categorical",
+        "filter": { "Version": 2, "From": [...], "Where": [...] },
+        "isHiddenInViewMode": true
+      }
+    ]
+  }
+}
+```
+
+**Why:** Discovered 2026-05-18. Schema 2.8.0 does not have `filters` at root or inside `visual`. The wrapper property is `filterConfig`. PBI Desktop on save places `filterConfig` after `visual` (at the bottom of the JSON).
+
+**How to apply:** When adding visual-level filters to .pbip visuals, always use `filterConfig.filters[]`, never bare `filters[]`.
+
+## Column displayName convention for PBI visuals
+For aggregated columns in table visuals, set both `nativeQueryRef` AND `displayName` with underscore-separated source names:
+- `Total_tokens` (not "Tokens" or "Total tokens")
+- `Prompt_tokens`, `Completion_tokens`, `Total_cost_usd`, `Avg_duration_ms`, `Caller_ip_hash`
+
+Non-aggregated columns use `nativeQueryRef` only with a human-friendly label (e.g., "User", "Email", "Node", "Requests").
+
+**Why:** User convention established 2026-05-18 — persist source column names with underscores for aggregated values, displayName alongside nativeQueryRef.
+
 ## Other rules
 - Never use bracket refs `[OtherMeasure]` in report-level measures — inline full DAX.
 - Fabric Lakehouse tables named as `"<schema> <table>"` (space-separated). DAX needs single quotes: `SUM('llmUsage llm_usage'[col])`.

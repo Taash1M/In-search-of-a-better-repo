@@ -27,6 +27,29 @@ All dataflow, process flow, and tech stack diagrams must meet these quality stan
 - **Vertical timeline** → D2 `direction: down` with numbered containers and transparent child descriptions
 - **Hierarchy tree** → Mermaid `flowchart TD` with distinct `classDef` per level, gray leaf nodes
 
+### D2 Annotation Bubble Pattern (proven 2026-05-03 on UBI AI Integration)
+Consulting-grade diagram style with annotation bubbles explaining each component. Proven across 4 diagrams (current_state, target_state, code_review_flow, phase2_architecture), embedded in 7 DOCX/PPTX files.
+
+**Pattern structure:**
+- **Main nodes**: colored fill matching service brand (#0078D4 Azure, #FF8C00 ADF, #FF3621 Databricks, etc.), white text, border-radius 8, font-size 20-22, bold, shadow
+- **Annotation bubbles**: light fill matching parent node color (#E8F4FD for Azure, #FFF3E0 for ADF), color-matched border, border-radius 10-12, font-size 14-15, stroke-width 2. Text format: "BOLD TITLE\nDescription line 1,\ndescription line 2."
+- **Bubble connectors**: dashed lines (stroke-dash 4, stroke-width 2) color-matched to the node they annotate
+- **Pipeline arrows**: numbered labels ("1 CI/CD Triggers", "2 Orchestrates Notebooks"), dark stroke (#1E2761), stroke-width 3, bold
+- **MCP connections**: purple dashed (#6A1B9A, stroke-dash 3, stroke-width 2)
+- **Multi-layer diagrams**: use `direction: down` with horizontal containers (`direction: right` inside each layer) for clean separation (e.g., AI Layer → MCP Layer → Platform Layer)
+
+**D2 gotchas (hard-won):**
+1. `top`, `bottom`, `left`, `right`, `center` are reserved keywords — cannot be node IDs
+2. `|md|` blocks don't render in PNG output (only SVG with foreignObject) — use plain quoted strings with `\n` for multi-line text
+3. Pipe `|` inside `|md|` blocks breaks the parser (interpreted as block terminator) — use `+` instead
+4. Chained edges (`a -> b -> c -> d`) inside containers with style blocks cause "cannot create edges between boards" error — split into individual edge declarations
+5. `direction: right` with flat nodes produces very wide/thin images — use dagre layout engine for better spacing
+6. cairosvg cannot convert D2 SVGs to PNG (foreignObject elements) — render directly to PNG via d2.exe
+7. Forward-slash paths only (even on Windows), `$` triggers variable substitution in labels
+8. **Theme 200 (Dark Mauve) is unreadable on white DOCX/PPTX backgrounds** — always use theme 0 (Default light) for embedded diagrams
+9. `direction: right` at top level creates extremely wide diagrams — use `direction: down` at top level with `direction: right` inside containers for balanced portrait-friendly layouts
+10. Container names auto-render as labels — set `label: ""` on grouping-only containers (e.g., `input_row: { label: "" ... }`) to suppress unwanted text
+
 ### Reference Files
 - Sample slide: `Leadership Forum/sample_veritas_slide18.pptx`
 - Build script: `Leadership Forum/sample_slide18_adaptation.py`

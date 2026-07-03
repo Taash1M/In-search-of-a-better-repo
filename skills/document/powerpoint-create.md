@@ -778,18 +778,19 @@ Agent(subagent_type=Explore, run_in_background=True):
 
 | Element | Size | Weight |
 |---------|------|--------|
-| Slide title | 36-44pt | Bold |
-| Section header | 20-24pt | Bold |
-| Body text | 14-16pt | Regular |
-| Captions/labels | 10-12pt | Regular or Light |
-| Large stat callout | 60-72pt | Bold |
-| Stat label | 12-14pt | Regular |
+| Slide title | 18-22pt | Bold |
+| Section header | 16-18pt | Bold |
+| Body text | 12-14pt | Regular |
+| Captions/labels | 9-11pt | Regular or Light |
+| Large stat callout | 40-48pt | Bold |
+| Stat label | 10-12pt | Regular |
 
 **Rules:**
 - Maximum 2 font families per presentation (1 header + 1 body)
 - Left-align body text (center only titles and single-line callouts)
 - Use weight contrast (bold headers, regular body) not just size
-- Minimum 14pt for any text that must be readable
+- Minimum 9pt for any text that must be readable
+- **Slide titles MUST be 20pt or smaller.** Titles at 34pt+ cause text to overflow their bounding box and overlap with subtitle/content below. When a title is long (40+ characters), 20pt is the maximum safe size for single-line rendering in a 12" wide text box. This is the single most common source of text overlap in presentations.
 
 ### Layout Patterns
 
@@ -2239,7 +2240,27 @@ row1.step4 -> row2.step5: { style.stroke-dash: 5 }
 
 **Target aspect ratios**: 2:1 to 4:1 for landscape slides. If a diagram exceeds ~5:1, split into rows.
 
-### 7. Image Placement — ALWAYS Preserve Aspect Ratio
+### 7. Title Text Overlap — Cap Headers at 20pt
+
+The most common source of text overlap in presentations is oversized slide titles. A 34pt ALL-CAPS title with 50+ characters overflows a 12" text box, colliding with the subtitle or content below. This is invisible in code but immediately obvious in the rendered output.
+
+```python
+# WRONG — 34pt title overflows and overlaps subtitle
+run.font.size = Pt(34)  # "THE ROOM ARCHITECT SOLVES THE JOB IKEA CUSTOMERS ACTUALLY HIRE FOR"
+
+# CORRECT — 20pt fits comfortably, no overlap risk
+run.font.size = Pt(20)  # Same text, clean single-line rendering
+```
+
+**Prevention rules:**
+- **Slide titles: 18-22pt max.** The safe default is 20pt Bold. Never exceed 22pt for content slide titles.
+- **Title slide (slide 1) main title: 20-24pt max.** Even the "hero" title should not exceed 24pt — large titles look clean at 20pt.
+- **Stat callout numbers: 40-48pt is fine** — these are short (1-5 characters) and sit inside dedicated bounding boxes, so overflow is not a concern.
+- **Subtitle text: 14pt max.** Subtitles sit immediately below titles — oversized subtitles collide with the content area.
+- **Estimate text width before committing:** At 20pt Calibri, each character is roughly 0.11". A 70-character title needs ~7.7" — fits in a 12" box. At 34pt, the same title needs ~13" — overflows.
+- **After building, verify programmatically:** Scan all shapes for title-position text (y < 1.0") with font size > 22pt and flag as an error.
+
+### 8. Image Placement — ALWAYS Preserve Aspect Ratio
 
 **NEVER use raw `add_picture(path, left, top, width, height)` for generated images.** It stretches the image to the exact dimensions you specify, ignoring the source aspect ratio. This produces visually distorted diagrams.
 
@@ -2603,7 +2624,8 @@ from pptx.util import Pt
 PPTX_PATH = sys.argv[1] if len(sys.argv) > 1 else "output.pptx"
 SAFE_MARGIN = 0.25           # inches from slide edge for content
 SAFE_FOOTER = 0.08           # tighter allowance for footer-zone text
-MIN_FONT_PT = 6              # minimum readable font size
+MIN_FONT_PT = 8              # minimum readable font size
+MAX_TITLE_PT = 22            # maximum font size for title-zone text (y < 1.2")
 OVERLAP_THRESHOLD = 0.30     # 30% of smaller shape's area
 
 prs = Presentation(PPTX_PATH)
@@ -2646,6 +2668,17 @@ for si, slide in enumerate(prs.slides, 1):
         # --- Check 3: Tiny unreadable text ---
         if min_font < 999 and min_font < MIN_FONT_PT:
             issues.append(f'S{si} TINY-TEXT(<{MIN_FONT_PT}pt): "{shape.name}" font={min_font:.1f}pt | "{txt[:30]}"')
+
+        # --- Check 3b: Oversized title text (causes overlap with content below) ---
+        if t < 1.2 and txt and len(txt) > 15:  # title zone, real text
+            max_font = 0
+            if shape.has_text_frame:
+                for p in shape.text_frame.paragraphs:
+                    for r in p.runs:
+                        if r.font.size:
+                            max_font = max(max_font, r.font.size / 12700)
+            if max_font > MAX_TITLE_PT:
+                issues.append(f'S{si} OVERSIZED-TITLE(>{MAX_TITLE_PT}pt): "{shape.name}" font={max_font:.0f}pt | "{txt[:40]}"')
 
     # --- Check 4: Real overlaps (filter intentional text-on-shape layering) ---
     content = [s for s in shapes if s['w'] > 0.15 and s['h'] > 0.1 and s['w'] < sw*0.9]
@@ -2690,7 +2723,8 @@ python qa_layout.py "path/to/output.pptx"
 |-------|------|-----------|
 | Hard OOB | Shapes past slide edges | > 0.02" past edge |
 | Safe zone | Content too close to edges | < 0.25" margin (0.08" for footers) |
-| Tiny text | Unreadable font sizes | < 6pt |
+| Tiny text | Unreadable font sizes | < 8pt |
+| Oversized title | Title text too large (causes overlap) | > 22pt in title zone (y < 1.2") |
 | Real overlaps | Two text elements colliding | > 30% of smaller shape's area |
 
 **What it filters out (not bugs):**
@@ -2703,7 +2737,8 @@ python qa_layout.py "path/to/output.pptx"
 - **OOB**: Reduce element heights/gaps, or move content up
 - **Margin**: Push footers/content inward by adjusting y or h values
 - **Overlap**: Redistribute elements across columns, reduce card heights, increase gaps
-- **Tiny text**: Increase font size to at least 7pt (8pt preferred for body text)
+- **Tiny text**: Increase font size to at least 8pt (9pt preferred for body text)
+- **Oversized title**: Reduce title font to 20pt. This is the #1 cause of text overlapping — long titles at 34pt+ overflow their textbox and collide with subtitles/content below
 
 ### Stage 3: Visual QA
 

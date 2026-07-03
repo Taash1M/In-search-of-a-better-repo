@@ -1,6 +1,6 @@
 ---
 name: Miro MCP Integration
-description: Miro MCP server connected to <USER>@<ORG_DOMAIN>, official miro-ai repo cloned, 13 tools available, custom skill planned, project folder at Claude code\MCP\Miro MCP
+description: Miro MCP (OAuth 2.1), 13 tools, 2 boards (Claude Code Deployment 16-diagram 7x3 grid + CPQ SMC RMC 17 artifacts), artifacts at AI\Miro\, no image upload (2026-04-30)
 type: project
 originSessionId: 9accd003-3d3b-4227-b58a-870575044110
 ---
@@ -10,7 +10,7 @@ originSessionId: 9accd003-3d3b-4227-b58a-870575044110
 ## Connection Status
 - **MCP Server**: Official Miro MCP at `https://mcp.miro.com/` (HTTP transport)
 - **Auth**: OAuth 2.1 — connected and authenticated as `<USER>@<ORG_DOMAIN>`
-- **Enabled by**: Laura Williams (laura.williams@<ORG_DOMAIN>) on 2026-04-13 via Fortive admin (Miro Enterprise)
+- **Enabled by**: Laura Williams (laura.williams@fortive.com) on 2026-04-13 via Fortive admin (Miro Enterprise)
 - **Config**: Already in Claude Code local MCP config (`claude mcp add --transport http miro https://mcp.miro.com`)
 - **Status check**: `claude mcp list` — should show `miro: https://mcp.miro.com (HTTP) - Connected`
 
@@ -68,9 +68,17 @@ originSessionId: 9accd003-3d3b-4227-b58a-870575044110
 
 ## Miro Boards
 - **Claude Code Deployment**: `https://miro.com/app/board/uXjVHajHEbE=/`
-  - 15 native flowchart diagrams (5 detailed arch at y=-5000, 5 simple arch at y=0, 5 data flows at y=3000)
-  - Phases on x-axis: P1 CLI (x=0), P2 Gateway (x=5500), P3 ETL (x=11000), P4 Security (x=16500), Infra (x=22000)
-  - Color coding: pink=users, green=compute, purple=storage, red=security, orange=orchestration, blue=AI, teal=deployments, yellow=planned, gray=containers
+  - **Presentation-ready grid** (reorganized 2026-04-30): 7 columns x 3 rows = 16 diagrams
+  - **Columns** (left→right): Phase 1 (x=-5000), Phase 2 (x=500), Phase 3 (x=6000), Phase 4 (x=11500), Infrastructure (x=17000), Phase 5 (x=22500), PBI Mockups (x=28000)
+  - **Rows** (top→bottom): Row 1 Architecture (y=-13844), Row 2 Flow Diagrams (y=-11279), Row 3 Drill-down Detail (y=-8713)
+  - Row 1: 7 architecture diagrams (CLI, Gateway, ETL, Security, Resource Landscape, Content Logging, PBI Content Analysis wireframe)
+  - Row 2: 7 flow diagrams (CLI Data Flow, Gateway Data Flow, ETL Data Flow, Security Data Flow, Provisioning Flow, Content Process Flow, PBI Content Alerts wireframe)
+  - Row 3: 2 diagrams (Phase 5 Content Data Flow Detail, PBI README Safety wireframe)
+  - All v2 content: 31 users, 19 tables, 6h ETL, PBI LIVE 10 pages, content logging, Haiku safety
+  - 3 black sticky notes at x=-6055 mark row positions (user-placed anchors)
+  - PBI mockup PNGs extracted to `Usage Tracking/pbi_mockups/` for optional drag-drop replacement
+  - Old diagrams (y=-5000 to y=6000) preserved but superseded by grid layout
+  - Color palette: `#fff6b6 #c6dcff #adf0c7 #ccf4ff #dedaff #ffc6c6 #f8d3af #ffd8f4 #c3faf5 #dbfaad #e7e7e7` (11 colors, indices 0-10)
   - Each diagram uses clusters for Azure boundaries (subscription, RG, service groups)
   - **Must click "Apply to canvas"** on each diagram to convert from draft to permanent shapes
 - **CPQ SMC RMC Integration**: `https://miro.com/app/board/o9J_lAknUAk=/`

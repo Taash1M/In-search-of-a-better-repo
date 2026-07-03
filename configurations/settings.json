@@ -1,15 +1,11 @@
 {
   "env": {
-    "CLAUDE_CODE_USE_FOUNDRY": "1",
-    "ANTHROPIC_FOUNDRY_API_KEY": "<REDACTED — set via environment>",
-    "ANTHROPIC_FOUNDRY_BASE_URL": "https://ai-taashimanyanga3461ai913834910233.services.ai.azure.com/anthropic",
-    "ANTHROPIC_DEFAULT_OPUS_MODEL": "claude-opus-4-6",
-    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "claude-haiku-4-5",
-    "ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-sonnet-4-6",
-    "ANTHROPIC_FOUNDRY_REGION": "eastus2"
+    "CLAUDE_CODE_USE_BEDROCK": "1",
+    "AWS_REGION": "us-east-2",
+    "AWS_PROFILE": "default",
+    "CPS_LSP_BINARY": "<USER_HOME>/.vscode/extensions/ms-copilotstudio.vscode-copilotstudio-1.4.37-win32-x64/lspOut/LanguageServerHost.exe"
   },
-  "model": "claude-opus-4-6",
-  "autoUpdatesChannel": "latest",
+  "model": "us.anthropic.claude-sonnet-4-6[1m]",
   "hooks": {
     "PreToolUse": [
       {
@@ -22,6 +18,26 @@
           {
             "type": "command",
             "command": "python \"<ADMIN_HOME>/.claude/hooks/dangerous-command-blocker.py\""
+          },
+          {
+            "type": "command",
+            "command": "python \"<ADMIN_HOME>/.claude/hooks/office-open-as-user.py\"",
+            "statusMessage": "Checking Office file open..."
+          },
+          {
+            "type": "command",
+            "command": "python \"<ADMIN_HOME>/.claude/hooks/databricks-all-purpose-cluster.py\"",
+            "statusMessage": "Enforcing all-purpose cluster..."
+          }
+        ]
+      },
+      {
+        "matcher": "Bash|Edit|Write|Agent",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"<ADMIN_HOME>/.claude/hooks/de-skill-activator.py\"",
+            "timeout": 5000
           }
         ]
       }
@@ -41,6 +57,10 @@
           {
             "type": "command",
             "command": "python \"<ADMIN_HOME>/.claude/hooks/obsidian-session-logger.py\""
+          },
+          {
+            "type": "command",
+            "command": "python \"<ADMIN_HOME>/.claude/hooks/obsidian-memory-sync.py\""
           }
         ]
       },
@@ -58,6 +78,10 @@
           {
             "type": "command",
             "command": "python \"<ADMIN_HOME>/.claude/hooks/obsidian-session-logger.py\""
+          },
+          {
+            "type": "command",
+            "command": "python \"<ADMIN_HOME>/.claude/hooks/obsidian-memory-sync.py\""
           }
         ]
       },
@@ -75,6 +99,10 @@
           {
             "type": "command",
             "command": "python \"<ADMIN_HOME>/.claude/hooks/obsidian-session-logger.py\""
+          },
+          {
+            "type": "command",
+            "command": "python \"<ADMIN_HOME>/.claude/hooks/obsidian-memory-sync.py\""
           }
         ]
       },
@@ -88,9 +116,36 @@
           {
             "type": "command",
             "command": "python \"<ADMIN_HOME>/.claude/hooks/obsidian-session-logger.py\""
+          },
+          {
+            "type": "command",
+            "command": "python \"<ADMIN_HOME>/.claude/hooks/aws-cost-tracker.py\""
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"<ADMIN_HOME>/.claude/hooks/qa-gate-enforcer.py\""
           }
         ]
       }
     ]
-  }
+  },
+  "enabledPlugins": {
+    "copilot-studio@skills-for-copilot-studio": true
+  },
+  "extraKnownMarketplaces": {
+    "skills-for-copilot-studio": {
+      "source": {
+        "source": "github",
+        "repo": "microsoft/skills-for-copilot-studio"
+      }
+    }
+  },
+  "autoUpdatesChannel": "latest",
+  "skipWorkflowUsageWarning": true
 }
